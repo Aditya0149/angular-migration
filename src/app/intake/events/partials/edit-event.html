@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="cloudlex" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/ng-grid.css" />
+    <link rel="stylesheet" href="styles/css/main.css">
+</head>
+<body>
+
+
+    <!--
+  <ul class="menu">
+    <li><a href="#/matter-list">Matter List</a></li>
+    <li><a href="#/add-matter">Add matter</a></li>
+  </ul>
+-->
+
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+    <!-- HEADER-->
+    <header id="header" ng-include="'app/app/components/header/page-header.html'"></header>
+    <!-- Navigation -->
+    <nav id="nav" ng-include="'app/components/side-nav/page-nav.html'" resize></nav>
+    <!-- Content -->
+    <div class="container-fluid" id="content" >
+<div class="row">
+                <div class="col-lg-2">
+                    <h2 class="page-title"> Edit Events</h2>
+                </div>
+
+                <div class="col-md-3 pull-right btn-botm">
+                    
+                      
+            <button ng-click="addCtrl.saveMatter()" class="btn btn-default pull-right"    id="saveButton">Save</button>
+               
+                     <button ng-click="addCtrl.cancelMatter()" class="btn btn-default btn-styleNone pull-right">Delete</button>
+                     <button ng-click="addCtrl.cancelMatter()" class="btn btn-default btn-styleNone pull-right">Cancel</button>
+                </div>
+            </div>
+        <div class=" borderTop">
+        
+        <form class="form col-md-7">
+          <div class="row form-group form-margin">
+            <div class="col-md-2 text-right"><label >Event Type:</label></div>
+            <div class="col-md-8"><input type="text" class="form-control"/></div>
+            </div>
+            
+            <div class="row form-group">
+            <div class="col-md-2 text-right"><label>Full Day:</label></div>
+            <div class="col-md-8"><input type="checkbox"/></div>
+            </div>
+            
+                <div class="row form-group">
+            <div class="col-md-2 text-right"><label>Start Date:</label></div>
+            <div class="col-md-3"><input type="text" class="form-control"/></div>
+                     <div class="col-md-2 text-right"><label>Start :</label></div>
+            <div class="col-md-3"><input type="text" class="form-control"/></div>
+            </div>
+              <div class="row form-group">
+            <div class="col-md-2 text-right"><label>End Date:</label></div>
+            <div class="col-md-3"><input type="text" class="form-control"/></div>
+                     <div class="col-md-2 text-right"><label>End:</label></div>
+            <div class="col-md-3"><input type="text" class="form-control"/></div>
+            </div>
+                      <div class="row form-group">
+            <div class="col-md-2 text-right"><label >Location:</label></div>
+            <div class="col-md-8"><input type="text" class="form-control"/></div>
+            </div>
+                      <div class="row form-group">
+            <div class="col-md-2 text-right"><label >Description:</label></div>
+                          <div class="col-md-8"><textarea class="form-control" ng-trim='false'></textarea></div>
+            </div>
+            <div class="paddingRLR flexCont">
+            <!-- ngRepeat: item in viewModel.statusWiseCounts -->
+        </div>
+             <div class="row form-group form-margin">
+            <div class="col-md-2 text-right"><label>Remind Me:</label></div>
+            <div class="col-md-1"><input type="checkbox" /></div>
+                     <div class="col-md-3 text-right"><label>Reminder Date:</label></div>
+            <div class="col-md-3"><input type="text" class="form-control"/></div>
+            </div>
+            </form>
+        </div>
+
+    <!-- In production use: -->
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+
+    <script type="text/javascript" src="vendor/ng-grid.debug.js"></script>
+    <script type='text/javascript' src='vendor/checklist-model.js'></script>
+
+    <script src="app.js"></script>
+
+    <!-- Global -->
+    <script src="global/global-module.js"></script>
+    <script src="global/global-constants.js"></script>
+
+    <!-- components -->
+    <script src="components/components-module.js"></script>
+    <script src="components/dialogue/dialog-service.js"></script>
+    <script src="components/header/page-header-ctrl.js"></script>
+    <script src="components/side-nav/page-nav-ctrl.js"></script>
+
+    <!-- Login -->
+    <script src="user/user-module.js"></script>
+    <script src="user/user-constant.js"></script>
+    <script src="user/user-login-ctrl.js"></script>
+    <script src="user/user-login-datalayer.js"></script>
+
+    <!-- Matter -->
+    <script src="matter/matter-module.js"></script>
+    <script src="matter/matter-constant.js"></script>
+    <script src="matter/factories/matter-factory.js"></script>
+    <script src="matter/add-matter/important-dates-directive/important-dates.js"></script>
+    <script src="matter/add-matter/add-contact-dialogue/add-contact-ctrl.js"></script>
+    <script src="matter/add-matter/contact-constant.js"></script>
+    <script src="matter/add-matter/contact-factory.js"></script>
+    <script src="matter/add-matter/add-matter-ctrl.js"></script>
+    <script src="matter/matter-list/matter-list-ctrl.js"></script>
+
+      <footer >
+
+           <ul>
+               <li>  <a href="#" >Overview</a></li>
+                  <li>  <a href="#">OVERVIEW </a></li>
+                   <li> <a href="#">ALL PARTIES </a></li>
+                  <li>  <a href="#" >DETAILS  </a></li>
+                                 <li>  <a href="#"> DOCUMENTS </a></li>
+                  <li>  <a href="#">NOTES </a></li>
+                  <li >  <a href="#" class="active-footer" >EVENTS </a></li>
+                  <li>  <a href="#"> TIMELINE</a></li>
+                </ul>
+        </footer>
+      <script>
+      // var app= angular.module('app', ['theaquaNg']);
+
+        $(document).ready(function(){
+         var foot=$('footer').outerWidth(true);
+                $('footer').css( 'margin-left', -(foot/2));
+               $('footer').css( 'left', '50%');
+                $(window).resize(function(){
+                $('footer').css( 'margin-left', -$('footer').width()/2);
+                });
+            
+            });
+    
+    </script>
+
+</body>
+</html>
+
+
+
+   <!-- Contact -->
+    <!--<script src="contact/contact-module.js"></script>
+    <script src="contact/contact-constant.js"></script>
+    <script src="contact/factories/contact-factory.js"></script>-->
+
+

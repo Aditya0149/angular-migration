@@ -1,0 +1,144 @@
+.contact-list-wrapper {
+	.linkdisabled {
+		cursor: not-allowed;
+		pointer-events: none;
+		color: grey;
+	}
+	.list {
+		display: inline-block;
+		margin: 0px 8px;
+	}
+	.search-overlap {
+		ul {
+			>li {
+				padding: inherit !important;
+				margin: 0 10px !important;
+			}
+		}
+	}
+	body {
+		.report-responsive {
+			.body-row {
+				.cell {
+					overflow: visible !important;
+				}
+			}
+		}
+	}
+	.new-scroll-custom-table {
+		th {
+			.th-inner {
+				padding: 10px 0 !important;
+				height: 50px !important;
+			}
+		}
+		.headerSpacer {
+			height: 41px;
+		}
+		.scrollArea {
+			margin-top: 20px;
+		}
+	}
+	#report-content {
+		margin-right: 0;
+		padding: 0 20px 20px;
+		width: calc(100% - 75px);
+	}
+	.scrollArea {
+		table {
+			td {
+				div {
+					white-space: initial;
+				}
+			}
+		}
+		height: 95%;
+	}
+	th.area-td {
+		.th-inner {
+			padding-top: 3px !important;
+		}
+	}
+	.default-cursor {
+		cursor: default;
+	}
+	.contact-list-fixed-table {
+		table-layout: fixed;
+	}
+	.contact-list-3 {
+		width: 3%;
+	}
+	.contact-list-15 {
+		width: 15%;
+	}
+	.contact-list-17 {
+		width: 17%;
+	}
+	.contact-list-22 {
+		width: 22%;
+	}
+	.contact-list-11 {
+		width: 11%;
+	}
+	.contact-list-12 {
+		width: 12%;
+	}
+	.contact-list-icons {
+		padding: 7px 10px;
+		vertical-align: super;
+	}
+	.home-greed {
+		margin-top: 5px;
+		display: inline-block;
+	}
+	.contact-list-custom-wrapper {
+		display: inline-block;
+		vertical-align: top;
+		padding-left: 6px;
+		width: 85%;
+		margin-top: 5px;
+	}
+	.morelink-box {
+		position: fixed;
+		bottom: 5px;
+		width: 49%;
+	}
+	.contact-sub-status {
+		width: 70%;
+		display: inline-block;
+		padding-top: 10px !important;
+	}
+	.search-overlap-inline {
+		display: inline;
+	}
+	.showBy-btns-li {
+		padding: 0px;
+		margin: 8px 0 0 0;
+	}
+	.showBy-btns-li-a {
+		font-size: 12px;
+		margin-top: 3px;
+		display: inline-block;
+	}
+	.showBy-btns-glyphicon {
+		margin: 0px 0 0 10px;
+	}
+	.icon--alignment {
+		vertical-align: sub;
+		margin-top: 0;
+	}
+	.tags {
+		li {
+			margin-top: 5px;
+		}
+	}
+	.morelink-outer {
+		overflow: hidden !important;
+		position: fixed;
+		width: 100%;
+		bottom: 05px;
+	}
+	.w-94 {
+		width: 94%;
+	}
+}

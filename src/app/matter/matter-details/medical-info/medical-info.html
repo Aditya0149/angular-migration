@@ -1,0 +1,264 @@
+
+    <div class="medical-information-wrapper"
+        ng-class="{'cursor-pointer-events-none' :medicalInfo.compose, '' : !medicalInfo.compose}">
+        <accordion>
+            <accordion-group is-open="medicalInfo.status.isFirstOpen">
+                <accordion-heading>
+                    <span>Plaintiff Bodily Injury Information</span>
+                    <i class="pull-right sprite"
+                        ng-class="{'default-upward-arrow': medicalInfo.status.isFirstOpen, 'default-downward-arrow': !medicalInfo.status.isFirstOpen}"></i>
+                </accordion-heading>
+                <div class="row injuries-box" data-ng-if="medicalInfo.bodilyInjuries.length > 0">
+                    <div class="col-md-4">
+                        Plaintiffs({{medicalInfo.bodilyInjuries.length}})
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row-fluid">
+                            Bodily Injury
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row-fluid">
+                            <div class="pull-left margin-right10px text-left">Surgery:</div>
+                            <div class="pull-left value task-width-dynamic">
+                                <div class="checkbox mt-auto">
+                                    <input data-ng-disabled="medicalInfo.mode === 'view'" type="checkbox"
+                                        data-ng-model="medicalInfo.selectedMedicalInfo.surgery" data-ng-change=""
+                                        data-ng-true-value="'1'" data-ng-false-value="'0'">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="showBy-btns pull-right mt-5-negative"
+                            ng-hide="medicalInfo.matterInfo.archivalMatterReadOnlyFlag">
+                            <button data-ng-disabled="medicalInfo.isGraceOver != 1"
+                                data-ng-click="medicalInfo.mode = 'edit'" data-ng-show="medicalInfo.mode == 'view'"
+                                class="btn btn-default ">
+                                Edit
+                            </button>
+                            <button data-ng-show="medicalInfo.mode !== 'view'"
+                                data-ng-disabled="medicalInfo.isGraceOver != 1"
+                                data-ng-click="medicalInfo.updateBodilyInjury(medicalInfo.bodilyInjuries)"
+                                class="btn btn-default ">
+                                Save
+                            </button>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row pb-65">
+                    <div data-ng-if="medicalInfo.bodilyInjuries.length === 0" class=" text-center form-margin ">
+                        <p> There is no bodily injury information available.</p>
+                    </div>
+                    <div class="col-md-4" data-ng-if="medicalInfo.bodilyInjuries.length > 0">
+                        <div class="task-list dashboard-tasks-due custom-height">
+                            <div class="list-progress list">
+                                <ul>
+                                    <li class="row"
+                                        data-ng-class="{ 'selected-task':medicalInfo.selectedMedicalInfo.plaintiffid===data.plaintiffid}"
+                                        data-ng-click="medicalInfo.selectMedicalInfo(data)"
+                                        data-ng-repeat="data in medicalInfo.bodilyInjuries ">
+                                        <div class="list-item-wrapper ">
+                                            <div class="col-md-9 list-item-height"
+                                                data-ng-click="medicalInfo.selectMedicalInfo(data)">
+                                                <span>{{data.firstname}} {{data.lastname}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ">
+                                            <progress class="progress-bar-divider ">
+                                                <bar ng-repeat="progress in data.completed track by $index"
+                                                    value="progress.value " type="{{progress.type}} ">
+                                                </bar>
+                                            </progress>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 detail-event mt-0"
+                        data-ng-if="medicalInfo.bodilyInjuries.length > 0">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- <div ng-if="medicalInfo.mode === 'view'">
+                                    <wysiwyg textarea-id="negligenceLiabilityDescriptionView" textarea-class="new-editor-height globle-note-color form-control"
+                                        textarea-name="text" textarea-required ng-model="medicalInfo.selectedMedicalInfo.bodilyinjury"
+                                        enable-bootstrap-title="true" read-only-field="true"></wysiwyg>
+                                </div>
+                                <div ng-if="medicalInfo.mode === 'edit'">
+                                    <wysiwyg textarea-id="negligenceLiabilityDescriptionEdit" textarea-class="new-editor-height globle-note-color form-control"
+                                        textarea-name="text" textarea-required ng-model="medicalInfo.selectedMedicalInfo.bodilyinjury"
+                                        enable-bootstrap-title="true"></wysiwyg>
+                                </div> -->
+                                <div ng-show="medicalInfo.mode === 'view'"
+                                    class="modal-body pop-body-scroll-height dashboard-tasks-due disk-bullet med-info-text-height">
+                                    <p data-ng-bind-html="medicalInfo.selectedMedicalInfo.bodilyinjury | showSafeHtml"
+                                        class="word-wrap"></p>
+                                </div>
+                                <!-- <text-angular detect-change-editor-text-angular
+                                ta-text-editor-class="form-control textangular-height" ta-html-editor-class="form-control textangular-height"
+                                    
+                                    ng-show="medicalInfo.mode === 'edit'" ta-toolbar="[['bold','italics','strikeThrough','underline'],['justifyLeft','justifyCenter','justifyRight'],
+                    ['ul', 'ol']]" ng-model="medicalInfo.selectedMedicalInfo.bodilyinjury"></text-angular> -->
+                                <wysiwyg textarea-id="matterNotesAdd"
+                                textarea-class="new-editor-height globle-note-color form-control matter-notes-add"
+                                ng-show="medicalInfo.mode === 'edit'" 
+                                textarea-name="text" ng-model="medicalInfo.selectedMedicalInfo.bodilyinjury"
+                                enable-bootstrap-title="true"></wysiwyg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    <span>Medical Information</span>
+                    <i class="pull-right sprite"
+                        ng-class="{'default-upward-arrow': status.open, 'default-downward-arrow': !status.open}"></i>
+                </accordion-heading>
+                <div class="row medical-info-gridSec margin0">
+                    <div class=" pull-right">
+                        <ul class="showBy-btns heading-right-buttons pull-right">
+                            <li class="seperation-filter" ng-hide="medicalInfo.matterInfo.archivalMatterReadOnlyFlag">
+                            </li>
+                            <li tooltip="Print" ng-hide="medicalInfo.matterInfo.archivalMatterReadOnlyFlag">
+                                <a
+                                    data-ng-click="medicalInfo.printMedicalInfo(matterDetail.plaintiffDefendants, medicalInfo.plaintiffid)">
+                                    <span class="sprite default-file "></span>
+                                </a>
+                            </li>
+                            <li class="paddingLR-10px" ng-hide="medicalInfo.matterInfo.archivalMatterReadOnlyFlag">
+                                <a data-ng-click="medicalInfo.downloadMedicalInfo(medicalInfo.plaintiffid)">
+                                    <span tooltip="Export" class="sprite default-sharedown sortby-icons"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="form-inline pull-right">
+                            <div class="form-group select-label-correction show-records-dropdown">
+                                <label>Show records of</label>
+                                <ui-select ng-model="medicalInfo.plaintiffid" theme="selectize"
+                                    on-select="medicalInfo.filterMedicalInfo(medicalInfo.plaintiffid.id,matterDetail.plaintiffDefendants, $item.selectedPartyType)">
+                                    <ui-select-match placeholder="Enter name">
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices group-by="matterDetail.groupPlaintiffDefendants"
+                                        group-filter="['All','Plaintiffs','Defendants','Other Parties']"
+                                        repeat="item in matterDetail.plaintiffDefendants  | filter:{ name:$select.search } | orderBy: 'name'">
+                                        <small> {{item.name}} </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </form>
+                        <div class="pull-right border">
+                        </div>
+                        <div class="pull-right">
+                            <div class="dropdown">
+                                <span class="sortby-align">Sort By:</span>
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{medicalInfo.getSortByLabel(medicalInfo.sortby)}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu custom-sort-dropdown" role="menu" aria-labelledby="dLabel">
+                                    <li data-ng-repeat-start="sort in medicalInfo.sorts"
+                                        data-ng-class="{' active': medicalInfo.sortby == sort.key}">
+                                        <a data-ng-click="medicalInfo.applySortByFilter(sort.key)">{{sort.name}}</a>
+                                    </li>
+                                    <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="paddingRLR clearfix search-overlap">
+                        <div class="paddingRLR clearfix search-overlap">
+                            <ul class="showBy-btns pull-left heading-right-buttons"
+                                ng-hide="medicalInfo.matterInfo.archivalMatterReadOnlyFlag">
+                                <li tooltip="Add">
+                                    <a href="javascript:void(0)" ng-if="(medicalInfo.isGraceOver != 0)"
+                                        data-ng-click="medicalInfo.addMedicalInfo(matterDetail.plaintiffDefendants)"
+                                        data-toggle="collapse" data-target="#addNote" aria-expanded="false"
+                                        aria-controls="addNote">
+                                        <span class="sprite default-plus">&nbsp;</span>
+                                    </a>
+                                </li>
+                                <li class="seperation"
+                                    data-ng-show="medicalInfo.medicalInfoGrid.selectedItems.length > 0"></li>
+                                <li data-ng-show="medicalInfo.medicalInfoGrid.selectedItems.length > 0">
+                                    <a href="javascript:void(0)" ng-if="(medicalInfo.isGraceOver != 0)"
+                                        data-ng-click="medicalInfo.deleteMedicalInfo(medicalInfo.medicalInfoGrid.selectedItems)"
+                                        tooltip="Delete">
+                                        <span class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                                    </a>
+                                </li>
+                                <li data-ng-show="medicalInfo.medicalInfoGrid.selectedItems.length > 0">
+                                    <a href="javascript:void(0)"
+                                        data-ng-click="medicalInfo.unlinkDocument(medicalInfo.medicalInfoGrid.selectedItems)"
+                                        tooltip="unlink">
+                                        <span class="sprite default-unlink col-md-offset-1">&nbsp;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"
+                                        data-ng-click="medicalInfo.editMedicalInfo(matterDetail.plaintiffDefendants,medicalInfo.medicalInfoGrid.selectedItems)"
+                                        ng-if="(medicalInfo.isGraceOver != 0)"
+                                        data-ng-show="medicalInfo.medicalInfoGrid.selectedItems.length === 1">
+                                        <span class="sprite default-edit " tooltip="Edit"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="report-responsive margin-top20px"
+                    data-ng-if="medicalInfo.medicalInfoList.medicalinfo.length> 0">
+                    <div class="row header-row remove-sticky-header">
+                        <div class="cell checkbox" data-width="3">
+                            <input type="checkbox" data-ng-model="medicalInfo.medicalInfoGrid.selectAll"
+                                data-ng-checked="medicalInfo.allUsersSelected()"
+                                data-ng-click="medicalInfo.selectAllUsers(medicalInfo.medicalInfoGrid.selectAll)" />
+                            <label></label>
+                        </div>
+                        <div class="cell " data-ng-repeat="header in ::medicalInfo.medicalInfoGrid.headers"
+                            data-width={{header.dataWidth}}>
+                            <span ng-if="header.displayName != 'Memo'"> {{header.displayName}} </span>
+                        </div>
+                    </div>
+                    <div class="row body-row "
+                        data-ng-class="{'selected-grid-row':medicalInfo.isUserSelected(data.medical_information_id)}"
+                        data-ng-repeat="data in medicalInfo.medicalInfoList.medicalinfo | orderBy: medicalInfo.sortKey">
+                        <div class="cell checkbox " data-width="3">
+                            <input type="checkbox"
+                                data-ng-checked="medicalInfo.isUserSelected(data.medical_information_id)"
+                                checklist-model="medicalInfo.medicalInfoGrid.selectedItems" checklist-value="data" />
+                            <label></label>
+                        </div>
+                        <div class="cell" data-ng-repeat="header in medicalInfo.medicalInfoGrid.headers"
+                            data-width={{header.dataWidth}} grid-size>
+                            <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in header.field"
+                                data-ng-class="{'display-table-cell':field.inline, 'cursor-pointer':field.cursor}"
+                                cell-data="{{data}}" field="{{field}}" render-cell>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center" data-ng-if="medicalInfo.medicalInfoList.medicalinfo.length==0">
+                    There is no medical information available.
+                </p>
+            </accordion-group>
+        </accordion>
+    </div>
+<div class="compose-wrap" ng-if="medicalInfo.firmData.API === 'PHP'"
+    data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :medicalInfo.compose, '' : !medicalInfo.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="medicalInfo.firmData.API === 'JAVA'"
+    data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :medicalInfo.compose, '' : !medicalInfo.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

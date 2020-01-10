@@ -1,0 +1,184 @@
+<style>
+    .panel-body {
+        padding: 5px 15px 15px 15px;
+    }
+    #report-content {
+		padding: 0 20px 2px !important;
+		overflow-y: auto !important;
+    }
+    .hide-scroll{
+        padding-bottom: 0px !important;
+        overflow-y: hidden !important;
+    }
+.dropdown-menu{width: auto;min-width: 210px !important;}
+</style>
+<div id="new-report-content" ng-class="{'report-custom-drop-height': true , 'hide-scroll': !master}">
+    <input type="checkbox" id="sidebartoggler" ng-model="master" report-nav="">
+    <div class="page-wrapper">
+        <label class="toggle" for="sidebartoggler" id="hamburger">
+            <i class="icon-toggle-img" tooltip='{{master? "Hide": "Show&nbsp;Report&nbsp;List"}}' tooltip-placement="right">&nbsp;</i>
+        </label>
+        <div>
+            <div class="row">
+
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="sidebar">
+                        <div class="clearfix"></div>
+                        <div class="accordion-height-adjust" ng-mousemove="mouseMove()">
+                            <accordion close-others="true" class="report-accord">
+                                <accordion-group is-open="reportCtrl.status.matters">
+                                    <accordion-heading>
+                                        <div class="ellipsis-nowrap report-accordion-head" data-ng-class="{'active': reportCtrl.status.matters, 'inactive': !reportCtrl.status.matters}">Matters</div>
+                                        <i class="pull-right glyphicon margin-accordion-arrow" data-ng-class="{'default-blueupward-arrow sprite': reportCtrl.status.matters, 
+                                    'default-bluedownward-arrow sprite': !reportCtrl.status.matters}"></i>
+                                    </accordion-heading>
+                                    <div>
+                                        <p class="ellipsis-nowrap">
+                                            <a data-ng-click="reportCtrl.changeReportView1('report.allMatterListReport')" data-ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.allMatterListReport'}"
+                                                tooltip="All Matter Report">All Matter Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterEvents')" ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.matterEvents'}"
+                                                tooltip="Events  Report"> Events Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.upcomingSOLs')" ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.upcomingSOLs'}"
+                                                tooltip="Upcoming SOLs">Upcoming SOLs</a>
+                                        </p>
+
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.upcomingNOCs')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.upcomingNOCs'}"
+                                                tooltip="Upcoming NOCs">Upcoming NOCs</a>
+                                        </p>
+
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterInTookByDate')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.matterInTookByDate'}"
+                                                tooltip="New Matters Opened by Date">New Matters Opened by Date</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterStatus')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.matterStatus'}"
+                                                tooltip="Matter Status">Matter Status</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterType')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.matterType'}"
+                                                tooltip="Matter Type">Matter Type</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterAge')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.matterAge'}"
+                                                tooltip="Matter Age">Matter Age</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.venue')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.venue'}"
+                                                tooltip="Court and Venue"> Court and Venue</a>
+                                        </p>
+
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.contact')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.contact'}"
+                                                tooltip="Matter Contact Relationship"> Matter Contact Relationship</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.expense')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.expense'}"
+                                                tooltip="Expense Report"> Expense Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap" ng-if="reportCtrl.mattersettlement[0].V == 1">
+                                            <a ng-click="reportCtrl.changeReportView1('report.settlement')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.settlement'}"
+                                                tooltip="Settlement Report"> Settlement Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.insurance')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.insurance'}"
+                                                tooltip="Insurance Report"> Insurance Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.mailingList')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.mailingList'}"
+                                                tooltip="Plaintiff Contact Report"> Plaintiff Contact Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap" ng-if="reportCtrl.matterValuatiion[0].V == 1">
+                                            <a ng-click="reportCtrl.changeReportView1('report.matterValuation')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.matterValuation'}"
+                                                tooltip="Matter Valuation Report"> Matter Valuation Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.medicalRecordRequest')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.medicalRecordRequest'}"
+                                                tooltip="Medical Record Request Report"> Medical Record Request Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.keywordSearch')" ng-class="{'accordionReportSelected ': reportCtrl.sublinkstate == 'report.keywordSearch'}"
+                                                tooltip="Keyword Search Report">Keyword Search Report</a>
+                                        </p>
+                                        <!--<p>
+                                    <a href="#" class="accordion-toggle"> <span ng-class="" class="">Matter status age</span></a>
+                                </p>
+                                <p>
+                                    <a href="#" class="accordion-toggle"> <span ng-class="" class="">Court & venue summary</span></a>
+                                </p>-->
+                                    </div>
+                                </accordion-group>
+
+                                <accordion-group is-open=" reportCtrl.status.tasks">
+                                    <accordion-heading>
+                                        <div style="display: inline-block" ng-class="{'active': reportCtrl.status.tasks, 'inactive': !reportCtrl.status.tasks}" class="ellipsis-nowrap report-accordion-head ">Tasks</div>
+                                        <i class="pull-right glyphicon margin-accordion-arrow" ng-class="{'default-blueupward-arrow sprite': reportCtrl.status.tasks,
+                                        'default-bluedownward-arrow sprite': ! reportCtrl.status.tasks}"></i>
+                                    </accordion-heading>
+                                    <div>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.taskSummary')" ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.taskSummary'}"
+                                                tooltip="Task Summary">Task Summary</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.taskAge')" ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.taskAge'}"
+                                                tooltip="Task Age">Task Age</a>
+                                        </p>
+                                    </div>
+                                </accordion-group>
+
+                                <accordion-group is-open="reportCtrl.status.user" data-ng-if="reportCtrl.isMD || reportCtrl.is_admin == 1">
+                                    <accordion-heading>
+                                        <div style="display: inline-block" data-ng-class="{'active':  reportCtrl.status.user, 'inactive': ! reportCtrl.status.user}"
+                                            class="ellipsis-nowrap report-accordion-head ">Users</div>
+                                        <i class="pull-right glyphicon margin-accordion-arrow" ng-class="{'default-blueupward-arrow sprite':  reportCtrl.status.user,
+                                        'default-bluedownward-arrow sprite': ! reportCtrl.status.user}"></i>
+                                    </accordion-heading>
+                                    <div>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="reportCtrl.changeReportView1('report.userActivity')" ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.userActivity'}"
+                                                tooltip="User Activity">User Activity</a>
+                                        </p>
+                                    </div>
+                                </accordion-group>
+
+                                <accordion-group is-open="reportCtrl.status.doc">
+                                    <accordion-heading>
+                                        <div style="display: inline-block" data-ng-class="{'active': reportCtrl.status.doc, 'inactive': !reportCtrl.status.doc}"
+                                            class="ellipsis-nowrap report-accordion-head ">Documents</div>
+
+                                        <i class="pull-right glyphicon margin-accordion-arrow" data-ng-class="{'default-blueupward-arrow sprite': reportCtrl.status.doc,
+                                        'default-bluedownward-arrow sprite': !reportCtrl.status.doc}"></i>
+                                    </accordion-heading>
+                                    <div>
+                                        <p class="ellipsis-nowrap " style="border-bottom:1px solid #d3d9de!important">
+                                            <a data-ng-click="reportCtrl.changeReportView1('report.documentReport')" data-ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.documentReport'}"
+                                                tooltip="Document Report">
+                                                Document Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap " style="border-bottom:1px solid #d3d9de!important">
+                                            <a data-ng-click="reportCtrl.changeReportView1('report.motionReport')" data-ng-class="{'accordionReportSelected': reportCtrl.sublinkstate == 'report.motionReport'}"
+                                                tooltip="Motion Report">
+                                                Motion Report</a>
+                                        </p>
+                                    </div>
+                                </accordion-group>
+                            </accordion>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+
+                    <div ui-view></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

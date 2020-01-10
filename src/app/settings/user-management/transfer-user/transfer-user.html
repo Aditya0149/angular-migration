@@ -1,0 +1,39 @@
+﻿<div class="modal-header">
+    <h2 class="pull-left page-title">Delete</h2>
+
+    <div class="pull-right">
+        <button
+            data-ng-click="transfer.deleteUser(transfer.uid)"
+            class="btn btn-default pull-right">
+            Delete
+        </button>
+        <button class="btn btn-default btn-styleNone pull-right"
+            data-ng-click="transfer.cancel()">
+            Close
+        </button>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="clearfix">
+        <label>
+            Transfer Tasks and Matters To:
+        </label>
+        <ui-select
+            ng-model="transfer.uid"
+            data-ng-required="true"
+            name="role"
+            theme="selectize">
+               <ui-select-match placeholder="Select User">
+                  {{$select.selected.name}}
+               </ui-select-match>
+               <ui-select-choices 
+                    repeat="user.uid as user in transfer.users| filter:{name:$select.search}">
+                   <small>
+                       {{user.name}}
+                   </small>
+               </ui-select-choices>
+        </ui-select>
+    </div>
+</div>
+

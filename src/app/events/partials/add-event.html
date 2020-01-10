@@ -1,0 +1,517 @@
+<style type="text/css">
+    .modal-dialog .add-event-popup .checkbox {
+        padding-top: 0px !important;
+    }
+
+    .radio {
+        margin-top: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio input {
+        outline: none !important;
+        box-sizing: initial !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .reason-list-order li {
+        float: left;
+        margin-left: 20px;
+        width: 95px;
+    }
+
+    .custom-form-control .select2-choices {
+        width: 94% !important;
+        min-height: 34px !important;
+        border: 1px solid #d0d0d0;
+        border-radius: 3px;
+    }
+
+    .select2-container-multi .select2-choices {
+        min-height: 70px;
+        max-height: 70px;
+        overflow-y: auto;
+    }
+
+    .select2-result-with-children .ui-select-choices-group-label {
+        color: #303030;
+        cursor: default;
+        background: #fff;
+        padding-top: 7px;
+        font-size: .85em;
+        font-weight: 700;
+    }
+</style>
+<div class="modal-header">
+    <div class="addevent-flicker">
+        <h2 class="pull-left page-title" ng-show="addEditEvent.pageMode != 'edit'">Add Event</h2>
+        <h2 class="pull-left page-title" ng-show="addEditEvent.pageMode == 'edit'">Edit Event</h2>
+        <div class="pull-right">
+            <button data-ng-click="addEditEvent.save(addEditEvent.event)" class="btn btn-default pull-right"
+                data-ng-disabled="!addEditEvent.event.label_id || addEditEvent.isDatesValid()">
+                Save
+            </button>
+
+            <button data-ng-click="addEditEvent.cancel(addEditEvent.event)"
+                class="btn btn-default btn-styleNone margin-right10px pull-right">
+                Cancel</button>
+        </div>
+    </div>
+</div>
+<div>
+    <form>
+        <div class="modal-body static-new-scrollbar" style="max-height: 85vh; padding-top: 0px; padding-bottom: 0;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row form-group form-margin">
+                        <div class="col-md-3">
+                            <label>Event Type<span class="compulsary-mark">*</span>:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <ui-select ng-model="addEditEvent.event.label_id"
+                                ng-disabled="addEditEvent.event.name == 'Personal Event'? true : false "
+                                theme="selectize"
+                                on-select="addEditEvent.event.all_day = 0;addEditEvent.showhideDates(addEditEvent.event, addEditEvent.pageMode,null, true);addEditEvent.setLocation(addEditEvent.event.label_id)">
+                                <ui-select-match placeholder="Enter Event Type">
+                                    {{$select.selected.Name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="item.LabelId as item in addEditEvent.eventTypes | filter:{ Name:$select.search }">
+                                    <small>
+                                        {{item.Name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row form-group"
+                        data-ng-show="addEditEvent.event.label_id==100 || addEditEvent.event.label_id==19 || addEditEvent.event.label_id==32">
+                        <div class="col-md-3">
+                            <label>Event Title:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" maxlength="250" data-ng-model="addEditEvent.event.title"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-if="!addEditEvent.hideAssignTo">
+                        <div class="col-md-3 "><label>Assign Event To:</label></div>
+                        <div class="col-md-7" style="width: 63%;">
+                            <ui-select class="width100" multiple ng-model="addEditEvent.assignedUsers"
+                                on-select="addEditEvent.addAssignedUser(addEditEvent.assignedUsers)"
+                                on-remove="addEditEvent.removeAssignedUser(addEditEvent.assignedUsers,$item)"
+                                theme="select2">
+                                <ui-select-match placeholder="Select Users">
+                                    {{$item.full_name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="user in addEditEvent.assignedToUserList  | filter:{full_name:$select.search} | orderBy: 'full_name' ">
+                                    <small>{{user.full_name}}</small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row form-group" data-ng-hide="addEditEvent.createTaskDisabled">
+                        <div class="col-md-3">
+                            <label>Create Task for event:</label>
+                        </div>
+                        <div class="col-md-8 checkbox">
+                            <input type="checkbox" data-ng-checked="addEditEvent.event.is_task_created == 1"
+                                data-ng-model="addEditEvent.event.is_task_created" data-ng-true-value="1"
+                                data-ng-false-value="0"
+                                data-ng-disabled="addEditEvent.createTaskDisabled" /><label></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 ">
+                            <label>Full Day:</label>
+                        </div>
+                        <div class="col-md-8 checkbox" style="padding-top:7px !important;">
+                            <input type="checkbox" data-ng-checked="addEditEvent.event.all_day == 1"
+                                data-ng-model="addEditEvent.event.all_day" data-ng-true-value="1"
+                                data-ng-false-value="0"
+                                data-ng-change="addEditEvent.showhideDates(addEditEvent.event, addEditEvent.pageMode, addEditEvent.event.all_day)"
+                                data-ng-click="addEditEvent.formatEndDate(addEditEvent.event.utcend)"
+                                data-ng-disabled="addEditEvent.event.criticalDatesClicked || addEditEvent.event.disableFullDay" /><label></label>
+                        </div>
+                    </div>
+                    <div class="row form-group" data-ng-show="addEditEvent.event.label_id==19">
+                        <div class="col-md-3 ">
+                            <label>Private:</label>
+                        </div>
+                        <div class="col-md-8 checkbox">
+                            <input type="checkbox" data-ng-checked="addEditEvent.event.private == 1"
+                                data-ng-model="addEditEvent.event.private" data-ng-true-value="1"
+                                data-ng-false-value="0" /><label></label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <!--data-ng-show="addEditEvent.pageMode == 'edit'"-->
+                        <div class="col-md-3 ">
+                            <label>Complied / Held:</label>
+                        </div>
+                        <div class="col-md-8 checkbox" style="padding-top:7px !important;">
+                            <input type="checkbox" data-ng-checked="addEditEvent.event.is_comply == 1"
+                                data-ng-model="addEditEvent.event.is_comply" data-ng-true-value="1"
+                                data-ng-false-value="0" /><label></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row form-group">
+                        <div class="col-md-3  ">
+                            <label>Start Date:</label>
+                        </div>
+                        <div class="col-md-3 ">
+                            <div class="input-group datepicker">
+                                <input type="text" data-ng-model="addEditEvent.event.utcstart"
+                                    datepicker-popup="{{addEditEvent.dateFormat}}"
+                                    datepicker-options="addEditEvent.datepickerOptions"
+                                    is-open="addEditEvent.event.openStartDatepicker" show-button-bar="false"
+                                    data-ng-disabled="false" id="mtrevestartDatediv" validate-date
+                                    error-div="#mtrevestartDatediv"
+                                    data-ng-change="addEditEvent.getFormattedDateString(addEditEvent.event);addEditEvent.event.is_comply='0';addEditEvent.calDays(addEditEvent.event)"
+                                    tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                        data-ng-click="addEditEvent.open($event,'openStartDatepicker'); addEditEvent.event.openStartDatepicker=true; addEditEvent.event.openEndDatepicker=false;">
+
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div><span></span></div>
+                            <div style="float: none;" class="error" id="mtrevestartDateErr">Invalid date format!</div>
+                        </div>
+
+                        <div class="col-md-5 form-control-margin-null" data-ng-show="addEditEvent.event.all_day == 0">
+                            <div class="col-md-3 ">
+                                <label>Start:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <clx-timepicker class="form-field" ng-model="theStartTime"
+                                    the-real-time="addEditEvent.event.start"
+                                    on-select="addEditEvent.setEndTime(addEditEvent.event.start)">
+                                </clx-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 ">
+                            <label>End Date:</label>
+                        </div>
+                        <div class="col-md-3 ">
+                            <p class="input-group datepicker">
+                                <input type="text" data-ng-model="addEditEvent.event.utcend"
+                                    datepicker-popup="{{addEditEvent.dateFormat}}"
+                                    datepicker-options="addEditEvent.datepickerOptions"
+                                    min-date="addEditEvent.event.utcstart"
+                                    ng-disabled="addEditEvent.event.label_id == 1"
+                                    is-open="addEditEvent.event.openEndDatepicker"
+                                    data-ng-change="addEditEvent.event.is_comply='0';addEditEvent.calDays(addEditEvent.event)"
+                                    validate-date error-div="#mtreveendDatediv" tooltip="mm/dd/yyyy"
+                                    placeholder="mm/dd/yyyy" show-button-bar="false" id="mtreveendDatediv"
+                                    class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-disabled="addEditEvent.event.label_id == 1"
+                                        class="btn btn-default"
+                                        data-ng-click="addEditEvent.open($event,'openEndDatepicker'); addEditEvent.event.openStartDatepicker=false; addEditEvent.event.openEndDatepicker=true;addEditEvent.event.openCustomDatepicker= false">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </p>
+                            <div><span></span></div>
+                            <div style="float: none;" class="error" id="mtreveendDateErr">Invalid date format!</div>
+                        </div>
+
+                        <div class="col-md-5 form-control-margin-null" data-ng-show="addEditEvent.event.all_day == 0">
+                            <div class="col-md-3 ">
+                                <label>End: </label>
+                            </div>
+                            <div class="col-md-7">
+                                <clx-timepicker class="form-field" ng-model="theEndTime"
+                                    the-real-time="addEditEvent.event.end">
+                                </clx-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+
+                    <!--US#5554 Event share with plaintiff-->
+                    <!-- data-ng-show="addEditEvent.isClientPortal == 1" -->
+                    <div class="row form-group" data-ng-show="isShareWithPlaintiff && addEditEvent.isClientPortal == 1">
+                        <div class="col-md-3 ">
+                            <label>Share with plaintiff:</label>
+                        </div>
+                        <div class="col-md-9" style="width: 63%;">
+                            <ui-select multiple ng-model="addEditEvent.event.share_with" theme="select2"
+                                class="width100">
+                                <ui-select-match placeholder="Enter User">
+                                    {{$item.contactid.firstname}} {{$item.contactid.lastname}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="plaintiff.plaintiffid as plaintiff in addEditEvent.plaintiffDataList | filter:{firstname:$select.search} | orderBy: 'firstname'"
+                                    data-ng-disabled="true">
+                                    <small>
+                                        {{plaintiff.contactid.firstname}} {{plaintiff.contactid.lastname}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3 ">
+                            <label>Location:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" maxlength="500" data-ng-model="addEditEvent.event.location"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 ">
+                            <label>Description:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control height-110" ng-trim='false' maxlength="2400"
+                                data-ng-model="addEditEvent.event.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="paddingRLR flexCont">
+                    </div>
+                    <!--US#3119- Added checkboxes for Reminder ...Start-->
+                    <div class="row form-group form-margin add-event-popup">
+                        <div class="margin-bottom10px clearfix">
+                            <h6 class="col-md-3 ">For Firm Users</h6>
+                        </div>
+                        <div class="col-md-3 ">
+                            <label style="line-height: 16px;">Reminder Days Prior to Due Date:</label>
+                        </div>
+                        <div class="col-md-9 padding-0">
+                            <div class="col-md-1 checkbox"
+                                data-ng-repeat="remiderdays in addEditEvent.reminderDaysList">
+                                <input type="checkbox" checklist-value="remiderdays"
+                                    checklist-model="addEditEvent.event.reminder_days" /><label>{{remiderdays | replaceText }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3  "><label style="line-height: 16px;">And/Or Custom Date Reminder:</label>
+                        </div>
+                        <div class="col-md-9 pull-right">
+                            <div class="input-group datepicker event-datepicker">
+                                <input type="text" data-ng-model="addEditEvent.event.custom_reminder"
+                                    datepicker-popup="{{addEditEvent.dateFormat}}"
+                                    datepicker-options="addEditEvent.datepickerOptions"
+                                    is-open="addEditEvent.event.openCustomDatepicker" validate-date
+                                    error-div="#customDateReminderdiv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                                    show-button-bar="false" id="customDateReminderdiv" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                        data-ng-click="addEditEvent.open($event,'openCustomDatepicker')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div><span></span></div>
+                            <div style="float: none;" class="error" id="customDateReminderdivErr">Invalid date format!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 ">
+                            <label>Remind Users:</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div ng-repeat="user in addEditEvent.userSelectedType"
+                                class="pull-left margin-right-radio padding-0">
+                                <div class="radio padding-0">
+                                    <input style="margin-left: 0px;" type="radio"
+                                        data-ng-model="addEditEvent.reminder_users_id"
+                                        ng-click="addEditEvent.setUserMode(user, true)" ng-value="user.id" />
+                                    <label style="line-height: inherit;">{{user.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group" ng-show="addEditEvent.reminder_users_id == '3'">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9" style="width: 64%;">
+                            <ui-select multiple ng-model="addEditEvent.event.remind_users_temp" theme="select2"
+                                class="width100 userPicker">
+                                <ui-select-match placeholder="Enter User">
+                                    {{$item.full_name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="user.user_id as user in addEditEvent.users | filter:{full_name:$select.search} | orderBy: 'full_name'">
+                                    <small>
+                                        {{user.full_name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <!-- Reminder for SMS -->
+                    <hr>
+                    <div ng-if="isSmsActiveUI">
+                        <div class="row form-group form-margin add-event-popup">
+                            <div class="margin-bottom10px clearfix">
+                                <h6 class="col-md-4">For Associated Parties</h6>
+                            </div>
+                            <div class="col-md-3 ">
+                                <label style="line-height: 16px;">Reminder Days Prior to Due Date:</label>
+                            </div>
+                            <div class="col-md-9 padding-0">
+                                <div class="col-md-1 checkbox"
+                                    data-ng-repeat="remiderdays in addEditEvent.reminderDaysList">
+                                    <input type="checkbox" checklist-value="remiderdays"
+                                        data-ng-disabled="!isSmsActiveUI"
+                                        checklist-model="addEditEvent.event.sms_reminder_days" /><label>{{remiderdays | replaceText }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3  "><label style="line-height: 16px;">And/Or Custom Date
+                                    Reminder:</label>
+                            </div>
+                            <div class="col-md-9 pull-right">
+                                <div class="input-group datepicker event-datepicker">
+                                    <input type="text" data-ng-model="addEditEvent.event.sms_custom_reminder"
+                                        datepicker-popup="{{addEditEvent.dateFormat}}" data-ng-disabled="!isSmsActiveUI"
+                                        datepicker-options="addEditEvent.datepickerOptions"
+                                        is-open="addEditEvent.event.openCustomDatepickerForSMS" validate-date
+                                        error-div="#customDateReminderdivForSMS" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" show-button-bar="false"
+                                        id="customDateReminderdivForSMS" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-ng-disabled="!isSmsActiveUI"
+                                            data-ng-click="addEditEvent.open($event,'openCustomDatepickerForSMS')">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div><span></span></div>
+                                <div style="float: none;" class="error" id="customDateReminderdivErrForSMS">Invalid date
+                                    format!</div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 "><label style="line-height:16px">Remind Associated Parties:</label>
+                            </div>
+                            <div class="col-md-8 reminder-select divider-label">
+                                <ui-select data-ng-disabled="!isSmsActiveUI" multiple
+                                    ng-model="addEditEvent.event.sms_contact_ids" theme="select2" class="width100">
+                                    <ui-select-match placeholder="Select Associated Party">
+                                        {{$item.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices group-by="addEditEvent.groupContacts"
+                                        group-filter="['Plaintiff(s)','Defendant(s)','Other Party(s)','Insurance Provider(s)','Insured Party(s)','Medical Service Provider(s)','Insurance Adjuster(s)','Lien Insurance Provider(s)','Lien Adjuster(s)','Lien Holder(s)','Physician(s)','Service Provider(s)']"
+                                        repeat="user.contactid as user in addEditEvent.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>
+                                            {{user.name}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!isSmsActiveUI" data-ng-class="{'grey-out' : !isSmsActiveUI}"
+                        data-ng-click="addEditEvent.cMessengerCheck()">
+                        <div class="row form-group form-margin add-event-popup">
+                            <div class="margin-bottom10px clearfix">
+                                <h6 class="col-md-4">For Associated Parties</h6>
+                            </div>
+                            <div class="col-md-3 ">
+                                <label style="line-height: 16px;">Reminder Days Prior to Due Date:</label>
+                            </div>
+                            <div class="col-md-9 padding-0">
+                                <div class="col-md-1 checkbox"
+                                    data-ng-repeat="remiderdays in addEditEvent.reminderDaysList">
+                                    <input type="checkbox" checklist-value="remiderdays"
+                                        data-ng-disabled="!isSmsActiveUI"
+                                        checklist-model="addEditEvent.event.sms_reminder_days" /><label>{{remiderdays | replaceText }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- checklist-value="remiderdays" checklist-model="addEditEvent.event.reminder_days" -->
+                        <div class="row form-group">
+                            <div class="col-md-3  "><label style="line-height: 16px;">And/Or Custom Date
+                                    Reminder:</label>
+                            </div>
+                            <div class="col-md-9 pull-right">
+                                <div class="input-group datepicker event-datepicker">
+                                    <input type="text" data-ng-model="addEditEvent.event.sms_custom_reminder"
+                                        datepicker-popup="{{addEditEvent.dateFormat}}" data-ng-disabled="!isSmsActiveUI"
+                                        datepicker-options="addEditEvent.datepickerOptions" validate-date
+                                        error-div="#customDateReminderdiv1ForSMS" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" show-button-bar="false"
+                                        id="customDateReminderdiv1ForSMS" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-ng-disabled="!isSmsActiveUI">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div><span></span></div>
+                                <div style="float: none;" class="error" id="customDateReminderdiv1ErrForSMS">Invalid
+                                    date
+                                    format!</div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 "><label style="line-height:16px">Remind Associated Parties:</label>
+                            </div>
+                            <div class="col-md-8 reminder-select divider-label">
+                                <ui-select data-ng-disabled="!isSmsActiveUI" multiple
+                                    ng-model="addEditEvent.event.sms_contact_ids" theme="select2" class="width100">
+                                    <ui-select-match placeholder="Select Associated Party">
+                                        {{$item.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices group-by="addEditEvent.groupContacts"
+                                        group-filter="['Plaintiff(s)','Defendant(s)','Other Party(s)','Insurance Provider(s)','Insured Party(s)','Medical Service Provider(s)','Insurance Adjuster(s)','Lien Insurance Provider(s)','Lien Adjuster(s)','Lien Holder(s)','Physician(s)','Service Provider(s)']"
+                                        repeat="user.contactid as user in addEditEvent.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>
+                                            {{user.name}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--...End-->
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</div>

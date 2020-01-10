@@ -1,0 +1,45 @@
+<!-- Start HTML For Create Document -->
+<div class="modal-header clearfix">
+    <div class="clearfix  heading-with-button-bottom-padding">
+        <h2 class="col-md-5 padding-0 page-title ng-binding">Microsoft Office Online</h2>
+        <div class=" pull-right ">
+            <button data-ng-click="cloneDocument.closeModal()" class="btn btn-default btn-styleNone">Cancel</button>
+            <button data-ng-click="cloneDocument.cloneDocument(cloneDocument.docModel)" ng-disabled="cloneDocument.docModel.document_name == undefined || cloneDocument.docModel.matterid == undefined || cloneDocument.docModel.category == undefined || cloneDocument.docModel.document_name == ''" class="btn btn-default">Save</button>
+        </div>
+    </div>
+</div>
+<div id="content12">
+    <div class="container padding-0">
+        <div class="select-document-details col-md-10 col-centered padding-0">
+            <div class="col-md-12 padding-0">
+                <div class="margin-top20px clear-block col-md-12">
+                    <label>Document Name</label><span class="compulsary-mark">*</span>
+                    <input style="width: 100%;" tabindex="1" type="text" ng-model="cloneDocument.docModel.document_name" ng-init="document.docModel.document_name = ''"
+                        placeholder="Enter document name" class="form-control ng-pristine ng-valid ng-valid-required ng-touched">
+                </div>
+            </div>
+            <div class="col-md-12 padding-0">
+                <div class="margin-top20px clear-block col-md-12">
+                    <label>Matter Name</label><span class="compulsary-mark">*</span>
+                    <input style="width: 100%;" tabindex="2" type="text" name="matterid" class="form-control" typeahead-remove-parse-error="" data-ng-model-options="{ debounce: 500 }"
+                        placeholder="Enter matter name" typeahead="row.matterid as row.name for row in cloneDocument.searchMatters($viewValue)"
+                        typeahead-editable="false" typeahead-input-formatter="cloneDocument.formatTypeaheadDisplay($model)" data-ng-required="true"
+                        data-ng-model="cloneDocument.docModel.matterid" />
+                </div>
+                <div class="margin-top20px clear-block col-md-12">
+                    <label>Document Category</label><span class="compulsary-mark">*</span>
+                    <ui-select style="width: 100%;" tabindex="4" ng-model="cloneDocument.docModel.category" data-ng-required="true"
+                        theme="selectize">
+                        <ui-select-match placeholder="Select Category...">
+                            {{$select.selected.doc_category_name}} </ui-select-match>
+                        <ui-select-choices repeat="category.doc_category_id as category in cloneDocument.documentCategories| filter:{doc_category_name:$select.search}| orderBy: 'doc_category_name'">
+                            <small> {{category.doc_category_name}} </small> </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope margin-top20px" style="height:5px;padding: 5px;"></div>
+<!-- End HTML For Create Document -->

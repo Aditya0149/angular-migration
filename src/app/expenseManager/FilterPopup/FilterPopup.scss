@@ -1,0 +1,66 @@
+.filterpopup-wrapper {
+    .modal {
+        overflow-y: hidden !important;
+    }
+
+    .modal-body {
+        height: 74vh;
+        overflow-x: hidden
+    }
+
+    .radio {
+        margin-top: 0;
+        padding-left: 0;
+    }
+
+    .radio {
+        input[type="radio"] {
+            margin-left: 0;
+            width: 20px;
+            height: 20px;
+            top: -3px;
+        }
+
+        input {
+            outline: none;
+            box-sizing: initial;
+        }
+
+        label {
+            padding-left: 25px;
+
+            &::after {
+                background-color: #2097c6;
+                top: 5px;
+                width: 9px;
+                height: 9px;
+                left: 5px;
+            }
+
+            &::before {
+                width: 19px;
+                height: 19px;
+                border: 2px solid #2097c6;
+            }
+        }
+    }
+
+    .datepicker.modi-date {
+        .dropdown-menu {
+            left: -148px !important;
+        }
+    }
+
+    .select2-results {
+        max-height: 99px;
+    }
+
+    .selectize-dropdown-content {
+        max-height: 170px;
+    }
+
+    .static-new-scrollbar {
+        height: 38vh;
+        overflow-x: hidden
+    }
+}

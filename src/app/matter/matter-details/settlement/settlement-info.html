@@ -1,0 +1,1029 @@
+<style>
+    .capitalize {
+        text-transform: capitalize;
+    }
+    .event-table-scrollable-grid {
+        width: 100%;
+        float: none;
+        word-wrap: break-word;
+    }
+
+    .event-table-scrollable-grid tbody {
+        margin-bottom: 0;
+        height: 280px;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+        font-size: 12px;
+    }
+
+    .radio,
+    .checkbox {
+        margin-top: 0px !important;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .selectize-control {
+        width: 100%;
+    }
+
+    .btn-group label {
+        line-height: 34px;
+    }
+
+    .btn-group .btn-default {
+        height: 33px !important;
+    }
+
+    #report-content .medical-info-gridSec {
+        height: auto;
+    }
+
+    .selected-grid-row {
+        padding: 10px 0 !important;
+    }
+
+    #report-content .medical-info-gridSec {
+        padding: 0px 0px 8px 0px !important;
+    }
+
+    #oldNegRecs .panel-group i {
+        float: inherit !important;
+    }
+
+    #oldNegRecs .panel-default>.panel-heading {
+        border-bottom: none !important
+    }
+    .settlement-calculator-main .panel-title{margin: 12px 0 11px 0 !important;}
+    .selectize-input>input {height: inherit;}
+    .top-align-dropdown .ui-select-choices{top: 35px !important;}
+</style>
+<div class="clearfix subnav page-title-border-links">
+    <div>
+        <ul class="centered-nav">
+            <li>
+                <a data-ng-click="settlement.setSelectedTab('negotiation')" data-ng-class="{'activeLink' :settlement.isNegotiation}">Negotiations</a>
+            </li>
+            <li>
+                <a data-ng-click="settlement.setSelectedTab('finalSettlement')" data-ng-class="{'activeLink' :settlement.isFinalSettlement}">Final
+                    Settlement
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div data-ng-if="settlement.isNegotiation">
+    <div class="row medical-info-gridSec margin0 " data-ng-if="settlement.plaintiffs.length != 0">
+        <div class="settlement-calculator-main">
+            <accordion data-ng-if="settlement.plaintiffs.length != 0">
+                <accordion-group is-open="plaintiffRec.open" ng-repeat="plaintiffRec in settlement.plaintiffs">
+                    <accordion-heading>
+                        <div ng-click="settlement.clearCal(plaintiffRec)">
+                            <span>{{plaintiffRec.plaintiff_name}}</span>
+                            <i class="pull-right sprite" ng-class="{'default-upward-arrow': plaintiffRec.open, 'default-downward-arrow': !plaintiffRec.open}"></i>
+                            <div ng-if="plaintiffRec.open" style="margin: 0;padding: 0;margin-right: 15px;clear: none;"
+                                class="total-amount-main pull-right">
+                                <div class="lable" style="color: #000;margin-top: 2px;">Plaintiff Recovery:
+                                    <span>{{(plaintiffRec.negotiation_amount == "-" ? "-" :
+                                        "$")}}{{(plaintiffRec.negotiation_amount) | number:2}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </accordion-heading>
+                    <div class="row container-block">
+                        <div class="col-md-9 padding-0">
+                            <div class="dashboard-tasks-due" style="max-height:600px;">
+                                <div style="padding-top: 15px;padding-left: 10px;">
+                                    <a ng-class=" {'switch-gear-disabled': plaintiffRec.showAdd}" tooltip="Add" href="javascript:void(0)"
+                                        ng-if="(settlement.isGraceOver != 0 && settlement.mattersettlement[0].A != 0) && !settlement.matterInfo.archivalMatterReadOnlyFlag"
+                                        data-ng-click="settlement.addNegotiation(plaintiffRec)">
+                                        <span class="sprite default-plus">&nbsp;</span>
+                                    </a>
+                                </div>
+                                <div class="settlement-info info-edit" style="margin-top: 10px;" ng-if="plaintiffRec.showAdd">
+                                    <div class="col-md-12">
+                                        <div class="pull-right margin-top15px">
+                                            <button class="btn btn-default btn-styleNone" ng-click="settlement.cancelNegotiation(plaintiffRec)">Cancel</button>
+                                            <!-- <button class="btn btn-default" data-ng-disabled="plaintiffRec.isDefendant || !settlement.negotiationInfo.defendent_id || !settlement.negotiationInfo.insurance_provider_id.insurance_provider_id"
+                                                ng-click="settlement.saveNegotiation(settlement.negotiationInfo,plaintiffRec)">Save</button> -->
+                                                <button class="btn btn-default" data-ng-disabled="!settlement.negotiationInfo.insurance_provider_id.insurance_provider_id"
+                                                ng-click="settlement.saveNegotiation(settlement.negotiationInfo,plaintiffRec)">Save</button>
+                                        </div>
+                                    </div>
+                                    <div ng-if="!plaintiffSettlementRec.isEdited">
+                                        <div class="col-md-12 padding-0">
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Defendant 
+                                                    <!-- <span class="compulsary-mark">*</span> -->
+                                                </div>
+                                                <ui-select ng-model="settlement.negotiationInfo.defendent_id" on-select="settlement.setInsuranceProvider(settlement.negotiationInfo.defendent_id,plaintiffRec.settlement_insurance_details,'','','','defendant')"
+                                                    theme="selectize">
+                                                    <ui-select-match placeholder="Enter name">
+                                                        {{$select.selected.defendant_name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="item in plaintiffRec.defendants | filter:{ defendant_name:$select.search } | orderBy: 'defendant_name'">
+                                                        <small>
+                                                            {{item.defendant_name}}
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Insurance Provider 
+                                                    <span class="compulsary-mark">*</span>
+                                                </div>
+                                                <ui-select class="top-align-dropdown" ng-model="settlement.negotiationInfo.insurance_provider_id"
+                                                    on-select="settlement.setInsuranceProvider(settlement.negotiationInfo.defendent_id,plaintiffRec.settlement_insurance_details,settlement.negotiationInfo.insurance_provider_id,'','','insuranceProvider')"
+                                                    theme="selectize">
+                                                    <ui-select-match placeholder="Enter name">
+                                                        {{$select.selected.insurance_provider_name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="item in settlement.insuranceProvider | filter:{ insurance_provider_name:$select.search } | orderBy: 'insurance_provider_name'">
+                                                        <small><strong>Insurance Provider-</strong>{{item.insuranceproviderid.firstname}}
+                                                            {{item.insuranceproviderid.lastname}}<br> </small>
+                                                        <small><strong>Adjuster-</strong>{{item.adjusterid.firstname}}
+                                                            {{item.adjusterid.lastname}}<br> </small>
+                                                        <small><strong>Claim No-</strong>{{item.claimnumber}} <br>
+                                                        </small>
+                                                        <small> <strong>Insured Party- </strong>{{item.insuredpartyid.firstname}}
+                                                            {{item.insuredpartyid.lastname}}<br></small>
+                                                        <small> <strong>Insurance Type- </strong>{{item.insurancetype}}<br></small>
+                                                        <hr style="margin:0; border-top:1px solid #ccc">
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-3 margin-top35px">
+                                                <a href="javascript:void(0)" ng-if="(settlement.isGraceOver != 0)" data-ng-click="settlement.openAddInsModal('add',matterDetail.plaintiffDefendants)">
+                                                    <span class="sprite default-plus">&nbsp;</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Adjuster</div>
+                                                <div style="word-break: break-all;">{{settlement.negotiationInfo.insurance_adjuster_id.adjuster_name
+                                                        | replaceByDash}}</div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-12 padding-0">
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Demand</div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" style="width:100%;" step="0.01"
+                                                        custom-currency-filter placeholder="Demand" ng-model="settlement.negotiationInfo.demanded_amount"
+                                                        name="sett-demand" class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Offer</div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" style="width:100%;" step="0.01"
+                                                        custom-currency-filter placeholder="Offer" ng-model="settlement.negotiationInfo.offered_amount"
+                                                        name="sett-offer" class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Status</div>
+                                                <ui-select data-ng-model="settlement.negotiationInfo.status" theme="selectize">
+                                                    <ui-select-match placeholder="Enter status">
+                                                        {{$select.selected.name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="item in settlement.status| filter:{name :$select.search }">
+                                                        <small>{{item.name}}</small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <div>Insurance Type</div>
+                                                <div style="word-break: break-all;">{{settlement.negotiationInfo.insurance_type.name |
+                                                        replaceByDash}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 padding-0">
+                                            <div class="col-md-12 margin-top15px">
+                                                <div>Memo</div>
+                                                <div>
+                                                    <textarea class="form-control" maxlength="1024" placeholder="Memo"
+                                                        rows="5" ng-model="settlement.negotiationInfo.memo">
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-class="{'settlement-info-first-entry':$first}" class="settlement-info" ng-hide="plaintiffRec.showAdd"
+                                    ng-repeat="plaintiffSettlementRec in plaintiffRec.settlement_negotiations">
+
+                                    <div class="col-md-12 padding-0" ng-hide="plaintiffRec.showAdd" style="margin-top: 0px;padding: 3px 0  14px 0 !important;border-bottom: 1px solid #e9eef0;"
+                                        data-ng-class="{'settlement-selected-grid-row': plaintiffSettlementRec.negotiation_id == settlement.selectedRow.negotiation_id}"
+                                        ng-click="settlement.getCalculations(plaintiffSettlementRec,plaintiffRec.plaintiff_name,plaintiffRec)">
+
+                                        <div class="col-md-12">
+                                            <div class="pull-left" style="margin-top: 13px;">
+                                                <label class="last-updated">Last Updated on
+                                                    {{plaintiffSettlementRec.modified_date | utcDateFilter:
+                                                    'MM/DD/YYYY'}}
+                                                    at {{plaintiffSettlementRec.modified_date | utcDateFilter:
+                                                    'h:mma'}}</label>
+                                            </div>
+                                            <div class="settlement-right-btn-block">
+                                                <!-- <a ng-if="!plaintiffSettlementRec.isEdited" href="javascript:void(0)"
+                                                    ng-click="settlement.viewMemo(plaintiffSettlementRec)" ng-hide="plaintiffSettlementRec.memo =='' || plaintiffSettlementRec.memo == null"
+                                                    class="margin-right20px">
+                                                    <span tooltip="View Memo" class="sprite default-view-comment">&nbsp;</span>
+                                                </a>-->
+                                                <a ng-if="(!plaintiffSettlementRec.isEdited && settlement.mattersettlement[0].E != 0) "
+                                                    href="javascript:void(0)" ng-click="settlement.editSettlement(plaintiffRec.settlement_negotiations, plaintiffSettlementRec)"
+                                                    class="margin-right20px" ng-hide="settlement.matterInfo.archivalMatterReadOnlyFlag">
+                                                    <span tooltip="Edit" class="sprite default-edit">&nbsp;</span>
+                                                </a>
+                                                <!-- sprite default-view-comment -->
+                                                <a ng-if="(!plaintiffSettlementRec.isEdited && settlement.mattersettlement[0].D != 0)"
+                                                    href="javascript:void(0)" ng-click="settlement.deleteSettlement(plaintiffSettlementRec)">
+                                                    <span tooltip="Delete" class="sprite default-delete" ng-hide="settlement.matterInfo.archivalMatterReadOnlyFlag">&nbsp;</span>
+                                                </a>
+
+                                                <button class="btn btn-default pull-right" ng-if="plaintiffSettlementRec.isEdited"
+                                                    ng-click="settlement.saveNegotiationEdit(settlement.negotiationInfo,plaintiffRec)">
+                                                    Save
+                                                </button>
+                                                <button class="btn btn-default btn-styleNone pull-right margin-right10px"
+                                                    ng-if="plaintiffSettlementRec.isEdited" ng-click="settlement.cancelNegotiation(plaintiffSettlementRec,'edit')">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3 margin-top5px">
+                                                <strong>Defendant</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.defendant_name}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top5px">
+                                                <strong>Insurance Provider</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.insurance_provider_name}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top5px">
+                                                <strong>Insurance Type</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.insurance_type}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top5px">
+                                                <strong>Adjuster</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.adjuster_name}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row col-md-12">
+                                            <div class="col-md-3 margin-top15px">
+                                                <strong>Demand</strong>
+                                                <div>
+                                                    <label>{{(plaintiffSettlementRec.demanded_amount == '-' ? "-" :
+                                                        "$")}}{{(plaintiffSettlementRec.demanded_amount) | number : 2}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <strong>Offer</strong>
+                                                <div>
+                                                    <label>{{(plaintiffSettlementRec.offered_amount == "-" ? "-" :
+                                                        "$")}}{{(plaintiffSettlementRec.offered_amount)| number : 2}}</label>
+                                                </div>
+                                            </div>
+                                            <div ng-if="!plaintiffSettlementRec.isEdited" class="col-md-3 margin-top15px">
+                                                <strong>Status</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.payment}}</label>
+                                                </div>
+                                            </div>
+                                            <div style="height: 55px;" ng-if="plaintiffSettlementRec.isEdited" class="col-md-3 margin-top15px">
+                                                <strong>Status</strong>
+                                                <ui-select data-ng-model="settlement.negotiationInfo.status" theme="selectize">
+                                                    <ui-select-match placeholder="Enter name">
+                                                        {{$select.selected.name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="item in settlement.status| filter:{name :$select.search }">
+                                                        <small>{{item.name}}</small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row col-md-12">
+                                            <div class="col-md-3 margin-top15px">
+                                                <strong>Policy Number</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.policy_number}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <strong>Policy Exhausted</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.policy_exhausted}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 margin-top15px">
+                                                <strong>Policy Limit</strong>
+                                                <div>
+                                                    <label>{{plaintiffSettlementRec.policy}}</label>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div ng-if="!plaintiffSettlementRec.isEdited" class="col-md-12 margin-top15px">
+                                            <strong>Memo</strong>
+                                            <textarea ng-readonly="true" class="form-control" rows="5" ng-model="plaintiffSettlementRec.memo"></textarea>
+                                        </div>
+
+                                        <div ng-if="plaintiffSettlementRec.isEdited" class="col-md-12 margin-top15px">
+                                            <strong>Memo</strong>
+                                            <div>
+                                                <textarea class="form-control" style="background-color: #ffffff !important;"
+                                                    maxlength="1024" placeholder="Memo" rows="5" ng-model="settlement.negotiationInfo.memo">
+                                                    </textarea>
+                                            </div>
+                                        </div>
+                                        <!-- <div ng-if="!plaintiffSettlementRec.isEdited" class="col-md-12 margin-top15px">
+                                            <label>Memo</label>
+                                            <div>
+                                                <strong>{{plaintiffSettlementRec.plain_text}}</strong>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-0" ng-hide="settlement.hideCalculator">
+                            <div class="settlement-calculator-right-block">
+                                <div class="calc-title col-md-12">
+                                    <strong>Settlement Calculator</strong>
+                                </div>
+                                <div class="pull-right margin-right10px" style="margin-top: 6px;" ng-hide="settlement.disbleAddDelete || settlement.matterInfo.archivalMatterReadOnlyFlag">
+
+                                    <a href="javascript:void(0)" ng-click="settlement.addCalculator(plaintiffRec)"
+                                        class="margin-right20px" ng-if="settlement.mattersettlement[0].A != 0">
+                                        <span tooltip="Add" class="sprite default-plus">&nbsp;</span>
+                                    </a>
+
+                                    <a ng-class="settlement.disableDelete ? 'cursor-pointer-events-none' : ''" href="javascript:void(0)"
+                                        ng-click="settlement.deleteCalculator()" ng-if="settlement.mattersettlement[0].D != 0">
+                                        <span tooltip="Delete" class="sprite default-delete">&nbsp;</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <div class="col-md-12 margin-top10px">
+                                        <label>Amount to be considered</label>
+                                        <!-- ng-click="settlement.setCalulationMode(true)" -->
+                                        <div>
+                                            <div ng-repeat="user in settlement.typeOfCal" class="pull-left margin-right-radio padding-0">
+                                                <div class="radio padding-0">
+                                                    <input style="margin-left: 0px;" type="radio" ng-disabled="settlement.disableCalculator"
+                                                        data-ng-model="settlement.currentCalculation.fee_calculation"
+                                                        ng-click="settlement.setCalulationMode(user)" ng-value="user.id" />
+                                                    <label style="line-height: inherit;">{{user.name}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 margin-top5px padding-right-0">
+                                    <label>Plaintiff Recovery</label>
+                                    <div>
+                                        <strong>${{settlement.currentCalculation.client_recovery | number:2}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 margin-top5px padding-right-0">
+                                    <label>Attorney Recovery</label>
+                                    <div>
+                                        <strong>${{settlement.currentCalculation.attorney_recovery | number:2}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Attorney Referral Fee</label>
+                                    <div>
+                                        <strong>${{(settlement.currentCalculation.referring_attorney_fee) | number:2}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Settlement Amount
+                                        <span class="compulsary-mark">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input ng-disabled="settlement.disableCalculator" type="text" style="width:100%;"
+                                            step="0.01" custom-currency-filter placeholder="Settlement Amount" ng-model="settlement.currentCalculation.settlement_amount"
+                                            name="sett-demand" class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Attorney Fee Percentage
+                                        <span class="compulsary-mark">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">%</span>
+                                        <input ng-disabled="settlement.disableCalculator" type="text" style="width:100%;"
+                                            step="0.01" percent-six-decimal placeholder="Attorney Fee Percentage" ng-model="settlement.currentCalculation.fee_percentage"
+                                            name="sett-demand" class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Attorney Referral Fee Percentage</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">%</span>
+                                        <input ng-disabled="settlement.disableCalculator" type="text" style="width:100%;"
+                                            step="0.01" percent-six-decimal placeholder="Attorney Referral Fee Percentage" ng-model="settlement.currentCalculation.referring_fee_percentage"
+                                            name="sett-demand" class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Expenses & Disbursements</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input ng-disabled="settlement.disableCalculator" type="text" style="width:100%;"
+                                            step="0.01" custom-currency-filter placeholder="Expenses & Disbursements"
+                                            ng-model="settlement.currentCalculation.expenses_amount" name="sett-demand"
+                                            class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Liens & Medical Bills</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input ng-disabled="settlement.disableCalculator" type="text" style="width:100%;"
+                                            step="0.01" custom-currency-filter placeholder="Liens & Medical Bills Amount"
+                                            ng-model="settlement.currentCalculation.lien_amount" name="sett-demand"
+                                            class="form-control" ng-keydown="settlement.checkIfEnterKeyWasPressed($event)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-top10px">
+                                    <label>Add this calculation to:</label>
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" ng-disabled="settlement.disableCalculator"
+                                            data-ng-checked="settlement.currentCalculation.is_final_settlement === '1'"
+                                            data-ng-model="settlement.currentCalculation.is_final_settlement"
+                                            data-ng-true-value="'1'" data-ng-false-value="'0'" />
+                                        <label>Final Settlement</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 dropdown pull-left">
+                                    <a style="font-size: 14px;font-weight: bold;" ng-mouseover="settlement.showInsurance(true,plaintiffRec.plaintiff_id)"
+                                        ng-mouseleave="settlement.showInsurance(false,plaintiffRec.plaintiff_id)" class="dropdown-toggle"
+                                        id="dropdownMenu9{{plaintiffRec.plaintiff_id}}" data-toggle="dropdown"
+                                        aria-expanded="true">View
+                                        Insurance Details</a>
+                                    <ul id="dropdownMenu{{plaintiffRec.plaintiff_id}}" class="launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown insurance-details-dropdown-set profile-custom-width"
+                                        role="menu" aria-labelledby="dropdownMenu9{{plaintiffRec.plaintiff_id}}">
+                                        <li><label>Claim Number</label>
+                                            <span>{{settlement.insuranceDetails.claim_number}}</span>
+                                            <!-- <span>243243</span> -->
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><label>Policy Exhausted</label>
+                                            <span class="capitalize">{{settlement.insuranceDetails.policy_exhausted}}</span>
+                                            <!-- <span>243243</span> -->
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><label>Policy Limit</label>
+                                            <span>{{settlement.insuranceDetails.policy}}</span>
+                                            <!-- <span>243243</span> -->
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-md-12 settlement-pagination" ng-show="settlement.disableCalculator">
+                                    <a href="javascript:void(0)" ng-click="settlement.viewCalculation()" class="sprite all-first"></a>&nbsp;&nbsp;
+                                    <a href="javascript:void(0)" ng-click="settlement.viewPrevCalculation()" class="sprite first"></a>&nbsp;&nbsp;
+                                    <span>{{settlement.currentCalculationIndex}} of {{settlement.allLength}}</span>&nbsp;&nbsp;
+                                    <a href="javascript:void(0)" ng-click="settlement.viewNextCalculation()" class="sprite last"></a>&nbsp;&nbsp;
+                                    <a href="javascript:void(0)" ng-click="settlement.viewCalculation('last')" class="sprite all-last"></a>
+                                </div>
+                                <div class="col-md-12 margin-top10px text-center">
+                                    <button ng-disabled="((settlement.disableCalculator) || settlement.mattersettlement[0].A == 0)"
+                                        class="btn btn-default" style="font-size: 12px;padding: inherit;height: 28px;"
+                                        ng-click="settlement.saveCalculation(settlement.currentCalculation)">Save
+                                        Calculation
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 15px;" ng-show="settlement.plaintiffs.length == 0">No records found</div>
+    <div id="oldNegRecs" data-ng-show="settlement.settlementHistoryData.length > 0">
+        <accordion>
+            <accordion-group is-open="plaintiffRec.showNegotiation">
+                <accordion-heading>
+                    <div>
+                        <span>Prior Negotiations</span>
+                        <i class="pull-right sprite" ng-class="{'default-upward-arrow': plaintiffRec.showNegotiation, 'default-downward-arrow': !plaintiffRec.showNegotiation}"></i>
+                    </div>
+                </accordion-heading>
+                <div class="row padding-0" style="padding-bottom: 65px">
+                    <div class="event-table-scrollable-grid">
+                        <table class="event-table-grid" data-ng-show="settlement.settlementHistoryData.length > 0">
+                            <thead style="background-color: #e9eef0;">
+                                <tr>
+                                    <th style="width:20%;">Last Updated</th>
+                                    <th style="width:28%;margin-right: 2.3%;"> Claim Representative</th>
+                                    <th style="width:20%;" class="text-right">Demand </th>
+                                    <th style="width:20%;" class="text-right">Offer </th>
+                                </tr>
+                            </thead>
+                            <tbody class="dashboard-tasks-due table">
+                                <tr data-ng-repeat="settHist in settlement.settlementHistoryData">
+                                    <td style="width:20%;" tooltip="{{settHist.modified_on | utcDateFilter: 'MM/DD/YYYY'}} {{settHist.modified_on | utcDateFilter: 'hh:mm A'}}">{{settHist.modified_on
+                                        | utcDateFilter: 'MM/DD/YYYY'}}
+                                        <br> {{settHist.modified_on | utcDateFilter: 'hh:mm A'}}
+                                    </td>
+                                    <td style="width:28%;margin-right: 2.8%;" tooltip="{{settHist.claim_representative.firstname}} {{settHist.claim_representative.lastname}}"
+                                        class="cursor-pointer" ng-click="settlement.openContactCardOnHistroy(settHist.claim_representative , 'clRhistroy')">{{settHist.claim_representative.firstname}}
+                                        {{settHist.claim_representative.lastname}}
+                                    </td>
+                                    <td style="width:20%;margin-right: 2.8%;" tooltip="{{settHist.demand | currency}}"
+                                        class="text-right">
+                                        <span ng-if="settHist.demand" style="text-overflow: ellipsis;width: 120px;display: inline-block;white-space: nowrap;overflow: hidden;">{{settHist.demand
+                                            | currency}}</span>
+                                        <span ng-hide="settHist.demand"></span>
+                                    </td>
+                                    <td style="width:20%;" tooltip="{{settHist.offer | currency}}" class="text-right">
+                                        <span ng-if="settHist.offer" style="text-overflow: ellipsis;width: 120px;display: inline-block;white-space: nowrap;overflow: hidden;">{{settHist.offer
+                                            | currency}}</span>
+                                        <span ng-hide="settHist.offer"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="margin-top10px text-center" data-ng-if="settlement.settlementHistoryData.length==0">
+                        History not available.
+                    </p>
+                </div>
+        </accordion>
+    </div>
+</div>
+<div data-ng-if="settlement.isFinalSettlement">
+    <div class="col-md-4 pull-right padding-0 margin-top15px margin-right10px">
+        <button data-ng-show="settlement.mode == 'edit'" data-ng-disabled="(settlement.isGraceOver != 1) || settlement.isDatesValid()"
+            data-ng-click="settlement.updateSettlementInfo(settlement.settlementInfo)" class="btn btn-default pull-right">
+            Save
+        </button>
+        <button data-ng-show="settlement.mode == 'edit'" data-ng-click="settlement.cancel()" class="btn btn-default btn-styleNone pull-right margin-right10px">
+            Cancel
+        </button>
+    </div>
+    <div class="row medical-info-gridSec margin0">
+        <div class="margin-top20px" data-ng-show="settlement.mode == 'view'">
+            Settlement Date:
+            <strong>{{settlement.settlementInfo.settlement_date}}</strong>
+            | Plaintiff Recovery:
+            <strong>{{(settlement.client_recovery == "-" ? "-" : "$")}}{{(settlement.client_recovery) | number:2}}</strong>
+            | Attorney Recovery:
+            <strong>{{(settlement.attorney_recovery == "-" ? "-" : "$")}}{{(settlement.attorney_recovery)| number:2}}</strong>
+            <div class="col-md-4 pull-right padding-0">
+                <!-- <button ng-show="settlement.mode != 'view'" data-ng-disabled="settlement.isGraceOver != 1" data-ng-click="settlement.mode = 'edit'"
+                    data-ng-show="settlement.mode == 'view'" class="btn btn-default pull-right">
+                    Edit
+                </button> -->
+                <div class="pull-right" ng-show="settlement.mode == 'view' && settlement.mattersettlement[0].E == 1 && !settlement.matterInfo.archivalMatterReadOnlyFlag"
+                    data-ng-disabled="settlement.isGraceOver != 1" data-ng-click="settlement.mode = 'edit'">
+                    <a href="javascript:void(0)" class="margin-right20px">
+                        <span tooltip="Edit" class="sprite default-edit">&nbsp;</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="row margin-top20px" data-ng-show="settlement.mode == 'view'">
+            <div class="col-md-3">
+                <div>Settlement Amount:</div>
+                <strong style="font-size: 18px;">{{(settlement.settlementInfo.sett_amount == "-" ? "-" :
+                    "$")}}{{(settlement.settlementInfo.sett_amount)| number:2}}</strong>
+            </div>
+            <div class="col-md-3">
+                <div>Paid:</div>
+                <div style="font-size: 18px;">{{(settlement.settlementInfo.totalPaid == "-" ? "-" :
+                    "$")}}{{(settlement.settlementInfo.totalPaid) | number:2}}</div>
+            </div>
+            <div class="col-md-3">
+                <div>Outstanding:</div>
+                <div style="font-size: 18px;">{{(settlement.settlementInfo.outstandingAmount == "-" ? "-" :
+                    "$")}}{{(settlement.settlementInfo.outstandingAmount) | number:2}}</div>
+            </div>
+        </div>
+        <div class="row margin-top20px" ng-show="!settlement.showDetails && settlement.mode == 'view'">
+            <a href=" javascript:void(0) " class="margin-right20px col-md-12 " ng-click="settlement.showDetails=true">
+                <span>Show Settlement Details</span>
+                <span class="default-downward-arrow sprite dropdown-arrow "></span>
+            </a>
+        </div>
+        <div ng-show="settlement.showDetails && settlement.mode=='view' ">
+            <div class="row margin-top20px ">
+                <div class="col-md-3 ">
+                    <div>Date Release Sent To Client:</div>
+                    <label>{{settlement.settlementInfo.date_release_client}}</label>
+                </div>
+                <div class="col-md-3 ">
+                    <div>Date Release Sent To Insurance:</div>
+                    <label>{{settlement.settlementInfo.date_release_insurance}}</label>
+                </div>
+            </div>
+            <div class="row margin-top20px ">
+                <div class="col-md-7 ">
+                    <div>Settlement Breakdown:</div>
+                    <!-- <div>{{settlement.settlementInfo.settlement_breakdown}}</div> -->
+                    <div class="dashboard-tasks-due " style="max-height: 95px;overflow-y: auto;white-space: pre-wrap; ">{{settlement.settlementInfo.settlement_breakdown}}</div>
+                </div>
+            </div>
+            <div class="row margin-top20px " ng-show="settlement.showDetails && settlement.mode=='view' ">
+                <a href="javascript:void(0) " class="margin-right20px col-md-12 " ng-click="settlement.showDetails=false">
+                    <span>Hide Settlement Details</span>
+                    <span class="default-upward-arrow sprite dropdown-arrow "></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class=" ">
+        <div class="medical-information-wrapper ">
+            <div collapse="settlement.display.isCollapsed ">
+                <div class="col-md-12 padding-0 ">
+                    <!--<form name="uform " ng-submit="FormSubmit() " novalidate>-->
+                    <form ng-show="settlement.mode=='edit' ">
+                        <div class="col-md-6 form-margin padding-0 ">
+                            <div class="col-md-12 padding-0 ">
+                                <div class="col-md-6 ">
+                                    <div class="form-group ">
+                                        <label>Settlement Amount</label>
+                                        <div class="input-group ">
+                                            <span class="input-group-addon ">$</span>
+                                            <input type="text " style="width:100%; " step="0.01 "
+                                                custom-currency-filter placeholder="Settlement Amount " ng-model="settlement.settlementInfo.settlement_amount "
+                                                ng-readonly="makereadonly " name="sett-amount " class="form-control "
+                                                required ng-keydown="settlement.checkIfEnterKeyWasPressed($event) " />
+                                        </div>
+                                        <div ng-if="settlement.total_settlement_amount">
+                                            <small><label>Negotiated Settlement: </label>{{settlement.total_settlement_amount
+                                                | currency}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 padding-0 ">
+                                    <div class="col-md-12 ">
+                                        <label>Settlement Date</label>
+                                        <p class="input-group datepicker ">
+                                            <input type="text " data-ng-model="settlement.settlementInfo.settlement_date "
+                                                datepicker-popup="MM/dd/yyyy " is-open="settlement.datePicker.opensettDate "
+                                                data-ng-disabled="false " id="medstartDatediv" validate-date error-div="#medstartDatediv "
+                                                tooltip="mm/dd/yyyy " placeholder="mm/dd/yyyy " class="form-control " show-button-bar="false"/>
+                                            <span class="input-group-btn ">
+                                                <button type="button " class="btn btn-default " data-ng-click="settlement.openDatePicker($event,'opensettDate');settlement.datePicker.opensettDate=true; ">
+                                                    <i class="default-calendar-small sprite "></i>
+                                                </button>
+                                            </span>
+                                        </p>
+                                        <div style="float: none; " class="error " id="medstartDatedivErr">Invalid
+                                            date format!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 padding-0 form-group ">
+                                    <div class="col-md-6 padding-0 ">
+                                        <div class="col-md-12 ">
+                                            <label>Date Release Sent To Client</label>
+                                            <p class="input-group datepicker margin0 ">
+                                                <input type="text " data-ng-model="settlement.settlementInfo.date_release_client"
+                                                    datepicker-popup="MM/dd/yyyy" is-open="settlement.datePicker.openDateRToClient"
+                                                    data-ng-disabled="false " id="dateRToClient" validate-date
+                                                    error-div="#dateRToClient" tooltip="mm/dd/yyyy " placeholder="mm/dd/yyyy "
+                                                    class="form-control " show-button-bar="false"/>
+                                                <span class="input-group-btn ">
+                                                    <button type="button " class="btn btn-default " data-ng-click="settlement.openDatePicker($event,'openDateRToClient');settlement.datePicker.openDateRToClient=true; ">
+                                                        <i class="default-calendar-small sprite "></i>
+                                                    </button>
+                                                </span>
+                                            </p>
+                                            <div style="float: none; " class="error " id="dateRToClientErr">Invalid
+                                                date
+                                                format!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 padding-0 ">
+                                        <div class="col-md-12 ">
+                                            <label>Date Release Sent To Insurance</label>
+                                            <p class="input-group datepicker margin0 ">
+                                                <input type="text " data-ng-model="settlement.settlementInfo.date_release_insurance "
+                                                    datepicker-popup="MM/dd/yyyy " is-open="settlement.datePicker.openDateRToInsu "
+                                                    data-ng-disabled="false " id="dateRToInsurance" validate-date
+                                                    error-div="#dateRToInsurance " tooltip="mm/dd/yyyy " placeholder="mm/dd/yyyy "
+                                                    class="form-control " show-button-bar="false"/>
+                                                <span class="input-group-btn ">
+                                                    <button type="button " class="btn btn-default " data-ng-click="settlement.openDatePicker($event,'openDateRToInsu');settlement.datePicker.openDateRToInsu=true; ">
+                                                        <i class="default-calendar-small sprite "></i>
+                                                    </button>
+                                                </span>
+                                            </p>
+                                            <div style="float: none; " class="error " id="dateRToInsuranceErr">Invalid
+                                                date format!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 padding-0">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group ">
+                                            <label>Total Paid </label>
+                                            <div class="input-group ">
+                                                <span class="input-group-addon ">$</span>
+                                                <input type="text " style="width:100%; " ng-readonly="true " ng-model="settlement.settlementInfo.totalPaid "
+                                                    placeholder="Total Paid " ng-keydown="settlement.checkIfEnterKeyWasPressed($event) "
+                                                    step="0.01 " custom-currency-filter name="name " class="form-control "
+                                                    required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group ">
+                                            <label>Outstanding Amount</label>
+                                            <div class="input-group ">
+                                                <span class="input-group-addon ">$</span>
+                                                <input type="text " style="width:100%; " ng-readonly="true " ng-model="settlement.settlementInfo.outstandingAmount "
+                                                    placeholder="Outstanding Amount " ng-keydown="settlement.checkIfEnterKeyWasPressed($event) "
+                                                    step="0.01 " custom-currency-filter name="name " class="form-control "
+                                                    required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6 ">
+                                    <div class="form-group ">
+                                        <label>Settlement Amount</label>
+                                        <div class="input-group ">
+                                            <span class="input-group-addon ">$</span>
+                                            <input type="text " style="width:100%; " step="0.01 "
+                                                custom-currency-filter placeholder="Settlement Amount " ng-model="settlement.settlementInfo.settlement_amount "
+                                                ng-readonly="makereadonly " name="sett-amount " class="form-control "
+                                                required ng-keydown="settlement.checkIfEnterKeyWasPressed($event) " />
+                                        </div>
+                                        <div ng-if="settlement.total_settlement_amount">
+                                            <small><label>Negotiated Settlement: </label>{{settlement.total_settlement_amount
+                                                | currency}}</small>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-margin padding-0 ">
+                            <div class="col-md-12 ">
+                                <div class="form-group ">
+                                    <label>Settlement Breakdown</label>
+                                    <textarea style="height: 194px;" class="form-control " maxlength="1000 " ng-model="settlement.settlementInfo.settlement_breakdown "
+                                        placeholder="Settlement Breakdown " rows="5 "></textarea>
+                                </div>
+                            </div>
+
+
+                            <!-- <div class="col-md-12 padding-0 ">
+                                <div class="col-md-6 ">
+                                    <label>Retainer Date</label>
+                                    <div class="input-group datepicker ">
+                                        <input type="text " class="form-control " maxlength="20 " datepicker-popup="MM/dd/yyyy "
+                                            max-date="settlement.maxdate " data-ng-model="settlement.settlementInfo.retainer_date "
+                                            is-open="settlement.retainerDate " data-ng-disabled="true " name="retainerDate "
+                                            id="retainerDate " validate-date error-div="#retainerDate " tooltip="mm/dd/yyyy "
+                                            placeholder="mm/dd/yyyy " close-text="Close " ng-readonly="true " />
+                                        <span class="input-group-btn " ng-readonly="true ">
+                                            <button type="button " class="btn btn-default " ng-disabled="true
+            " ng-click="addCtrl.openCalender($event);addCtrl.retainerDate=t rue;addCtrl.openDoi=f alse;addCtrl.openDointake=f alse "
+                                                ng-readonly="true ">
+                                                <i class="default-calendar-small sprite "></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group ">
+                                        <label> Closing statement Date</label>
+                                        <p class="input-group datepicker ">
+                                            <input type="text " data-ng-model="settlement.settlementInfo.closing_statement_date "
+                                                datepicker-popup="MM/dd/yyyy " is-open="settlement.datePicker.opencloseStateDate "
+                                                data-ng-disabled="false " id="closingDate " validate-date error-div="#closingDate "
+                                                tooltip="mm/dd/yyyy " placeholder="mm/dd/yyyy " class="form-control "
+                                                close-text="Close " />
+                                            <span class="input-group-btn ">
+                                                <button type="button " class="btn btn-default " data-ng-click="settlement.openDatePicker($event,
+            'opencloseStateDate');settlement.datePicker.opencloseStateDate=true; ">
+                                                    <i class="default-calendar-small sprite "></i>
+                                                </button>
+                                            </span>
+                                        </p>
+                                        <div style="float: none; " class="error " id="closingDateError ">Invalid date
+                                            format!</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-12 padding-0 ">
+                                <div class="col-md-6 form-group ">
+                                    <label>Retainer #</label>
+                                    <input type="text " style="width:100%; " format="number
+            " amount-format placeholder="Retainer # "
+                                        ng-model="settlement.settlementInfo.retainer_no " ng-keydown="settlement.checkIfEnterKeyWasPressed($event) "
+                                        name="retainer_no " class="form-control " ng-readonly="true " />
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group ">
+                                        <label> Closing statement #</label>
+                                        <input type="text " style="width:100%; " format="number
+            " amount-format maxlength="20 "
+                                            placeholder="Settlement closing statement " ng-keydown="settlement.checkIfEnterKeyWasPressed($event) "
+                                            ng-model="settlement.settlementInfo.closing_statement_no " name="sett-amount "
+                                            class="form-control " />
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!---New settlement three field added and last 4 field shifted -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-ng-if="settlement.isFinalSettlement ">
+    <div class="clearfix subnav page-title-border-links " style="position: inherit; ">
+        <ul>
+            <li>
+                <a data-ng-click="settlement.setTab( 'payInfo') " data-ng-class="{ 'activeLink' :settlement.isPaymentInfo} ">Payment
+                    Information
+                </a>
+            </li>
+            <li>
+                <a data-ng-click="settlement.setTab( 'plaintiffInfo') " data-ng-class="{ 'activeLink' :settlement.isPlaintiffInfo} ">Plaintiff
+                    Recovery Details
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="settlement.isPaymentInfo ">
+        <div class="pull-right ">
+            <ul class="showBy-btns heading-right-buttons pull-right " ng-hide="settlement.matterInfo.archivalMatterReadOnlyFlag">
+                <li class="seperation-filter "></li>
+                <li tooltip="Print ">
+                    <a data-ng-click="settlement.printPaymentInfo(settlement.settlementInfo) ">
+                        <span class="sprite default-file "></span>
+                    </a>
+                </li>
+                <li class="paddingLR-10px ">
+                    <a data-ng-click="settlement.downloadPaymentInfo() ">
+                        <span tooltip="Export " class="sprite default-sharedown sortby-icons "></span>
+                    </a>
+                </li>
+            </ul>
+            <div class="pull-right border ">
+            </div>
+        </div>
+        <div class="margin-top20px paddingRLR clearfix search-overlap ">
+            <div class="paddingRLR clearfix search-overlap " style="margin-bottom: 12px ">
+                <ul class="showBy-btns pull-left heading-right-buttons ">
+                    <li tooltip="Add ">
+                        <a href="javascript:void(0) " ng-if="(settlement.isGraceOver !=0 && settlement.mattersettlement[0].A == 1 ) && !settlement.matterInfo.archivalMatterReadOnlyFlag"
+                            data-ng-click="settlement.addPaymentInfo($event,settlement.settlementInfo) " data-toggle="collapse "
+                            data-target="#addNote " aria-expanded="false" aria-controls="addNote ">
+                            <span class="sprite default-plus ">&nbsp;</span>
+                        </a>
+                    </li>
+                    <li class="seperation " data-ng-show="((settlement.settlementInfoGrid.selectedItems.length> 0) && (settlement.mattersettlement[0].A == 1 && (settlement.mattersettlement[0].E == 1 || settlement.mattersettlement[0].D == 1))) && !settlement.matterInfo.archivalMatterReadOnlyFlag"></li>
+                    <li data-ng-show="settlement.settlementInfoGrid.selectedItems.length > 0">
+                        <a href="javascript:void(0)" ng-if="(settlement.isGraceOver != 0 && settlement.mattersettlement[0].D == 1) && !settlement.matterInfo.archivalMatterReadOnlyFlag"
+                            data-ng-click="settlement.deletePaymentInfo(settlement.settlementInfoGrid.selectedItems)">
+                            <span tooltip="Delete" class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-ng-click="settlement.editPaymentInfo(settlement.settlementInfo,settlement.settlementInfoGrid.selectedItems)"
+                            ng-if="(settlement.isGraceOver != 0 && settlement.mattersettlement[0].E == 1) && !settlement.matterInfo.archivalMatterReadOnlyFlag" data-ng-show="settlement.settlementInfoGrid.selectedItems.length === 1">
+                            <span class="sprite default-edit " tooltip="Edit"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--<div class="gridStyle" data-ng-grid="settlement.gridOptions">
+            </div>-->
+        <div class="report-responsive" data-ng-if="settlement.settlementInfoList.payment.length > 0">
+            <div class="row header-row remove-sticky-header">
+                <div class="cell checkbox" data-width="3">
+                    <input type="checkbox" data-ng-model="settlement.settlementInfoGrid.selectAll" data-ng-checked="settlement.allUsersSelected()"
+                        data-ng-click="settlement.selectAllUsers(settlement.settlementInfoGrid.selectAll)" />
+                    <label></label>
+                </div>
+                <div class="cell " data-ng-repeat="header in ::settlement.settlementInfoGrid.headers" data-width={{header.dataWidth}}
+                    data-ng-class="{'text-right':(header.field[0].prop == 'amount_recieved')}">
+                    <span ng-if="header.displayName != 'Memo'"> {{header.displayName}} </span>
+                </div>
+            </div>
+            <div class="row body-row " data-ng-class="{'selected-grid-row':settlement.isUserSelected(data.id) || settlement.clickedRow === data.id}"
+                data-highlight-clicked-row="{{data.id}},settlement.clickedRow" data-ng-repeat="data in settlement.settlementInfoList.payment">
+                <div class="cell checkbox " data-width="3">
+                    <input type="checkbox" data-ng-checked="settlement.isUserSelected(data.id)" checklist-model="settlement.settlementInfoGrid.selectedItems"
+                        checklist-value="data" />
+                    <label></label>
+                </div>
+                <div class="cell" data-ng-repeat="header in settlement.settlementInfoGrid.headers" data-width={{header.dataWidth}}
+                    grid-size>
+                    <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in header.field" data-ng-class="{'display-table-cell':field.inline, 'cursor-pointer':field.cursor,'text-right':(header.field[0].prop == 'amount_recieved')}"
+                        cell-data="{{data}}" field="{{field}}" render-cell>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center" data-ng-if="settlement.settlementInfoList.payment.length==0">
+            No data available.
+        </p>
+    </div>
+    <div ng-if="settlement.isPlaintiffInfo">
+        <div class="margin-top20px paddingRLR clearfix search-overlap">
+            <div class="paddingRLR clearfix search-overlap" style="margin-bottom: 12px">
+                <ul class="showBy-btns pull-left heading-right-buttons ">
+                    <li>
+                        <a class="margin-left5px" href="javascript:void(0)" data-ng-click="settlement.editPlaintiffRecovery(settlement.plaintiffRecoveryGrid.selectedPlaintiff)"
+                            ng-if="(settlement.isGraceOver != 0 && settlement.mattersettlement[0].E == 1)" data-ng-show="settlement.plaintiffRecoveryGrid.selectedPlaintiff.length === 1 && !settlement.matterInfo.archivalMatterReadOnlyFlag">
+                            <span class="sprite default-edit " tooltip="Edit"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="margin-left5px" href="javascript:void(0)" data-ng-click="settlement.deletePlaintiffRecovery(settlement.plaintiffRecoveryGrid.selectedPlaintiff)"
+                            ng-if="(settlement.isGraceOver != 0 && settlement.mattersettlement[0].D == 1)" data-ng-show="settlement.plaintiffRecoveryGrid.selectedPlaintiff.length === 1 && !settlement.matterInfo.archivalMatterReadOnlyFlag">
+                            <span class="sprite default-delete " tooltip="Delete"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--<div class="gridStyle" data-ng-grid="settlement.gridOptions">
+                    </div>-->
+        <div class="report-responsive" data-ng-if="settlement.plaintiffdetails.length > 0" style="padding-bottom: 65px;">
+            <div class="row header-row remove-sticky-header">
+                <div class="cell" data-width="3">
+                    <!-- <input type="checkbox" data-ng-model="settlement.plaintiffRecoveryGrid.selectAll" data-ng-checked="settlement.allPlaintiffSelected()"
+                        data-ng-click="settlement.selectAllPlaintiff(settlement.plaintiffRecoveryGrid.selectAll)" />
+                    <label></label> -->
+                </div>
+                <div class="cell " data-ng-repeat="header in ::settlement.plaintiffRecoveryGrid.headers" data-width={{header.dataWidth}}
+                    data-ng-class="{'text-right':(header.field[0].prop == 'client_recovery_amount')}">
+                    <span> {{header.displayName}} </span>
+                </div>
+            </div>
+            <div class="row body-row " data-ng-class="{'selected-grid-row':settlement.isPlaintiffSelected(data.plaintiff_id) || settlement.clickedRow === data.plaintiff_id}"
+                data-highlight-clicked-row="{{data.plaintiff_id}},settlement.clickedRow" data-ng-repeat="data in settlement.plaintiffdetails">
+                <div class="cell checkbox " data-width="3">
+                    <input type="checkbox" data-ng-checked="settlement.isPlaintiffSelected(data.plaintiff_id)"
+                        checklist-model="settlement.plaintiffRecoveryGrid.selectedPlaintiff" checklist-value="data" />
+                    <label></label>
+                </div>
+                <div class="cell" data-ng-repeat="header in settlement.plaintiffRecoveryGrid.headers" data-width={{header.dataWidth}}
+                    grid-size>
+                    <div data-ng-repeat="field in header.field" data-ng-class="{'display-table-cell':field.inline, 'cursor-pointer':field.cursor,'text-right':(header.field[0].prop == 'client_recovery_amount')}"
+                        cell-data="{{data}}" field="{{field}}" render-cell>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center" data-ng-if="settlement.plaintiffdetails.length==0">
+            No data available.
+        </p>
+    </div>
+</div>
+</div>
+<!-- <div class="compose-wrap" ng-if="settlement.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :settlement.compose, '' : !settlement.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="settlement.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :settlement.compose, '' : !settlement.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div> -->

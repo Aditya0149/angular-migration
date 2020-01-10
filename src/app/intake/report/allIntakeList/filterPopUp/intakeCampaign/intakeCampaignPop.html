@@ -1,0 +1,154 @@
+<style>
+    .modal-dialog{width: 60%;}
+    .datepicker-popup-ipad-position > .ng-valid-date-disabled{left: -180px !important;}    
+    </style>
+    <div class="modal-header clearfix">
+        <h1 class="modal-title fl-left">Filters</h1>
+        <button class="close fl-right" data-ng-click="intakeCampaignFilter.cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="filter-greybox container modal-body" class="dashboard-tasks-due" style="height: 70vh !important; overflow-x: hidden">
+    
+        <div class="clearfix">
+            <div class="col-md-12 padding-0">
+                <div class="col-md-2 text-left padding-0">
+                    <h2 class="margin-top10px">Date Range</h2>
+                </div>
+
+                <div class="pull-left" style="margin-right: 36px;">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" datepicker-popup="MM/dd/yyyy" data-ng-model="intakeCampaignFilter.viewModel.filter.s" is-open="openedEndDate" data-ng-disabled="true" name="doi" full-day-date="1" id="reportFiltstartDatediv" show-button-bar="false"
+                        validate-date error-div="#reportFiltstartDatediv" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" data-ng-disabled="intakeCampaignFilter.dateFilterFlag"
+                                ng-click="intakeCampaignFilter.openCalender($event);openedEndDate = true;openedStartDate=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="reportFiltstartDateErr">Invalid date format!</div>
+                </div>
+                <div class="pull-left">
+                    <div class="input-group datepicker datepicker-popup-ipad-position">
+                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" datepicker-popup="MM/dd/yyyy" data-ng-model="intakeCampaignFilter.viewModel.filter.e" is-open="openedStartDate" data-ng-disabled="true" name="doi" full-day-date="1" id="reportFiltendtDatediv" show-button-bar="false"
+                        validate-date error-div="#reportFiltendtDatediv" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default" data-ng-disabled="intakeCampaignFilter.dateFilterFlag"
+                                ng-click="intakeCampaignFilter.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="reportFiltendDateErr">Invalid date format!</div>
+                </div>
+                <div class="pull-right">
+                    <ui-select class="min-width-select" ng-model="intakeCampaignFilter.viewModel.name" data-ng-change="intakeCampaignFilter.setDateRange(intakeCampaignFilter.viewModel.name)"
+                        theme="selectize">
+                        <ui-select-match placeholder="Date Filter...">
+                            {{$select.selected}}
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="item in intakeCampaignFilter.viewModel.dateFilters|filter: $select.search | orderBy:'name'">
+                            <small>
+                                {{item}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+    
+        </div>
+        <div class="flexCont margin-top20px"></div>
+    
+        <div class="row margin-top20px">
+            <div class="col-md-4">
+                <div>
+                    <h2 class="subtitle">Status</h2>
+                    <ui-select class="width100" multiple ng-model="intakeCampaignFilter.selectionModel.multiFilters.status" on-select="intakeCampaignFilter.getSubstatus(intakeCampaignFilter.selectionModel.multiFilters.status)"
+                       on-remove="intakeCampaignFilter.getSubstatus(intakeCampaignFilter.selectionModel.multiFilters.status)" theme="select2">
+                        <ui-select-match placeholder="Status Filter...">
+                            {{$item.name | replaceByBlank}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="status in intakeCampaignFilter.viewModel.status|filter:{name: $select.search} ">
+                            <small>
+                            {{status.name | replaceByBlank}}
+                        </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="checklist" data-ng-show="intakeCampaignFilter.substatuses.length > 0">
+                    <h2 class="subtitle margin-top10px">Substatus</h2>
+                    <ul class="dashboard-tasks-due" style="max-height: 100vh;position: relative;">
+                            <li ng-repeat-start="item in intakeCampaignFilter.substatuses |filter:{name: $select.search}" ng-show="item.id == 0 ">
+                                <label>{{item.statusname | replaceByBlank}}</label>
+                            </li>
+                            <li class="checkbox" ng-show="item.id != 0"
+                                ng-repeat-end="item in intakeCampaignFilter.substatuses |filter:{name: $select.search}">
+                                <input checklist-value="item" checklist-model="intakeCampaignFilter.selectionModel.multiFilters.substatus" type="checkbox">
+                                <label>{{item.name | replaceByBlank}}</label>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="checklist">
+                    <h2 class="subtitle">Type</h2>
+                    <ui-select
+                        ng-model="intakeCampaignFilter.selectionModel.multiFilters.types[0]"
+                        on-select="intakeCampaignFilter.getSubtypes(intakeCampaignFilter.selectionModel.multiFilters.types[0])"
+                        theme="selectize">
+                        <ui-select-match 
+                            placeholder="Select Type...">
+                            {{$select.selected.name | replaceByBlank}}
+                        </ui-select-match>
+                        <ui-select-choices 
+                            repeat="type in intakeCampaignFilter.viewModel.type| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>
+                                {{type.name |replaceByBlank}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div data-ng-show="intakeCampaignFilter.subtypes.length > 0" class="margin-top10px">
+                    <h2 class="subtitle">Subtypes</h2>
+                    <ul>
+                        <li class="checkbox" data-ng-repeat="type in intakeCampaignFilter.subtypes">
+                            <input checklist-value="type"
+                                checklist-model="intakeCampaignFilter.selectionModel.multiFilters.subtypes" type="checkbox" />
+                            <label>{{type.name |replaceByBlank}}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+           <!--End-->
+           
+            
+            <div class="col-md-4">
+                <div>
+                    <label>Lead Name</label>
+                    <input type="text"
+                        data-ng-model="intakeCampaignFilter.viewModel.userFilter.leadNameFilter"
+                        data-ng-model-options="{ debounce: 500 }"
+                        placeholder="Enter name"
+                        typeahead="row as removeunwantedhtml(row.name) for row in intakeCampaignFilter.searchMatters($viewValue)"
+                        typeahead-input-formatter="intakeCampaignFilter.formatTypeaheadDisplay($model)"
+                        class="form-control" />
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-8">
+                <button ng-click="intakeCampaignFilter.resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+                <button ng-click="intakeCampaignFilter.ok(intakeCampaignFilter.selectionModel.multiFilters)" type="button" class="btn btn-default" ng-disabled="intakeCampaignFilter.enableApply">Apply</button>
+            </div>
+        </div>
+    </div>
+    
+    

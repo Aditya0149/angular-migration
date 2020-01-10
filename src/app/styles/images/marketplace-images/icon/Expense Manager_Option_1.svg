@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0.406849315" y="0" width="179.173973" height="179.173973" rx="44.790411"></rect>
+        <filter x="-30.0%" y="-34.3%" width="160.0%" height="168.6%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.21254917 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-4" x="0" y="34.1772152" width="99.9493671" height="67.8227848" rx="5.739"></rect>
+        <filter x="-6.0%" y="-8.8%" width="112.0%" height="117.7%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.193618881 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cloudlex_Lead-Connector_Icon-Copy">
+            <g id="Group">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#2A98C7" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <g opacity="0.5" mask="url(#mask-2)">
+                    <g transform="translate(-2.465753, 0.000000)">
+                        <g>
+                            <image id="Bitmap" x="0.406849315" y="0" width="183.69863" height="178.767123" xlink:href="data:image/png;base64,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"></image>
+                        </g>
+                    </g>
+                </g>
+                <g id="_100x100" mask="url(#mask-2)">
+                    <g transform="translate(-1.232877, 87.534247)" id="Bitmap">
+                        <image x="0.72739726" y="0.801369863" width="181.232877" height="92.9589041" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAA1CAYAAAC3ME4GAAAABGdBTUEAALGOfPtRkwAAAAlwSFlzAAAHiQAAB4kB+XNYvQAABKpJREFUeAHtnIuSEzsMRMny+PT9ZwqoJT3QQdFIlmwrGSfEVTC2JbUeh7nZm6I4fXx8fHqtdSbwtk4pr0owgS/47XQ6Aczn89vyA+fWOvueWvZOW6UWUq+sl6oNTl//NgIoOONXC0xK+KyRWZVayFepd4gW3hACQQEsAvfYW2DoczZPr5eWGqEEAhMGxCHhCVhYGgx9/ljHf6/SQQVVWlU6QzVZQKQQi9NgeA/f2VWl9RQ6HhAMmQ3KpwTD+xWArFSLnF33bDQQKSab1HuC+dmdcR8gtffW3E2FBjJV6ExptIDoAmUi7gEGe/0Zg9jsolbW3/J7Gg0A+aY61M3Js9wjjGfoYD8KhjrQHFmz8cg5qzEbv9XAN0QOQQv3nEfB6Byynsz+6PhtmJlCGz5bDyNArOR6IPyM6XljtEaj9p1pJtbqZ5cguCjLnwHiFayL0GfE9YCx4oM5XMwzsRCZiZ+J3eWuBLITx8V5oeAsmJnmniJ2BgiHjadc3mAyYLxYqe/tj4gtz5kFgiFYya07z1fet94YTxPxrXXvONRSnlMDaSXwbL33shEPjKfZAiJ1Iz9pv2eusMZbAmkll0PAT2IEMzsoqSu1ov1I3E1ijgKCAbEhCUP+mEx7NExpf/gYCSRqpmWvshEOwbR0JQjue/0Rt1RMFkhUdLVdgom0CYPPW/uPQEzXRCBRwKw904SVg2B6v1W2tAjMei7jXwVkdOB6ON5gesF4Ojofz7f079IGEP1tL4uUz4zoPXwABnn4GSNr1PtMPYzp8UVMj3+XL98QFuY9M6L39EHdyBeBydTEno/23fJngGQLrfTLavE/ZS0wWa2sHwBmfbN+F81VgVwKxCZYaDoCkx3M4X4RkGyBmFnWN+s3otkCk8mb8RmpCzHeusr5LEDQrGzMAyN9UgNynDI6uiZH6qru7e/2sngdkE2aTSz1b6Wtddmb/IzRPrIu7g/zab0hmaJ6GqAvnvfW1mAy+SOfyJ7pc6fhAdk5ymka+0fxl2AyNUc+5XYLSJTE4NH1Jz7zJ0fnqK4pCybKO2M3YzUQ00lPR50fOYZgWt+VRf217N02CaQVrBhcHUfiVosBmFEorV66bQTSCryavjrcM+7WuaK3pZXfs3n3GKNpA5DMl4uKw3Y0BS1Hdbd63CgYr6+ue74hamapo5coCh6Ng+5o7EgcwCBO/j8MasCy9Kw7z9e9HwXiJUeiaB0RO5OTb4wGY2lad5iHdW/ejQCxhCIItM/Eeo1RO3rO5EasBcbSnLrrBWIliwYh7UfGV+XOgLFy6Tt9xpxOjwTEakDCjvbV8RqM1o/OGwBVdBcQnUBphcej460BhEUrB6uHFhjtH56zb4gWUnWGx9l4JFhdQ4KRtcq97mNnywDRQeH0DYf/SSMDRs7jat8CIh2NGaevVtK5Zy0EI7+SYX4+McSrvQdEOqUnbzi+dP79uEwwnAmfEor5oS4djRmnr6p0ZMHp5I5jVU0jOvqNgQZ1Lk/9htDg9JO+rtJBwmfTkmDQG/vb9gTCy/TEG46VWkhTqbeSlgaz/fNYKPB7Y7i9psqGkbtSr1Krujbo/Tr/esMb8o7Ta60xgd8+cj0ShNgmjwAAAABJRU5ErkJggg=="></image>
+                    </g>
+                </g>
+            </g>
+        </g>
+        <g id="Group-8" transform="translate(40.000000, 33.000000)">
+            <g id="Group-2">
+                <path d="M4.77976257,34.4998733 L82.0623016,10.3305372 C85.0873785,9.38447482 88.306623,11.0698491 89.2526853,14.0949261 C89.4260891,14.6493926 89.514299,15.2269742 89.514299,15.8079235 L89.514299,45.4810127 L4.77976257,34.4998733 Z" id="Path-3" fill="#D2D2D2"></path>
+                <g id="Group-3" filter="url(#filter-3)" transform="translate(19.000000, 0.000000)">
+                    <circle id="Oval" fill="#FFFFFF" cx="20.0347726" cy="18.9652274" r="16.0347726"></circle>
+                    <path d="M19.8333333,0 C30.8146183,0 39.6666667,8.85204833 39.6666667,19.8333333 C39.6666667,25.5699383 37.2439025,30.8531183 33.3958333,34.453125 C33.2233248,34.6123749 33.0758314,34.7967417 32.9583333,35 L20.34375,35 C21.4302165,34.7566841 22.1934676,33.7797228 22.1666667,32.6666667 L22.1666667,31.390625 C25.5679328,30.816898 28,27.797987 28,24.5 C28,20.5232183 24.2737495,17.4998483 19.8333333,17.5 C17.2321765,17.5 16.3333333,16.3605283 16.3333333,15.1666667 C16.3333333,13.6608033 16.9211537,12.8333333 18.6666667,12.8333333 L25.6666667,12.8333333 C26.5081485,12.845231 27.2908514,12.4031206 27.7150644,11.6762943 C28.1392773,10.9494679 28.1392773,10.0505321 27.7150644,9.32370575 C27.2908514,8.59687936 26.5081485,8.15476899 25.6666667,8.16666667 L22.1666667,8.16666667 L22.1666667,7 C22.1811422,6.32800891 21.9051573,5.68240949 21.4093917,5.22853951 C20.913626,4.77466952 20.2462305,4.55661089 19.578125,4.63020833 C18.3760007,4.76231008 17.4739899,5.7909189 17.5,7 L17.5,8.27604167 C14.096761,8.84816683 11.6666667,11.8674628 11.6666667,15.1666667 C11.6666667,19.1434483 15.3930035,22.1666667 19.8333333,22.1666667 C22.4344038,22.166585 23.3333333,23.306115 23.3333333,24.5 C23.3333333,26.0058633 22.745513,26.8333333 21,26.8333333 L14,26.8333333 C13.1585182,26.8214357 12.3758152,27.263546 11.9516023,27.9903724 C11.5273893,28.7171988 11.5273893,29.6161345 11.9516023,30.3429609 C12.3758152,31.0697873 13.1585182,31.5118977 14,31.5 L17.5,31.5 L17.5,32.6666667 C17.4799883,33.8021401 18.2803087,34.7871498 19.3958333,35 L6.70833333,35 C6.59083528,34.7967417 6.44334189,34.6123749 6.27083333,34.453125 C2.41545967,30.8525 9.73088277e-12,25.5795167 9.73088277e-12,19.8333333 C9.73088277e-12,8.85204833 8.85204833,0 19.8333333,0 Z" id="Path" fill="#14B468"></path>
+                </g>
+                <g id="Rectangle">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+                <path d="M72.3403692,59.1772152 L99.9493671,59.1772152 L99.9493671,79.1772152 L72.3403692,79.1772152 C70.1312302,79.1772152 68.3403692,77.3863542 68.3403692,75.1772152 L68.3403692,63.1772152 C68.3403692,60.9680762 70.1312302,59.1772152 72.3403692,59.1772152 Z" id="Rectangle" fill="#F0564A"></path>
+                <circle id="Oval" fill="#FFFFFF" cx="77.2466644" cy="69.1772152" r="3.24324324"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

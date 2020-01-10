@@ -1,0 +1,553 @@
+<div class="application-wrapper">
+    <div class="marketplace-main">
+
+        <div class="col-md-11 col-centered">
+
+            <!-- <div id="{{applicationCtrl.isExpenseManager.app_order}}"
+                ng-if="((applicationCtrl.isExpenseManager.permission.V==1 && applicationCtrl.isExpenseManager.is_visible==1 && applicationCtrl.isExpenseManager.is_active== 0) && applicationCtrl.isExpenseManager.app_code == 'EM' && applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="Expense Manager"
+                        src="../styles/images/launcher-icons/Expense_Manager.svg?v=1">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Expense Manager</div>
+                    <div class="text">
+                        With Expense Manager, you can make sure your obligations are always accounted for. Instead of
+                        engaging
+                        in time-consuming back and forth with your bookkeeper, your staff can simply add their
+                        matter-specific
+                        expenses to our app--where they will be tracked and organized for whoever pays the bills. From
+                        there,
+                        authorized users can record outstanding liabilities and sync them with Quickbooks--ensuring that
+                        your
+                        upcoming expenses get paid on time.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('EM')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isExpenseManager.is_active==0"
+                        ng-click="applicationCtrl.save(applicationCtrl.isExpenseManager, 'EM',applicationCtrl.isExpenseManager.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isExpenseManager.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div> -->
+            <div id="{{applicationCtrl.isLG.app_order}}"
+                ng-if="((applicationCtrl.isLG.permission.V==1 && applicationCtrl.isLG.is_visible==1 && applicationCtrl.isLG.is_active==0))"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="lead generator"
+                        src="styles/images/marketplace-images/icon/lead-generator.svg?v=15">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Lead Generator</div>
+                    <div class="text">
+                        Lead Generator is a live website chat that captures your website’s visitors and converts them
+                        into
+                        qualified personal injury leads. Our expert Personal Injury Intake Specialists will greet your
+                        visitors and gather specific case details—starting the intake
+                        process for you. This information is instantly transferred to Intake Manager so you can have
+                        informed follow ups and convert your leads to clients faster.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('LG')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isLG.is_active==0"
+                        ng-disabled="(applicationCtrl.isLG.permission.E==0) || (applicationCtrl.dissableSubscribe)"
+                        ng-click="applicationCtrl.save(applicationCtrl.isLG, 'LG',applicationCtrl.isLG.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isLG.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isIntakeManager.app_order}}"
+                ng-if="((applicationCtrl.isIntakeManager.permission.V==1 && applicationCtrl.isIntakeManager.is_visible==1 && applicationCtrl.isIntakeManager.is_active==0)&& applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Intake Manager"
+                        src="../styles/images/launcher-icons/intake-manager.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Intake Manager</div>
+                    <div class="text">Intake Manager guides you through the entire intake process (e.g., contact info,
+                        case
+                        details, injury checklists)—ensuring you capture all the information you need to successfully
+                        grow
+                        your firm. You can view important lead info (alongside
+                        vital firm data) and schedule follow-ups or reminders right from a prospect’s profile—so you
+                        never
+                        miss out on potential clients or revenue. We’ll even provide you with detailed marketing reports
+                        on
+                        which of your firm’s campaigns are
+                        bringing in the most leads, conversions, and ROI so you can budget prudently and maximize
+                        profits.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('IM')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==0"
+                        ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM',applicationCtrl.isIntakeManager.app_order)">SUBSCRIBE</button>
+                    <!-- <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==0"
+                        ng-disabled="(applicationCtrl.isIntakeManager.permission.E==0) || (applicationCtrl.dissableSubscribe) "
+                        ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM',applicationCtrl.isIntakeManager.app_order)">SUBSCRIBE</button> -->
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isSMS.app_order}}"
+                ng-if="((applicationCtrl.isSMS.permission.V==1 && applicationCtrl.isSMS.is_visible==1) && applicationCtrl.isSMS.is_active==0 && applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-pic" alt="Client Messenger"
+                        src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Client Messenger</div>
+                    <div class="text">With Client Messenger, you can efficiently communicate with your clients from the
+                        convenience of CloudLex®, instead of your personal cell. Send and receive texts—pics, videos,
+                        and
+                        docs too—in our centralized and secure platform allowing
+                        for quick and easy reference and retrieval of your conversations.</div>
+                    <a ng-click="applicationCtrl.showDetails('SMS')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isSMS.is_active==0"
+                        ng-disabled="(applicationCtrl.isSMS.permission.E==0) || (applicationCtrl.dissableSubscribe)"
+                        ng-click="applicationCtrl.save(applicationCtrl.isSMS, 'SMS',applicationCtrl.isSMS.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isSMS.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isRefferalEngine.app_order}}"
+                ng-if="((applicationCtrl.isRefferalEngine.permission.V==1 && applicationCtrl.isRefferalEngine.is_visible == 1) && applicationCtrl.isRefferalEngine.is_active==0 && applicationCtrl.launchpadAccess) "
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Referral Engine"
+                        src="styles/images/marketplace-images/icon/referral-engine.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Referral Engine</div>
+                    <div class="text">Refer out and take on matters from a growing community of plaintiff attorneys.
+                        Referrals are easy to setup and even easier to manage. Track changes and easily share
+                        information
+                        with partner firms over a secure and HIPAA compliant server.
+                    </div>
+
+                    <a ng-click="applicationCtrl.showDetails('RE')" class="see-details">SEE DETAILS</a>
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isRefferalEngine.permission.E==0)  ||  (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isRefferalEngine.is_active==0"
+                        ng-click="applicationCtrl.save(applicationCtrl.isRefferalEngine, 'RE',applicationCtrl.isRefferalEngine.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isRefferalEngine.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isDigitalArchival.app_order}}"
+                ng-if="((applicationCtrl.isDigitalArchival.permission.V==1 && applicationCtrl.isDigitalArchival.is_visible==1) && applicationCtrl.isDigitalArchival.is_active==0)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Digital Archiver"
+                        src="styles/images/marketplace-images/icon/digital-archival.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Digital Archiver</div>
+                    <div class="text">Switch to Digital Archiver of your closed cases (in lieu of physical storage) and
+                        free
+                        up the space and resources needed to grow your practice. Digitally archive all data related to
+                        your
+                        closed matters (even digital correspondence) for
+                        a period of 7 years on a secure and easily searchable platform.</div>
+                    <a ng-click="applicationCtrl.showDetails('DA')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isDigitalArchival.is_active==0"
+                        ng-disabled="(applicationCtrl.isDigitalArchival.permission.E==0) || (applicationCtrl.dissableSubscribe) "
+                        ng-click="applicationCtrl.save(applicationCtrl.isDigitalArchival, 'DA',applicationCtrl.isDigitalArchival.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isDigitalArchival.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+        </div>
+        <div id="main" class="col-md-11 col-centered"
+            ng-repeat="app in applicationCtrl.applicationlist | orderBy: ['is_active','name']">
+            <div id="{{applicationCtrl.isIntakeManager.app_order}}"
+                ng-if="((applicationCtrl.isIntakeManager.permission.V==1 && applicationCtrl.isIntakeManager.is_visible==1 && applicationCtrl.isIntakeManager.is_active==1) && app.app_code == 'IM' && applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Intake Manager"
+                        src="../styles/images/launcher-icons/intake-manager.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Intake Manager</div>
+                    <div class="text">Intake Manager guides you through the entire intake process (e.g., contact info,
+                        case
+                        details, injury checklists)—ensuring you capture all the information you need to successfully
+                        grow
+                        your firm. You can view important lead info (alongside
+                        vital firm data) and schedule follow-ups or reminders right from a prospect’s profile—so you
+                        never
+                        miss out on potential clients or revenue. We’ll even provide you with detailed marketing reports
+                        on
+                        which of your firm’s campaigns are
+                        bringing in the most leads, conversions, and ROI so you can budget prudently and maximize
+                        profits.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('IM')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==0"
+                        ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM',applicationCtrl.isIntakeManager.app_order)">SUBSCRIBE</button>
+                    <!-- <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==0"
+                        ng-disabled="(applicationCtrl.isIntakeManager.permission.E==0) || (applicationCtrl.dissableSubscribe) "
+                        ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM',applicationCtrl.isIntakeManager.app_order)">SUBSCRIBE</button> -->
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isIntakeManager.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <!-- Expense Manager  -->
+            <div id="{{applicationCtrl.isExpenseManager.app_order}}"
+                ng-if="((applicationCtrl.isExpenseManager.permission.V==1 && applicationCtrl.isExpenseManager.is_visible == 1 && applicationCtrl.isExpenseManager.is_active==1) && app.app_code == 'EM')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="Expense Manager"
+                        src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=1">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Expense Manager</div>
+                    <div class="text">
+                        With Expense Manager, you can make sure your obligations are always accounted for. Instead of
+                        engaging in time-consuming back and forth with your bookkeeper, your staff can simply add their
+                        matter-specific expenses to our app--where they will be tracked and organized for whoever pays
+                        the
+                        bills.
+                        From there, authorized users can record outstanding liabilities and sync them with
+                        Quickbooks--ensuring
+                        that your upcoming expenses get paid on time.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('EM')" class="see-details">SEE DETAILS</a>
+                    <div></div>
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isExpenseManager.permission.E==0) || (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isExpenseManager.is_active==0"
+                        ng-click="applicationCtrl.isExpenseManagerFn(applicationCtrl.isExpenseManager,applicationCtrl.isExpenseManager.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isExpenseManager.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isLG.app_order}}"
+                ng-if="((applicationCtrl.isLG.permission.V==1 && applicationCtrl.isLG.is_visible==1) && applicationCtrl.isLG.is_active==1 && app.app_code == 'LG')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="lead generator"
+                        src="styles/images/marketplace-images/icon/lead-generator.svg?v=15">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Lead Generator</div>
+                    <div class="text">
+                        Lead Generator is a live website chat that captures your website’s visitors and converts them
+                        into
+                        qualified personal injury leads. Our expert Personal Injury Intake Specialists will greet your
+                        visitors and gather specific case details—starting the intake
+                        process for you. This information is instantly transferred to Intake Manager so you can have
+                        informed follow ups and convert your leads to clients faster.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('LG')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isLG.is_active==0"
+                        ng-disabled="(applicationCtrl.isLG.permission.E==0) || (applicationCtrl.dissableSubscribe)"
+                        ng-click="applicationCtrl.save(applicationCtrl.isLG, 'LG',applicationCtrl.isLG.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isLG.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+
+
+            <div id="{{applicationCtrl.isSMS.app_order}}"
+                ng-if="((applicationCtrl.isSMS.permission.V==1 && applicationCtrl.isSMS.is_visible==1) && applicationCtrl.isSMS.is_active==1 && app.app_code == 'SMS' && applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-pic" alt="Client Messenger"
+                        src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Client Messenger</div>
+                    <div class="text">With Client Messenger, you can efficiently communicate with your clients from the
+                        convenience of CloudLex®, instead of your personal cell. Send and receive texts—pics, videos,
+                        and
+                        docs too—in our centralized and secure platform allowing
+                        for quick and easy reference and retrieval of your conversations.</div>
+                    <a ng-click="applicationCtrl.showDetails('SMS')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isSMS.is_active==0"
+                        ng-disabled="(applicationCtrl.isSMS.permission.E==0) || (applicationCtrl.dissableSubscribe)"
+                        ng-click="applicationCtrl.save(applicationCtrl.isSMS, 'SMS',applicationCtrl.isSMS.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isSMS.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+
+            <div id="{{applicationCtrl.isRefferalEngine.app_order}}"
+                ng-if="((applicationCtrl.isRefferalEngine.permission.V==1 && applicationCtrl.isRefferalEngine.is_visible == 1) && applicationCtrl.isRefferalEngine.is_active==1 && app.app_code == 'RE' && applicationCtrl.launchpadAccess) "
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Referral Engine"
+                        src="styles/images/marketplace-images/icon/referral-engine.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Referral Engine</div>
+                    <div class="text">Refer out and take on matters from a growing community of plaintiff attorneys.
+                        Referrals are easy to setup and even easier to manage. Track changes and easily share
+                        information
+                        with partner firms over a secure and HIPAA compliant server.
+                    </div>
+
+                    <a ng-click="applicationCtrl.showDetails('RE')" class="see-details">SEE DETAILS</a>
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isRefferalEngine.permission.E==0)  ||  (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isRefferalEngine.is_active==0"
+                        ng-click="applicationCtrl.save(applicationCtrl.isRefferalEngine, 'RE',applicationCtrl.isRefferalEngine.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isRefferalEngine.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isDigitalArchival.app_order}}"
+                ng-if="((applicationCtrl.isDigitalArchival.permission.V==1 && applicationCtrl.isDigitalArchival.is_visible==1) && applicationCtrl.isDigitalArchival.is_active==1 && app.app_code == 'DA')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Digital Archiver"
+                        src="styles/images/marketplace-images/icon/digital-archival.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Digital Archiver</div>
+                    <div class="text">Switch to Digital Archiver of your closed cases (in lieu of physical storage) and
+                        free
+                        up the space and resources needed to grow your practice. Digitally archive all data related to
+                        your
+                        closed matters (even digital correspondence) for
+                        a period of 7 years on a secure and easily searchable platform.</div>
+                    <a ng-click="applicationCtrl.showDetails('DA')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isDigitalArchival.is_active==0"
+                        ng-disabled="(applicationCtrl.isDigitalArchival.permission.E==0) || (applicationCtrl.dissableSubscribe) "
+                        ng-click="applicationCtrl.save(applicationCtrl.isDigitalArchival, 'DA',applicationCtrl.isDigitalArchival.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isDigitalArchival.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isCloudlexCommunicator.app_order}}"
+                ng-if="((applicationCtrl.isCloudlexCommunicator.permission.V==1 && applicationCtrl.isCloudlexCommunicator.is_visible==1) && app.app_code == 'CCOM' && applicationCtrl.launchpadAccess)"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon" alt="Client Communicator"
+                        src="styles/images/marketplace-images/icon/client-communicator.png">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Client Communicator</div>
+                    <div class="text">Reduce frequent calls and communicate with your clients in a mutually convenient
+                        manner. Firms can share real time case updates that can be viewed by clients around-the-clock.
+                        And
+                        clients can upload important case documents right in the
+                        portal, saving your firm valuable time.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('CCOM')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isCloudlexCommunicator.is_active==0"
+                        ng-disabled="(applicationCtrl.isCloudlexCommunicator.permission.E==0) || (applicationCtrl.dissableSubscribe) "
+                        ng-click="applicationCtrl.save(applicationCtrl.isCloudlexCommunicator, 'CCOM',applicationCtrl.isCloudlexCommunicator.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isCloudlexCommunicator.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isIntegratingTools.app_order}}"
+                ng-if="((applicationCtrl.isIntegratingTools.permission.V==1 && applicationCtrl.isIntegratingTools.is_visible==1) && app.app_code == 'IT')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="App Integrator"
+                        src="styles/images/marketplace-images/icon/integrations.svg?v=15">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">App Integrator</div>
+                    <div class="text">Seamlessly integrate CloudLex with leading productivity apps like iCal, Google Calendar, OneDrive, Google Drive, MS Exchange, Dropbox and more, so that your updates are easily synced without leaving CloudLex—a huge time-saver for your firm! Download <b>'CloudLex Calendar'</b> Chrome Extension from Chrome Web Store to enable two-way sync between your Google Calendar and CloudLex.
+                    </div>
+                    <a ng-click="applicationCtrl.showDetails('IT')" class="see-details">SEE DETAILS</a>
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isIntegratingTools.permission.E==0)  || (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isIntegratingTools.is_active==0"
+                        ng-click="applicationCtrl.subIntegratingTools(applicationCtrl.isIntegratingTools,applicationCtrl.isIntegratingTools.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isIntegratingTools.is_active==1" disabled="disabled">SUBSCRIBED</button>
+
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isOfficeOnline.app_order}}"
+                ng-if="((applicationCtrl.isOfficeOnline.permission.V==1 && applicationCtrl.isOfficeOnline.is_visible==1) && app.app_code == 'O365')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="Microsoft Office Online®"
+                        src="styles/images/marketplace-images/icon/microsoft-online.svg?v=15">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Microsoft Office Online®</div>
+                    <div class="text">Create, edit, and co-author your Word, Excel, and PowerPoint documents without
+                        leaving
+                        the Legal Cloud. Updates made in CloudLex are automatically reflected across all team members
+                        and
+                        devices, so you can spend less time coordinating and
+                        more time collaborating.</div>
+
+                    <a ng-click="applicationCtrl.showDetails('O365')" class="see-details">SEE DETAILS</a>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isOfficeOnline.is_active==0 "
+                        ng-disabled="(applicationCtrl.isOfficeOnline.permission.E==0)  || ( applicationCtrl.dissableSubscribe)"
+                        ng-click="applicationCtrl.showOfficeOnlinePopup(applicationCtrl.isOfficeOnline,applicationCtrl.isOfficeOnline.app_order)">SUBSCRIBE</button>
+                    <!--<button class="btn btn-default margin-top30px"  data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#payment" ng-if="applicationCtrl.isOfficeOnline.is_active==0 && applicationCtrl.paymentFlag"
+                        ng-disabled="applicationCtrl.isOfficeOnline.permission.E==0" ng-click="applicationCtrl.showOfficeOnlinePopup(applicationCtrl.isOfficeOnline)">SUBSCRIBE</button>-->
+                    <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isOfficeOnline.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <div id="{{applicationCtrl.isWordOfficePlugin.app_order}}"
+                ng-if="((applicationCtrl.isWordOfficePlugin.permission.V==1 && applicationCtrl.isWordOfficePlugin.is_visible == 1) && app.app_code == 'OPLG')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="Word Connector"
+                        src="styles/images/marketplace-images/icon/office-connector.svg?v=1215">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Word Connector</div>
+                    <div class="text">Work on CloudLex documents while offline. Create,edit, and upload documents to
+                        CloudLex within Word while accessing important case information. Confidently save and categorize
+                        these documents to their respective matters or intakes in CloudLex.</div>
+                    <div></div>
+                    <a ng-click="applicationCtrl.showDetails('OPLG')" class="see-details pull-left">SEE DETAILS</a>
+                    <span ng-if="applicationCtrl.isWordOfficePlugin.is_active==1">
+                        <a ng-click="applicationCtrl.downloadOfficeConnector()"
+                            class="btn btn-default download-connector-btn">INSTALL
+                            FOR WINDOWS</a>
+                    </span>
+                    <span ng-if="applicationCtrl.isWordOfficePlugin.is_active==1">
+                        <a ng-click="applicationCtrl.downloadOfficeConnectorForMAC()"
+                            class="btn btn-default download-connector-btn">INSTALL
+                            FOR MAC</a>
+                    </span>
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isWordOfficePlugin.permission.E==0)  ||  (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isWordOfficePlugin.is_active==0"
+                        ng-click="applicationCtrl.subofficeConnector(applicationCtrl.isWordOfficePlugin,applicationCtrl.isWordOfficePlugin.app_order)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isWordOfficePlugin.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+            <!-- <div id="{{applicationCtrl.isOutlookPlugin.app_order}}" ng-if="((applicationCtrl.isOutlookPlugin.permission.V==1 && applicationCtrl.isOutlookPlugin.is_visible == 1) && app.app_code == 'OTLG')" class="marketplace-row">
+                    <div class="col-md-2 left-img"><img class="marketplace-list-icon" src="styles/images/marketplace-images/icon/outlook-connector.png"></div>
+                    <div class="col-md-8 marketplace-right-block margin-top10px">
+                        <div class="title">Outlook Connector</div>
+                        <div class="text">Eliminate email chaos - save your important Outlook messages to CloudLex and keep everyone informed.</div>
+                        <div></div> 
+                        <a ng-click="applicationCtrl.showDetails('OTLG')" class="see-details pull-left">SEE DETAILS</a>
+                        <span ng-if="applicationCtrl.isOutlookPlugin.is_active==1"><a ng-click="applicationCtrl.downloadOutlookConnector()" class="btn btn-default download-connector-btn">INSTALL DESKTOP APPLICATION</a></span>
+                        <span ng-if="applicationCtrl.isOutlookPlugin.is_active==1"><a ng-click="applicationCtrl.outlookWebConnectorDetails()" class="btn btn-default download-connector-btn">INSTALL WEB APPLICATION</a></span>
+                    </div>
+                    
+                     <div class="col-md-2">                 
+                         <button class="btn btn-default margin-top30px"
+                          ng-disabled="(applicationCtrl.isOutlookPlugin.permission.E==0)  ||  (applicationCtrl.dissableSubscribe)" 
+                          ng-if="applicationCtrl.isOutlookPlugin.is_active==0"
+                          ng-click="applicationCtrl.subofficeConnector(applicationCtrl.isOutlookPlugin,applicationCtrl.isOutlookPlugin.app_order)">SUBSCRIBE</button>
+                        <button class="btn btn-default margin-top30px" ng-if="applicationCtrl.isOutlookPlugin.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                    </div>
+                </div> -->
+            <div id="100"
+                ng-if="(((applicationCtrl.isgmailPlugin.permission.V==1 && applicationCtrl.isgmailPlugin.is_visible == 1) || (applicationCtrl.isOutlookPlugin.permission.V==1 && applicationCtrl.isOutlookPlugin.is_visible == 1)) && app.app_code == 'EC')"
+                class="marketplace-row">
+                <div class="col-md-2 left-img">
+                    <img class="marketplace-list-icon small-imga" alt="Email Connector"
+                        src="styles/images/marketplace-images/icon/Connector-Email.svg?v=15">
+                </div>
+                <div class="col-md-8 marketplace-right-block margin-top10px">
+                    <div class="title">Email Connector</div>
+                    <div class="text">Eliminate email chaos—save your important Outlook & Gmail messages and Outlook
+                        calendar events to CloudLex and keep your team members on the same page.</div>
+                    <div></div>
+                    <a ng-click="applicationCtrl.showDetails('OTLG')" class="see-details pull-left">SEE DETAILS</a>
+                    <!-- <span ng-if="applicationCtrl.isOutlookPlugin.is_active==1"><a ng-click="applicationCtrl.downloadOutlookConnector()" class="btn btn-default download-connector-btn">INSTALL DESKTOP APPLICATION</a></span>
+                        <span ng-if="applicationCtrl.isOutlookPlugin.is_active==1"><a ng-click="applicationCtrl.outlookWebConnectorDetails()" class="btn btn-default download-connector-btn">INSTALL WEB APPLICATION</a></span> -->
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-default margin-top30px"
+                        ng-disabled="(applicationCtrl.isgmailPlugin.permission.E==0 && applicationCtrl.isOutlookPlugin.permission.E==0)  ||  (applicationCtrl.dissableSubscribe)"
+                        ng-if="applicationCtrl.isgmailPlugin.is_active==0 || applicationCtrl.isOutlookPlugin.is_active==0"
+                        ng-click="applicationCtrl.subEmailConnector(applicationCtrl.isgmailPlugin,applicationCtrl.isOutlookPlugin,100)">SUBSCRIBE</button>
+                    <button class="btn btn-default margin-top30px"
+                        ng-if="applicationCtrl.isgmailPlugin.is_active==1 && applicationCtrl.isOutlookPlugin.is_active==1"
+                        disabled="disabled">SUBSCRIBED</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="payment" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="pull-left">Microsoft online Payment Confirmation</strong>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <strong>You have selected Microsoft online</strong>
+                    </p>
+
+                    <div class="clearfix">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8 text-right">Charges :</div>
+                        <div class="col-md-2 text-right">
+                            <strong>{{applicationCtrl.offOnlineInfo.amount | currency}}</strong>
+                        </div>
+                    </div>
+                    <div class="modal-footer negative-mb-60"></div>
+
+                    <div class="row margin-top10px">
+                        <div class="col-md-8 text-right margin-left6px">Total amount :</div>
+                        <div class="col-md-2 text-right">
+                            <strong>{{applicationCtrl.offOnlineInfo.amount | currency}}</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer white-border">
+                    <button data-dismiss="modal" class="btn btn-default btn-default">Cancel</button>
+                    <button data-ng-click="applicationCtrl.confirm(applicationCtrl.offOnlineInfo)"
+                        class="btn btn-default btn-default">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

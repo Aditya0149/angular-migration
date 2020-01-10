@@ -1,0 +1,94 @@
+<style>
+    .modal-dialog {
+        width: 800px !important;
+    }
+</style>
+<div class="">
+    <div class="modal-header">
+        <h2 class="pull-left">Outlook web plugin setup</h2>
+        <button class="close pull-right" data-ng-click="outlookWebCtrl.cancel()">
+            <span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body marketplace-details-main marketplace-popup-slider">
+        <div class="col-md-12 col-centered">
+            <carousel interval="outlookWebCtrl.myInterval">
+                <slide active="slide.active">
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-1.jpg">
+                    <p class="txt">Once logged into Outlook, click on the gear icon and select <b>“Manage add-ins”</b>
+                        from the “Mail settings” menu.</p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-2.jpg">
+                    <p class="txt">Select <b>"Add from URL…"</b> from the drop-down menu and enter the URL:
+                        "https://clodulexqadocs.blob.core.windows.net/outlook-plugin/OutlookWebAddIn.xml"
+                        <a data-ng-click="outlookWebCtrl.copyTextToClipboard()">
+                            <span class="sprite default-copy-small-icon" tooltip="Copy link"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+                    </p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-3.jpg">
+                    <p class="txt">When prompted, click <b>“Install”</b>. Once installed, CloudLex will show up as a
+                        custom add-in under <b>“my add-ins”</b>.</p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-4.png">
+                    <p class="txt">To save an Outlook email as a note in CloudLex: <br>
+                        After you have received/sent an email, click on the CloudLex icon in the reading pane and enter
+                        your user information just like you’re logging into CloudLex.
+                    </p>
+                </slide>
+
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-5.png">
+                    <p class="txt">Choose appropriate matter or intake from the drop-down menu and click
+                        <b>“Upload”</b>.
+                    </p>
+                </slide>
+
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-6.png">
+                    <p class="txt">If you want to mark the Note as <b>“Important”</b>, select the check box.<br>
+                        You can also upload the attachment(s) by simply clicking on <b>“Choose Files”</b> and upload the
+                        files.
+                        To finalize the process, click <b>“Upload”</b>.
+                    </p>
+                </slide>
+
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-7.png">
+                    <p class="txt">You can also add an event from your Outlook calendar to CloudLex. <br>
+                        To do so- go to your Outlook Calendar, select to open the appropriate <b>“event”</b> and click
+                        on the
+                        horizontal ellipsis "..." in the menu. Select <b>“CloudLex”</b> to proceed.
+                    </p>
+                </slide>
+
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-8.png">
+                    <p class="txt">Select the Matter or Intake name that corresponds to the event you want to save in
+                        the CloudLex, and then click <b>"Save"</b>.
+                    </p>
+                </slide>
+
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/outlook-connector/setup-9.png">
+                    <p class="txt">You can see the saved event in your CloudLex account under the “Events” tab in that
+                        particular Matter or Intake.
+                    </p>
+                </slide>
+
+                <div class="carousel-caption"></div>
+            </carousel>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer" style="border-top: white;">
+        <!-- <button data-ng-click="outlookWebCtrl.cancel()" class="btn btn-default btn-default">Cancel</button> -->
+        <button data-ng-click="outlookWebCtrl.confirm()" class="btn btn-default btn-default">Ok</button>
+
+    </div>
+</div>

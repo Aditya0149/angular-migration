@@ -1,0 +1,20 @@
+<style>
+    .pagination-padding{
+        padding: 0px 6px !important;
+    }
+</style>
+<div>
+    <ul class="pagination" style="margin: 0">
+        <li class="page-item" ng-class="{'disabled cursor-pointer-events-none' :currentPage == 1}" ng-click="more({pageNum :(currentPage - 1)})">
+            <a href='javascript:void(0)' class="page-link glyphicon glyphicon-menu-left pagination-padding"></a>
+        </li>
+        <li class="page-item" ng-click="more({pageNum:(currentPage + 1)})">
+            <a href='javascript:void(0)' class="page-link glyphicon glyphicon-menu-right pagination-padding"></a>
+        </li>
+        <li class="page-item" style="align-self: center;padding-left: 1px;">
+            <span style="border: none; color:#000" class="pagination-padding"> Showing
+                {{recordsCount2.start |number}} to
+                {{recordsCount2.end |number}}</span>
+        </li>
+    </ul>
+</div>

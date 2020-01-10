@@ -1,0 +1,306 @@
+<style>
+    .report-custom-drop-height .open .dropdown-menu {
+        max-height: 210px !important;
+    }
+
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<!-- CONTENT SECTION-->
+<div class="report-table" scrolly="settlementReportCtrl.scrollReachedBottom()"
+    reached-top="settlementReportCtrl.scrollReachedTop()">
+    <div class=" clearfix">
+        <div class="row">
+            <h1 class="col-md-5 ellipsis-nowrap  padding-topbottom-14px">Settlement Report</h1>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed ">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="settlementReportCtrl.openPopupFilter()" class="sprite default-filter"
+                                tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="settlementReportCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="settlementReportCtrl.downloadSettlementInfo()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown head-padding-10px pull-right">
+                Sort By :
+                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{settlementReportCtrl.selectedSort}}
+                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+                <ul class="dropdown-menu divider-alt dashboard-tasks-due" role="menu" aria-labelledby="dLabel"
+                    style="max-height: 359px;">
+                    <li data-ng-repeat="sort in settlementReportCtrl.sorts">
+                        <a data-ng-click="settlementReportCtrl.applySortByFilter(sort)">{{sort.name}}
+                        </a>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="settlementReportCtrl.tagCancelled"
+                    tag-list="settlementReportCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="settlementReportCtrl.settlementDataList.length >0 ">
+        <show-record-count-only more="settlementReportCtrl.getMore()" all="settlementReportCtrl.getAll()"
+            hide-pager="{{settlementReportCtrl.showPaginationButtons()}}"
+            displayed="settlementReportCtrl.settlementDataList.length" total="settlementReportCtrl.total">
+        </show-record-count-only>
+    </div>
+
+
+    <!-- Start: New scroll-table tableid -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <div class="report-scroll-all-matter">
+
+        <scroll-table tag="settlementReportCtrl.tags" sort="settlementReportCtrl.selectedSort" watch="settlementReportCtrl.filteredSettlementRecords" tableid="listGrid" to="#listUpper"
+            from="#moreAllLinkRecord">
+
+            <table class="table table-scroll">
+                <thead data-ng-show="settlementReportCtrl.settlementDataList.length!=0">
+                    <tr>
+                        <th class="th-width-12">
+                            <div>
+                                <span>
+                                    <b>Matter name, File Number</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Plaintiff Name</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Date of Incident</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Status, <br>Sub-status</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-12">
+                            <div>
+                                <span>
+                                    <b>Settlement Amount & Settlement Date</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Total Paid</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Outstanding Amount</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-8">
+                            <div>
+                                <span>
+                                    <b>Retainer Number, Retainer Date</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Closing Statement Number, Closing Statement Date</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-7">
+                            <div>
+                                <span>
+                                    <b>Status</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-11">
+                            <div>
+                                <span>
+                                    <b>Demand & Offer</b>
+                                </span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="dashboard-tasks-due" id="settlementDataListlistbody" style="overflow-y:overlay">
+                    <tr data-ng-class="{'selected-grid-row':($index == settlementReportCtrl.clickedRow)}"
+                        data-highlight-clicked-row="{{$index}},settlementReportCtrl.clickedRow"
+                        data-ng-repeat="data in settlementReportCtrl.filteredSettlementRecords = (settlementReportCtrl.settlementDataList)">
+
+                        <td class="th-width-12">
+                            <div>
+                                <a class="word-wrap" href="#/matter-overview/{{data.matter_id}}"
+                                    tooltip-placement="right" tooltip="{{data.matter_name}}">
+                                    {{data.matter_name}}
+                                </a><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.file_number}}">
+                                    File# {{data.file_number}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.plaintiff_name}}">
+                                    {{data.plaintiff_name}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.date_of_incidence}}">
+                                    {{data.date_of_incidence}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.status_name}}">
+                                    {{data.status_name}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_status_name}}">
+                                    {{data.sub_status_name}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-12">
+                            <div>
+                                <span class="right-align amount_ellipsis" ng-if="data.settlement_amount"
+                                    tooltip-placement="bottom"
+                                    tooltip="${{ (data.settlement_amount) ? (data.settlement_amount | number:2) : (data.settlement_amount) }}">
+                                    ${{ (data.settlement_amount) ? (data.settlement_amount | number:2) : data.settlement_amount }}
+                                </span>
+                                <span tooltip-placement="bottom" tooltip="{{data.settlement_date}}">
+                                    {{data.settlement_date}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span class="amount_ellipsis" ng-if="data.total_paid" tooltip-placement="bottom"
+                                    tooltip="${{(data.total_paid) ? (data.total_paid | number:2) : (data.total_paid) }}">
+                                    ${{ (data.total_paid) ? (data.total_paid | number:2) : (data.total_paid) }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span class="amount_ellipsis" ng-if="data.outstanding_amount" tooltip-placement="bottom"
+                                    tooltip="${{ (data.outstanding_amount) ? (data.outstanding_amount | number:2) : (data.outstanding_amount) }}">
+                                    ${{(data.outstanding_amount) ? (data.outstanding_amount | number:2) : (data.outstanding_amount)}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span ng-if="data.retainer_num" tooltip-placement="bottom"
+                                    tooltip="{{data.retainer_num}}">
+                                    {{data.retainer_num}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.retainer_date}}">
+                                    {{data.retainer_date}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span ng-if="data.closing_statement_no" tooltip-placement="bottom"
+                                    tooltip="{{data.closing_statement_no}}">
+                                    {{data.closing_statement_no}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.closing_statement_date}}">
+                                    {{data.closing_statement_date}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-7">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.negotiation_status}}">
+                                    {{data.negotiation_status}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-11">
+                            <div>
+                                <span class="amount_ellipsis" ng-if="data.demand" tooltip-placement="bottom"
+                                    tooltip="${{ (data.demand) ? (data.demand | number:2) : (data.demand) }}">
+                                    ${{ (data.demand) ? (data.demand | number:2) : (data.demand) }}
+                                </span><br>
+                                <span class="amount_ellipsis" ng-if="data.offer" tooltip-placement="bottom"
+                                    tooltip="${{ (data.offer) ? (data.offer | number:2) : (data.offer) }}">
+                                    ${{ (data.offer) ? (data.offer | number:2) : (data.offer) }}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </scroll-table>
+        <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+            style="overflow: hidden !important;position: fixed;bottom: 0px;">
+        </div>
+    </div>
+
+    <div data-ng-show="settlementReportCtrl.settlementDataList.length >0 ">
+        <show-record-more-and-all more="settlementReportCtrl.getMore()" all="settlementReportCtrl.getAll()"
+            hide-pager="{{settlementReportCtrl.showPaginationButtons()}}"
+            displayed="settlementReportCtrl.settlementDataList.length" total="settlementReportCtrl.total">
+        </show-record-more-and-all>
+    </div>
+
+    <div class="text-center margin-top10px" data-ng-show="settlementReportCtrl.settlementDataList.length <= 0">
+        No data for the applied filters
+    </div>
+
+
+
+</div>

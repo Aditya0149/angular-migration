@@ -1,0 +1,114 @@
+<div data-ng-init="insaurance.setInitData(matterDetail.plaintiffDefendants)"  ng-class="{'cursor-pointer-events-none' :insaurance.compose, '' : !insaurance.compose}">
+    <div class="row medical-info-gridSec margin0">
+        <div class=" pull-left">
+            <div class="paddingRLR clearfix search-overlap">
+                <ul class="showBy-btns" ng-hide="insaurance.matterInfo.archivalMatterReadOnlyFlag">
+                    <li tooltip="Add">
+                        <a href="javascript:void(0)" ng-if="(insaurance.isGraceOver != 0)" data-ng-click="insaurance.addInsauranceInfo('add',matterDetail.plaintiffDefendants)">
+                            <span class="sprite default-plus">&nbsp;</span>
+                        </a>
+                    </li>
+                    <li class="seperation" data-ng-show="insaurance.insuranceGrid.selectedItems.length > 0 && insaurance.isGraceOver != 0"></li>
+
+                    <li>
+                        <a href="javascript:void(0)" data-ng-show="insaurance.insuranceGrid.selectedItems.length > 0 && insaurance.isGraceOver != 0 "
+                            data-ng-click="insaurance.deleteInsurance(insaurance.insuranceGrid.selectedItems)">
+                            <span tooltip="Delete" class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="javascript:void(0)" data-ng-show="insaurance.insuranceGrid.selectedItems.length > 0" data-ng-click="insaurance.unlinkDocument(insaurance.insuranceGrid.selectedItems)">
+                            <span tooltip="unlink" class="sprite default-unlink col-md-offset-1">&nbsp;</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="javascript:void(0)" data-ng-show="insaurance.insuranceGrid.selectedItems.length === 1 
+                         && insaurance.isGraceOver != 0" data-ng-click="insaurance.addInsauranceInfo('edit',matterDetail.plaintiffDefendants,insaurance.insuranceGrid.selectedItems)">
+                            <span tooltip="Edit" class="sprite default-edit "></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-ng-show="matterDetail.showViewDoc(insaurance.insuranceGrid.selectedItems,'insurance_documentid')">
+                            <open-doc doc-id="{{[{doc_id:insaurance.insuranceGrid.selectedItems[0]['insurance_documentid']}]}}"></open-doc>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class=" pull-right">
+            <ul class="showBy-btns heading-right-buttons pull-right" ng-hide="insaurance.matterInfo.archivalMatterReadOnlyFlag">
+                <li class="seperation-filter"></li>
+                <li tooltip="Print">
+                    <a data-ng-click="insaurance.printInsurance(matterDetail.plaintiffDefendants,
+                        insaurance.associated_party_id)"><span class="sprite default-file "></span></a>
+                </li>
+                <li class="paddingLR-10px" >
+                    <a data-ng-click="insaurance.downloadInsurance(insaurance.associated_party_id)">
+                        <span tooltip="Export" class="sprite default-sharedown sortby-icons"></span></a>
+                </li>
+            </ul>
+
+            <form class="form-inline pull-right">
+                <div class="form-group select-label-correction">
+                    <label>Show records of</label>
+
+                    <ui-select ng-model="insaurance.associated_party_id" theme="selectize" on-select="insaurance.filterInsurance(insaurance.associated_party_id.id,matterDetail.plaintiffDefendants, $item.selectedPartyType)">
+                        <ui-select-match placeholder="Enter Name">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices group-by="matterDetail.groupPlaintiffDefendants" group-filter="['All','Plaintiffs','Defendants','Other Parties']"
+                            repeat="item in matterDetail.plaintiffDefendants | filter:{ name:$select.search } | orderBy: 'name'">
+                            <small>
+                                    {{item.name}}
+                                </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- <div data-ng-if="insaurance.gridOptions" class="gridStyle" data-ng-grid="insaurance.gridOptions">
+    </div>-->
+
+    <div class="report-responsive" data-ng-if="insaurance.insuranceList.insurance.length > 0">
+        <div class="row header-row">
+            <div class="cell checkbox" data-width="3">
+
+                <input type="checkbox" data-ng-model="insaurance.insuranceGrid.selectAll" data-ng-checked="insaurance.allUsersSelected()"
+                    data-ng-click="insaurance.selectAllUsers(insaurance.insuranceGrid.selectAll)" /><label></label>
+
+            </div>
+            <div class="cell" data-ng-repeat="header in ::insaurance.insuranceGrid.headers" data-width="{{header.dataWidth}}" data-ng-class="{'text-right':(header.field[0].prop == 'policy')}">
+                <span ng-if="header.displayName != 'Memo'">   {{header.displayName}} </span>
+            </div>
+        </div>
+        <div class="row body-row" data-ng-class="{'selected-grid-row':insaurance.isUserSelected(data.insuranceid) }"
+            data-ng-repeat="data in insaurance.insuranceList.insurance">
+            <div class="cell checkbox" data-width="3">
+
+                <input type="checkbox" data-ng-checked="insaurance.isUserSelected(data.insuranceid)" checklist-model="insaurance.insuranceGrid.selectedItems"
+                    checklist-value="data" /><label></label>
+
+            </div>
+            <div class="cell" data-ng-repeat="header in insaurance.insuranceGrid.headers" data-width="{{header.dataWidth}}" grid-size>
+                <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in header.field" data-ng-class="{'display-table-cell':field.inline,'cursor-pointer':field.cursor,'text-right':(field.prop == 'policy') }"
+                    cell-data="{{data}}" field="{{field}}" render-cell>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center" data-ng-if="insaurance.insuranceList.insurance.length==0">
+        No data available.
+    </p>
+</div>
+
+<!-- <div class="compose-wrap" ng-if="insaurance.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :insaurance.compose, '' : !insaurance.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="insaurance.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :insaurance.compose, '' : !insaurance.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div> -->

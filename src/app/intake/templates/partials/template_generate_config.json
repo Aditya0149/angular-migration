@@ -1,0 +1,198 @@
+[
+    {
+        "template_code": "F1153_10",
+        "template_type": "new",
+        "template_api_call": "java2",
+        "display_prop": {
+            "layout": {
+                "layout_name": "Intakelayoutd60"
+            },
+            "display_fields": {
+                "plaintiffs": true,
+                "refferedBy": true,
+                "custom_date": true
+            }
+        },
+        "request_params": {
+            "params": {
+                "plaintiffs": "plaintiffs",
+                "custom_date": "custom_date"
+            }
+        }
+    },
+    {
+        "template_code": "F1153_9",
+        "template_type": "new",
+        "template_api_call": "java2",
+        "display_prop": {
+            "layout": {
+                "layout_name": "Intakelayoutd60"
+            },
+            "display_fields": {
+                "plaintiffs": true,
+                "refferedBy": true,
+                "custom_date": true
+            }
+        },
+        "request_params": {
+            "params": {
+                "plaintiffs": "plaintiffs",
+                "custom_date": "custom_date"
+            }
+        }
+    },
+    {
+        "template_code": "F1143_133",
+        "template_type": "new",
+        "template_api_call": "java2",
+        "display_prop": {
+            "layout": {
+                "layout_name": "Intakelayoutd60"
+            },
+            "display_fields": {
+                "plaintiff_onChange": true,
+                "plaintiff_employers_pri": true,
+                "plaintiff_employers_sec": true,
+                "plaintiff_employers_ter": true,
+                "insurance": true,
+                "medical_provider": true,
+                "medical_provider1": true,
+                "medical_provider2": true,
+                "witness": true,
+                "witness1": true,
+                "assignUser": true,
+                "emergency_number": true,
+                "accident_description": true,
+                "bedTime": true,
+                "houseTime": true,
+                "serviceDescription": true,
+                "policeAccidentInfo": true,
+                "prioirAccidents": true,
+                "subsequentAccidents": true,
+                "priorMedicalCondition": true,
+                "meansOfCalculation": true,
+                "liabilityBasis": true,
+                "socialSecInfo": true,
+                "userAddress": true,
+                "userState": true,
+                "userCounty": true,
+                "amount_lost_income": true,
+                "billed_amount1": true,
+                "billed_amount2": true,
+                "billed_amount3": true,
+                "gross_pay1": true,
+                "gross_pay2": true,
+                "gross_pay3": true,
+                "marriage_date": true,
+                "date_Employed_From1": true,
+                "date_Employed_From2": true,
+                "date_Employed_From3": true,
+                "filling_date": true,
+                "date_Employed_To1": true,
+                "date_Employed_To2": true,
+                "date_Employed_To3": true,
+                "spouse_ssn": true
+            }
+        },
+        "request_params": {
+            "params": {
+                "plaintiffs": "plaintiffs",
+                "plaintiffEmployerIds": "plaintiffEmployerIds",
+                "plaintiffEmployerIds_sec": "plaintiffEmployerIds_sec",
+                "plaintiffEmployerIds_ter": "plaintiffEmployerIds_ter",
+                "onlyInsuranceId": "onlyInsuranceId",
+                "medicalproviderId": "medicalproviderId",
+                "medicalproviderId2": "medicalproviderId2",
+                "medicalproviderId3": "medicalproviderId3",
+                "witnessId": "witnessId",
+                "witnessId1": "witnessId1",
+                "assign_user": "assign_user",
+                "textBoxOne": "textBoxOne",
+                "textBoxTwo": "textBoxTwo",
+                "textBoxThree": "textBoxThree",
+                "textBoxFour": "textBoxFour",
+                "textBoxFive": "textBoxFive",
+                "textBoxSix": "textBoxSix",
+                "textBoxSeven": "textBoxSeven",
+                "textBoxEight": "textBoxEight",
+                "textBoxNine": "textBoxNine",
+                "textBoxTen": "textBoxTen",
+                "userValueOne": "userValueOne",
+                "userValueTwo": "userValueTwo",
+                "userValueThree": "userValueThree",
+                "userValueFour": "userValueFour",
+                "userValueFive": "userValueFive",
+                "userValueSix": "userValueSix",
+                "amountInNumbers1": "amountInNumbers1",
+                "amountInNumbers2": "amountInNumbers2",
+                "amountInNumbers3": "amountInNumbers3",
+                "amountInNumbers4": "amountInNumbers4",
+                "amountInNumbers5": "amountInNumbers5",
+                "amountInNumbers6": "amountInNumbers6",
+                "amountInNumbers7": "amountInNumbers7",
+                "marriage_date": "marriage_date",
+                "date_Employed_From1": "date_Employed_From1",
+                "date_Employed_From2": "date_Employed_From2",
+                "date_Employed_From3": "date_Employed_From3",
+                "filling_date": "filling_date",
+                "date_Employed_To1": "date_Employed_To1",
+                "date_Employed_To2": "date_Employed_To2",
+                "date_Employed_To3": "date_Employed_To3"
+            }
+        }
+    },
+    {
+        "template_code": "F1563_11",
+        "template_type": "new",
+        "template_api_call": "java2",
+        "display_prop": {
+            "layout": {
+                "layout_name": "Intakelayoutd60"
+            },
+            "display_fields": {
+                "plaintiff_onChange_secondary": true,
+                "plaintiff_employers_pri2": true,
+                "insured_Party": true,
+                "medicalProvider_Physicians": true,
+                "serviceProvider" : true,
+                "accident_description": true,
+                "accident_Time": true,
+                "Vehicle_Information": true
+            }
+        },
+        "request_params": {
+            "params": {
+                "plaintiffs": "plaintiffs",
+                "plaintiffEmployerIdsNew": "plaintiffEmployerIdsNew",
+                "insuredParty": "insuredParty",
+                "medicalProviderPhysicians": "medicalProviderPhysicians",
+                "medicalServiceProvider" : "medicalServiceProvider",
+                "textBoxTwo": "textBoxTwo",
+                "accidentTime": "accidentTime",
+                "vehicleInformation": "vehicleInformation"
+            }
+        }
+    },
+    {
+        "template_code": "F1563_13",
+        "template_type": "new",
+        "template_api_call": "java2",
+        "display_prop": {
+            "layout": {
+                "layout_name": "Intakelayoutd60"
+            },
+            "display_fields": {
+                "plaintiffs": true,
+                "service_Date": true,
+                "serviceProvider": true
+            }
+        },
+        "request_params": {
+            "params": {
+                "plaintiffs": "plaintiffs",
+                "serviceDates": "serviceDates",
+                "medicalServiceProvider": "medicalServiceProvider"
+            }
+        }
+    }
+]

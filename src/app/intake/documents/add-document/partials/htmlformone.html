@@ -1,0 +1,79 @@
+<form id="htmlformone">
+    <div class="row fullsize-control">
+        <div class="col-md-6">
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Date of service</label>
+                    <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model=""  data-ng-disabled="true" name="doi" utc-manager view-format="MM/DD/YYYY" close-text="Close" />
+                </div>
+                <div class="col-md-6">
+                    <label>Returnable Date</label>
+                    <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="" is-open="opened" data-ng-disabled="true" name="doi" utc-manager view-format="MM/DD/YYYY" close-text="Close" />
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Type</label>
+                    <ui-select name="jurisdiction" ng-required="true" ng-model="addCtrl.matterInfo.jurisdiction_id" theme="selectize">
+                        <ui-select-match placeholder="Select Jurisdiction...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="jurisdiction.id as jurisdiction in addCtrl.jurisdictionList| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>
+                                    {{jurisdiction.name}}
+                                </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6">
+                    <label>Title</label>
+                    <input name="matter_name" type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" data-ng-required="true" required="required">
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-12">
+                    <label>Description</label>
+                    <textarea rows="8" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Status</label>
+                    <ui-select name="jurisdiction" ng-required="true" ng-model="addCtrl.matterInfo.jurisdiction_id" theme="selectize">
+                        <ui-select-match placeholder="Select Jurisdiction...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="jurisdiction.id as jurisdiction in addCtrl.jurisdictionList| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>
+                                    {{jurisdiction.name}}
+                                </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="form-group col-md-8">
+
+                    <label>Judge</label>
+                    <input type="text" data-ng-model="addPlaintiff.plaintiffInfo.contact" data-ng-model-options="{ debounce: 500 }" placeholder="enter name" typeahead="row as row.name for row in addPlaintiff.getContacts($viewValue)" typeahead-input-formatter="addPlaintiff.formatTypeaheadDisplay($model)" class="form-control">
+                </div>
+
+                <div class="add-now-wrap">
+                    <span class="or-connector">OR</span>
+                    <button class="btn btn-default" data-ng-click="addPlaintiff.addNewContact('PLAINTIFF')">
+                        Add New</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Field</label>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+
+    </div>
+</form>
+

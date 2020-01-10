@@ -1,0 +1,182 @@
+<style>
+.date-left-start .datepicker .ng-valid-date-disabled {
+    left: -180px !important;
+}
+</style>
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right"
+        data-ng-click="docFilter.close()">
+        <span aria-hidden="true">×</span></button>
+</div>
+
+<div class="modal-body" class="dashboard-tasks-due" style="max-height: 80vh !important; overflow-x: hidden"F>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="checklist">
+                <h2 class="subtitle">Categories</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="cat in docFilter.categories">
+                        <input
+                            checklist-value="cat"
+                            checklist-model="docFilter.filter.category_filter"
+                            type="checkbox" />
+                        <label>{{cat.doc_category_name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <ui-select
+                on-select="docFilter.dtFilterSelected(docFilter.filter.date_filter)"
+                ng-model="docFilter.filter.date_filter"
+                theme="selectize">
+                <ui-select-match 
+                    placeholder="Date Filter">
+                    {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices 
+                repeat="dtFilter.id as dtFilter in docFilter.dtFilters| filter:{name:$select.search}  | orderBy:'name'">
+                <small>
+                    {{dtFilter.name}}
+                </small>
+                </ui-select-choices>
+         </ui-select>
+
+            <div class="margin-top10px" data-ng-show="docFilter.showQuickFilters(docFilter.filter.date_filter)">
+                <ui-select
+                    on-select="docFilter.setQuickFilters(docFilter.filter.quickFilters.dateRange)"
+                    ng-model="docFilter.filter.quickFilters"
+                    theme="selectize">
+             <ui-select-match 
+                 placeholder="Quick Filter">
+                 {{$select.selected.value}}
+             </ui-select-match>
+             <ui-select-choices 
+             repeat="dtFilter as dtFilter in docFilter.quickFilters| filter:{value:$select.search}">
+             <small>
+                 {{dtFilter.value}}
+             </small>
+             </ui-select-choices>
+            </ui-select>
+            </div>
+
+            <div class="row margin-top10px"
+                data-ng-show="docFilter.showDateFilter(docFilter.filter.quickFilters)">
+                <div class="col-md-6">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control"
+                            datepicker-popup="MM/dd/yyyy"
+                            data-ng-model="docFilter.filter.start_date"
+                            is-open="openedStartDate"
+                            data-ng-disabled="false"
+                            id="custstartDatediv"
+                            validate-date error-div="#custstartDatediv"       
+                            tooltip="mm/dd/yyyy"
+                            placeholder="mm/dd/yyyy"
+                            name="doi"
+                            data-ng-change="docFilter.setMinMaxDate(docFilter.filter.start_date,'startDate')"
+                            close-text="Close" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default"
+                                ng-click="docFilter.openCalender($event);openedStartDate = true;openedEndDate=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="custstartDateErr">Invalid date format!</div>
+                </div>
+
+                <div class="col-md-6 date-left-start">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control"
+                            datepicker-popup="MM/dd/yyyy"
+                            data-ng-model="docFilter.filter.end_date"
+                            is-open="openedEndDate"
+                            data-ng-disabled="false"
+                            id="custendDatediv"
+                            validate-date error-div="#custendDatediv"       
+                            tooltip="mm/dd/yyyy"
+                            placeholder="mm/dd/yyyy"   
+                            data-ng-change="docFilter.setMinMaxDate(docFilter.filter.end_date,'endDate')"
+                            close-text="Close" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default"
+                                ng-click="docFilter.openCalender($event);openedEndDate = true;openedStartDate=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="custendDateErr">Invalid date format!</div>
+                </div>
+            </div>
+
+            <div class="row margin-top30px">
+                <div class="col-md-12">
+                    <label>Created By </label>
+                    <ui-select
+                        ng-model="docFilter.filter.created_by_filter"
+                        theme="selectize"
+                        ng-change="">
+			                    <ui-select-match 
+                                    placeholder="Select User..." >
+			                        {{$select.selected.Name}} 
+			                    </ui-select-match> 
+                             <ui-select-choices 
+				                    repeat="user.uid as user in docFilter.users| filter:{Name:$select.search} | orderBy:'Name' ">
+			                     <small> {{user.Name}} </small> 
+                             </ui-select-choices> 
+                        </ui-select>
+                </div>
+            </div>
+
+            <div class="row margin-top30px">
+                <div class="col-md-12">
+                    <label>Updated By </label>
+                    <ui-select
+                        ng-model="docFilter.filter.updated_by_filter"
+                        theme="selectize"
+                        ng-change="">
+			                    <ui-select-match 
+                                    placeholder="Select User..." >
+			                        {{$select.selected.Name}} 
+			                    </ui-select-match> 
+                             <ui-select-choices 
+				                    repeat="user.uid as user in docFilter.users| filter:{Name:$select.search} | orderBy:'Name'">
+			                     <small> {{user.Name}} </small> 
+                             </ui-select-choices> 
+                        </ui-select>
+                </div>
+            </div>
+
+            <div class="row margin-top10px"> 
+                    <div class="col-md-12">
+                <li class="checkbox">
+                    <input type="checkbox" data-ng-model="docFilter.filter.need_to_be_Reviewed" data-ng-change=""
+                    data-ng-true-value="1" data-ng-false-value="0">
+                    <label>Needs Review</label>
+                </li>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="pull-right ">
+            <button data-ng-click="docFilter.resetFilters()"
+                type="button"
+                class="btn btn-default btn-styleNone">
+                Reset</button>
+
+            <button data-ng-click="docFilter.apply(docFilter.filter)"
+                type="button"
+                ng-disabled= "docFilter.isDatesValid() || docFilter.enableApply"    
+                class="btn btn-default">
+                Apply</button>
+        </div>
+    </div>

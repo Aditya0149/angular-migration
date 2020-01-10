@@ -1,0 +1,190 @@
+<style type="text/css">
+
+
+    .radio {
+        margin-top: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio input {
+        outline: none !important;
+        box-sizing: initial !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .reason-list-order li {
+        float: left;
+        margin-left: 20px;
+        width: 95px;
+    }
+    .checkbox.padding-top10px{
+    padding-top: 10px !important;
+}
+</style>
+<cancel-pending-requests></cancel-pending-requests>
+
+<div >
+
+    <div class="row">
+
+        <div class="col-md-12" style="padding-top: 10px;padding-bottom: 5px;">
+            <div class="col-md-5 pull-left" style="margin-left:-5px">
+                <span>Allow users to add events </span> <span class="zero-border" ng-switcher="" ng-model="events.matterCollaborationEventPermission"
+                    style="display:inline-block;vertical-align: middle" ng-click="events.matterCollaborationEventPermissionToggle(events.matterCollaborationEventPermission)">
+                    <div class="switch switch-left" ng-class="{'switch-left': !model, 'switch-right': model}">
+                        <div class="switch-button">&nbsp;</div>
+                    </div>
+                </span>
+                <!-- <p ng-if="events.clxGridOptions.selectedItems.length > 0">{{events.clxGridOptions.selectedItems.length}}
+                        Selected</p> -->
+            </div>
+            <div class="col-md-7 pull-right">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null" data-ng-show="events.showSearch">
+                            <div class="default-searchico sprite"></div>
+                            <input type="text" focus-me="events.showSearch" data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="events.searchEvent" data-ng-change="events.filterRetain();" class="form-control ng-pristine ng-valid ng-touched">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+                    <!-- <li>
+                        <a>
+                            <span data-ng-click="events.openFilterPopUp();" class="sprite default-filter" tooltip="Filter"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li> -->
+                    <li class="search-overlap">
+                        <ul data-ng-hide="events.showSearch" class="ng-hide">
+                            <li style="margin-right: -15px;"><a data-ng-click="events.showSearch = true" data-ng-model="events.searchEvent"
+                                    data-ng-change="events.filterRetain();"><span class="sprite default-searchico-menu "
+                                        tooltip="Search" tooltip-placement="right"></span></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="pull-right ">
+                <clx-filter-tags on-filter-cancel="events.cancleFilterTags" tag-list="events.tags" class="ng-isolate-scope">
+                    <ul class="tags">
+                    </ul>
+                </clx-filter-tags>
+            </div>
+        </div>
+
+    </div>
+    <div class="report-responsive" style="margin-right:75px;"  ng-if="events.eventsList.length > 0">
+        <div data-ng-show="events.eventsList.length > 0">
+            <show-record-count3 more="events.getMoreRoleContacts()" all="events.getAllRoleContacts('all')" displayed="events.eventsList.length"
+                hide-pager="{{events.eventsList.length < events.totalCount}}" total="events.totalCount"></show-record-count3>
+        </div>
+        <div>
+            <div>
+                <div class="row header-row">
+                    <div class="cell" data-width="05" cal-width>
+                        <div class="checkbox padding-top10px">
+                            <input type="checkbox" 
+                            data-ng-checked="events.allEventselected()"
+                            data-ng-model="events.clxGridOptions.selectAll" data-ng-click="events.selectAllEvent(events.clxGridOptions.selectAll)" />
+                            <label></label>
+                        </div>
+                    </div>
+                    <div class="cell" data-width="25" cal-width>Event Type</div>
+                    <div class="cell" data-width="15" cal-width>Start Date </div>
+                    <div class="cell" data-width="15" cal-width>End Date</div>
+                    <div class="cell" data-width="15" cal-width>Location</div>
+                    <div class="cell" data-width="25" cal-width>Description</div>
+                </div>
+            </div>
+            <div>
+                <div class="dashboard-tasks-due" style="max-height:200px;overflow-x: hidden;">
+                    <div data-ng-repeat="eveList in events.eventsList | filter: events.searchEvent" grid-size-updated>
+                        <!-- {{year}} <br> {{eveList}} -->
+                        <div class="row body-row contact-sub-border">
+                            <!-- data-ng-class="{'selected-grid-row':events.isContactRoleSelected(contact)==true}" -->
+                            <!-- data-ng-class="{'selected-grid-row':events.display.eventSelected[event.event_id] }" -->
+                            <div class="cell" data-width="05" cal-width>
+                                <div class="checkbox padding-top10px">
+                                    <input type="checkbox" data-ng-checked="events.isEventSelected(eveList)" 
+                                        checklist-model="events.clxGridOptions.selectedItems"
+                                        checklist-value="eveList" />
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="cell" data-width="25" cal-width>
+                                <div class="cursor-pointer" style="padding-top:10px !important;" data-ng-click="events.openContactCard(contact)">
+                                    <span  ng-if="!(eveList.label_id == 100 || eveList.label_id == 32 || eveList.label_id == 19)">{{eveList.event_name}}</span>
+                                    <span ng-if="(eveList.label_id == 100 || eveList.label_id == 32 || eveList.label_id == 19)"> {{eveList.title}}</span>
+                                </div>
+                            </div>
+                            <div class="cell" data-width="15" cal-width>
+                                <div style="padding-top:10px !important;" ng-if="eveList.all_day == 1">{{eveList.utcstart | utcDateFilter: 'MM-DD-YYYY' :eveList.all_day:'start'}}</div>
+                                <div style="padding-top:10px !important;"ng-if="eveList.all_day == 0">{{eveList.utcstart | utcDateFilter: 'MM-DD-YYYY hh:mm A' :eveList.all_day:'start'}}</div>
+                            </div>
+                            <div class="cell" data-width="15" cal-width data-ng-show="eveList.utcstart != eveList.utcend">
+                                <div style="padding-top:10px !important;" ng-if="eveList.all_day == 1" >{{eveList.utcend | utcDateFilter: 'MM-DD-YYYY' :eveList.all_day:'end'}}</div>
+                                <div style="padding-top:10px !important;"ng-if="eveList.all_day == 0">{{eveList.utcend | utcDateFilter: 'MM-DD-YYYY hh:mm A' :eveList.all_day:'end'}}</div>
+                            </div>
+                            <div class="cell" data-width="15" cal-width data-ng-show="eveList.utcstart == eveList.utcend">
+                                    <div style="padding-top:10px !important;">{{eveList.utcstart | utcDateFilter: 'MM-DD-YYYY' :eveList.all_day:'start'}}</div>
+                                </div>
+                            <div class="cell" data-width="15" cal-width >
+                                <div style="padding-top:10px !important;">{{eveList.location}}</div>
+                            </div> 
+                            <div class="cell" data-width="25" cal-width>
+                                <div style="padding-top:10px !important;">{{eveList.description}}</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="moreLink" class="row margin-top20px text-center" style="overflow: hidden !important;position: fixed;width: 100%;bottom: 05px;">
+            <div data-ng-show="events.eventsList.length < events.totalCount">
+                <div data-ng-show="!events.isAllRole" class="col-md-12 relative-container">
+                    <div data-ng-hide="events.eventsList.length == 0" class="text-center pull-left" style="width:94%">
+                        <a data-ng-click="events.getMoreRoleContacts()">More</a>
+                        <span class="paddingLR-10px">|</span>
+                        <a data-ng-click="events.getAllRoleContacts('all')">All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="text-center  margin-top30px" ng-if="events.eventsList.length == 0">
+    <span>There aren’t any events associated with this matter.</span>
+</div>

@@ -1,0 +1,36 @@
+<!-- CONTENT SECTION-->
+<cancel-pending-requests></cancel-pending-requests>
+
+<div id="content">
+    <div class="container-fluid inline-form-label">
+        <div class="row margin-top30px">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9">
+                        Login with Firm: <ui-select ng-model="firms.firm_id" theme="selectize"
+                                                    on-select="addEditEvent.showhideDates(addEditEvent.event, addEditEvent.pageMode)">
+                            <ui-select-match placeholder="Select Firm">
+                                {{$select.selected.firm_name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item.firm_id as item in firms.firmsList | filter:{ firm_name:$select.search }">
+                                <small>
+                                    {{item.firm_name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <button data-ng-click="firms.saveProceed(firms.firm_id)"
+                                class="btn btn-default pull-left margin-top20px " ng-disabled="!firms.firm_id">
+                            Save & Proceed
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            </div>
+    </div>
+</div>

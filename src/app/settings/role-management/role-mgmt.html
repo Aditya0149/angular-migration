@@ -1,0 +1,94 @@
+<div class="role-management-wrapper">
+	<div class="col-md-12">
+		<div class="col-md-1 margin-top18px padding-0 w-55px">
+			<label> User: </label>
+	
+		</div>
+		<div class="col-md-2 access-management-dropdown margin-top10px padding-0">
+			<ui-select class="margin-bottom10px" on-select="roleMgmt.getUserInfo($select.selected);" ng-model="roleMgmt.selectedUser"
+			 theme="selectize">
+				<ui-select-match placeholder="Select Name">
+					{{$select.selected.name}}
+				</ui-select-match>
+				<ui-select-choices repeat="users.name as user in roleMgmt.users| filter:{name:$select.search} | orderBy:'name'">
+					<small>
+						{{user.name}}
+					</small>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	
+		<div class="col-md-4 margin-top18px">
+			<label class="w-45px">Role: </label>
+			<span> {{roleMgmt.userInfo.role}} </span>
+		</div>
+	
+	</div>
+	<div class="page-title-border-links col-md-12 mt-0"></div>
+	
+	<div class="col-md-12 padding-0">
+	
+		<accordion>
+			<accordion-group ng-if="(roleMgmt.launchpadAccess || app.app_name == 'Matter Manager') && app.app_name != 'Expense Manager'" ng-repeat="app in roleMgmt.apps | orderBy:'app_id'">
+				<accordion-heading>
+					<div class="pull-left">{{app.app_name}}</div>
+					<div ng-if="app.app_name != 'Matter Manager'" class="pull-right checkbox text-center negative-mr-5">
+						<input data-ng-disabled="roleMgmt.userInfo.is_admin ==1" type="checkbox" data-ng-model="app.permission" ng-true-value="1" ng-false-value="0"
+						 data-ng-show="roleMgmt.isGraceOver !=0" ng-click="$event.stopPropagation();" />
+						<label></label>
+	
+					</div>
+					<div>
+						<i ng-if="app.app_name == 'Matter Manager'" data-ng-click="roleMgmt.toggleAccordionGroup(app)" ng-class="{'default-upward-arrow sprite pull-right sprite': app.$open, 'default-downward-arrow sprite pull-right sprite': !app.$open}"></i>
+					</div>
+	
+				</accordion-heading>
+				<div ng-if="app.app_name == 'Matter Manager'">
+					<div class="report-responsive" data-ng-hide="roleMgmt.userList.length == 0">
+						<div class="row header-row gray-bg  ">
+							<div class="cell" data-width="37">Entity </div>
+							<div class="cell text-center" data-width="15">View</div>
+							<div class="cell text-center" data-width="15">Add</div>
+							<div class="cell text-center" data-width="15">Edit</div>
+							<div class="cell text-center" data-width="15">Delete</div>
+						</div>
+						<div class="row body-row" data-ng-click="roleMgmt.setDeafultPermissions(userinfo)" ng-repeat="userinfo in roleMgmt.userList"
+							 ng-show="roleMgmt.userList.length > 0" grid-size no-sticky="true">
+							<div class="cell" data-width="37">
+								<span>{{userinfo.entity_name}} </span>
+							</div>
+							<div class="cell checkbox text-center" data-width="15">
+								<input data-ng-disabled="!(userinfo.entity_name=='User Management' || userinfo.entity_name=='Matter Valuation' || userinfo.entity_name=='Settlement') ||roleMgmt.userInfo.is_admin == 1 " type="checkbox" data-ng-model="userinfo.V" data-ng-true-value="1" data-ng-false-value="0" data-ng-show="roleMgmt.isGraceOver !=0" /><label></label>
+							</div>
+							<div class="cell checkbox text-center" data-width="15">
+								<input data-ng-disabled="roleMgmt.userInfo.is_admin ==1 || (userinfo.entity_name=='Task due date') || (userinfo.entity_name=='Matter Valuation')" type="checkbox" data-ng-model="userinfo.A" data-ng-true-value="1" data-ng-false-value="0" data-ng-show="roleMgmt.isGraceOver !=0" /><label></label>
+							</div>
+							<div class="cell checkbox text-center" data-width="15">
+								<input data-ng-disabled="roleMgmt.userInfo.is_admin == 1 " type="checkbox" data-ng-model="userinfo.E" data-ng-true-value="1" data-ng-false-value="0" data-ng-show="roleMgmt.isGraceOver !=0" /><label></label>
+							</div>
+							<div class="cell checkbox text-center" data-width="15">
+								<input data-ng-disabled=" roleMgmt.userInfo.is_admin == 1 || (userinfo.entity_name=='Task due date') || (userinfo.entity_name=='Matter Valuation') " type="checkbox" data-ng-model="userinfo.D" data-ng-true-value="1" data-ng-false-value="0" data-ng-show="roleMgmt.isGraceOver !=0" /><label></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</accordion-group>
+		</accordion>
+	</div>
+	<div>
+	
+		<div class="row margin-top18px margin-top0px pull-right pb-60">
+			<div class="pull-left">
+				<button data-ng-click="roleMgmt.reset(roleMgmt.userList)" ng-disabled="roleMgmt.setResetBtn()" class="btn btn-default">
+					Reset
+				</button>
+			</div>
+			<div class="pull-left margin-left10px">
+				<button data-ng-click="roleMgmt.save(roleMgmt.userList)" ng-disabled="roleMgmt.setSaveBtn()" class="btn btn-default">
+					Save
+				</button>
+			</div>
+		</div>
+	</div>
+
+</div>

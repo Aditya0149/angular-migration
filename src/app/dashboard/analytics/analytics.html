@@ -1,0 +1,140 @@
+<div class="analytics-wrapper">
+    <div class="row margin0" data-ng-show="dashboardAnalytics.display.statusStrip">
+        <div class="dropdown  pull-left head-padding-10px" data-ng-show="dashboardAnalytics.isMD">
+            <button id="status-strip" type="button" class="btn sortby-dropdown dropdown-toggle heading-black"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{dashboardAnalytics.statusStripData}}
+                <span data-ng-show="dashboardAnalytics.isMD" class="default-downward-arrow-black sprite dropdown-arrow"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="status-strip">
+                <li data-ng-click="dashboardAnalytics.showTopStrip(type)" data-ng-repeat="type in dashboardAnalytics.topStripOptions "><a>{{type}}</a>
+                </li>
+            </ul>
+        </div>
+        <h2 data-ng-show="!dashboardAnalytics.isMD" class="pull-left margin-top25px">{{dashboardAnalytics.statusStripData}}</h2>
+        <!--current matter strip-->
+        <div data-ng-show="dashboardAnalytics.statusStripData === 'Current Matters'" data-ng-include="'app/dashboard/analytics/statuswise-count.html'">
+        </div>
+
+        <!--average matter age-->
+        <div data-ng-if="dashboardAnalytics.statusStripData === 'Average Age'" data-ng-include="'app/dashboard/analytics/avarage-matter-age.html'">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!--matter trend chart-->
+            <div class="remove-border" data-ng-show="dashboardAnalytics.display.matterTrend">
+                <div class="dropdown  pull-left">
+                    <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle heading-black"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{dashboardAnalytics.selectedMatterTrend}}
+                        <span data-ng-show="dashboardAnalytics.isMD" class="default-downward-arrow-black sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu" data-ng-show="dashboardAnalytics.isMD" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-click="dashboardAnalytics.getDataForMaterTrend(type)" data-ng-repeat="type in dashboardAnalytics.matterTypes"><a>{{type}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="child-ul-right subnav-compact">
+                    <clx-filter-options fiter-opts="dashboardAnalytics.matterTypesFilters" on-filter-select="dashboardAnalytics.filterMatterTrendData"
+                        selected-filter="dashboardAnalytics.selectedMatterTrendFilter"></clx-filter-options>
+                </div>
+            </div>
+            <div class="flexCont"></div>
+            <div class="clearfix"></div>
+
+
+
+            <div class="margin-top20px">
+                <div id="area-chart" class="intook-matters"></div>
+            </div>
+            <!--matter trend chart end-->
+
+            <!--venue accordion start-->
+            <div class="row ">
+                <div class="col-md-5 remove-border ">
+                    <h2>Current Matters by Venue</h2>
+                </div>
+
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="flexCont"></div>
+            <div class="paddingTB-5px clearfix">
+                <div class="pull-left dropdown">
+                    <span class="sortby-align">Jurisdiction:</span>
+                    <button id="Button2" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{dashboardAnalytics.map.jurisdiction}}
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu dashboard-tasks-due" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-click="dashboardAnalytics.getVenuesForJurisdiction(jurisdiction)" data-ng-repeat="jurisdiction in dashboardAnalytics.jurisdictionList | orderBy:'name'">
+                            <a>{{jurisdiction.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pull-left dropdown">
+                    <span class="sortby-align">Venue:</span>
+                    <button id="Button2" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{dashboardAnalytics.map.venue}}
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu dashboard-tasks-due" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-click="dashboardAnalytics.getMattersForVenue(venue)" data-ng-repeat="venue in dashboardAnalytics.venues | orderBy:'name'">
+                            <a>{{venue.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pull-left height-30px margin-left20px" data-ng-hide="(dashboardAnalytics.map.jurisdiction == 'New York' || dashboardAnalytics.map.jurisdiction == dashboardAnalytics.selectedJurisdiction.jurisdiction) && dashboardAnalytics.map.venue === 'Select Venue'">
+                    <a href="javascript:void(0)" tooltip="Reset" data-ng-click="dashboardAnalytics.reset()" class="reset-icons sprite"></a></div>
+            </div>
+            <div class="flexCont"></div>
+            <div class="margin-top10px">
+                <!-- <div id="googleMap" style="height: 400px;" class="google-map-style"></div>
+                <clx-google-map venue="dashboardAnalytics.map.venue" marker-data="dashboardAnalytics.map.markers"></clx-google-map>-->
+                <div class="text-center" data-ng-show="dashboardAnalytics.noDataForVenueMsg(dashboardAnalytics.map.markers)">
+                    No data available for the venue
+                </div>
+                <ul class="list-styled dashboard-tasks-due">
+                    <li data-ng-repeat="(location, matter)  in dashboardAnalytics.map.markers" class="paddingTB-5px">
+                        <a data-ui-sref="add-overview({matterId: matter.matter_id})">{{matter.matter_name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!--venue accordion end-->
+        </div>
+
+        <div class="col-md-4" data-ng-show="dashboardAnalytics.isMD">
+            <div data-ng-include="'app/dashboard/analytics/MD-view.html'"></div>
+        </div>
+
+        <div class="col-md-4 margin-top20px" data-ng-show="!dashboardAnalytics.isMD && dashboardAnalytics.display.dashboard">
+            <div>
+                <h2 class="head-padding-10px">Recent Activities</h2>
+            </div>
+            <div class="flexCont"></div>
+            <ul class="recent-act-list">
+                <li data-ng-click="dashboardAnalytics.gotoActivity(activity)" data-ng-repeat="activity in dashboardAnalytics.userActivities">
+                    <div class="head-padding-10px title45Percent">
+                        <h2 class="ellipsis-nowrap">{{activity.matter_name}}</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{activity.details}}
+                        </div>
+                        <div class="col-md-4">
+                            <div>{{activity.date | utcDateFilter:'MM/DD/YYYY'}}</div>
+                            <div>{{activity.date | utcDateFilter:'hh:mm A'}}</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="text-center margin-top10px clear-both" data-ng-show="dashboardAnalytics.userActivities.length == 0">
+                <p>No Recent Activities available.</p>
+            </div>
+        </div>
+    </div>
+</div>

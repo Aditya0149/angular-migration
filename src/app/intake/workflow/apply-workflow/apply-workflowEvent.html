@@ -1,0 +1,143 @@
+<style>
+    .task-workflow-checkbox {
+        margin: 17px 20px 0 20px !important;
+    }
+    #report-content{
+    padding-bottom: 65px;
+}
+    </style>
+<div id="report-content" data-ng-if="applyWorkflowEvent.viewapplyworkflow && (!applyWorkflowEvent.goToTask)">
+    <div class="row  margin0  margin-top10px">
+        <div class="col-md-12 paddingRLR">
+            <h2 class="page-title">Events</h2>
+        </div>
+    </div>
+    <div class="margin-top10px flexCont col-md-12"></div>
+    <div class="margin-top30px"></div>
+
+    <div data-ng-repeat="data in filtered = (applyWorkflowEvent.eventInfo )" class="workflow-task-reminder-main">
+        <div class="row margin-top10px">
+            <div class="pull-left task-workflow-checkbox">
+                <div class="checkbox">
+                    <input type="checkbox" data-ng-click="applyWorkflowEvent.setSelectedEvent(data)" data-ng-checked="data.checked" />
+                    <label></label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Event Name</label>
+                <input style="width: 100%;" type="text" data-ng-disabled="true" name="eventname" class="form-control"
+                    data-ng-model="data.event_title" />
+            </div>
+            <div class="col-md-3" data-ng-form="applyWorkflowEvent.assiginedTo">
+                <label>Assign To </label>
+                <ui-select multiple ng-model="data.assigned_to" style="width: 100%" name="userid" theme="select2" class>
+                    <ui-select-match>
+                        {{$item.fullName}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="applyWorkflowEvent.groupAssignedToUsers" group-filter="['All','Firm User','Intake Assigned User']"
+                        repeat="user.userId as user in applyWorkflowEvent.assignedTo | filter:{fullName:$select.search} | orderBy: 'fullName'">
+                        <small>
+                            {{user.fullName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="pull-left">
+                <div>
+                    <label>Event Date</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" view-format="MM/DD/YYYY" data-ng-disabled="true"
+                            data-ng-required="true" datepicker-popup="MM/dd/yyyy" data-ng-model="data.duedate" is-open="applyWorkflowEvent.opened[applyWorkflowEvent.openDatepicker($index)]"
+                            id="{{'duedateeventwork' + $index}}" validate-date error-div="{{'#duedateeventwork'+ $index}}"
+                            tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" datepicker-options="dateOptions" close-text="Close"
+                            show-button-bar="false" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="applyWorkflowEvent.openCalender($event,$index);">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="error" style="float: none;">Invalid date format!</div>
+                </div>
+
+            </div>
+            <div data-ng-if="data.all_day==0" class="col-md-3">
+
+                <div class="col-md-6 padding-0">
+                    <label>Start</label>
+                    <clx-timepicker class="form-field" ng-model="theStartTime" the-real-time="data.start_time"
+                        on-select="applyWorkflowEvent.setEndTime(data.start_time,$index)">
+                    </clx-timepicker>
+                </div>
+
+
+                <div class="col-md-6 padding-0">
+                    <label>End</label>
+                    <clx-timepicker class="form-field" ng-model="theEndTime"
+                        the-real-time="data.end_time">
+                    </clx-timepicker>
+                </div>
+            </div>
+        </div>
+        <div class="row apply-workflow-block">
+            <div class="col-md-7 add-event-popup workflow-task-reminder-checkbox" style="width: 61%;">
+                <label>Reminder Days Prior to Due Date</label>
+                <div class="row padding-left-5">
+                    <div class="col-md-1 checkbox" data-ng-repeat="remiderdays in data.reminderDaysList">
+                        <input type="checkbox" checklist-value="remiderdays" checklist-model="data.reminder_days" />
+                        <label>{{remiderdays | replaceText}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 margin-top10px">
+                <div>
+                    <label>And/Or Custom Date Reminder</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" view-format="MM/DD/YYYY" data-ng-disabled="true"
+                            data-ng-required="true" datepicker-popup="MM/dd/yyyy" data-ng-model="data.custom_reminder"
+                            is-open="applyWorkflowEvent.openedReminder[applyWorkflowEvent.openReminderDatepicker($index)]"
+                            id="{{'custom_reminderwork' + $index}}" validate-date error-div="{{'#custom_reminderwork'+ $index}}"
+                            tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" datepicker-options="dateOptions" close-text="Close"
+                            show-button-bar="false" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="applyWorkflowEvent.openReminderCalender($event,$index);">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="error" style="float: none;">Invalid date format!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+        <p>There aren't any events associated with this workflow.</p>
+    </div>
+
+    <div class="row margin-top30px">
+        <div class="col-md-6"></div>
+        <div class="col-md-4 text-center">
+            <button data-ng-click="applyWorkflowEvent.goToTasks(applyWorkflowEvent.eventInfo)" class="btn btn-default btn-styleNone">
+                Back</button>
+            <button data-ng-click="applyWorkflowEvent.cancel()" class="btn btn-default btn-styleNone">
+                Cancel</button>
+            <button data-ng-click="applyWorkflowEvent.apply(applyWorkflowEvent.eventInfo)" type="button" class="btn btn-default">
+                Apply
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<div data-ng-if="!applyWorkflowEvent.viewapplyworkflow">
+    <div data-ng-controller="WorkflowintakeCtrl as workflow" data-ng-include="'app/intake/workflow/workflow.html'">
+    </div>
+</div>
+
+
+<div data-ng-if="applyWorkflowEvent.goToTask">
+    <div data-ng-controller="applyintkWorkflowTaskCtrl as applyWorkflowTask" data-ng-include="'app/intake/workflow/apply-workflow/apply-workflowTask.html'">
+    </div>
+</div>

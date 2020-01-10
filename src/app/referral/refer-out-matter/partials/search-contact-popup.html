@@ -1,0 +1,147 @@
+<div class="container-fluid padding-0">
+	<div class="modal-header">
+		<h2 class="pull-left page-title"> Search Contact</h2>
+		<button class="close fl-right" data-ng-click="searchRef.cancel()">
+		<span aria-hidden="true">×</span></button>
+	</div>
+	<form name="searchForm" class="margin-top10px col-md-12 modal-body">
+		<div class="row">
+			<div class="col-md-12 input-group">
+				<div class="col-md-4">
+					<ui-select
+						ng-model="searchRef.searchParam"
+						on-select="searchRef.setSelectedTab(searchRef.searchParam)"
+						theme="selectize">
+						<ui-select-match 
+							placeholder="Select">
+							{{$select.selected.label}}
+						</ui-select-match>
+						<ui-select-choices 
+							repeat="tab.value as tab in searchRef.searchParams| filter:{label:$select.search}">
+							{{tab.label}}<br />
+						</ui-select-choices>
+					</ui-select>
+				</div>
+				<div class="col-md-8 padding-0" data-ng-if="searchRef.currentTab != 'inviteNew'">
+					<div class="col-md-8">
+						<div> 
+							<input class="col-md-6 form-control"
+								data-ng-model="searchRef.searchString"
+								placeholder="Type Here"
+								type="text">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<button
+							type="submit"
+							data-ng-click="searchRef.getSearchedData(searchRef.searchString,searchRef.searchParam)"
+							class="btn btn-default global-search-btn" aria-hidden="true">
+						Search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="margin-top10px" data-ng-show="searchRef.showNoDataMsg && searchRef.searchString">
+		No data for search query "{{searchRef.searchString}}"
+	</div>
+	<div data-ng-show="searchRef.isDataPresent" class="modal-body static-new-scrollbar" style=" padding-top: 0; max-height: 65vh;overflow-x: hidden;">
+		<div>
+		<div>
+			<div data-ng-show="searchRef.isDataPresent">
+				<div data-ng-if="searchRef.currentTab === 'lawFirm'" class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-7 "><strong>{{searchRef.lawFirm.length || 0}} </strong>Result(s) found</div>
+							<div class="col-md-5"></div>
+						</div>
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div  data-ng-click="searchRef.selectedContact(lawfirm)" class="col-md-4 margin-top10px ellipsis-nowrap"
+						data-ng-repeat="lawfirm in searchRef.lawFirm ">
+						<strong>
+						<a tooltip="{{lawfirm.firm_name}}"
+							tooltip-append-to-body="true" tooltip-placement="top-left">{{lawfirm.firm_name}}</a>
+						</strong>
+						<br />
+						<span tooltip="{{lawfirm.email_id}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">Email :{{lawfirm.email_id}}</span>
+						<br />
+						<span tooltip="{{lawfirm.smp_name}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">SMP Name :{{lawfirm.smp_name}}</span>
+						<br />
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div class="col-md-12 margin-top10px" data-ng-show="!searchRef.lawFirm">
+						No Law firms found 
+					</div>
+				</div>
+				<div data-ng-if="searchRef.currentTab === 'searchByName'" class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-7"><strong>{{searchRef.searchByName.length || 0}}</strong> Result(s) found</div>
+							<div class="col-md-5"></div>
+						</div>
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div data-ng-click="searchRef.selectedContact(att)" data-ng-repeat="att in searchRef.searchByName" 
+						class="margin-top10px col-md-4 ellipsis-nowrap">
+						<strong>
+						<a href="javascript:void(0)"
+							tooltip="{{att.firstname}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left"
+							data-ng-click="searchRef.goToContact(contact)">{{att.name}} </a>
+						</strong>
+						<br />
+						<span tooltip="{{att.email_id}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">{{att.email_id}}</span>
+						<br />
+						<span tooltip="{{att.firm_name}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">{{att.firm_name}}</span>
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div class="col-md-12 margin-top10px" data-ng-show="!searchRef.searchByName">
+						No Attorney records found
+					</div>
+				</div>
+				<div data-ng-if="searchRef.currentTab === 'searchByEmail'" class="row margin-top20px">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-7"><strong>{{searchRef.searchByEmail.length || 0}}</strong> Result(s) found</div>
+							<div class="col-md-5"></div>
+						</div>
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div data-ng-click="searchRef.selectedContact(att)" data-ng-repeat="att in searchRef.searchByEmail" 
+						class="margin-top10px col-md-4 ellipsis-nowrap">
+						<strong>
+						<a href="javascript:void(0)"
+							tooltip="{{att.firstname}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left"
+							data-ng-click="searchRef.goToContact(contact)">{{att.name}} </a>
+						</strong>
+						<br />
+						<span tooltip="{{att.email_id}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">{{att.email_id}}</span>
+						<br />
+						<span tooltip="{{att.firm_name}}"
+							tooltip-append-to-body="true"
+							tooltip-placement="top-left">{{att.firm_name}}</span>
+						<div class="flexCont margin-top10px"></div>
+					</div>
+					<div class="col-md-12 margin-top10px" data-ng-show="!searchRef.searchByEmail">
+						No Attorney records found
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

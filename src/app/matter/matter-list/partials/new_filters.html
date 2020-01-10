@@ -1,0 +1,237 @@
+<style>
+    .datepicker .ng-valid-date-disabled{left: -180px !important;}
+</style>
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left"> Filters</h1>
+    <button class="close fl-right" data-ng-click="cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body dashboard-tasks-due" style="max-height: 70vh !important; overflow-x: hidden">
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Status</h2>
+                <ui-select multiple class="width100" ng-model="matterFilters.statusFilter" on-select="statusSelected(matterFilters.statusFilter)"
+                    on-remove="statusSelected(matterFilters.statusFilter)" theme="select2">
+                    <ui-select-match placeholder="Select Status...">
+                        {{$item.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="status in viewModel.statuses| filter:{name:$select.search}">
+                        <small>
+                            {{status.name |replaceByBlank}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div data-ng-show="substatuses.length > 0" class="margin-top10px">
+                <h2 class="subtitle">Substatus</h2>
+                <ul class="dashboard-tasks-due" style="max-height: 100vh;position: relative;">
+                    <li ng-repeat-start="status in substatuses| filter:{name:$select.search} " ng-show="status.name == '' || status.name == '{Blank}'">
+                        <label>{{status.statusname |replaceByBlank}}</label>
+                    </li>
+                    <li class="checkbox" ng-repeat-end="status in substatuses| filter:{name:$select.search} ">
+                        <input checklist-value="status" checklist-model="selectionModel.multiFilters.substatus" type="checkbox" />
+                        <label>{{status.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--US#6563 start-->
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Type</h2>
+                <ui-select ng-model="matterFilters.types" on-select="typeSelected(matterFilters.types)" theme="selectize">
+                    <ui-select-match placeholder="Select Type...">
+                        {{$select.selected.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="type in viewModel.type| filter:{name:$select.search} | orderBy: 'name'">
+                        <small>
+                            {{type.name |replaceByBlank}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div data-ng-show="subtypes.length > 0" class="margin-top10px">
+                <h2 class="subtitle">Subtype</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="type in subtypes">
+                        <input checklist-value="type" checklist-model="selectionModel.multiFilters.subtypes" type="checkbox" />
+                        <label>{{type.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--End-->
+
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h3 class="subtitle">Category</h3>
+                <ul>
+                    <li class="checkbox" ng-repeat="item in viewModel.categories">
+                        <input checklist-value="item" data-ng-checked="isOptionChecked(item,'categories')" checklist-model="selectionModel.multiFilters.categories"
+                            type="checkbox">
+                        <label>{{item.name|replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3">
+            <div class="row">
+                <h2 class="subtitle">Law Type</h2>
+                <ul>
+                    <li class="checkbox" ng-repeat="item in viewModel.lawtypes">
+                        <input checklist-value="item" checklist-model="selectionModel.multiFilters.lawtypes" type="checkbox">
+                        <label>{{item.name|replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="row row margin-top10px">
+                <h2 class="subtitle">Jurisdiction</h2>
+                <ui-select on-select="setVenues(selectionModel.multiFilters.jurisdictions)" ng-model="selectionModel.multiFilters.jurisdictions"
+                    theme="selectize">
+                    <ui-select-match placeholder="Select jurisdiction...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in viewModel.jurisdictions| filter:{name:$select.search} | orderBy: 'name'">
+                        <small>
+                            {{item.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+            <div class="row row margin-top10px">
+                <h2 class="subtitle">Venue</h2>
+                <ui-select on-select="checkVenues(selectionModel.multiFilters.venues[0])" ng-model="selectionModel.multiFilters.venues[0]"
+                    theme="selectize">
+                    <ui-select-match placeholder="Select Venue...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in venues | filter:{name:$select.search} | orderBy: 'name'">
+                        <small>
+                            {{item.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                <span ng-if="selectionModel.multiFilters.jurisdictions == undefined">
+                    <small>Please select jurisdiction</small>
+                </span>
+                <span ng-if="selectionModel.multiFilters.jurisdictions != undefined && selectionModel.multiFilters.venues[0] == null">
+                    <small>Please select venue</small>
+                </span>
+                <span ng-if="venues.length == 0 && selectionModel.multiFilters.jurisdictions != undefined">
+                    <small>No venues found</small>
+                </span>
+            </div>
+
+            <div class="row margin-top10px">
+                <h2 class="subtitle">Lead Attorney</h2>
+                <ui-select ng-model="selectionModel.multiFilters.leadAttorney" theme="selectize">
+                    <ui-select-match placeholder="Select Attorney...">
+                        {{$select.selected.attName}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.uid as item in attorneys| filter:{name:$select.search} | orderBy: 'attName'">
+                        <small>
+                            {{item.attName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="row margin-top10px">
+                <h2 class="subtitle">Attorney</h2>
+                <ui-select ng-model="selectionModel.multiFilters.attorney" theme="selectize">
+                    <ui-select-match placeholder="Select Attorney...">
+                        {{$select.selected.attName}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.uid as item in attorneys| filter:{name:$select.search} | orderBy: 'attName'">
+                        <small>
+                            {{item.attName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="row margin-top10px">
+                <label>Staff</label>
+                <ui-select ng-model="selectionModel.multiFilters.staff" theme="selectize">
+                    <ui-select-match placeholder="Select staff...">
+                        {{$select.selected.attName}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.uid as item in staffs| filter:{attName:$select.search}| orderBy:'attName'">
+                        <small>
+                            {{item.attName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="row margin-top10px">
+                <label>Paralegal</label>
+                <ui-select ng-model="selectionModel.multiFilters.paralegal" theme="selectize">
+                    <ui-select-match placeholder="Select paralegal...">
+                        {{$select.selected.attName}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.uid as item in paralegals| filter:{attName:$select.search} | orderBy:'attName'">
+                        <small>
+                            {{item.attName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="row margin-top10px">
+                <h2 class="subtitle">DOI</h2>
+                <div class="input-group datepicker">
+                    <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="selectionModel.multiFilters.doiStart"
+                        is-open="doiStart" placeholder="start" data-ng-disabled="false" id="DOIstartDatediv" validate-date error-div="#DOIstartDatediv"
+                        tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" show-button-bar="false"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openCalendar($event);doiStart = true;doiEnd=false">
+                            <i class="default-calendar-small sprite"></i>
+                        </button>
+                    </span>
+                </div>
+
+                <div class="error" id="DOIstartDateError">Invalid date format!</div>
+
+                <div class="margin-top10px">
+                    <span></span>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="selectionModel.multiFilters.doiEnd"
+                            is-open="doiEnd" placeholder="end" data-ng-disabled="false" id="DOIEndDatediv" validate-date error-div="#DOIEndDatediv"
+                            tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openCalendar($event);doiEnd = true;doiStart=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="error" id="DOIendDateError">Invalid date format!</div>
+                </div>
+                <!--US#5557 Include Referred out -->
+                <div data-ng-if="includeReferredOut==1">
+                    <div class="checklist">
+                        <div class="checkbox" style="margin-top: 20px;">
+                            <input type="checkbox" data-ng-model="selectionModel.multiFilters.includeReferredOut" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                            />
+                            <label style="font-size: 14px;">
+                                <b>Include Referred out </b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-lg-offset-9 col-md-offset-8">
+            <button ng-click="resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+            <button ng-disabled="enableApply" ng-click="ok(selectionModel.multiFilters)" type="button" class="btn btn-default" ng-disabled="isDatesValid() || checkVenue == true ">Apply</button>
+        </div>
+    </div>
+</div>

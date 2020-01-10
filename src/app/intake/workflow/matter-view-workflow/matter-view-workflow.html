@@ -1,0 +1,87 @@
+<div id="report-content" ng-if="!viewMattWorkflow.viewWorkflowOverview">
+<div class="page-title-border clearfix  ">
+    <div class="col-md-12"> <h3 class="pull-left page-title">Workflow Name:  </h3><label class="workflow-label"> {{viewMattWorkflow.selctedWorkflowData.workflow_name}} </label></div>
+    <div class="col-md-4"><label class="pull-left page-title">Applied On:  </label> <label class="workflow-label"> {{viewMattWorkflow.selctedWorkflowData.applied_on}} </label></div>
+    <div class="col-md-4"><label class="pull-left page-title">Applied To: </label><label class="workflow-label"> {{viewMattWorkflow.info.intake.intake_name}} </label></div>
+    <div class="col-md-4"><label class="pull-left page-title">Applied By: </label><label class="workflow-label"> {{viewMattWorkflow.selctedWorkflowData.applied_by}} </label></div>
+    <div class="col-md-12"> <h3 class="pull-left page-title">Workflow Description: </h3><label class="workflow-label">{{viewMattWorkflow.selctedWorkflowData.description}} </label></div>
+    
+</div>
+<div>
+    <div class="row  margin0"> <h2 class="pull-left page-title">Tasks </h2> </div>
+   
+     <div class="container margin-top10px">
+
+       <div class="row" style="background-color: #E9EEF0;">
+           <div class="col-md-12">         
+                    <div class="col-md-3 head-padding-10px">Task Name</div>
+                    <div class="col-md-3 head-padding-10px">Assigned To</div>
+                    <div class="col-md-3 head-padding-10px">Due Date</div>
+                    <div class="col-md-3 head-padding-10px">Status</div>
+     </div>
+     </div>
+        
+      
+      <div class="dashboard-tasks-due row" style="max-height:125px; width:103.3%" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">              
+      <div class="col-md-12 reminder-row" data-ng-repeat="data in filtered = (viewMattWorkflow.userList | filter:viewMattWorkflow.searchText)">
+            
+            <div  data-ng-click="viewMattWorkflow.gotoTask(data)" class="col-md-3 head-padding-10px" >
+               <span  data-ng-class="{'cursor-pointer':viewMattWorkflow.cursor}"> {{data.task_name}} <span>
+            </div> 
+            <div class="col-md-3 head-padding-10px">
+              {{data.assigned_to_user}}  
+            </div>
+          
+            <div class="col-md-3 reminder-cell head-padding-10px">
+            {{data.duedate}}
+            </div>
+             <div class="col-md-3 reminder-cell head-padding-10px">
+            {{data.status}}
+            </div>
+           
+          </div> 
+        </div>  
+         <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+        <p>No data for applied filters</p>
+    </div>
+        
+    </div> 
+</div>
+<div>
+    <div class="row  margin0 margin-top10px"> <label class="pull-left page-title">Calendar Events </label> </div>
+   
+    <div class="container margin-top10px">
+      <div class="row " style="background-color: #E9EEF0;">
+            <div class="col-md-12">              
+                    <div class="col-md-3 head-padding-10px">Event Name</div>
+                    <div class="col-md-3 head-padding-10px">Start Date </div>
+                    <div class="col-md-3 head-padding-10px">End Date</div>
+     </div>
+     </div>
+        
+        
+      
+     <div class="dashboard-tasks-due row" style="max-height:125px; width:103.3%" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">    
+      <div class="col-md-12 reminder-row" data-ng-repeat="data in filtered = (viewMattWorkflow.evntsList | filter:viewMattWorkflow.searchText)">
+           
+            <div  data-ng-click="viewMattWorkflow.goToEvent(data)" class="col-md-3 head-padding-10px" >
+                <span  data-ng-class="{'cursor-pointer':viewMattWorkflow.cursor}"> {{data.event_title}}
+            </div> 
+            <div class="col-md-3 head-padding-10px">
+              {{data.start}} 
+            </div>
+          
+            <div class="col-md-3 reminder-cell head-padding-10px">
+              {{data.end}}
+            </div>
+           
+          </div> 
+        </div> 
+         <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+           <p>No data for applied filters</p>
+        </div> 
+        
+    </div> 
+</div>
+</div>
+

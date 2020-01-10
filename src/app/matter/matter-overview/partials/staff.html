@@ -1,0 +1,51 @@
+<div class=" margin-top10px">
+    <div class="col-md-6">
+        <div class="row">
+            <strong>Lead Attorney </strong>
+
+            <ul>
+                <li data-ng-repeat="att in matterOverview.matterOverviewData.latt">{{att.fullName}}
+                </li>
+                <li data-ng-show="matterOverview.matterOverviewData.latt == 0">No lead attorney assigned.
+                </li>
+            </ul>
+
+        </div>
+        <div class="row margin-top20px">
+            <strong>Attorney </strong>
+
+            <ul>
+                <li data-ng-repeat="att in matterOverview.matterOverviewData.att">{{att.fullName}}
+                </li>
+                <li data-ng-show="matterOverview.matterOverviewData.att == 0">No attorney assigned.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+            <strong>Staff </strong>
+
+            <ul>
+                <li data-ng-repeat="staff in matterOverview.matterOverviewData.staff">{{staff.fullName}}
+                </li>
+                <li data-ng-show="matterOverview.matterOverviewData.staff.length == 0">No staff assigned.
+                </li>
+            </ul>
+        </div>
+
+        <div class="row margin-top20px">
+            <strong>Paralegal </strong>
+
+            <ul>
+                <li data-ng-repeat="paralegal in matterOverview.matterOverviewData.paralegal">{{paralegal.fullName}}
+                </li>
+                <li data-ng-show="matterOverview.matterOverviewData.paralegal == 0">No paralegal assigned.
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

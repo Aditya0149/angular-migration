@@ -1,0 +1,33 @@
+<div id="content" style="padding:0px;">
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+        <h2 class="pull-right page-title col-md-8">Office 365 Online</h2>
+
+
+    </div>
+    <div class="filter-greybox container modal-body" style="max-height: 450px;overflow-y: auto;">
+
+        <div class="row-fluid margin-top30px">
+
+            <div class="col-md-12">
+               
+
+                <div class="margin-top10px ipad-document-scroll">
+                    <div ng-if="DocumentsPopupViewCtrl.extFlag">
+                        <div ng-controller="DocumentsPopupViewCtrl as docpopupviewCtrl"
+                         data-ng-include="'app/documents/view-document/iFrame.html'">
+                        </div>
+                    </div>
+                    <iframe ng-show="docpopupviewCtrl.viewable && docpopupviewCtrl.singleDoc.viewdocumenturi" ng-src="{{docpopupviewCtrl.singleDoc.viewdocumenturi}}"
+                        height="500" width="100%"></iframe>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer" style="height: 30px">
+    </div>
+</div>

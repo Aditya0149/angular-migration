@@ -1,0 +1,109 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div class="matter-details-wrapper">
+    <div class="row  margin0  margin-top10px top-row-style">
+        <matter-info-header matter-info="matterDetail.matterInfo"></matter-info-header>
+    </div>
+    <div id="report-content" class="report-content-padding">
+        <div class="page-title-border-links clearfix subnav">
+            <ul class="centered-nav">
+                <li ng-if="matterDetail.showIntakeDetails" data-ng-click="matterDetail.activateTab('intakeInfo',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.intakeInfo}">Intake</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('negligence',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.negligence}">Negligence-Liability</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('medicalInfo',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.medicalInfo}">Medical
+                        Information</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('medicalBill',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.medicalBill}">Medical
+                        Bills</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('insaurance',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.insaurance}">Insurance</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('liens',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.liens}">Liens</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('expenses',matterDetail.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.expenses}">Expenses</a>
+                </li>
+                <li data-ng-click="matterDetail.activateTab('settlement',matterDetail.activeTab)" data-ng-show="matterDetail.mattersettlement[0].V == 1">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : matterDetail.activeTab.settlement}">Settlement</a>
+                </li>
+            </ul>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.intakeInfo">
+            <div data-ng-controller="intakeInfoCtrl as matterCtrl" data-ng-include="'app/matter/matter-details/intake-info/intake-info.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.negligence">
+            <div data-ng-controller="NegligenceLiabilityCtrl as negligenceCtrl" data-ng-include="'app/matter/matter-details/negligence-liability/negligence-liability.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.medicalInfo">
+            <div data-ng-controller="MedicalInfoCtrl as medicalInfo" data-ng-include="'app/matter/matter-details/medical-info/medical-info.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.medicalBill">
+            <div data-ng-controller="MedicalBillsCtrl as medicalBills" data-ng-include="'app/matter/matter-details/medical-bills/medical-bills.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.insaurance">
+            <div data-ng-controller="InsauranceCtrl as insaurance" data-ng-include="'app/matter/matter-details/insaurance/insaurance.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.liens">
+            <div data-ng-controller="LiensCtrl as liens" data-ng-include="'app/matter/matter-details/liens/liens.html'">
+            </div>
+        </div>
+    
+        <div data-ng-if="matterDetail.activeTab.expenses">
+            <div data-ng-controller="ExpensesCtrl as expenses" data-ng-include="'app/matter/matter-details/expenses/expenses.html'">
+            </div>
+        </div>
+        <div data-ng-if="matterDetail.activeTab.settlement">
+            <div data-ng-controller="settlementCtrl as settlement" data-ng-include="'app/matter/matter-details/settlement/settlement-info.html'">
+            </div>
+        </div>
+    </div>
+    <footer position-center delayRender='true'>
+        <ul>
+            <li><a href="#/matter-overview/{{matterDetail.matterId}}">Overview</a>
+            </li>
+            <li><a href="#/allParties/{{matterDetail.matterId}}">All Parties</a>
+            </li>
+            <li><a href="javascript:void(0)" class="active-footer">Details</a>
+            </li>
+            <li><a href="#/matter-documents/{{matterDetail.matterId}}">Documents</a>
+            </li>
+            <li><a href="#/notes/{{matterDetail.matterId}}">Notes</a>
+            </li>
+            <li><a data-ui-sref="events({matterId:{{matterDetail.matterId}}})">Events </a>
+            </li>
+            <li><a href="#/tasks/{{matterDetail.matterId}}">Tasks</a>
+            </li>
+            <li data-ng-show="is_workflow_active">
+                <a href="#/workflow/{{matterDetail.matterId}}">Workflow</a>
+            </li>
+            <li><a href="#/timeline/{{matterDetail.matterId}}">Timeline</a>
+            </li>
+    
+        </ul>
+    </footer>
+    <div class="compose-wrap" ng-if="matterDetail.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :matterDetail.compose, '' : !matterDetail.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+    <div class="compose-wrap" ng-if="matterDetail.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+        ng-class="{'composeShow' :matterDetail.compose, '' : !matterDetail.compose}">
+        <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+    </div>
+</div>

@@ -1,0 +1,191 @@
+<!-- layout d83 start -->
+<div class="row" ng-form="plaintiffform">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Start: Plaintiff Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffs">
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" label="Select Plaintiff"
+                    placeholder="Select plaintiff..." validation="No plaintiff found..." ngexpression="item"
+                    ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown -->
+
+            <!--Start: Treatment Dates from medical info and bill dropdown-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.medicalBillsAndInfo1">
+                <clx-select list="GenerateTemplateCtrl.medicalBillAndInfoDates"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="treatmentDate"
+                    label="Select Treatment Date" validation="No Treatment Dates found..." placeholder="Select date..."
+                    ngexpression="item" selectedviewproperty='<small>{{$select.selected.startEndDate1}}</small>'
+                    dropdownviewproperty='<small>{{item.startEndDate1}}</small>'>
+                </clx-select>
+            </div>
+            <!--End: Treatment Dates from medical info and bill dropdown-->
+
+            <!-- Start:Medical provider from medical bill and Info Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.medicalBillsAndInfo2">
+                <clx-select list="GenerateTemplateCtrl.uniqMedicalProvidersFromBillAndInfoCopy"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="medicalproviderid"
+                    label="Medical Provider" placeholder="Select medical provider..."
+                    validation="No medical providers found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: 'contact_name'"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Medical provider from medical bill and Info Dropdown -->
+
+            <!-- Start: Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_adjstor_insured">
+                <clx-select list="GenerateTemplateCtrl.insuranceAdjusorInsured"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId" changefn="yes"
+                    selected-items-changed="GenerateTemplateCtrl.getContactInfo_Java_InsuranceAdj(GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId.adjusterid);"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>' dropdownviewproperty=' <small><strong>Insurance Provider-</strong>{{item.insuranceproviderid.firstname}} {{item.insuranceproviderid.lastname}}<br> </small>
+                            <small><strong>Adjuster-</strong>{{item.adjusterid.firstname}} {{item.adjusterid.lastname}}<br> </small>
+                            <small ><strong>Claim No-</strong>{{item.claimnumber}} <br> </small> 
+                            <small > <strong>Insured Party- </strong>{{item.insuredpartyid.firstname}} {{item.insuredpartyid.lastname}}<br></small>  
+                            <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown -->
+
+            <!-- Start: Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_adjstor_insured4">
+                <clx-select list="GenerateTemplateCtrl.insuranceAdjusorInsured"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId" changefn="yes"
+                    selected-items-changed="GenerateTemplateCtrl.getContactInfo_Java_InsuranceAdj(GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId.insuredpartyid);"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{insuranceProviderName:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.insuranceProviderName}}</small>'
+                    dropdownviewproperty=' <small><strong>Insurance Provider-</strong>{{item.insuranceproviderid.firstname}} {{item.insuranceproviderid.lastname}}<br> </small>
+                         <small><strong>Adjuster-</strong>{{item.adjusterid.firstname}} {{item.adjusterid.lastname}}<br> </small>
+                         <small ><strong>Claim No-</strong>{{item.claimnumber}} <br> </small> 
+                         <small > <strong>Insured Party- </strong>{{item.insuredpartyid.firstname}} {{item.insuredpartyid.lastname}}<br></small>  
+                         <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown -->
+
+            <!-- Start: Only Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.only_InsuranceProvider">
+                <clx-select list="GenerateTemplateCtrl.uniqonlyInsuranceProviderNew"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId" changefn="yes"
+                    selected-items-changed="GenerateTemplateCtrl.getContactInfo_Java_insuranceProvider(GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId.insuranceproviderid);"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{insuranceProvider_contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.insuranceProvider_contact_name}}</small>'
+                    dropdownviewproperty=' <small>{{item.insuranceProvider_contact_name}}<br> </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Only Insurance Dropdown -->
+
+            <!-- Start: Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_provider_plantiff">
+                <clx-select list="GenerateTemplateCtrl.insuranceAdjusorInsured"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId" changefn="yes"
+                    selected-items-changed="GenerateTemplateCtrl.getContactInfo_Java_insuranceProvider(GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId.insuranceproviderid);"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{insuranceProviderName:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.insuranceProviderName}}</small>'
+                    dropdownviewproperty=' <small><strong>Insurance Provider-</strong>{{item.insuranceproviderid.firstname}} {{item.insuranceproviderid.lastname}}<br> </small>
+                         <small><strong>Adjuster-</strong>{{item.adjusterid.firstname}} {{item.adjusterid.lastname}}<br> </small>
+                         <small ><strong>Claim No-</strong>{{item.claimnumber}} <br> </small> 
+                         <small > <strong>Insured Party- </strong>{{item.insuredpartyid.firstname}} {{item.insuredpartyid.lastname}}<br></small>  
+                         <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown -->
+
+            <!-- Start: Contact Name Dropdown-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.matter_contact_all">
+                <clx-select list="GenerateTemplateCtrl.allMatterContacts" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="otherpartycontactid" label="Select Contacts" placeholder="Select contact..."
+                    validation="No contacts found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    groupby="GenerateTemplateCtrl.groupContacts" groupfilter="GenerateTemplateCtrl.contactType"
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Contact Name Dropdown-->
+
+            <!-- Start: Attorney Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.smpAttorney">
+                <clx-select list="GenerateTemplateCtrl.allAttorneysList" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="leadattorneyid" label="Select Attorney" placeholder="Select attorney..."
+                    validation="No attorneys found..." ngexpression="item.uid"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    groupby="GenerateTemplateCtrl.groupAllAttorneys" groupfilter="GenerateTemplateCtrl.attorneyTypes"
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Attorney Dropdown -->
+
+            <!-- Start: Assign user from firm Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.user_in_firm">
+                <clx-select list="GenerateTemplateCtrl.allFirmUser" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="firmUserId" label="Select User Name" placeholder="Select user..."
+                    validation="No users found..." ngexpression="item.user_id"
+                    ngfilter=" | filter:{full_name:$select.search}" groupby="GenerateTemplateCtrl.groupFirmUsers"
+                    groupfilter="GenerateTemplateCtrl.firmUserType"
+                    selectedviewproperty='<small> {{$select.selected.full_name}}</small>'
+                    dropdownviewproperty='<small> {{item.full_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Assign user from firm Dropdown -->
+
+            <!-- Start: Communication Method Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.communication_method">
+                <clx-select list="GenerateTemplateCtrl.communicationMethod"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="communicationMethod"
+                    label="Communication Method" placeholder="Select method..." ngfilter=" | filter:{id:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.id}}</small>'
+                    dropdownviewproperty='<small>{{item.id}}</small>'>
+                </clx-select>
+            </div>
+            <!-- End: Communication Method Dropdown -->
+
+            <!-- Start: Name of Members-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.NameMembers">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="NameMembers"
+                    label="Name of Member" placeholder="Enter details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Name of Members -->
+
+            <!-- Start: Group Number-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.GroupNumber">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="GroupNumber" label="Group Number"
+                    placeholder="Enter details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Group Number -->
+
+        </div>
+    </div>
+</div>
+<!-- layout d83 ends -->

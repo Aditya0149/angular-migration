@@ -1,0 +1,122 @@
+<style>
+    .btn-group .btn-default {
+        line-height: 36px;
+        height: 38px;
+    }
+</style>
+<div class="modal-body">
+    <div data-ng-form="document.form" class="row">
+        <div class="col-md-12 margin-top15px">
+            <form>
+                <div class="col-md-6 margin-top10px" style="height: 55px;">
+                    <div class="col-md-6 padding-0">
+                        <label>Insured Party </label>
+                        <input type="text" data-ng-model="document.newInsauranceInfo.insured_party" data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+                            ng-keydown="document.checkIfEnterKeyWasPressed($event)" typeahead="row as row.name for row in document.getContacts($viewValue,'AllTypeWithoutLead')"
+                            typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)" typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+                            typeahead-loading="document.display.loadinginsuredpartyid" class="form-control">
+                        <!-- <span ng-show="document.display.loadinginsuredpartyid">loading...</span> -->
+                    </div>
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default" data-ng-click="document.addNewContact(document.newInsauranceInfo,'insured_party')">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Policy Limit </label>
+                    <div class="row">
+                        <div class="col-md-5" style="width: 46%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" step="0.01" custom-currency-filter ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                                    data-ng-model="document.newInsauranceInfo.policy_limit" />
+                            </div>
+                        </div>
+                        <div class="pull-left policy-limit-divider">/</div>
+                        <div class="col-md-5" style="width: 46%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control" step="0.01" custom-currency-filter ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                                    data-ng-model="document.newInsauranceInfo.policy_limit_max" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 padding-0 margin-top10px" style="height: 55px;">
+                    <div class=" col-md-6">
+                        <label>Insurance Provider</label>
+                        <input type="text" data-ng-model="document.newInsauranceInfo.insurance_provider" data-ng-model-options="{ debounce: 500 }"
+                            placeholder="Enter name" typeahead="row as row.name for row in document.getContacts($viewValue,'AllTypeWithoutLead')"
+                            typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)" typeahead-loading="document.display.loadinginsuranceproviderid"
+                            typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html" ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                            class="form-control">
+                        <!-- <span ng-show="document.display.loadinginsuranceproviderid">loading...</span> -->
+                    </div>
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default" data-ng-click="document.addNewContact(document.newInsauranceInfo,'insurance_provider')">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Policy Number</label>
+                    <input type="text" class="form-control" ng-keydown="document.checkIfEnterKeyWasPressed($event)" data-ng-model="document.newInsauranceInfo.policy_number"
+                        maxlength="50" />
+                </div>
+                <div class="col-md-6 padding-0 margin-top10px" style="height: 55px;">
+                    <div class=" col-md-6">
+                        <label>Adjuster Name</label>
+                        <input type="text" data-ng-model="document.newInsauranceInfo.insurance_adjuster" data-ng-model-options="{ debounce: 500 }"
+                            placeholder="Enter name" typeahead="row as row.name for row in document.getContacts($viewValue,'AllTypeWithoutLead')"
+                            typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)" typeahead-loading="document.display.loadingadjusterid"
+                            typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html" ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                            class="form-control">
+                        <!-- <span ng-show="document.display.loadingadjusterid">loading...</span>
+                        <span ng-show="document.display.loadinginsuranceproviderid">loading...</span> -->
+                    </div>
+
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default" data-ng-click="document.addNewContact(document.newInsauranceInfo,'insurance_adjuster')">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Claim Number</label>
+                    <input type="text" class="form-control" ng-keydown="document.checkIfEnterKeyWasPressed($event)" data-ng-model="document.newInsauranceInfo.claim_number"
+                        maxlength="50" />
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Insurance Type</label>
+
+                    <ui-select data-ng-model="document.newInsauranceInfo.insurance_type" theme="selectize">
+                        <ui-select-match placeholder="Select type">
+                            {{$select.selected}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in document.insuranceTypeList.sort() | filter:$select.search">
+                            <small>{{item}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6 margin-top10px padding-0">
+                    <div class="col-md-6">
+                        <label>Excess Confirmed</label>
+                        <clx-btn-group btn-list="document.excessConfirmed" value="document.newInsauranceInfo.excess_confirmed"></clx-btn-group>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Policy Exhausted</label>
+                        <clx-btn-group btn-list="document.excessConfirmed" value="document.newInsauranceInfo.policy_exhausted"></clx-btn-group>
+                    </div>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Memo</label>
+                    <textarea class="form-control" placeholder="Add Memo..." ng-model="document.newInsauranceInfo.memo" maxlength="1024" rows="5"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

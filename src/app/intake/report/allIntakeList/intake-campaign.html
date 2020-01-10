@@ -1,0 +1,103 @@
+<div class="allIntakeListReport-wrapper">
+<div scrolly="intakeCampaignReportCtrl.scrollReachedBottom()" reached-top="intakeCampaignReportCtrl.scrollReachedTop()">
+    <div class=" clearfix">
+        <div class="row">
+            <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Intake Campaign Report </h1>
+            <div class="col-md-7 pull-right page-sublinks subnav">
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed ">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="intakeCampaignReportCtrl.filterAllIntakeReport()" class="sprite default-filter"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="intakeCampaignReportCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="intakeCampaignReportCtrl.downloadMatters()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="left"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="pull-right head-padding-10px ">
+                <button class="btn  btn-default" data-ng-click="intakeCampaignReportCtrl.resetAllFilter()" value="Reset">
+                    Clear Filter</button>
+            </div>
+            <div class="dropdown head-padding-10px pull-right">
+                Sort By :
+                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{intakeCampaignReportCtrl.selectedSort}}
+                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+                <ul class="dropdown-menu divider-alt sortby-dropdown-height all-list-dropdown" role="menu" aria-labelledby="dLabel">
+                    <div class="">
+                        <li data-ng-repeat="sort in intakeCampaignReportCtrl.sorts">
+                            <a data-ng-click="intakeCampaignReportCtrl.applySortByFilter(sort)">{{sort.name}}
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="intakeCampaignReportCtrl.tagCancelled" tag-list="intakeCampaignReportCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="intakeCampaignReportCtrl.viewModel.allIntake.length >0 ">
+        <show-record-count displayed="intakeCampaignReportCtrl.viewModel.allIntake.length" more="intakeCampaignReportCtrl.applyFilterLazyLoading()"
+            all="intakeCampaignReportCtrl.getAllIntakeList()" hide-pager="{{intakeCampaignReportCtrl.showPager}}" total="intakeCampaignReportCtrl.total"></show-record-count>
+    </div>
+    <div class="report-scroll-all-matter">
+        <div class="report-responsive all-matter" data-ng-if="intakeCampaignReportCtrl.viewModel.allIntake.length >0 ">
+            <div class="row header-row">
+                <div class="cell" data-ng-repeat="header in ::intakeCampaignReportCtrl.clxGridOptions.headers"
+                    data-width="{{header.dataWidth}}">
+                    {{header.displayName}}
+                </div>
+            </div>
+
+            <div class="row body-row" data-ng-if="intakeCampaignReportCtrl.display.filtered" data-ng-class="{'selected-grid-row':($index == intakeCampaignReportCtrl.clickedRow) }"
+                data-highlight-clicked-row="{{$index}},intakeCampaignReportCtrl.clickedRow" data-ng-repeat="data in intakeCampaignReportCtrl.filteredMatters = (intakeCampaignReportCtrl.viewModel.allIntake|filter:intakeCampaignReportCtrl.viewModel.filters.filterText|limitTo:intakeCampaignReportCtrl.matterLimit)"
+                grid-size>
+                <div class="cell" data-ng-repeat="header in ::intakeCampaignReportCtrl.clxGridOptions.headers"
+                    data-width="{{header.dataWidth}}" data-ng-class="{'selected-grid-row':intakeCampaignReportCtrl.isMatterSelected(data)}">
+                    <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell
+                        data-ng-class="{'display-inline-block':field.showInline}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center margin-top10px" data-ng-if="intakeCampaignReportCtrl.viewModel.allIntake.length===0
+        && intakeCampaignReportCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+        <p class="text-center margin-top10px" data-ng-show="intakeCampaignReportCtrl.filteredMatters.length === 0 && intakeCampaignReportCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+    </div>
+    <div class="col-md-12 relative-container">
+        <div class="text-right pull-left width-54per" data-ng-show="intakeCampaignReportCtrl.showPager">
+            <a href="javascript:void(0)" data-ng-click="intakeCampaignReportCtrl.applyFilterLazyLoading()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" data-ng-click="intakeCampaignReportCtrl.getAllIntakeList()">All</a>
+        </div>
+    </div>
+</div>
+</div>

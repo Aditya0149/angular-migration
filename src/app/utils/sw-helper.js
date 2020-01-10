@@ -1,0 +1,3 @@
+var swData = {
+    message : 'd'
+}

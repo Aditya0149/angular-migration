@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    font-family: helvetica;
+  }
+
+  .bgimg {
+    background-image: url('bg.jpg');
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    color: white;
+    font-size: 25px;
+  }
+
+  .topleft {
+    position: absolute;
+    top: 0;
+    left: 16px;
+  }
+
+  .bottomleft {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+  }
+
+  .middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 71%;
+  }
+
+  hr {
+    margin: auto;
+    width: 40%;
+  }
+
+  .margin-bottom0 {
+    margin-bottom: 0;
+  }
+</style>
+
+<body>
+
+  <div class="bgimg">
+    <div class="topleft">
+      <div style="margin-top:20px;"><img src="logo.png" width="212px" height="45px"></div>
+    </div>
+    <div class="middle">
+      <h1>You're Done!</h1>
+      <p class="margin-bottom0">Your document(s) have been successfully sent.</p>
+      <p>Please close this screen and refresh Cloudlex to continue working.</p>
+      <div>
+        <button type="button" class="btn btn-danger" onClick="window.close()">Close</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<div class="referred-matters-outer">
+        <div id="report-content" ng-class="{'launcher-archive-grid': !intakeReferred.isMM}">
+        
+            <!-- <div class="page-title-border-links clearfix">
+                <h2 data-ng-show="intakeReferred.activeTab === 'referred out' " class="col-md-6 head-padding-bottom-14px">
+                    <a ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'" id="matterTab" href="#/referred-matters">Matters</a><span class="refferralSpan" data-ng-show="isUserIntakeActive"> | <a
+                            ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'" id="intakeTab"
+                            href="#/intake/referred-intake"> Intakes</a> </span></h2>
+                <h2 data-ng-show="intakeReferred.activeTab === 'referred in'" class=" col-md-6 head-padding-bottom-14px">
+                    <a ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'"
+                        href="#/referred-matters">Matters</a><span class="refferralSpan" data-ng-show="isUserIntakeActive"> | <a
+                            ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'"
+                            href="#/intake/referred-intake"> Intakes</a></span></h2>
+            </div> -->
+        
+            <div class="page-title-border-links clearfix subnav">
+        
+                <ul class="centered-nav margin0" data-ng-show="intakeReferred.activeTab === 'referred out' ">
+                    <li>
+                        <a ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'" id="matterTab"
+                            href="#/referred-matters">Matters</a>
+                    </li>
+                    <li>
+                        <a ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'" id="intakeTab"
+                            href="#/intake/referred-intake">Intakes</a>
+                    </li>
+        
+                </ul>
+        
+                <ul class="centered-nav margin0" data-ng-show="intakeReferred.activeTab === 'referred in'">
+                    <li>
+                        <a ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'"
+                        href="#/referred-matters">Matters</a>
+                    </li>
+                    <li>
+                        <a  ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'"
+                        href="#/intake/referred-intake">Intakes</a>
+                    </li>
+        
+                </ul>
+        
+                <!-- <h2 data-ng-show="referred.activeTab === 'referred out'" class=" col-md-6 head-padding-bottom-14px"><a
+                id="matterTab"  href="#/referred-matters" ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'">Matters</a> <span class="refferralSpan" data-ng-show="isUserIntakeActive">| <a id="intakeTab"
+                ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'" href="#/intake/referred-intake"> Intakes</a> </span></h2>
+        <h2 data-ng-show="referred.activeTab === 'referred in'" class=" col-md-6 head-padding-bottom-14px">
+            <a ng-class="is_ReferralMatter ? 'refferralSelected' : 'refferralTabColor'" href="#/referred-matters">Matters</a><span class="refferralSpan" data-ng-show="isUserIntakeActive"> | <a ng-class="is_ReferralIntake ? 'refferralSelected' : 'refferralTabColor'" href="#/intake/referred-intake"> Intakes</a></span></h2> -->
+        
+            </div>
+        
+            <div class="row margin0">
+                <div class="paddingRLR flexCont ongoing-matter card-seperator-8 display-block">
+                    <div data-ng-class="{'active': intakeReferred.selectedStatusId.id === status.id 
+                        && intakeReferred.selectedStatusId.isIntakeStatus}" class="flex-column card "
+                        data-ng-click="intakeReferred.getReferredMatters(status,intakeReferred.activeTab)"
+                        data-ng-repeat="status in intakeReferred.matterStatuses">
+                        <h2 class="numb">{{status.Count}}</h2>
+                        <span class="textA">{{status.desc}}</span>
+                    </div>
+        
+                    <div data-ng-class="{'active': intakeReferred.selectedStatusId.id === status.id
+                        && !intakeReferred.selectedStatusId.isIntakeStatus}" class="flex-column card"
+                        data-ng-hide="status.desc === 'Awaiting Decision' && status.Count === '0'"
+                        data-ng-click="intakeReferred.getReferredMatters(status,intakeReferred.activeTab)"
+                        data-ng-repeat="status in intakeReferred.referredStatuses">
+                        <h2 class="numb">{{status.Count}}</h2>
+                        <span class="textA">{{status.desc}}</span>
+                    </div>
+                </div>
+            </div>
+        
+            <div data-ng-include="'app/intake/referral/referred-matters/referred-grid.html'">
+            </div>
+        
+            <footer class="referral-header" position-center delayRender='true'>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0);" data-ng-click="intakeReferred.getStatusCounts('referred out')"
+                            data-ng-class="{'active-footer':intakeReferred.activeTab === 'referred out'}">Referred
+                            Out</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" data-ng-click="intakeReferred.getStatusCounts('referred in')"
+                            data-ng-class="{'active-footer':intakeReferred.activeTab === 'referred in'}">Referred
+                            In</a>
+                    </li>
+                </ul>
+            </footer>
+        
+        </div>
+
+</div>

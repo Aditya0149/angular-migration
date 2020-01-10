@@ -1,0 +1,157 @@
+<div id="content">
+    <clx-filter-options
+        on-filter-select="task.getFilteredTasks"
+        selected-filter="task.filters.tab"
+        fiter-opts="task.taskFilters"></clx-filter-options>
+
+    <div class="row gridSec margin0 page-title-border ">
+        <div class="col-md-12 paddingRLR">
+            <div class="col-md-4 pull-left paddingRLR dropdown create">
+                <a data-ui-sref="tasks-add({matterId: {{task.matterId}} })">
+                    <span class="sprite default-plus" >&nbsp;</span></a>
+            </div>
+ 
+            <div class="col-md-6 pull-right paddingRLR clearfix">
+                <div class="pull-right">
+                    <div class="search-input">
+                        <div class="default-searchico sprite"></div>
+                        <input type="text"
+                            data-ng-model="task.taskFilterText"
+                            data-ng-change="task.filterTask(task.taskFilterText)"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <clx-date-slider
+        get-data="task.getTasksByDate"></clx-date-slider>-->
+
+
+    <div class="row">
+        <div data-ng-if="task.tasksList.length === 0 && task.display.dataReceived" class="text-center form-margin">
+            <p>{{task.getNoDataMessage(task.taskFilterText)}}</p>
+        </div>
+        <div class="col-md-4 event-sidebar"
+            mb-scrollbar="scrollbar('vertical', true)">
+            <div class="list-progress list">
+                <ul>
+                    <li class="row"
+                        data-ng-click="task.selectTask(data)"
+                        data-ng-class="{'selected-task':task.selectedTask.taskid === data.taskid}"
+                        data-ng-repeat="data in task.tasksList">
+                        <div class="list-item-wrapper">
+                            <div class="col-md-2 circle-position">
+                                <div class="circle-small text-center">
+                                    <span>{{data.priority|priorityFilter}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-9 list-item-height">
+                                <span>{{data.taskname}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <progress class="progress-bar-divider">
+                                <bar
+                                    ng-repeat="progress in data.completed track by $index"
+                                    value="progress.value"
+                                    type="{{progress.type}}">
+                                    </bar>
+                            </progress>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8 detail-event view-only-fields" data-ng-if="task.tasksList.length > 0">
+            <div class="row-fluid">
+                <div class="search-overlap">
+                    <ul class="showBy-btns pull-right absolute-container right0">
+                        <li>
+                            <a href="javascript:void(0)" data-ng-click="task.editTask(task.matterId,task.selectedTask.taskid)">
+                                <span class="sprite default-edit " tooltip="Edit"></span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"
+                                data-ng-click="task.deleteTask(task.selectedTask.taskid)">
+                                <span class="sprite default-delete " tooltip="Delete"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 text-right">Task Name:</div>
+                <div class="col-md-6 value"><strong>{{task.selectedTask.taskname}}</strong></div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Assigned To:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.usrfname}} {{task.selectedTask.usrlname}}</strong>
+                </div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Note:</div>
+                <div class="col-md-8 value">
+                    <span ng-bind-html="task.selectedTask.notes"></span>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Assigned on:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.assignmentutcdate | utcImpDateFilter: 'MM-DD-YYYY'}}</strong>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Due Date:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.dueutcdate |utcImpDateFilter: 'MM-DD-YYYY'}}</strong>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Priority:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.priority}}</strong>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Status:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.status}}</strong>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-3 text-right">Percentage Complete:</div>
+                <div class="col-md-8 value">
+                    <strong>{{task.selectedTask.percentagecomplete}} %</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer position-center>
+    <ul>
+        <li><a href="#/intake/intake-overview/{{task.intakeId}}">Overview</a>
+        </li>
+        <li><a href="#/allParties/{{task.intakeId}}">Contact</a>
+        </li>
+        <!-- <li><a href="#/matter-details/{{task.matterId}}">Details</a>
+        </li> -->
+        
+        <li><a href="#/notes/{{task.intakeId}}">Notes</a>
+        </li>
+        <li><a href="#/events/{{task.intakeId}}">Events </a>
+        </li>
+        <li><a href="javascript:void(0)" class="active-footer">Tasks</a>
+        </li>
+        <li><a href="#/intake-documents/{{task.intakeId}}">Documents</a>
+        </li>
+        <!-- <li><a href="#/timeline/{{task.matterId}}">Timeline</a>
+        </li> -->
+        <!--<li>
+            <a href="#/motion/{{task.matterId}}">Workflow</a>
+        </li>-->
+    </ul>
+</footer>

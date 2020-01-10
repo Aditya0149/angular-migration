@@ -1,0 +1,37 @@
+<div class="pull-right head-padding-10px" data-ng-if="!dashboardAnalytics.isMD">
+    <clx-btn-group
+        data-ng-show="dashboardAnalytics.statusStripData === 'Current Matters'"
+        btn-list="dashboardAnalytics.statuses"
+        btn-click="dashboardAnalytics.getStatusWiseCounts"
+        value="dashboardAnalytics.statusId">
+            </clx-btn-group>
+</div>
+<div class="clearfix"></div>
+<div class="flexCont"></div>
+
+<div class="paddingRLR flexCont ongoing-matter non-clickable">
+    <!-- All -->
+    <div
+        class="flex-column card "
+        ng-repeat="(itemKey,item) in dashboardAnalytics.statusWiseCountsAll">
+        <h2 class="numb">{{item.Count}}</h2>
+        <span class="textA">{{itemKey}}</span>
+    </div>
+
+    <!--rest status-->
+    <div
+        class="flex-column card "
+        ng-repeat="key in dashboardAnalytics.getKeys(dashboardAnalytics.statusWiseCounts)"
+        ng-init="value = dashboardAnalytics.statusWiseCounts[key]">
+        <h2 class="numb">{{dashboardAnalytics.statusWiseCounts[key].Count}}</h2>
+        <span class="textA">{{key}}</span>
+    </div>
+
+    <!-- Stalled -->
+    <div
+        class="flex-column card "
+        ng-repeat="(itemKey,item) in dashboardAnalytics.statusWiseCountsStalled">
+        <h2 class="numb">{{item.Count}}</h2>
+        <span class="textA">{{itemKey}}</span>
+    </div>
+</div>

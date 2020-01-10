@@ -1,0 +1,60 @@
+<div class="cal-popup-wrapper">
+    <div class="modal-header" ng-if="!detailsCtrl.showAssignedToEdit">
+        <div class="row">
+            <h1 class="modal-title col-md-9 big-title">{{detailsCtrl.eventName}}</h1>
+        <div class="col-md-2">
+            <button class="close fl-right" data-ng-click="detailsCtrl.cancel()">
+                <span aria-hidden="true">×</span>
+            </button></div>
+        </div>
+
+
+        <p>
+            <label ng-if="!detailsCtrl.isIntake">Matter name:</label>
+            <label ng-if="detailsCtrl.isIntake">Intake name:</label>
+            <label class="normal-font"ng-if="!detailsCtrl.isIntake">{{detailsCtrl.singleEventDetail.matter_name}}</label>
+            <label class="normal-font" ng-if="detailsCtrl.isIntake">{{detailsCtrl.singleEventDetail.intake_name}}</label>
+        </p>
+    </div>
+    <div class="filter-greybox container modal-body">
+        <div ng-if="detailsCtrl.showAssignedToEdit" class="col-md-12 padding-0 margin-top5px"><label>Assign event
+                to</label></div>
+        <div class="row">
+            <div ng-if="detailsCtrl.showAssignedToEdit" class="col-md-12 custom-form-control">
+                <ui-select class="width100 reviewer-select-height" multiple
+                    ng-model="detailsCtrl.singleEventDetail.assignedTo" on-remove="detailsCtrl.setUserList($item)"
+                    theme="select2">
+                    <ui-select-match placeholder="Select Users">
+                        {{$item.full_name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="user in detailsCtrl.assignedToUserList  | filter:{full_name:$select.search} ">
+                        <small>{{user.full_name}}</small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div ng-if="!detailsCtrl.showAssignedToEdit">
+            <label>Assigned To:</label>
+            <span class="cursor-pointer saved-search-link" ng-if="!detailsCtrl.showAssignedToEdit" ng-click="detailsCtrl.showAssignedToEdit=true"
+                type="button">Edit</span>
+            <div class="containt-height dashboard-tasks-due">{{detailsCtrl.assign_to}}</div>
+        </div>
+        <div ng-if="!detailsCtrl.showAssignedToEdit" class="padding-top-5px">
+            <label>Description:</label>
+            <div class="containt-height dashboard-tasks-due"
+                data-ng-bind-html="detailsCtrl.singleEventDetail.description | cut:false:100"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="">
+            <button ng-if="!detailsCtrl.showAssignedToEdit" ng-click="detailsCtrl.viewDetails()" type="button"
+                class="btn btn-default">View Details</button>
+            <button ng-if="detailsCtrl.showAssignedToEdit" ng-click="detailsCtrl.cancelAssignTo()" type="button"
+                class="btn btn-default">Cancel</button>
+            <button ng-if="detailsCtrl.showAssignedToEdit"
+                ng-click="detailsCtrl.saveAssignTo(detailsCtrl.singleEventDetail)" type="button"
+                class="btn btn-default">Save</button>
+        </div>
+    </div>
+</div>

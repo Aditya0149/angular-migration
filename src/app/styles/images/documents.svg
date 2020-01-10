@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150px" height="100px" viewBox="0 0 150 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Doc-Icon_1" transform="translate(39.000000, 14.000000)">
+            <g id="thin-0078_document_file_word_office_doc_text">
+                <path d="M37.647,19.59 L10.404,19.59" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M22.698,10.68 L10.404,10.68" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M67.281,31.521 L28.533,31.521 C26.793,31.521 25.383,32.931 25.383,34.671 L25.383,55.488 C25.383,57.228 26.793,58.638 28.533,58.638 L67.281,58.638 C69.021,58.638 70.428,57.228 70.428,55.488 L70.428,34.668 C70.428,32.928 69.018,31.518 67.281,31.518 L67.281,31.521 Z" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="43.005 1.587 43.017 13.5 55.437 13.5"></polyline>
+                <path d="M55.434,25.206 L55.434,13.5 C55.434,12.861 55.176,12.615 54.72,12.168 L44.685,2.274 C44.2370642,1.83308765 43.6335297,1.58628515 43.005,1.587 L4.023,1.587 C2.70083031,1.587 1.629,2.65883031 1.629,3.981 L1.629,68.019 C1.629,69.342 2.7,70.413 4.023,70.413 L53.037,70.413 C53.6729672,70.4145939 54.283433,70.1630735 54.7336936,69.7139385 C55.1839543,69.2648035 55.437002,68.6549692 55.437,68.019 L55.437,64.689" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M37.236,49.506 C39.504,49.506 41.343,47.481 41.343,44.982 C41.343,42.483 39.504,40.455 37.236,40.455 L34.293,40.455 L34.293,49.521 L37.236,49.521 L37.236,49.506 Z" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M64.71,41.712 C63.9335109,40.9117497 62.867044,40.4585554 61.752,40.455 C59.391,40.455 57.477,42.483 57.477,44.982 C57.477,47.481 59.391,49.509 61.752,49.509 C62.946,49.509 64.023,48.99 64.8,48.159" id="Path" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <ellipse id="Oval" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" cx="49.518" cy="44.988" rx="4.107" ry="4.533"></ellipse>
+                <polygon id="Path" points="0 0 72 0 72 72 0 72"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

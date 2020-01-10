@@ -1,0 +1,1154 @@
+[
+    {
+        "template_code": "DLT09",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1423_6",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRING_BY_RELATIONSHIP",
+                "label": "Referring by relationship",
+                "placeholder": "Enter the relationship..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRING_BY_OCCUPATION",
+                "label": "Referring by occupation",
+                "placeholder": "Enter the occupation..."
+            },
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "REFERRING_BY_RELATIONSHIP",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRING_BY_RELATIONSHIP}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "REFERRING_BY_OCCUPATION",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRING_BY_OCCUPATION}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1423_7",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1353_12",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRAL_SOURCE_NAME",
+                "label": "Referral Source Name and Address",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "type": "text",
+                "modelname": "LOCATION_OF_ACCIDENT_CITY",
+                "label": "City of the Location of Accident",
+                "placeholder": "Enter the city..."
+            },
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "REFERRAL_SOURCE_NAME",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRAL_SOURCE_NAME}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "LOCATION_OF_ACCIDENT_CITY",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{LOCATION_OF_ACCIDENT_CITY}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1275_15",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "PRIMARY_SPOKEN_LANGUAGE",
+                "label": "Primary Spoken Language",
+                "placeholder": "Enter the language..."
+            },
+            {
+                "type": "text",
+                "modelname": "DESCRIPTION_OF_ALLEGED_INCAPACITY_AND_REASON_FOR_ALLEGED_INCAPACITY",
+                "label": "Description of Alleged Incapacity & Reason for Alleged Incapacity",
+                "placeholder": "Enter the description..."
+            },
+            {
+                "type": "text",
+                "modelname": "NEXT_OF_KIN",
+                "label": "Next of Kin",
+                "placeholder": "Enter the next of kin..."
+            },
+            {
+                "type": "text",
+                "modelname": "PHYSICIANS_ATTENDING",
+                "label": "Name of The Attending Physicians",
+                "placeholder": "Enter the name..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "PRIMARY_SPOKEN_LANGUAGE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{PRIMARY_SPOKEN_LANGUAGE}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "DESCRIPTION_OF_ALLEGED_INCAPACITY_AND_REASON_FOR_ALLEGED_INCAPACITY",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{DESCRIPTION_OF_ALLEGED_INCAPACITY_AND_REASON_FOR_ALLEGED_INCAPACITY}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "NEXT_OF_KIN",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{NEXT_OF_KIN}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "PHYSICIANS_ATTENDING",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{PHYSICIANS_ATTENDING}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1244_4",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "CASE_TYPE",
+                "label": "Case Type",
+                "placeholder": "Enter the type..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "CASE_TYPE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{CASE_TYPE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1244_3",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "CASE_TYPE",
+                "label": "Case Type",
+                "placeholder": "Enter the type..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "CASE_TYPE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{CASE_TYPE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1244_2",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "CASE_TYPE",
+                "label": "Case Type",
+                "placeholder": "Enter the type..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "CASE_TYPE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{CASE_TYPE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1244_1",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "CASE_TYPE",
+                "label": "Case Type",
+                "placeholder": "Enter the type..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "CASE_TYPE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{CASE_TYPE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1226_1364",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1226_1107",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "ATTORNEY_CONTACT_NUMBER",
+                "label": "Attorney Contact Number",
+                "placeholder": "Enter the number..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "ATTORNEY_CONTACT_NUMBER",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ATTORNEY_CONTACT_NUMBER}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1226_1106",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1226_1100",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "dropdown",
+                "api": "getAssignUser",
+                "list": "IntakeGenerateTemplateCtrl.assignUsers",
+                "modelname": "user_id",
+                "label": "User Name",
+                "placeholder": "Select user...",
+                "validation": "No user found..."
+            },
+            {
+                "type": "text",
+                "modelname": "USER_CONTACT_NUMBER",
+                "label": "User Contact Number",
+                "placeholder": "Enter the number..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "user_id",
+                "keyValue": "userId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "USER_CONTACT_NUMBER",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{USER_CONTACT_NUMBER}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "template_code": "F1166_9",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_12",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_14",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_3",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_21",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_28",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "template_code": "F1309_29",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 822,
+        "template_code": "F1479_13",
+        "template_name": "Retainer Statement (New Option B)",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "dropdown",
+                "api": "getAssignUser",
+                "list": "IntakeGenerateTemplateCtrl.assignUsers",
+                "modelname": "user_id",
+                "label": "User Name",
+                "placeholder": "Select user...",
+                "validation": "No user found..."
+            },
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            }
+        ],
+        "request_params": [
+            {
+                "key": "intakePlaintiffId",
+                "keyValue": "plaintiff_id",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "user_id",
+                "keyValue": "userId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "id": 903,
+        "template_code": "F1473_8",
+        "template_name": "RETAINER STATEMENT - Fixed Rate",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "ATTORNEY_LAW_FIRM_ADDRESS",
+                "label": "Attorney Law Firm Address",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "type": "text",
+                "modelname": "ATTORNEY_LAW_FIRM_CITY",
+                "label": "Attorney Law Firm City",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "type": "text",
+                "modelname": "ATTORNEY_LAW_FIRM_STATE",
+                "label": "Attorney Law Firm State",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRED_BY_OCCUPATION",
+                "label": "Referred by Occupation",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRED_BY_RELATIONSHIP",
+                "label": "Referred by Relationship",
+                "placeholder": "Enter the details..."
+            },
+            {
+                "type": "text",
+                "modelname": "UDMC_NUNC",
+                "label": "UDMC:NUNC",
+                "placeholder": "Enter the details..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "ATTORNEY_LAW_FIRM_ADDRESS",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ATTORNEY_LAW_FIRM_ADDRESS}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "ATTORNEY_LAW_FIRM_CITY",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ATTORNEY_LAW_FIRM_CITY}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "ATTORNEY_LAW_FIRM_STATE",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ATTORNEY_LAW_FIRM_STATE}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "REFERRED_BY_OCCUPATION",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRED_BY_OCCUPATION}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "REFERRED_BY_RELATIONSHIP",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRED_BY_RELATIONSHIP}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "UDMC_NUNC",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{UDMC_NUNC}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "id": 944,
+        "template_code": "F1542_8",
+        "template_name": "OCA Retainer Statement",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "required": true,
+                "type": "datePicker",
+                "modelname": "RETAINER_AGREEMENT_DATE",
+                "label": "Retainer Agreement's Date"
+            },
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRED_BY_OCCUPATION",
+                "label": "Referred by Occupation",
+                "placeholder": "Enter the detail..."
+            },
+            {
+                "type": "text",
+                "modelname": "REFERRED_BY_RELATIONSHIP",
+                "label": "Referred by Relationship",
+                "placeholder": "Enter the detail..."
+            },
+            {
+                "type": "text",
+                "modelname": "ASSOCIATED_ATTORNEY_LAW_FIRM_NAME",
+                "label": "Associated Attorney Law Firm Name",
+                "placeholder": "Enter the name..."
+            },
+            {
+                "type": "text",
+                "modelname": "ATTORNEY_LAW_FIRM_ADDRESS",
+                "label": "Attorney Law Firm Address",
+                "placeholder": "Enter the details..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "RETAINER_AGREEMENT_DATE",
+                "keyValue": "",
+                "type": "date_1",
+                "defaultValue": "{RETAINER_AGREEMENT_DATE}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            },
+            {
+                "key": "REFERRED_BY_OCCUPATION",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRED_BY_OCCUPATION}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "REFERRED_BY_RELATIONSHIP",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{REFERRED_BY_RELATIONSHIP}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "ASSOCIATED_ATTORNEY_LAW_FIRM_NAME",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ASSOCIATED_ATTORNEY_LAW_FIRM_NAME}",
+                "defaultValueType": "key"
+            },
+            {
+                "key": "ATTORNEY_LAW_FIRM_ADDRESS",
+                "keyValue": "",
+                "type": "string",
+                "defaultValue": "{ATTORNEY_LAW_FIRM_ADDRESS}",
+                "defaultValueType": "key"
+            }
+        ]
+    },
+    {
+        "id": 817,
+        "template_code": "F1563_12",
+        "template_name": "ASSOCIATING ATTORNEY AGREEMENT",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 822,
+        "template_code": "F1563_14",
+        "template_name": "HIPPA RELEASE Form",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 818,
+        "template_code": "F1563_15",
+        "template_name": "LAW Authority to Represent",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 819,
+        "template_code": "F1563_16",
+        "template_name": "LAW Authority to Represent for No Fault Benefits",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 820,
+        "template_code": "F1563_17",
+        "template_name": "Statement of Client Rights",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 1095,
+        "template_code": "F1125_41",
+        "template_name": "Retainer (MedMal)",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    },
+    {
+        "id": 1096,
+        "template_code": "F1125_42",
+        "template_name": "Retainer General",
+        "template_api_call": "java2",
+        "template_type": "new",
+        "display_prop": [
+            {
+                "type": "dropdown",
+                "api": "getPlaintiffs",
+                "list": "IntakeGenerateTemplateCtrl.plaintiff_dropdown",
+                "modelname": "plaintiff_id",
+                "label": "Select Plaintiff",
+                "placeholder": "Select plaintiff...",
+                "validation": "No plaintiff found..."
+            }
+        ],
+        "request_params": [
+            {
+                "key": "plaintiff_id",
+                "keyValue": "intakePlaintiffId",
+                "type": "ArrayIntValue",
+                "defaultValue": "[0]",
+                "defaultValueType": "code_1"
+            }
+        ]
+    }
+]

@@ -1,0 +1,133 @@
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right"
+            data-ng-click="cancel()">
+        <span aria-hidden="true">×</span></button>
+</div>
+<div class="filter-greybox container modal-body">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="checklist">
+                <h2 class="subtitle">Motion Status</h2>
+
+                <ul>
+                    <li class="checkbox" data-ng-repeat="status in viewModel.motion_statuses">
+                        <input
+                                checklist-value="status"
+                                checklist-model="selectionModel.multiFilters.motion_statuses" type="checkbox" />
+                        <label>{{status.name |replaceByBlank}}</label>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class=" col-md-6">
+            <div class="checklist">
+                <h2 class="subtitle">Motion Type</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="type in viewModel.motion_types">
+                        <input
+                                checklist-value="type"
+                                checklist-model="selectionModel.multiFilters.motion_types" type="checkbox" />
+                        <label>{{type.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--<div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Motion Status</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="motion_status in viewModel.motion_statuses">
+                        <input
+                                checklist-value="motion_status"
+                                checklist-model="selectionModel.multiFilters.motion_statuses" type="checkbox" />
+                        <label>{{motion_status.motion_status_name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Motion Type</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="motion_type in viewModel.motion_types">
+                        <input
+                                checklist-value="motion_type"
+                                checklist-model="selectionModel.multiFilters.motion_types" type="checkbox" />
+                        <label>{{motion_type.motion_type_name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+
+
+        <!--<div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Status</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="status in viewModel.statuses">
+                        <input
+                                checklist-value="status"
+                                checklist-model="selectionModel.multiFilters.statuses" type="checkbox" />
+                        <label>{{status.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+        <!-- <div class="col-lg-3 col-md-3">
+             <div class="checklist">
+                 <h2 class="subtitle">Type</h2>
+                 <ul>
+                     <li class="checkbox" ng-repeat="item in viewModel.type">
+                         <input
+                                 checklist-value="item"
+                                 checklist-model="selectionModel.multiFilters.types" type="checkbox">
+                         <label>{{item.name|replaceByBlank}}</label>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+         <div class="col-lg-3 col-md-3">
+             <div class="checklist">
+                 <h3 class="subtitle">Category</h3>
+                 <ul>
+                     <li class="checkbox" ng-repeat="item in viewModel.categories">
+                         <input checklist-value="item"
+                                data-ng-checked="isOptionChecked(item,'categories')"
+                                checklist-model="selectionModel.multiFilters.categories" type="checkbox">
+                         <label>{{item.name|replaceByBlank}}</label>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+         <div class="col-lg-3 col-md-3">
+             <h2 class="subtitle">Venue</h2>
+             <ui-select
+                     ng-model="selectionModel.multiFilters.venues[0]"
+                     theme="selectize">
+                 <ui-select-match
+                         placeholder="Select Venue...">
+                     {{$select.selected.name}}
+                 </ui-select-match>
+                 <ui-select-choices
+                         repeat="item in viewModel.masterList.venues| filter:{name:$select.search}">
+                     <small>
+                         {{item.name}}
+                     </small>
+                 </ui-select-choices>
+             </ui-select>
+         </div>-->
+    </div>
+</div>
+<div class="modal-footer">
+<div class="pull-right">
+        <button ng-click="resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+        <button ng-click="ok(selectionModel.multiFilters)" type="button" class="btn btn-default">Apply</button>
+
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<div ng-class="{'add-inote' :isIntake, 'add-mnote' : !isIntake}">
+    <div class="form-group" ng-form="notes.addNote" style="display: block;margin: 25px 0;">
+        <div class="col-md-8 add-note-height-180 padding-0">
+            <wysiwyg textarea-id="matterNotesAdd" textarea-class="new-editor-height globle-note-color form-control"
+                textarea-name="text" textarea-required ng-model="notes.noteToBeAdded.text" enable-bootstrap-title="true"
+                form-data="notes.addNote.text"></wysiwyg>
+
+            <div data-ng-show="notes.addNote.text.$error.maxSize" ng-messages="notes.addNote.text.$error">
+                <div class="error" style="float: left !important;" ng-message="maxSize">
+                    Note description max limit exceeded
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 note-category-bar">
+        <div class="col-md-12 p-0">
+            <form class="form-inline" role="form">
+                <div class="col-md-12 pull-right">
+                    <button class="btn btn-default pull-right" data-ng-click="notes.saveMatterNote()"
+                        data-ng-disabled="notes.addNote.$invalid">
+                        Done</button>
+                    <button class="btn btn-default btn-styleNone pull-right" data-ng-click="notes.toggleAddView()">
+                        Cancel</button>
+                </div>
+                <div class="form-group" style="width:100%;">
+                    <div class="col-md-12 margin-top20px padding-0">
+                        <label class="display-block"> Link Contact</label>
+                        <ui-select multiple ng-model="notes.noteToBeAdded.linked_contact" theme="select2"
+                            class="w-70">
+                            <ui-select-match placeholder="Enter Contact">
+                                {{$item.firstname + " " + $item.lastname}}
+                            </ui-select-match>
+                            <ui-select-choices refresh-delay="1000" refresh="notes.getLinkContact($select.search)"
+                                repeat="contact.contactid as contact in notes.contactList1 | orderBy: 'name'">
+                                <small>
+                                    {{contact.firstname + " " + contact.lastname}}
+                                    <br> {{contact.street}} {{contact.city}}
+                                    <span ng-if="((contact.street)||(contact.city)) && (contact.state)">,</span>
+                                    {{contact.state}}
+                                </small>
+                                <hr>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span>OR</span>
+                        <button class=" btn btn-default contact-btn-new margin0" data-ng-click="notes.addNewContact('all_notes')">
+                            Add New
+                        </button>
+                        
+                    </div>
+                </div>
+
+                <div class=" form-group select-label-correction">
+                    <div class="pull-left notes-category-menu">
+                        <label style="margin-left: 0px;">Category</label>
+                        <ui-select ng-model="notes.noteToBeAdded.noteCategory.notecategory_id" name="notecat"
+                            theme="selectize">
+                            <ui-select-match placeholder="Enter category">
+                                {{$select.selected.category_name | SentenseCase}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="item.notecategory_id as item in notes.addNoteCategories | filter:{ category_name:$select.search }">
+                                <small>
+                                    {{item.category_name | SentenseCase}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-group margin-top20px">
+                    <div ng-switcher ng-model="notes.noteToBeAdded.is_important" class="form-control zero-border"></div>
+                    <label>
+                        <a href="javascript:void(0)">Important</a>
+                        </strong>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

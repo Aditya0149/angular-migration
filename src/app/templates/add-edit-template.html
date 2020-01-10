@@ -1,0 +1,117 @@
+<div class="modal-header">
+    <div class=" clearfix  heading-with-button-bottom-padding">
+
+        <h2 class=" pull-left page-title" ng-show="AddTemplate.pageMode != 'edit'">Add Template</h2>
+        <h2 class=" pull-left page-title" ng-show="AddTemplate.pageMode == 'edit'">Edit Template</h2>
+        <div class="pull-right">
+            <button class="btn btn-default pull-right"
+                data-ng-disabled="templateform.$invalid"
+                data-ng-click="AddTemplate.addTemplateInfo(AddTemplate.newTemplateInfo)">
+                Save
+            </button>
+            <button class="btn btn-default btn-styleNone pull-right" data-ng-click="AddTemplate.close()">Cancel</button>
+        </div>
+    </div>
+
+</div>
+<div class="modal-body">
+    <div class="container-fluid margin-bottom5">
+        <div class="row">
+            <div data-ng-form="template.form">
+                <div class="col-md-5">
+                    <form name="templateform">
+                        <div class="margin-top10px">
+                            <label>Template Name <span class="compulsary-mark">*</span></label>
+                            <input type="text"
+                                name="templateName"
+                                class="form-control"
+                                ng-pattern="/^[\x00-\x7F]*$/"
+                                data-ng-model="AddTemplate.newTemplateInfo.template_name" required />
+                            <div class="error" data-ng-show="templateform.templateName.$dirty && templateform.templateName.$invalid">
+                                Invalid template name.
+                            </div>
+                        </div>
+                        <div class="margin-top10px">
+                            <label>Template Description <span class="compulsary-mark">*</span></label>
+                            <textarea type="text" class="form-control" data-ng-model="AddTemplate.newTemplateInfo.template_description" required /></textarea>
+                        </div>
+                        <div class="margin-top10px">
+                            <label>Template Category<span class="compulsary-mark">*</span></label>
+                            <ui-select ng-model="AddTemplate.newTemplateInfo.category_id" theme="selectize" required>
+                    <ui-select-match placeholder="Select Category">
+                        {{$select.selected.Name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.Id as item in AddTemplate.templateCategories | filter:$select.search">
+                        <small>
+                            {{item.Name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                        </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="row margin-top10px">
+                        <div class="col-lg-8 col-md-7">
+                            <label>Select Caption</label>
+                            <ui-select ng-model="AddTemplate.newTemplateInfo.captions" theme="selectize">
+                    <ui-select-match placeholder="Select Caption">
+                        {{$select.selected.caption_name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.caption_id as item in AddTemplate.templateCaptions | filter:$select.search">
+                        <small>
+                            {{item.caption_name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                        </div>
+                        <div class="add-now-wrap">
+                            <button data-ng-click="AddTemplate.insertCaption(AddTemplate.newTemplateInfo.captions)" class="btn btn-default btn-styleNone">Add Caption</button>
+                        </div>
+                    </div>
+                    <div class="row margin-top10px">
+                        <div class="col-lg-8 col-md-7">
+                            <label>Select keyword</label>
+                            <ui-select ng-model="AddTemplate.newTemplateInfo.keyword" theme="selectize" on-select="AddTemplate.getKeywordValue(AddTemplate.newTemplateInfo.keyword)">
+                    <ui-select-match placeholder="Select" >
+                        {{$select.selected.category_name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.category_id as item in AddTemplate.templateKeyword | filter:$select.search" >
+                        <small>
+                            {{item.category_name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+
+                            <label></label>
+                            <ui-select ng-model="AddTemplate.newTemplateInfo.kewwordValue" theme="selectize">
+                    <ui-select-match placeholder="Select Keyword">
+                        {{$select.selected.variable}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.variable_id as item in AddTemplate.selectedKeyValue | filter:$select.search" >
+                        <small>
+                            {{item.variable}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                        </div>
+                        <div class="add-topMargin">
+                            <button data-ng-click="AddTemplate.insertKeyword(AddTemplate.newTemplateInfo.kewwordValue)" class="btn btn-default btn-styleNone">Add Keyword</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="margin-top10px">
+
+                        <label>Template Content</label>
+                        <textarea class="ckeditor" name="editornew" id="editornew" ng-model="AddTemplate.newTemplateInfo.template_content" required><p></p></textarea>
+
+                    </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>

@@ -1,0 +1,115 @@
+<style>
+    .btn-group .btn-default{line-height: 36px;height: 38px;}
+</style>
+<div class="container-fluid">
+	<div class="row">
+		<div data-ng-form="document.form">
+			<div class="col-md-12 margin-top15px">
+				<form class="form-margin">
+					<div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Expense Name</label>
+						<input type="text" class="form-control" data-ng-model="document.newExpenseInfo.name" />
+					</div>
+                    <div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Expense Amount </label>
+						<div class="input-group">
+                            <span class="input-group-addon">$</span>
+							<input
+								type="text" step="0.01" custom-currency-filter
+								class="form-control" style="width:94%;"
+								data-ng-model="document.newExpenseInfo.expense_amount" ng-change="document.changeExpenseValues(document.newExpenseInfo)"/>
+							</div>
+					</div>
+					<div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Expense Type</label>
+						<ui-select ng-model="document.newExpenseInfo.expense_type_id" theme="selectize">
+							<ui-select-match placeholder="Enter type">
+								{{$select.selected.Name}}
+							</ui-select-match>
+							<ui-select-choices repeat="item.LabelId as item in document.expenseTypes | filter:{ Name:$select.search }">
+								<small>
+								{{item.Name}}
+								</small>
+							</ui-select-choices>
+						</ui-select>
+					</div>
+                    <div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Paid Amount </label>
+						<div class="input-group">
+                            <span class="input-group-addon">$</span>
+							<input type="text" style="width:94%;" class="form-control" step="0.01" custom-currency-filter data-ng-model="document.newExpenseInfo.paidamount" ng-change="document.changeExpenseValues(document.newExpenseInfo)"
+								ng-disabled="document.newExpenseInfo.paymentmode!=3" />
+						</div>
+					</div>
+					<div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label class="display-block">Date Incurred</label>
+						<p class="input-group margin0 datepicker">
+							<input type="text"
+								data-ng-model="document.newExpenseInfo.incurreddate"
+								datepicker-popup="MM/dd/yyyy"
+								is-open="document.incurredServicePicker"
+								data-ng-disabled="false"
+								id="docincurredDatediv"
+								validate-date error-div="#docincurredDatediv"       
+								tooltip="mm/dd/yyyy"
+								placeholder="mm/dd/yyyy"
+								class="form-control" />
+							<span class="input-group-btn">
+							<button type="button"
+								class="btn btn-default"
+								data-ng-click="document.incurredDatePicker($event)">
+							<i class="default-calendar-small sprite"></i>
+							</button>
+							</span>
+						</p>
+						<div style="float: none;" class="error" id="docincurredError">Invalid date format!</div>
+					</div>
+                    <div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Outstanding Amount </label>
+						<div class="input-group">
+                            <span class="input-group-addon">$</span>
+							<input type="text" style="width:94%;" class="form-control" step="0.01" custom-currency-filter data-ng-model="document.newExpenseInfo.outstandingamount" ng-disabled="true" />
+						</div>
+					</div>
+					<div class="col-md-6 margin-top10px padding-0" style="height: 55px;">
+						<div class="col-md-5">
+							<label>Disbursable</label>
+							<clx-btn-group btn-list="document.disbursableBtns"
+								value="document.newExpenseInfo.disbursable"></clx-btn-group>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					
+					
+					
+					<div class="col-md-6 margin-top10px" style="height: 55px;" data-ng-form="document.expenseform">
+						<label>Check #</label>
+						<input  data-ng-pattern="/^[\040-\100,\133-\140,\173-\177]*$/"  
+						name="chequeno" type="text" class="form-control" placeholder="Enter check no" 
+						data-ng-model="document.newExpenseInfo.chequeno" maxlength="20" />
+						<div ng-if="document.expenseform.chequeno.$dirty" ng-messages="document.expenseform.chequeno.$error">
+                                <div  style="margin-right: 6%;" class="error error-ch" ng-message="pattern">
+                                    Invalid Cheque no 
+                                </div>
+                         </div>
+					</div>
+                    <div class="col-md-6 margin-top10px" style="height: 55px;">
+                        <label>Payment Status</label>
+                        <clx-btn-group btn-list="document.paymentBtns"
+                            value="document.newExpenseInfo.paymentmode" 
+                            btn-click="document.calExpenseBill"></clx-btn-group>
+                        <div class="clearfix"></div>
+				    </div>
+					<div class="col-md-6 margin-top10px" style="height: 55px;">
+						<label>Bank Account Details</label>
+						<input type="text" class="form-control" placeholder="Enter bank details" data-ng-model="document.newExpenseInfo.bank_account" maxlength="100" />
+					</div>
+					<div class="col-md-6 margin-top10px">
+						<label>Memo</label>
+						<textarea  class="form-control" placeholder="Add Memo..." ng-model="document.newExpenseInfo.memo" maxlength="1024" rows="5"></textarea>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

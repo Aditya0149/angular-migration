@@ -1,0 +1,34 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="note-subhead">
+            <strong>Office online Payment Confirmation</strong>
+        </div>
+        <button class="close fl-right" data-ng-click="payment.cancel()" style="margin-top: -25px;">
+              <span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <p><strong>You have selected Office online</strong></p>
+       
+        <div class="clearfix" style="border-bottom-style: ridge;border-bottom-width: thin;margin-left: 75px;padding: 2px;padding-bottom: px;margin-bottom: 8px;"></div>
+      
+        <div class="row">
+            <div class="col-md-8 text-right">Charges :</div>
+            <div class="col-md-2 text-right"><strong>{{payment.offOnlineInfo.amount | currency}}</strong></div>
+        </div>
+        <div class="modal-footer" style="margin-bottom: -60px;"></div>
+
+        <div class="row margin-top10px">
+            <div class="col-md-8 text-right margin-left6px">Total amount :</div>
+            <div class="col-md-2 text-right margin-left10px">
+                <strong>{{payment.offOnlineInfo.amount | currency}}</strong></div>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer" style="border-top: white;">
+        <button data-ng-click="payment.cancel()" class="btn btn-default btn-default">Cancel</button>
+        <button data-ng-click="payment.confirm(offOnlineInfo)" class="btn btn-default btn-default">Confirm</button>
+        
+    </div>
+</div>

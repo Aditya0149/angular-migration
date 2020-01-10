@@ -1,0 +1,35 @@
+<div data-ng-show="dailymailscan.enableUpload" >
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+        <h2 class="col-md-5 page-title ng-binding" data-ng-if="dailymailscan.userRole!='LexviasuperAdmin'" >Upload Document</h2>
+        <h2 class="col-md-5 page-title ng-binding" data-ng-if="dailymailscan.userRole=='LexviasuperAdmin'" >Upload Unindexed Document</h2>
+        <div class="pull-right ">
+            <button data-ng-hide="dailymailscan.fileUpload" data-ng-click="dailymailscan.enableUpload=false" class="btn btn-default btn-styleNone" >Cancel</button>
+             <button data-ng-show="dailymailscan.cancelfileUpload" data-ng-click="dailymailscan.removeAllFiles()" class="btn btn-default btn-styleNone" >Cancel</button>
+        </div>
+    </div>
+    
+	<div class="file-upload-wrapper" data-ng-hide="dailymailscan.fileUpload" >
+	   	<form class="dropzone" id="multidropzone" >
+			<div class="dz-default" > 
+	    		<span class="sprite default-document-batch"></span>
+	    		<h2 class="margin-top10px">Batch File Upload</h2>
+					<div class="margin-top10px"> <span>Drop Files here/ </span>Click to upload</div>
+	   		</div>
+	   	</form>	
+	</div> 
+	
+	<!-- File Uploading -->
+	<div class="row multiupload-row" data-ng-show="dailymailscan.fileUpload"  >
+    <div class="col-md-11">
+        <div class="row">
+        <div class="col-md-4 margin-top30px relative-container" data-ng-repeat="multifile in dailymailscan.multiFilesdata"> <strong class="margin-top10px">{{multifile.fileName}} </strong><span>({{multifile.fileSize}})</span>
+            <div class="progress-close relative-container">
+                <progressbar class="progress active " animate="false" max="100" value="multifile.fileProgress" type="info"></progressbar><a href="javascript:void(0)" class="absolute-container right0 adjust-absolute-cross" ng-click="dailymailscan.removeMultifile(multifile.fileName)"  ><span aria-hidden="true" class="sprite default-cross"></span></a>
+            	<span class="text-success" data-ng-show="multifile.success!=''" >{{multifile.success}}</span>
+            	<span class="error" data-ng-show="multifile.error!=''" >{{multifile.error}}</span>	
+            </div>
+            </div>
+        </div>
+       </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.user-management-wrapper{ 
+    .linkDisabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        color:#808080;
+    }
+    .username-profile-dropdown{
+        padding: 10px;
+        width: 250px;
+    }
+
+}
+   

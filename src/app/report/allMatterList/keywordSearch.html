@@ -1,0 +1,71 @@
+<style>
+    .checkbox input[type=checkbox]{margin-top: -2px !important;margin-left: 5px;}
+.custom-form-control .select2-choices {
+    width: 94% !important;
+    min-height: 34px !important;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+}
+.checkbox label::before{top: 2px;}
+.checkbox label::after{top: 2px;}
+.report-checkbox-table .checkbox input[type=checkbox]{top: 3px;left: -5px;}
+    .select2-container-multi .select2-choices {
+    height: 60px !important;
+    overflow-y: auto;
+}
+ul.select2-choices {
+    border-radius: 5px;
+}
+
+</style>
+<div class="row">
+    <h1 class="col-md-6 ellipsis-nowrap">Keyword Search Report</h1>
+    <div class="col-md-5 padding-0 text-right" style="padding-bottom:8px !important">
+        <button type="submit" class="btn btn-default global-search-btn" ng-click="keywordSearch.save()">Create Report</button>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="row margin0 fixed-grid-report">
+    <div class="row margin-top10px">
+        <div class="col-md-1 margin-top5px" style="width: 5%;">Search:</div>
+        <div class="col-md-5">
+            <input style="width: 100%;" placeholder="Search text" ng-model="keywordSearch.searchText" class="form-control ng-pristine ng-valid ng-touched"
+                type="text">
+        </div>
+        
+        <div class="col-md-1 margin-top5px" style="width: 6%;">Recipient:</div>
+        <div class="col-md-5 recipient-text-field" style="padding-left: 20px;">
+            <ui-select class="width100" multiple ng-model="keywordSearch.recipientsUsers" ng-change="keywordSearch.checkAddress(keywordSearch.recipientsUsers);"
+                theme="select2" >
+                <ui-select-match placeholder="Select Users">
+                    {{$item.mail}}
+                </ui-select-match>
+                <ui-select-choices refresh="keywordSearch.getSendToList($select.search)" refresh-delay="300" repeat="firmU as firmU in keywordSearch.sendToList| filter:{firstLastname:$select.search}">
+                    <small>{{firmU.name}} {{firmU.lname}} &#60;{{firmU.mail}}&#62;</small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="margin-top15px col-md-5 row">
+    <div class="col-md-12 padding-0"> <label> Search in Matter:</label></div>
+    <div class="col-md-5 padding-0 static-new-scrollbar checkbox" style="width: 90% !important;max-height: 48vh;height: auto;">
+        <span class="node-header checkbox" style="display: inline-block;">
+            <input type="checkbox" data-ng-model="checkAllNode" data-ng-true-value="true" data-ng-false-value="false" ng-click="keywordSearch.selectAll(checkAllNode)"/>
+            <label>Select All</label>
+        </span>
+        <hierarchy-search dataset="list" ng-model="keywordSearch.checkedList"></hierarchy-search>
+    </div>
+</div>
+<div class="margin-top15px col-md-7 row" data-ng-show="keywordSearch.isIntakeDisplay" style="padding-left:88px">
+    <div class="col-md-12 padding-0"><label>Search in Intake:</label> </div>
+    <div class="col-md-5 padding-0 static-new-scrollbar checkbox" style="width: 100% !important;max-height: 48vh;height: auto;">
+        <span class="node-header checkbox" style="display: inline-block;">
+            <input type="checkbox" data-ng-model="checkAllIntakeNode" data-ng-true-value="true" data-ng-false-value="false" ng-click="keywordSearch.selectAllIntake(checkAllIntakeNode)"/>
+            <label>Select All</label>
+        </span>
+        <intake-hierarchy-search dataset="intakeList" ng-model="keywordSearch.intakeCheckedList"></intake-hierarchy-search>
+    </div>
+</div>
+</div>

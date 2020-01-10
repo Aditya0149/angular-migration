@@ -1,0 +1,274 @@
+<style>
+    .form-control{width: 100% !important;}
+    .selectize-control {width: 100% !important;}
+</style>
+<div class="modal-header">
+    <div class=" clearfix  heading-with-button-bottom-padding row">
+        <h2 class="col-md-5 page-title" ng-show="addInsaurance.pageMode != 'edit'">Add Insurance Information </h2>
+        <h2 class="col-md-5 page-title" ng-show="addInsaurance.pageMode == 'edit'">Edit Insurance Information </h2>
+
+        <div class="pull-right">
+            <button class="btn btn-default pull-right"
+                data-ng-click="addInsaurance.saveInsauranceInfo(addInsaurance.newInsauranceInfo)">
+                Save
+            </button>
+            <button class="btn btn-default btn-styleNone pull-right margin-right10px" data-ng-click="addInsaurance.close()">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="modal-body static-new-scrollbar" style="max-height: 85vh;">
+    <div data-ng-form="addInsaurance.form" class="row">
+        <div class="col-md-12">
+            <form>
+                <div class="form-group margin-bottom10">
+                    <label>Associated Party</label>
+                    <ui-select
+                        ng-model="addInsaurance.newInsauranceInfo.associated_party"
+                        on-select="addInsaurance.setPartyRole(addInsaurance.newInsauranceInfo.associated_party)"
+                        theme="selectize">
+                    <ui-select-match 
+                        placeholder="Select name">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices 
+                         group-by="addInsaurance.groupPlaintiffDefendants" 
+                         group-filter="['Plaintiffs','Defendants','Other Parties']"
+                         repeat="item in addInsaurance.plaintiffs | filter:{ name:$select.search } | orderBy: 'name'">
+                        <small>
+                            {{item.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                </div>
+
+                <div class="row ">
+                    <div class=" col-md-6">
+                        <label>Insured Party </label>
+                        <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.insured_party"
+                            data-ng-model-options="{ debounce: 500 }"
+                            placeholder="Enter name"
+                            ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"
+                            typeahead="row as row.name +' '+ row.state +' '+ row.city for row in addInsaurance.getContacts($viewValue)"
+                            typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"      
+                            typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                            typeahead-loading="addInsaurance.display.loadinginsuredpartyid"
+                            class="form-control">
+                        <!-- <span ng-show="addInsaurance.display.loadinginsuredpartyid">loading...</span> -->
+                    </div>
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default"
+                            data-ng-click="addInsaurance.addNewContact('insured_party')">
+                            Add New
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="row margin-top10px">
+                    <div class=" col-md-6">
+                        <label>Insurance Provider</label>
+                        <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.insurance_provider"
+                            data-ng-model-options="{ debounce: 500 }"
+                            placeholder="Enter name"
+                            ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"
+                            typeahead="row as row.name +' '+ row.state +' '+ row.city for row in addInsaurance.getContacts($viewValue)"
+                            typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"   
+                            typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                            typeahead-loading="addInsaurance.display.loadinginsuranceproviderid"
+                            class="form-control">
+                        <!-- <span ng-show="addInsaurance.display.loadinginsuranceproviderid">loading...</span> -->
+
+                    </div>
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default"
+                            data-ng-click="addInsaurance.addNewContact('insurance_provider')">
+                            Add New
+                        </button>
+
+
+                    </div>
+                </div>
+
+                <div class="row margin-top10px">
+                    <div class=" col-md-6">
+                        <label>Adjuster Name</label>
+                        <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.insurance_adjuster"
+                            data-ng-model-options="{ debounce: 500 }"
+                            placeholder="Enter name"
+                            ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"
+                            typeahead="row as row.name +' '+ row.state +' '+ row.city for row in addInsaurance.getContacts($viewValue)"
+                            typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"   
+                            typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                            typeahead-loading="addInsaurance.display.loadingadjusterid"
+                            class="form-control">
+                        <!-- <span ng-show="addInsaurance.display.loadingadjusterid">loading...</span>
+                        <span ng-show="addInsaurance.display.loadinginsuranceproviderid">loading...</span> -->
+                    </div>
+                    <div class="add-now-wrap">
+                        <span class="or-connector">OR</span>
+                        <button class="btn btn-default"
+                            data-ng-click="addInsaurance.addNewContact('insurance_adjuster')">
+                            Add New
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Insurance Type</label>
+                    <!--  <input type="text" class="form-control" data-ng-model="addInsaurance.newInsauranceInfo.insurancetype" />-->
+                    <ui-select
+                        data-ng-model="addInsaurance.newInsauranceInfo.insurance_type"
+                        theme="selectize">
+                    <ui-select-match 
+                        placeholder="Select type">
+                        {{$select.selected}}
+                    </ui-select-match>
+                         <ui-select-choices 
+                             repeat="item in addInsaurance.insuranceTypeList.sort() | filter:$select.search">
+                              <small>{{item}}</small> 
+                         </ui-select-choices>
+                </ui-select>
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Excess Confirmed</label>
+                    <clx-btn-group
+                        btn-list="addInsaurance.excessConfirmed"
+                        value="addInsaurance.newInsauranceInfo.excess_confirmed"></clx-btn-group>
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Policy Exhausted</label>
+                    <clx-btn-group
+                        btn-list="addInsaurance.excessConfirmed"
+                        value="addInsaurance.newInsauranceInfo.policy_exhausted"></clx-btn-group>
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Policy Limit</label>
+                    <div class="row">
+                        <div class="col-md-5" style="width: 49%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control"
+                                    step="0.01" custom-currency-filter  ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"
+                                    data-ng-model="addInsaurance.newInsauranceInfo.policy_limit"  />
+                            </div>
+                        </div>
+                        <div class="pull-left policy-limit-divider">/</div>
+                        <div class="col-md-5" style="width: 49%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" class="form-control"
+                                   step="0.01" custom-currency-filter  ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"
+                                    data-ng-model="addInsaurance.newInsauranceInfo.policy_limit_max"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Policy Number</label>
+                    <input type="text" class="form-control"  ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)" data-ng-model="addInsaurance.newInsauranceInfo.policy_number" maxlength="50" />
+                </div>
+
+                <div class="margin-top10px">
+                    <label>Claim Number</label>
+                    <input type="text" class="form-control" data-ng-model="addInsaurance.newInsauranceInfo.claim_number" maxlength="50"  ng-keydown="addInsaurance.checkIfEnterKeyWasPressed($event)"/>
+                </div>
+                <div class="margin-top10px">
+                        <label>Memo</label>
+                        <textarea  class="form-control" placeholder="Add Memo ..." ng-model="addInsaurance.newInsauranceInfo.memo" maxlength="1024" rows="5"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="page-title">Add Insaurance Info</h2>
+        </div>
+
+        <div class="col-lg-6 pull-right btn-botm">
+            <button class="btn btn-default pull-right"
+                data-ng-disabled="addInsaurance.form.$invalid"
+                data-ng-click="addInsaurance.saveInsauranceInfo(addInsaurance.newInsauranceInfo)">
+                Save</button>
+            <button class="btn btn-default btn-styleNone pull-right" data-ng-click="addInsaurance.close()">Cancel</button>
+
+        </div>
+
+    </div>-->
+
+<!--select class="form-control"
+                    data-ng-required="true"
+                    data-ng-model="addInsaurance.newInsauranceInfo.plaintiffid"
+                    data-ng-options="data.plaintiffid as data.name for data in addInsaurance.plaintiffs">
+                </!select-->
+
+
+<!--            <div class="form-group">
+                <label>Insured Party </label>
+                <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.insuredpartyid"
+                    data-ng-model-options="{ debounce: 500 }"
+                    placeholder="enter name"
+                    typeahead="row as row.name for row in addInsaurance.getContacts($viewValue)"
+                    typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                    typeahead-loading="addInsaurance.display.loadinginsuredpartyid"
+                    class="form-control">
+                <span ng-show="addInsaurance.display.loadinginsuredpartyid">loading...</span>
+
+                <span class="or-connector">OR</span>
+                <button class="btn btn-default"
+                        data-ng-click="addInsaurance.addNewContact('insuredpartyid')">
+                    Add New
+                </button>
+
+            </div>-->
+
+
+
+<!--            <div class="form-group">
+                <label>Adjuster Name</label>
+                <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.adjusterid"
+                    data-ng-model-options="{ debounce: 500 }"
+                    placeholder="enter name"
+                    typeahead="row as row.name for row in addInsaurance.getContacts($viewValue)"
+                    typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                    typeahead-loading="addInsaurance.display.loadingadjusterid"
+                    class="form-control">
+                <span ng-show="addInsaurance.display.loadingadjusterid">loading...</span>
+                <span ng-show="addInsaurance.display.loadinginsuranceproviderid">loading...</span>
+
+                <span class="or-connector">OR</span>
+                <button class="btn btn-default"
+                        data-ng-click="addInsaurance.addNewContact('adjusterid')">
+                    Add New
+                </button>
+
+            </div>-->
+
+
+
+<!--            <div class="form-group">
+                <label>Insurance Provider</label>
+                <input type="text" data-ng-model="addInsaurance.newInsauranceInfo.insuranceproviderid"
+                    data-ng-model-options="{ debounce: 500 }"
+                    placeholder="enter name"
+                    typeahead="row as row.name for row in addInsaurance.getContacts($viewValue)"
+                    typeahead-input-formatter="addInsaurance.formatTypeaheadDisplay($model)"
+                    typeahead-loading="addInsaurance.display.loadinginsuranceproviderid"
+                    class="form-control">
+                <span ng-show="addInsaurance.display.loadinginsuranceproviderid">loading...</span>
+
+                <span class="or-connector">OR</span>
+                <button class="btn btn-default"
+                        data-ng-click="addInsaurance.addNewContact('insuranceproviderid')">
+                    Add New
+                </button>
+
+            </div>-->

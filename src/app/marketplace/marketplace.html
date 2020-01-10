@@ -1,0 +1,14 @@
+<div id="report-content" style="width: 100% !important;" data-ui-view="" class="relative-container"></div>
+
+
+<footer data-position-center="" delayRender='true'>
+
+    <ul>
+        <li data-ng-repeat="navs in marketplace.settingsNavigation">
+            <a data-ui-sref="{{navs.state}}" data-ng-class="{'active-footer': marketplace.highlightCurrentNav(navs.state)}">{{navs.name}}</a>
+
+        </li>
+    </ul>
+
+
+</footer>

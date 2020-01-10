@@ -1,0 +1,157 @@
+<div class="row dashboard-tasks-due keep-inside-clicks-open">
+    <div class="row parent-box text-center" ng-if="!dataset || dataset.length == 0">
+        There aren’t any notifications for you.
+    </div>
+    <div class="row parent-box" data-ng-repeat="noti in dataset | filter:searchTerm" id="{{noti.notification_id}}"
+        ng-class="{'light-blue-bg ':noti.is_seen == 1}">
+        <div class="col-sm-11 padding-right-0"
+            data-ng-class="{'cursor-pointer' : noti.is_intake == 0 || noti.is_intake == 1 || noti.is_intake == 2}"
+            data-ng-click="goTo(noti,$event,false, true)">
+            <div ng-if='noti.notification_type == "Event_Reminder" || noti.notification_type == "Task_Reminder" ||
+                    noti.notification_type == "Event" || noti.notification_type == "Task"'>
+                <p ng-bind-html="noti.text"></p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6 zero-padd-LT padding-right-0" data-ng-if="noti.type== 'event'">
+                            <strong>Start:</strong>
+                            <span ng-if="noti.all_day == 1">{{noti.start_date | utcDateFilter:
+                                            'MM-DD-YYYY':noti.all_day:'start'}}</span>
+                            <span ng-if="noti.all_day == 0">{{noti.start_date | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                            A':noti.all_day:'start'}}</span>
+                        </div>
+                        <div class="col-md-6 zero-padd-LT padding-right-0" data-ng-if="noti.type== 'event'">
+                            <strong>End:</strong>
+                            <span ng-if="noti.all_day == 1">{{noti.end_date | utcDateFilter:
+                                            'MM-DD-YYYY':noti.all_day:'end'}}</span>
+                            <span ng-if="noti.all_day == 0">{{noti.end_date | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                            A':noti.all_day:'end'}}</span>
+                        </div>
+                        <div data-ng-if="noti.type== 'task'">
+                            <strong>Due Date:</strong>
+                            <span>
+                                {{noti.start_date |utcImpDateFilter: 'MM-DD-YYYY'}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if='noti.notification_type == "Sidebar_Comment"'>
+                <p ng-bind-html="noti.text">
+                </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Post:</strong>
+                        <span>{{noti.post |characters:50}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Comment:</strong>
+                        <span>{{noti.comment |characters:50}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Firm Post creation notification -->
+            <div ng-if='noti.notification_type == "Sidebar_Post"'>
+                <p ng-bind-html="noti.text">
+                </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Post:</strong>
+                        <span>{{noti.post |characters:50}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if='noti.notification_type == "Email"'>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>From:</strong>
+                        <span>{{noti.senders_name}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>Subject:</strong>
+                        <span ng-bind-html="noti.subject"></span>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                        <div class="col-md-12">
+                            <strong>E-mail:</strong>
+                            <span
+                                ng-bind-html="noti.mail_body"></span>
+                        </div>
+                    </div> -->
+            </div>
+            <div ng-if='noti.notification_type == "Client_Messenger"'>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>From:</strong>
+                        <span>{{noti.sender_name}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong ng-if="noti.is_sms == 1">Message:</strong>
+                        <span ng-bind-html="noti.text"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Matter Creation notification -->
+            <div ng-if='noti.notification_type == "Matter"'>
+                <p ng-bind-html="noti.text"></p>
+            </div>
+            <!-- Intake creation notification -->
+            <div ng-if='noti.notification_type == "Intake"'>
+                <p ng-bind-html="noti.text"></p>
+            </div>
+                           
+            <div class="row" ng-if="noti.is_intake == 0 && noti.matter_id > 0">
+                <div class="col-md-12">
+                    <strong>Matter:</strong>
+                    <span>
+                        {{noti.matter_name}}</span>
+                </div>
+            </div>
+            <div class="row" ng-if="noti.is_intake == 1 && noti.matter_id > 0">
+                <div class="col-md-12">
+                    <strong>Intake:</strong>
+                    <span>
+                        {{noti.matter_name}}</span>
+                </div>
+            </div>
+            <div class="period-info">
+                <p>
+                    <img ng-if='noti.notification_type == "Task"' src="../styles/images/ic_Tasks_Notification.svg">
+                    <img ng-if='noti.notification_type == "Task_Reminder" || noti.notification_type == "Event_Reminder"'
+                        src="../styles/images/ic_Reminder_Notification.svg">
+                    <img ng-if='noti.notification_type == "Client_Messenger"'
+                        src="../styles/images/ic_ClientMessenger_Notification.svg">
+                    <img ng-if='noti.notification_type == "Event"' src="../styles/images/ic_Events_Notification.svg">
+                    <img ng-if='noti.notification_type == "Sidebar_Comment"'
+                        src="../styles/images/ic_FirmPost_Notification.svg">
+                    <img ng-if='noti.notification_type == "Sidebar_Post"'
+                        src="../styles/images/ic_FirmPost_Notification.svg">
+                        <img ng-if='noti.notification_type == "Matter"'
+                        src="../styles/images/ic_Matter_Notification.svg">
+                        <img ng-if='noti.notification_type == "Intake"'
+                        src="../styles/images/ic_Intake_Notification.svg">
+                    <img ng-if='noti.notification_type == "Email"' src="./styles/images/ic_Email_Notification.svg">
+                    {{noti.created_on | utcDateFilter: 'MM-DD-YYYY hh:mm A' :1:'start'}}
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-1 text-right">
+            <p class="dots" data-ng-click="toggleMenu(noti)">
+                ...
+            </p>
+            <div class="hidden-option" ng-class="{'displayStyleNone':!noti.notiDots,'displayStyleBlock':noti.notiDots}">
+                <p data-ng-click="dismissNotification(noti)">Dismiss</p>
+                <p ng-if="noti.is_seen == 0" data-ng-click="markReadNotification(noti)">Mark as read</p>
+            </div>
+        </div>
+    </div>
+
+</div>

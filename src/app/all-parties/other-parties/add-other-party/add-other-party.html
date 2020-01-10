@@ -1,0 +1,22 @@
+<div id="report-content">
+    <div class="container-fluid ">
+        <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+            <div class="pull-left ">
+                <h2  data-ng-if="!addOtherParty.isEditMode" class="page-title">Add Other Party</h2>
+                <h2  data-ng-if="addOtherParty.isEditMode" class="page-title">Edit Other Party</h2>                
+            </div>
+            <div class="pull-right">
+                <div class=" pull-right ">
+                    <button data-ng-click="addOtherParty.cancel()" class="btn btn-default btn-styleNone">Cancel</button>                    
+                    <button data-ng-click="addOtherParty.save()" class="btn btn-default" ng-disabled="addOtherParty.disableSave()">Save</button>
+                </div>
+            </div>  
+        </div>
+    </div>
+    
+   
+<div class="margin-top10px" >
+    <div data-ng-if="!addOtherParty.isEditMode" data-ng-include="'app/all-parties/other-parties/add-other-party/partials/searchOrAdd.html'"></div>
+    <div data-ng-include="'app/all-parties/other-parties/add-other-party/partials/generalInfo.html'"></div>    
+</div>
+</div>

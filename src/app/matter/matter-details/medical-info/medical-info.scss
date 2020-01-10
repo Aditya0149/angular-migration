@@ -1,0 +1,61 @@
+.medical-information-wrapper {
+        margin-top: 10px;
+        padding-bottom: 65px;
+        .ta-editor { width: 100% !important;
+        height: 44vh !important;
+        .panel-group {
+            margin-bottom: 0;
+        }
+        .panel-body {
+            padding-bottom: 0;
+        }
+    }
+    .sprite.default-link {
+        cursor: default;
+    }
+    .matter-notes-add {
+        ul {
+            li {
+                list-style: disc;
+                margin-left: 10px;
+            }
+        }
+    }
+    .injuries-box {
+        border-bottom: 1px solid #E9EEF0;
+        margin-bottom: 15px;
+    }
+    .mt-auto {
+        margin-top: auto;
+    }
+    .mt-5-negative {
+        margin-top: -5px;
+    }
+    .pb-65 {
+        padding-bottom: 65px;
+    }
+    .custom-height {
+        max-height: 35vh;
+    }
+}
+
+
+.add-medical-info-wrapper {
+        .form-control,.selectize-control{width: 100%;
+    }
+    .modal-open {
+        .modal {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+    }
+    .cust-picker {
+        .dropdown-menu {
+            left: -142px !important;
+        }
+    }
+    .custom-scroll-height {
+        height: 74vh;
+        overflow-x: hidden;
+    }
+}

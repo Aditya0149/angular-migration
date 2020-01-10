@@ -1,0 +1,168 @@
+<div class="filterpopup-wrapper">
+    <div class="modal-header clearfix">
+        <h1 class="modal-title fl-left">Add to Records</h1>
+        <button class="close fl-right" data-ng-click="expenseAddToRecordCtrl.cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+
+    <div class="filter-greybox container modal-body static-new-scrollbar">
+        <div class="row ">
+            <div class=" col-md-6">
+                <label class="margin-top10px">Payee
+
+                </label>
+                <ui-select ng-model="expenseAddToRecordCtrl.filter.payee" theme="selectize">
+                    <ui-select-match placeholder="Payee">
+                        {{expenseAddToRecordCtrl.filter.payee.DisplayName}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="payees as payees in expenseAddToRecordCtrl.payeeTypeData | filter:{DisplayName:$select.search} | orderBy:'DisplayName'">
+                        <small>
+                            {{payees.DisplayName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+
+            <div class=" col-md-6">
+                <label class="margin-top10px">Payment Method</label>
+                <ui-select ng-model="expenseAddToRecordCtrl.filter.paymentMethod" theme="selectize">
+                    <ui-select-match placeholder="Payment Method">
+                        {{expenseAddToRecordCtrl.filter.paymentMethod.Name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="paymentMethods as paymentMethods in expenseAddToRecordCtrl.paymentMethodTypeData| filter:{Name:$select.search} | orderBy:'Name'">
+                        <small>
+                            {{paymentMethods.Name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+            <div class=" col-md-6">
+                <label class="margin-top10px">Customer</label>
+                <ui-select ng-model="expenseAddToRecordCtrl.filter.customers" theme="selectize">
+                    <ui-select-match placeholder="Customer Name">
+                        {{expenseAddToRecordCtrl.filter.customers.FullyQualifiedName}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="customer as customer in expenseAddToRecordCtrl.customersTypeData| filter:{FullyQualifiedName:$select.search} | orderBy:'FullyQualifiedName'">
+                        <small>
+                            {{customer.FullyQualifiedName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+
+            <div class=" col-md-6">
+                <label class="margin-top10px">Payment Account
+                    <span class="compulsary-mark">*</span>
+                </label>
+                <ui-select ng-model="expenseAddToRecordCtrl.filter.paymentAccount" theme="selectize">
+                    <ui-select-match placeholder="Payment Account">
+                        {{expenseAddToRecordCtrl.filter.paymentAccount.FullyQualifiedName}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="paymentAccounts as paymentAccounts in expenseAddToRecordCtrl.paymentAccountTypeData| filter:{FullyQualifiedName:$select.search} | orderBy:'FullyQualifiedName'">
+                        <small>
+                            {{paymentAccounts.FullyQualifiedName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+            <div class=" col-md-6">
+                <label class="margin-top10px">Category
+                    <span class="compulsary-mark">*</span>
+                </label>
+                <ui-select ng-model="expenseAddToRecordCtrl.filter.category" theme="selectize"
+                    on-select="expenseAddToRecordCtrl.getSubcategorys(expenseAddToRecordCtrl.filter.category)">
+                    <ui-select-match placeholder="Category Name">
+                        {{expenseAddToRecordCtrl.filter.category.FullyQualifiedName}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="categorys as categorys in  expenseAddToRecordCtrl.categoryTypeData| filter:{FullyQualifiedName:$select.search}">
+                        <small>
+                            {{categorys.FullyQualifiedName}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+            <div class="col-md-6">
+                <label class="margin-top10px"> Payment Type
+                    <span class="compulsary-mark">*</label>
+
+                <ui-select data-ng-model="expenseAddToRecordCtrl.filter.paymentType" theme="selectize">
+                    <ui-select-match placeholder="Enter Payment Type">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="item in expenseAddToRecordCtrl.paymentType| filter:{name :$select.search }">
+                        <small>{{item.name}}</small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class=" col-md-6">
+                <label class="margin-top10px">Date Incurred</label>
+
+                <div>
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy"
+                            data-ng-model="expenseAddToRecordCtrl.filter.dateIncurred" is-open="openedEndDate"
+                            data-ng-disabled="false" name="doi" id="expenceStartDatediv" validate-date
+                            error-div="#expenceStartDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            full-day-date="1" close-text="Close"
+                            ng-change="expenseAddToRecordCtrl.setDates('start','#expenceStartDatediv')"
+                            placeholder="Date Incurred" show-button-bar="false" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                ng-click="expenseAddToRecordCtrl.openCalender($event);openedEndDate = true;openedStartDate=false;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <span></span>
+                    </div>
+                    <div class="error" id="expenceStartDateErr">Invalid date format!</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row margin-top10px">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="comment">Description</label>
+                    <textarea class="form-control" placeholder="Add description..."
+                        ng-model="expenseAddToRecordCtrl.filter.description" maxlength="1024" rows="5"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="comment">Memo</label>
+                    <textarea class="form-control" placeholder="Add memo ..."
+                        ng-model="expenseAddToRecordCtrl.filter.memo" maxlength="1024" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right ">
+            <button data-ng-click="expenseAddToRecordCtrl.resetFilters()" type="button"
+                class="btn btn-default btn-styleNone">
+                Reset
+            </button>
+            <button data-ng-click="expenseAddToRecordCtrl.proceedToExpense(expenseAddToRecordCtrl.filter)"
+                ng-disabled=" expenseAddToRecordCtrl.enableApply || expenseAddToRecordCtrl.isDatesValid()" type="button" class="btn btn-default">
+                Apply
+            </button>
+        </div>
+    </div>
+</div>

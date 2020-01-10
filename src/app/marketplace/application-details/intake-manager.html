@@ -1,0 +1,59 @@
+<div class="marketplace-details-main row-m-0">
+    <div class="ng-scope row">
+        <div class="container col-md-12 main-top">
+            <div class="pull-left back-btn-block">
+                <a href="#/marketplace" data-ng-click="applicationCtrl.clearStorage()" class="marketplace-back-btn"></a>
+            </div>
+            <div class="pull-left left-img">
+                <img class="small-imga" src="../styles/images/launcher-icons/intake-manager.png">
+            </div>
+            <div class="col-md-7 marketplace-details-block border-right">
+                <div class="title">Intake Manager</div>
+                <div class="text col-md-10 padding-0">Intake Manager guides you through the entire intake process (e.g., contact info, case details, injury checklists)—ensuring you capture all the information you need to successfully grow your firm.  You can view important lead info (alongside vital firm data) and schedule follow-ups or reminders right from a prospect’s profile—so you never miss out on potential clients or revenue.  We’ll even provide you with detailed marketing reports on which of your firm’s campaigns are bringing in the most leads, conversions, and ROI so you can budget prudently and maximize profits.</div>
+                  
+            </div> 
+            <div class="col-md-2 padding-right-0 marketplace-details-block">
+                <div class="text clear-both">
+                    
+                    <div class="margin-top30px">
+                        <button class="btn btn-default"
+                          ng-if="applicationCtrl.isIntakeManager.is_active==0" ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM')">SUBSCRIBE</button>
+                         <!-- <button class="btn btn-default"
+                         ng-disabled="applicationCtrl.isIntakeManager.permission.E==0 || (applicationCtrl.dissableSubscribe)" ng-if="applicationCtrl.isIntakeManager.is_active==0" ng-click="applicationCtrl.save(applicationCtrl.isIntakeManager, 'IM')">SUBSCRIBE</button> -->
+                        <button class="btn btn-default" ng-if="applicationCtrl.isIntakeManager.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                    </div>
+                </div>  
+                
+            </div>
+        </div>
+    </div>
+    <div id="report-content" class="fiex-height-slider">
+        <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+            <carousel interval="applicationCtrl.myInterval">
+                <slide ng-repeat="slide in applicationCtrl.slides" active="slide.active">
+                    <img ng-src="{{slide.image}}">
+                    <span class="slide-txt static-new-scrollbar" ng-bind-html="slide.text"></span>
+                    <div class="carousel-caption">
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+</div>
+
+
+
+<footer position-center >
+    <ul>
+        <li>
+            <a href="#/marketplace" class="active-footer">Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+        <!-- <li>
+            <a href="#/marketplace/upcoming">Upcoming</a>
+        </li> -->
+
+    </ul>
+</footer>

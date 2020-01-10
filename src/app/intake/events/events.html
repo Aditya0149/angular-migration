@@ -1,0 +1,375 @@
+<!-- CONTENT SECTION-->
+<cancel-pending-requests></cancel-pending-requests>
+<div class="intake-event-wrapper">
+    <div id="report-content">
+    
+        <div class="row gridSec margin0 container">
+    
+            <div class="col-md-12 paddingRLR">
+                <div class="col-md-4 pull-left paddingRLR dropdown create" ng-if="(events.isGraceOver != 0)">
+                    <a ng-if="events.migrate!= 1" href="javascript:void(0)" data-toggle="collapse" data-target="#"
+                        aria-expanded="false" aria-controls="addEvent">
+                        <span data-ng-click="events.addEditEvent('add')" class="sprite default-plus"
+                            tooltip="Add">&nbsp;</span>
+                    </a>
+                </div>
+                <div class="col-md-8 pull-right">
+                    <div class="col-md-3 pull-right paddingRLR clearfix">
+                        <div class="pull-right">
+                            <div class="search-input">
+                                <div class="default-searchico sprite" tooltip="Search"></div>
+                                <input type="text" class="form-control" data-ng-model="events.searchEvent"
+                                    data-ng-change="events.filterRetain();">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <div class="dropdown">
+                            <span class="sortby-align">Sort By:</span>
+                            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{events.getSortByLabel(events.sortby)}}
+                                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <li data-ng-repeat-start="sort in events.sorts"
+                                    data-ng-class="{' active': events.sortby == sort.key}">
+                                    <a data-ng-click="events.applySortByFilter(sort.key)">{{sort.name}}</a>
+                                </li>
+                                <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="paddingRLR flexCont">
+            <!-- ngRepeat: item in viewModel.statusWiseCounts -->
+        </div>
+    
+    
+        <!--<div class="row">
+            <div class="list margin-top10px text-center" data-ng-show="events.eventsPermissions[0].V==0">
+                You are not authorized to view events
+            </div>
+        </div>-->
+        <div>
+            <div class="row">
+                <div class="list margin-top10px text-center"
+                    data-ng-show="events.eventsList.length==0 && events.isDataAvailable">
+                    No events are available!
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="main-event" class="dashboard-tasks-due mxh-68">
+                        <div class="events-list list"
+                            data-ng-repeat="rec in events.yearList | orderBy:'year':events.sortDESC" id="{{rec.year}}">
+                            <h4 class="text-center">{{rec.year}}</h4>
+                            <div data-ng-show="events[rec.year].filtered.length == 0">
+                                <p>No matching event</p>
+                            </div>
+                            <ul>
+                                <li class="row" data-ng-click="events.selectEvent(event)"
+                                    on-finish-render="ngRepeatFinished"
+                                    data-ng-repeat="event in events[rec.year].filtered = (events.eventsList[rec.year]|filter:{'event_title':events.searchEvent}) "
+                                    ng-class="{'selected-event' : events.isSelected(event)} ">
+                                    <div class="col-md-3">
+                                        <div class="circle text-center" ng-class="events.showEventClass(event)">
+                                            <strong>{{event.start_date|utcDateFilter:'DD':event.all_day:'start'}}</strong>
+                                        </div>
+                                        <div class="text-center">
+                                            {{event.start_date|utcDateFilter:'MMM':event.all_day:'start'}}
+                                        </div>
+                                    </div>
+                                    <div id="x{{event.intake_event_id}}" class="col-md-9 custom-name">
+                                        <p> {{event.event_display_name}}</p>
+                                        <span ng-if="event.is_comply == 1">Complied/Held</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- bug#8659 for delete event -->
+                <div id="eventDetails" class="col-md-8 detail-event view-only-fields dashboard-tasks-due  event-box"
+                    data-ng-if="events.showEventDetails(events.selectedEvent)">
+    
+                    <div class="row-fluid">
+                        <div class="search-overlap">
+                            <ul class="showBy-btns pull-right absolute-container right0">
+                                <li>
+                                    <a ng-if="events.migrate!= 1" href="javascript:void(0);"
+                                        data-ng-click="events.addEditEvent('edit',events.selectedEvent)"
+                                        ng-if="(events.isGraceOver != 0)">
+                                        <span class="sprite default-edit " tooltip="Edit" tooltip-placement="left"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"
+                                        data-ng-click="events.delete(events.selectedEvent.intake_event_id)"
+                                        data-ng-show="events.isGraceOver != 0">
+                                        <span class="sprite default-delete " tooltip="Delete" tooltip-placement="left"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+    
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Event Type:</div>
+                        <div class="col-md-6 value"><strong>{{events.selectedEvent.name}}</strong></div>
+                    </div>
+                    <div class="row-fluid"
+                        data-ng-show="events.selectedEvent.label_id==100 || events.selectedEvent.label_id==19 || events.selectedEvent.label_id==32">
+                        <div class="col-md-3 ">Event Title:</div>
+                        <div class="col-md-6 value">
+                            <strong>{{events.selectedEvent.event_title}}</strong>
+                        </div>
+                    </div>
+    
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Assigned To:</div>
+                        <div class="col-md-8 value">
+                            <strong>{{events.assigned_to_name}}</strong>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Start Date:</div>
+                        <div class="col-md-8 value">
+                            {{events.selectedEvent.start_date|utcDateFilter: 'MM-DD-YYYY':events.selectedEvent.all_day:'start'}}
+                            <span data-ng-show="events.selectedEvent.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;
+                                {{events.selectedEvent.start_date|utcDateFilter: 'hh:mm A':events.selectedEvent.all_day:'start'}}
+                            </span>
+                        </div>
+    
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">End Date:</div>
+                        <div class="col-md-8 value">
+                            {{events.selectedEvent.end_date|utcDateFilter: 'MM-DD-YYYY':events.selectedEvent.all_day:'end'}}
+                            <span data-ng-show="events.selectedEvent.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;
+                                {{events.selectedEvent.end_date|utcDateFilter: 'hh:mm A':events.selectedEvent.all_day:'end'}}
+                            </span>
+                        </div>
+                    </div>
+    
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Location:</div>
+                        <div class="col-md-8 value">
+                            <strong>{{events.selectedEvent.location}}</strong>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Description:</div>
+                        <div class="col-md-8 value">
+                            <p class="dashboard-tasks-due description-text">
+                                {{events.selectedEvent.description}}</p>
+                        </div>
+                        <!--<div data-ng-bind-html="events.selectedEvent.description|replaceNonASCII"></div>-->
+    
+                    </div>
+                    <!--US#3119- Added checkboxes for Reminder ...Start-->
+                    <hr>
+                    <div class="row-fluid">
+                        <div class="margin-bottom10px clearfix">
+                            <h6 class="col-md-3">For Firm Users</h6>
+                        </div>
+                        <div class="col-md-3 ">Reminder Days Prior to Due Date:</div>
+                        <div class="col-md-9 add-event-popup padding-0">
+                            <div class="col-md-1 checkbox padding-0 margin0"
+                                data-ng-repeat="remiderdays in events.reminderDaysList">
+                                <input type="checkbox" data-ng-disabled="true" checklist-value="remiderdays"
+                                    checklist-model="events.selectedEvent.reminder_days" />
+                                <label>{{remiderdays | replaceText}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid" ng-if="events.selectedEvent.custom_reminder">
+                        <div class="col-md-3 ">And/Or Custom Date Reminder:</div>
+                        <div class="col-md-9 add-event-popup padding-0">
+                            {{events.selectedEvent.custom_reminder}} </div>
+                    </div>
+                    <!--...End-->
+                    <div class="row-fluid margin0">
+                        <div class="col-md-3 ">Remind Users:</div>
+                        <div class="col-md-9 add-event-popup padding-0">
+                            <div ng-repeat="user in events.userSelectedType" class="pull-left margin-right-radio padding-0">
+                                <div class="radio padding-0">
+                                    <input class="ml-0" type="radio" data-ng-model="events.reminder_users_id"
+                                        ng-click="events.setUserMode(user)" ng-value="user.id" ng-disabled="true" />
+                                    <label class="custom-line-height">{{user.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-show="events.reminder_users_id == '3'">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <ui-select multiple ng-model="events.selectedEvent.remind_users_temp" theme="select2"
+                                class="width100" ng-disabled="true">
+                                <ui-select-match placeholder="Enter User">
+                                    {{$item.full_name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="user.user_id as user in events.assignedToUserList | filter:{full_name:$select.search} | orderBy: 'full_name'">
+                                    <small>
+                                        {{user.full_name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <!-- Reminder for SMS -->
+                    <hr>
+                    <div class="row-fluid">
+                        <div class="margin-bottom10px clearfix">
+                            <h6 class="col-md-3">For Associated Parties</h6>
+                        </div>
+                        <div class="col-md-3 ">Reminder Days Prior to Due Date:</div>
+                        <div class="col-md-9 add-event-popup padding-0">
+                            <div class="col-md-1 checkbox padding-0 margin0"
+                                data-ng-repeat="remiderdays in events.reminderDaysList">
+                                <input type="checkbox" data-ng-disabled="true" checklist-value="remiderdays"
+                                    checklist-model="events.selectedEvent.sms_reminder_days" />
+                                <label>{{remiderdays | replaceText}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid" ng-if="events.selectedEvent.sms_custom_reminder">
+                        <div class="col-md-3 ">And/Or Custom Date Reminder:</div>
+                        <div class="col-md-9 add-event-popup padding-0">
+                            {{events.selectedEvent.sms_custom_reminder}} </div>
+                    </div>
+                    <!--...End-->
+                    <div class="row-fluid" data-ng-if="events.selectedEvent.sms_contact_ids.length>0">
+                        <div class="col-md-3 ">Remind Associated Parties:</div>
+                        <div class="col-md-9 padding-0">
+                            <ui-select multiple ng-model="events.selectedEvent.sms_contact_ids" theme="select2"
+                                class="width100" ng-disabled="true">
+                                <ui-select-match placeholder="Enter Associated Party">
+                                    {{$item.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="user.contactid as user in events.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                    <small>
+                                        {{user.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <!--         US#5678- Event history grid start    -->
+                    <!--         US#5678- Event history grid start    -->
+    
+                    <div class="row-fluid">
+                        <div class="col-md-3 ">Event History:</div>
+    
+                        <div class="task-event-reminders">
+                            <div class="fl-right" ng-if="events.eventHistoryData.length > 0">
+                                <a data-ng-click="events.exportEventHistory()">
+                                    <span class="sprite default-sharedown sortby-icons" tooltip="Export History"
+                                        tooltip-placement="left"></span>
+                                </a>
+                            </div>
+                            <div class="margin-top20px clear-both">&nbsp;</div>
+    
+    
+                            <div class="event-table-scrollable-grid">
+                                <table class="event-table-grid" data-ng-show="events.eventHistoryData.length > 0">
+                                    <thead class="grey-thead">
+                                        <tr>
+                                            <th class="th-width-15">Last Updated</th>
+                                            <th class="th-width-15">Start Date</th>
+                                            <th class="th-width-15">End Date</th>
+                                            <th class="th-width-18">Reason</th>
+                                            <th class="th-width-22">Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="dashboard-tasks-due table">
+                                        <tr data-ng-repeat="evthist in events.eventHistoryData">
+                                            <td class="th-width-15">
+                                                {{evthist.modified_date | utcDateFilter: 'MM/DD/YYYY'}}
+                                                <br>
+                                                {{evthist.modified_date | utcDateFilter: 'hh:mm A'}}
+                                            </td>
+                                            <td class="th-width-15" ng-show="evthist.all_day=='1'">
+                                                {{evthist.start_date | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'start'}}
+                                            </td>
+                                            <td class="th-width-15" ng-show="evthist.all_day=='0'">
+                                                {{evthist.start_date | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'start'}}
+                                                <br>
+                                                {{evthist.start_date | utcDateFilter: 'hh:mm A' :evthist.all_day:'start'}}
+                                            </td>
+                                            <td class="th-width-15" ng-show="evthist.all_day=='1'">
+                                                {{evthist.end_date | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'end'}}
+                                            </td>
+                                            <td class="th-width-15" ng-show="evthist.all_day=='0'">
+                                                {{evthist.end_date | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'end'}}
+                                                <br>
+                                                {{evthist.end_date | utcDateFilter: 'hh:mm A' :evthist.all_day:'end'}}
+                                            </td>
+                                            <td class="th-width-18">{{evthist.reason_name}}</td>
+                                            <td class="cell word-wrap th-width-22">
+                                                {{evthist.comments}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+    
+    
+    
+    
+    
+                            <div class="text-center margin-top10px" data-ng-show="events.eventHistoryData.length === 0">
+                                <p>No event history found...</p>
+                            </div>
+    
+    
+                        </div>
+    
+                    </div>
+    
+    
+    
+    
+                    <!--         US#5678- Event history grid end -->
+    
+    
+                </div>
+    
+            </div>
+        </div>
+    
+    
+        <footer class="intake-header">
+            <ul>
+                <li>
+                    <a href="#/intake/intake-overview/{{events.intakeId}}">Overview</a>
+                </li>
+                <li><a href="#/intake/plaintiff/{{events.intakeId}}">Details</a>
+                </li>
+                <li>
+                    <a href="#/intake/intake-documents/{{events.intakeId}}">Documents</a>
+                </li>
+    
+                <li>
+                    <a href="#/intake/notes/{{events.intakeId}}">Notes</a>
+                </li>
+                <li class="active-footer">
+                    <a href="javascript:void(0)" class="active-footer">Events </a>
+                </li>
+                <li>
+                    <a href="#/intake/tasks/{{events.intakeId}}">Tasks</a>
+                </li>
+    
+                <li data-ng-show="is_workflow_active">
+                    <a href="#/intake/workflow/{{events.intakeId}}">Workflow</a>
+                </li>
+    
+            </ul>
+        </footer>
+    </div>
+
+</div>

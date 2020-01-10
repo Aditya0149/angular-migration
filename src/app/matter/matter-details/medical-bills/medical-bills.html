@@ -1,0 +1,136 @@
+<div class="row medical-info-gridSec margin0" ng-class="{'cursor-pointer-events-none' :medicalBills.compose, '' : !medicalBills.compose}">
+    <div class=" pull-left">
+
+        <div class="paddingRLR clearfix search-overlap">
+
+            <ul class="showBy-btns pull-right heading-right-buttons " ng-hide="medicalBills.matterInfo.archivalMatterReadOnlyFlag">
+
+                <li tooltip="Add">
+                    <a href="javascript:void(0)" ng-if="(medicalBills.isGraceOver != 0)" data-ng-click="medicalBills.addMedicalBillsInfo('add',matterDetail.plaintiffDefendants)">
+                        <span class="sprite default-plus">&nbsp;</span>
+                    </a>
+                </li>
+                <li data-ng-show="medicalBills.medicalBillGrid.selectedItems.length > 0 && (medicalBills.isGraceOver != 0)" class="seperation"></li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-show="medicalBills.medicalBillGrid.selectedItems.length > 0 && (medicalBills.isGraceOver != 0)"
+                        data-ng-click="medicalBills.deleteMedicalBills(medicalBills.medicalBillGrid.selectedItems)">
+                        <span tooltip="Delete" class="sprite default-delete ">&nbsp;</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="javascript:void(0)" data-ng-show="medicalBills.medicalBillGrid.selectedItems.length > 0" data-ng-click="medicalBills.unlinkDocument(medicalBills.medicalBillGrid.selectedItems)">
+                            <span tooltip="unlink" class="sprite default-unlink ">&nbsp;</span>
+                        </a>
+                </li>
+                <li >
+                    <a href="javascript:void(0)" data-ng-show="medicalBills.medicalBillGrid.selectedItems.length === 1
+                         && (medicalBills.isGraceOver != 0)" data-ng-click="medicalBills.addMedicalBillsInfo('edit',matterDetail.plaintiffDefendants,medicalBills.medicalBillGrid.selectedItems)">
+                        <span tooltip="Edit" class="sprite default-edit "></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-show="matterDetail.showViewDoc(medicalBills.medicalBillGrid.selectedItems,'bill_documentid')">
+                        <open-doc doc-id="{{[{doc_id:medicalBills.medicalBillGrid.selectedItems[0]['bill_documentid']}]}}"></open-doc>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+     
+    <div class="pull-right">
+    <div class=" pull-right">
+        <ul class="showBy-btns heading-right-buttons pull-right" ng-hide="medicalBills.matterInfo.archivalMatterReadOnlyFlag">
+            <li class="seperation-filter"></li>
+            <li tooltip="Print">
+                <a data-ng-click="medicalBills.printMedicalBill(matterDetail.plaintiffDefendants, medicalBills.plaintiffid)"><span class="sprite default-file "></span></a>
+            </li>
+            <li class="paddingLR-10px" >
+                <a data-ng-click="medicalBills.downloadMedicalBill(medicalBills.plaintiffid)"><span tooltip="Export" class="sprite default-sharedown sortby-icons"></span></a>
+            </li>
+        </ul>
+        <form class="form-inline pull-right">
+            <div class="form-group select-label-correction">
+                <label>Show records of</label>
+                <ui-select ng-model="medicalBills.plaintiffid" theme="selectize" on-select="medicalBills.filterMedicalBills(medicalBills.plaintiffid.id,medicalBills.plaintiffDefendants, $item.selectedPartyType)">
+                    <ui-select-match placeholder="Enter name">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="matterDetail.groupPlaintiffDefendants" group-filter="['All','Plaintiffs','Defendants','Other Parties']"
+                        repeat="item in matterDetail.plaintiffDefendants | filter:{ name:$select.search } | orderBy: 'name'">
+                        <small>
+                            {{item.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+
+        </form>
+    </div>  
+    
+    <div class="dropdown pull-right">
+        <span class="sortby-align">Sort By:</span>
+        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            {{medicalBills.getSortByLabel(medicalBills.sortby)}} 
+            <span class="default-downward-arrow sprite dropdown-arrow"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <li data-ng-repeat-start="sort in medicalBills.sorts" data-ng-class="{' active': medicalBills.sortby == sort.key}">
+                <a data-ng-click="medicalBills.applySortByFilter(sort.key)">{{sort.name}}</a>
+            </li>
+            <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+        </ul>
+    </div>
+</div>
+<div class="total-amount-main pull-right margin0" data-ng-if="medicalBills.medicalBillList.medicalbills.length > 0">
+    <div><b>Total</b> <span class="total-amount-sepretor"></span></div>
+    <div class="lable">Bills/Adjusted Amounts (after write-off): <span>{{medicalBills.medicalBillsTotal.billamount| sumOfValue:'billamount' |currency}}</span><span ng-if="medicalBills.medicalBillsTotal.adjustedamount">/{{medicalBills.medicalBillsTotal.adjustedamount| sumOfValue:'adjustedamount' |currency}}</span></div>
+    <div class="lable">Adjustments: <span>{{medicalBills.medicalBillsTotal.totalAdjustments | sumOfValue:'Adjustment' |currency}}</span></div>
+    <div class="lable">Paid: <span>{{medicalBills.medicalBillsTotal.paidamount| sumOfValue:'paidamount'|currency}}</span></div>
+    <div class="lable">Outstanding: <span>{{(medicalBills.medicalBillsTotal.outstandingamount| sumOfValue:'outstandingamount') ? "$" :"$"}}{{ (medicalBills.medicalBillsTotal.outstandingamount| sumOfValue:'outstandingamount') | number:2}}</span></div>
+</div>
+</div>
+ 
+<!--<div class="gridStyle" data-ng-grid="medicalBills.gridOptions"></div>-->
+<div class="report-responsive" data-ng-if="medicalBills.medicalBillList.medicalbills.length > 0" ng-class="{'cursor-pointer-events-none' :medicalBills.compose, '' : !medicalBills.compose}">
+    <div class="row header-row ">
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-model="medicalBills.medicalBillGrid.selectAll" data-ng-checked="medicalBills.allUsersSelected()"
+                data-ng-click="medicalBills.selectAllUsers(medicalBills.medicalBillGrid.selectAll)" /><label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in ::medicalBills.medicalBillGrid.headers" data-width={{header.dataWidth}} data-ng-class="{'text-right':((header.field[0].prop == 'totalamount') || (header.field[0].prop == 'adjustedamount') || (header.field[0].prop == 'paidamount') || (header.field[0].prop == 'outstandingamount'))}">
+
+            <span ng-if="header.displayName != 'Memo' && header.displayName != 'Bills/Adjusted Amounts'">  {{header.displayName}} </span>
+            <span ng-if="header.displayName == 'Bills/Adjusted Amounts' ">Bill Amount/<br>Adjusted Amount</span>
+        </div>
+    </div>
+    <div class="row body-row " data-ng-class="{'selected-grid-row':medicalBills.isUserSelected(data.medical_bill_id) }"
+         data-ng-repeat="data in medicalBills.medicalBillList.medicalbills | orderBy: medicalBills.sortKey">
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-checked="medicalBills.isUserSelected(data.medical_bill_id)" checklist-model="medicalBills.medicalBillGrid.selectedItems"
+                checklist-value="data" /><label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in ::medicalBills.medicalBillGrid.headers" data-width={{header.dataWidth}} grid-size>
+            <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in ::header.field" data-ng-class="{'display-table-cell':field.inline,'cursor-pointer':field.cursor,'text-right':((field.prop == 'totalamount') || (field.prop == 'adjustedamount') || (field.prop == 'paidamount') || (field.prop == 'outstandingamount'))}"
+                cell-data="{{data}}" field="{{field}}" render-cell>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="text-center clear-both" data-ng-if="medicalBills.medicalBillList.medicalbills.length==0">
+    No data available.
+</p>
+
+<!-- <div class="compose-wrap" ng-if="medicalBills.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :medicalBills.compose, '' : !medicalBills.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="medicalBills.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :medicalBills.compose, '' : !medicalBills.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div> -->

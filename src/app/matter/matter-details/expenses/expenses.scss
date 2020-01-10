@@ -1,0 +1,21 @@
+.add-edit-expenses-wrapper{
+		.static-new-scrollbar { overflow-x: hidden;
+		max-height: 80vh;
+	}
+	.modal-dialog {
+		.modal-header {
+			height: 70px;
+		}
+	}
+}
+
+.expenses-wrapper{
+	.username-dropdown{
+		left: auto;
+		right: 0px;
+		margin-top:35px
+	}
+	.pb-65{
+		padding-bottom: 65px
+	}
+}

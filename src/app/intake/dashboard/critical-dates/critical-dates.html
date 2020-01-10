@@ -1,0 +1,79 @@
+<style>
+.default-cursor {
+    cursor: pointer;
+}
+
+    .dropdown-menu {
+    min-width: 210px;
+}
+</style>
+
+<div class="row" scrolly="dashboardCriticalDates.scrollReachedBottom()" reached-intake-top="dashboardCriticalDates.scrollReachedTop()">
+    
+    <div class="col-md-12 ">
+        <div class="dropdown pull-left  head-padding-10px">
+         
+             <button id="dLabel" type="button"
+                class="btn sortby-dropdown dropdown-toggle heading-black"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{dashboardCriticalDates.selectedEvent.name}}
+                    <span class="default-downward-arrow-black sprite dropdown-arrow"></span>
+            </button> 
+             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li data-ng-click="dashboardCriticalDates.getCriticalEventsData(event)"
+                    data-ng-repeat="event in dashboardCriticalDates.events"><a>{{event.name}}</a>
+                </li>
+            </ul> 
+        </div>
+        <a data-ng-click="dashboardCriticalDates.printCriticalDates(dashboardCriticalDates.matters,dashboardCriticalDates.selectedEvent.name,dashboardCriticalDates.weekInfo )"><span class="sprite default-file sortby-icons margin-top10px" tooltip="Print"></span></a>
+        <div class="clearfix"></div>
+        <div class="flexCont"></div>
+    </div>
+</div>
+<div class="row margin0">
+    <div class="paddingRLR flexCont">
+        <div
+            class="flex-column card card-border-none" 
+            data-ng-click="dashboardCriticalDates.getMatterForWeek(data)"
+            data-ng-class="{'active': dashboardCriticalDates.isWeekSelected(data)}"
+             data-ng-repeat="data in dashboardCriticalDates.criticalDates">
+            <h2 class="numb" >{{data.count}}</h2>
+            <span class="textA">{{data.start}} - {{data.end}}</span>
+        </div>
+    </div>
+</div>
+
+<div data-ng-show="dashboardCriticalDates.display.view === 'grid'">
+    <div class="report-responsive critical-dates-block"
+        data-ng-if="dashboardCriticalDates.display.renderGrid">
+        <div class="row header-row" data-ng-show="dashboardCriticalDates.matters.length > 0">
+            <div class="cell"
+                render-header
+                header="{{header.displayName}}"
+                align="{{header.headerAlign}}"
+                 data-width={{header.dataWidth}}
+                data-ng-repeat="header in ::dashboardCriticalDates.clxGridOptions.headers">
+            </div>
+        </div>      
+        <div class="row body-row" data-ng-click="dashboardCriticalDates.gotoEvent(data)"
+            data-ng-repeat="data in dashboardCriticalDates.matters | limitTo:dashboardCriticalDates.criticalEventsLimit">
+
+            <div class="cell default-cursor" data-ng-repeat="header in ::dashboardCriticalDates.clxGridOptions.headers" data-width={{header.dataWidth}} grid-size>
+                <div data-ng-repeat="field in ::header.field" ng-class="{'cursor-pointer':(data.matter_id != null)}"
+                    cell-data="{{data}}" field="{{field}}" render-cell>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<p class="text-center margin-top20px"
+            data-ng-show="dashboardCriticalDates.matters.length===0 
+        && dashboardCriticalDates.display.renderGrid">
+        No events are available!
+</p>
+
+<div data-ng-show="dashboardCriticalDates.display.view === 'map'">
+    <h1>MAP</h1>
+</div>
+

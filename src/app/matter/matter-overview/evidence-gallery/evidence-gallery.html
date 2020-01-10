@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h2 class="pull-left page-title">Photos</h2>
+
+    <button class="close" data-ng-click="evidenceGallery.close()">
+        <span aria-hidden="true">×</span></button>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 image-gallery-wrapper" mb-scrollbar="scrollbar('vertical', true)">
+            <div data-ng-repeat="evidence in evidenceGallery.evidences">
+                
+          <a class="matter-photo-popup-open" data-ng-click="evidenceGallery.selectEvidence(evidence)"></a>        
+<!--               Image tag for displaying image       -->
+                <img  
+                    data-ng-if="!(evidence.isPDF)"
+                    data-ng-class="{'active-img':evidenceGallery.selected.uri === evidence.uri}"
+                    class="image image-gallery-list border-radius-4px"
+                    data-ng-src="{{evidence.uri}}" />
+                
+<!--                Iframe tag for displaying PDFs-->
+                
+                <iframe data-ng-if="evidence.isPDF"
+                        data-ng-class="{'active-img':evidenceGallery.selected.uri === evidence.uri}"
+                        data-ng-src="{{evidence.uri}}"
+                        class="image image-gallery-list border-radius-4px"
+                        height="100" width="100%"></iframe>  
+   
+            </div>
+        </div>
+        <div class="col-md-9  ">
+            
+        <!--               Image tag for displaying image       -->    
+          <div  data-ng-if="evidenceGallery.selected.isPDF"
+                class="margin-top10px ipad-document-scroll">
+                <iframe 
+                        data-ng-src="{{evidenceGallery.selected.uri}}"
+                        class=" image-gallery-selected border-radius-4px"
+                        height="430" width="100%"></iframe>
+          </div>    
+            
+       <!--                Iframe tag for displaying PDFs-->     
+          <img data-ng-if="!(evidenceGallery.selected.isPDF)" class=" image-gallery-selected border-radius-4px" data-ng-src="{{evidenceGallery.selected.uri}}" width="100%;" />
+       </div>
+       
+    </div>
+</div>
+<div class="modal-footer" style="height: 30px">
+</div>

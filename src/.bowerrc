@@ -1,0 +1,9 @@
+{
+  "directory": "bower_components",
+"registry": "http://bower.herokuapp.com",
+  "proxy": "http://soham_nakhare:Passw0r!d@ptproxy.persistent.co.in:8080",
+  "https-proxy": "https://soham_nakhare:Passw0r!d@ptproxy.persistent.co.in:8080",
+  "strict-ssl": false,
+  "json": "bower.json"
+
+}

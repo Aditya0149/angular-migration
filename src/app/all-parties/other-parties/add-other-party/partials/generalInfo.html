@@ -1,0 +1,60 @@
+<!--2 page-->
+<div class="row ">
+    <div class="col-md-6">
+        <form class="form">
+            <div class="row">
+                <div class=" col-md-7  margin-top10px fullwidth-select">
+                    <label>Role</label><span class="compulsary-mark">*</span>
+                    <ui-select data-ng-model="addOtherParty.otherPartyInfo.contactRole" theme="selectize">
+                        <ui-select-match placeholder="Select Role...">
+                            {{$select.selected.contactrolename}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in addOtherParty.contactRoles | filter:{contactrolename:$select.search} | orderBy: 'contactrolename'">
+                            <small>
+                                {{item.contactrolename}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class=" margin-top10px  col-md-7 fullwidth-select">
+                    <label>Associated Party / Parties</label><span class="compulsary-mark">*</span>
+                    <ui-select class="width100per" ng-show="addOtherParty.mode == 'add'" multiple ng-model="addOtherParty.otherPartyInfo.associated_party_id" theme="select2">
+                        <ui-select-match placeholder="Select Party...">
+                            {{$item.contactid.firstname}} {{$item.contactid.lastname}}
+
+                        </ui-select-match>
+                        <ui-select-choices group-by="addOtherParty.groupPlaintiffDefendants" group-filter="['Plaintiffs','Defendants']" repeat="item in addOtherParty.plaintiffDefendants| filter: $select.search | orderBy: ['contactid.firstname','contactid.lastname']">
+                            <small>{{item.firstname}} {{item.contactid.firstname}} {{item.contactid.lastname}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <ui-select class="width100per" ng-show="addOtherParty.mode == 'edit'" on-select="addOtherParty.addAssociatedParty($item)"
+                     on-remove="addOtherParty.updateAssociatedParty($item)" multiple ng-model="addOtherParty.otherPartyInfo.associated_party_id" theme="select2">
+                        <ui-select-match placeholder="Select Party...">
+                            {{$item.contactid.firstname}} {{$item.contactid.lastname}}
+
+                        </ui-select-match>
+                        <ui-select-choices group-by="addOtherParty.groupPlaintiffDefendants" group-filter="['Plaintiffs','Defendants']" repeat="item in addOtherParty.plaintiffDefendants| filter: $select.search | orderBy: ['contactid.firstname']">
+                            <small> {{item.contactid.firstname}} {{item.contactid.lastname}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <!--<ui-select ng-model="addOtherParty.otherPartyInfo.associated_party_id" ng-show="addOtherParty.mode == 'edit'" theme="selectize">
+                        <ui-select-match placeholder="Select Party...">
+                            {{$select.selected.contactid.firstname}} {{$select.selected.contactid.lastname}}
+                        </ui-select-match>
+                        <ui-select-choices group-by="addOtherParty.groupPlaintiffDefendants" group-filter="['Plaintiffs','Defendants']" repeat="item in addOtherParty.plaintiffDefendants| filter: $select.search | orderBy: ['contactid.firstname','contactid.lastname']">
+                            <small>
+                            {{item.firstname}} {{item.contactid.firstname}} {{item.contactid.lastname}}
+                        </small>
+                        </ui-select-choices>
+                    </ui-select>-->
+                </div>
+            </div>
+    </div>
+    </form>
+</div>
+</div>

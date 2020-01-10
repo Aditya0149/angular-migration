@@ -1,0 +1,65 @@
+<style>
+.whats-new-popup-body .dashboard-tasks-due{
+    overflow-x: hidden;
+}
+.whats-new-popup-body .dashboard-tasks-due td{
+    vertical-align: top;
+}
+.whats-new-popup-body .dashboard-tasks-due td.whats-dot{
+    color: #17b226;
+    font-size: 40px;
+    position: relative;
+    top: -3px;
+    vertical-align: top !important;
+    line-height: 0;
+    padding-right: 10px;
+}
+.whats-new-popup-body .dashboard-tasks-due tr{
+    border-bottom: 1px solid #2983b8;
+    padding: 10px 0px;
+    display: inline-block;
+    width: 100%;
+}    
+.whats-new-popup .modal-dialog .modal-content .modal-footer{margin-top: 5px !important;}    
+.whats-new-popup .modal-dialog .modal-content{width: 440px !important;height: 330px;}
+.whats-new-popup .whats-new-popup-body ul{max-height: 326px !important;}
+.feedback-number{margin: 15px 0 0 0;display: inline-block;}
+.feedback-number span {float:left;display: inline-block;border-radius: 50%;border: 1px solid #ccc;padding: 4px 0px;margin: 0 5px;height: 30px;width: 30px;text-align: center;font-size: 14px;color: #677885;}    
+.feedback-number span:hover, span.select{background-color: #2983b8;color: #fff;}
+.likely-txt{font-size: 10px;color: #677885;margin:0 6px;}
+</style>    
+<div class="modal-header whats-new-popup-height">
+    <h2 class="modal-title fl-left">Your Feedback Is Requested!</h2>    
+</div>
+<div class="modal-body whats-new-popup-body">
+    <ul class="dashboard-tasks-due">
+        <p>Based on your experience, how likely are you to recommend CloudLex<sup style="font-size: 22px;top: 0.1em;">®</sup> to a friend or colleague?</p>
+        <div class="feedback-number">
+            <span class="cursor-pointer" id="feed0" ng-click="nps.setValue(0)">0</span>
+            <span class="cursor-pointer" id="feed1" ng-click="nps.setValue(1)">1</span>
+            <span class="cursor-pointer" id="feed2" ng-click="nps.setValue(2)">2</span>
+            <span class="cursor-pointer" id="feed3" ng-click="nps.setValue(3)">3</span>
+            <span class="cursor-pointer" id="feed4" ng-click="nps.setValue(4)">4</span>
+            <span class="cursor-pointer" id="feed5" ng-click="nps.setValue(5)">5</span>
+            <span class="cursor-pointer" id="feed6" ng-click="nps.setValue(6)">6</span>
+            <span class="cursor-pointer" id="feed7" ng-click="nps.setValue(7)">7</span>
+            <span class="cursor-pointer" id="feed8" ng-click="nps.setValue(8)">8</span>
+            <span class="cursor-pointer" id="feed9" ng-click="nps.setValue(9)">9</span>
+            <span class="cursor-pointer" id="feed10" ng-click="nps.setValue(10)">10</span>
+        </div>
+        <div>
+            <div class="pull-left likely-txt">Not at all likely</div>
+            <div class="pull-right likely-txt">Extremely likely</div>
+        </div>    
+        <textarea maxlength="1024" ng-model="nps.comment" style="width: 100%;margin-top: 30px;" placeholder="What was the primary reason for your rating?" rows="4" class="form-control"></textarea>
+    </ul>
+</div>
+<div class="modal-footer">
+    <div class="pull-left">
+            <button style="font-size: 13px;" class="btn btn-default btn-styleNone" ng-click="nps.close()">Remind me later</button>
+    </div>
+    <div class="pull-right">
+        <button class="btn btn-default btn-styleNone" ng-click="nps.submitRating(true)" style="font-size: 13px;">No, thanks</button>
+        <button ng-disabled="nps.feedbackRating == -1" ng-click="nps.submitRating(false)" class="btn btn-default">Submit</button>
+    </div>    
+</div>

@@ -1,0 +1,286 @@
+<style>
+    .reply-dropdown li a:hover {
+        background-color: #e2e2e2 !important;
+    }
+
+    .reply-dropdown li.divider {
+        margin: 5px 0 !important;
+        border-bottom: 1px solid #ccc !important;
+    }
+    .show-bullet-list ul{
+        list-style: inside disc;
+    }
+</style>
+<div class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px"
+                data-ng-click="mailboxCtrlV2.resetPage()"
+                href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div class="container" show-side-navpage ng-click="hideMenu($event)" ng-class="{'cursor-pointer-events-none' :mailboxCtrlV2.compose, '' : !mailboxCtrlV2.compose}">
+    <div class="page-title-border-links clearfix  ">
+        <div class="subnav pull-left ">
+            <ul>
+                <li><a href="javascript:void(0)" data-ng-click="mailboxCtrlV2.toggleTab('Inbox')" ng-class="{' activeLink': mailboxCtrlV2.activeTab == 'Inbox'}">Inbox</a>
+                </li>
+                <li><a href="javascript:void(0)" data-ng-click="mailboxCtrlV2.toggleTab('Sentbox')" ng-class="{' activeLink': mailboxCtrlV2.activeTab == 'Sentbox'}">Sent</a>
+                </li>
+                <li><a href="javascript:void(0)" data-ng-click="mailboxCtrlV2.toggleTab('Draftbox')" ng-class="{' activeLink': mailboxCtrlV2.activeTab == 'Draftbox'}">Draft</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="pull-right">
+            <button data-ng-show="mailboxCtrlV2.enableCompose==true" data-ng-disabled="mailboxCtrlV2.isGraceOver != 1" data-ng-click="mailboxCtrlV2.compose=true;mailboxCtrlV2.composeMailMsg = mailboxCtrlV2.signature; rootDocumentContainer = true; mailboxCtrlV2.emailDocsNote = false;mailboxCtrl.disabledSidebarIcon()"
+                class="btn btn-default">
+                Compose</button>
+        </div>
+    </div>
+
+    <div class="row gridSec page-title-border-links" data-ng-show="mailboxCtrlV2.inboxList.inboxListreceived && mailboxCtrlV2.inboxList.count>0">
+        <div class="col-md-12 paddingRLR">
+            <div class="col-md-2 pull-left paddingRLR  create checkbox mar-LT8">
+                <div dropdown is-open="status.isopen">
+                    <input type="checkbox" data-ng-model="mailboxCtrlV2.inboxList.selectAll" data-ng-checked="mailboxCtrlV2.allMailsSelected()"
+                        data-ng-click="mailboxCtrlV2.selectAllMails(mailboxCtrlV2.inboxList.selectAll)" />
+                    <label></label>
+                    <button data-ng-show="mailboxCtrlV2.activeTab==='Inbox'" type="button" class="btn sortby-dropdown" dropdown-toggle ng-disabled="disabled"
+                        ng-click="stay($event)">
+                        <span class="sprite default-downward-arrow "></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" data-ng-show="mailboxCtrlV2.activeTab==='Inbox'">
+                        <li><a href="javascript:void(0);" data-ng-click="mailboxCtrlV2.inboxList.selectAll=true;mailboxCtrlV2.selectAllMails(mailboxCtrlV2.inboxList.selectAll)">Select All</a>
+                        </li>
+                        <li><a href="javascript:void(0);" data-ng-click="mailboxCtrlV2.selectUnreadRead('read')">Select Read</a>
+                        </li>
+                        <li><a href="javascript:void(0);" data-ng-click="mailboxCtrlV2.selectUnreadRead('unread')">Select Unread</a>
+                        </li>
+
+                    </ul>
+                    <a data-ng-click="mailboxCtrlV2.deleteMails(mailboxCtrlV2.activeTab)" data-ng-show="mailboxCtrlV2.inboxList.selectedItems.length > 0 && mailboxCtrlV2.isGraceOver != 0">
+                        <span class="sprite default-delete col-md-offset-1" tooltip="Delete">&nbsp;</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-8 pull-right paddingRLR clearfix margin-top5px">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null ng-hide" data-ng-show="mailboxCtrlV2.showSearch">
+                            <div class="default-searchico sprite"></div>
+                            <input type="text" focus-me="mailboxCtrlV2.showSearch" data-ng-model-options="{ debounce: 0 }" data-ng-model="mailboxCtrlV2.inboxList.filterText"
+                                data-ng-change="mailboxCtrlV2.filterRetain();" class="form-control ng-pristine ng-untouched ng-valid">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+
+                    <li class="seperation-filter"></li>
+                    <li class="search-overlap">
+                        <ul data-ng-hide="mailboxCtrlV2.showSearch">
+                            <li><a data-ng-click="mailboxCtrlV2.showSearch = true"><span class="sprite default-searchico-menu " tooltip="Search"></span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="pull-right border">
+                </div>
+                <div class="pull-right relative-container">
+
+                    <div dropdown is-open="status2.isopen">
+                        Sort By :
+                        <button type="button" class="btn sortby-dropdown " dropdown-toggle ng-disabled="disabled">
+                        {{mailboxCtrlV2.inboxList.sortSeleted}}
+                      <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                    </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-ng-click="mailboxCtrlV2.sortMails(0,'desc');mailboxCtrlV2.inboxList.sortSeleted='Date'"
+                                    data-ng-class="{' active': mailboxCtrlV2.inboxList.sortby == 0}">Date</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li data-ng-show="mailboxCtrlV2.activeTab==='Inbox'"><a data-ng-click="mailboxCtrlV2.sortMails(1,'asc');mailboxCtrlV2.inboxList.sortSeleted='Sender (Alphabetical)'"
+                                    data-ng-class="{'active': mailboxCtrlV2.inboxList.sortby == 1}" class="active">Sender (Alphabetical)</a>
+                            </li>
+                            <li data-ng-show="mailboxCtrlV2.activeTab==='Sentbox' || mailboxCtrlV2.activeTab==='Draftbox'"><a data-ng-click="mailboxCtrlV2.sortMails(2,'asc');mailboxCtrlV2.inboxList.sortSeleted='Recepient (Alphabetical)'"
+                                    data-ng-class="{'active': mailboxCtrlV2.inboxList.sortby == 2}" class="active">Recepient (Alphabetical)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="mailboxCtrlV2.cancleFilterTags()" tag-list="mailboxCtrlV2.inboxList.filtertags" class="ng-isolate-scope">
+                </clx-filter-tags>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!--Listing mails for Inbox, sent, draft -->
+        <div class="col-md-4 ">
+            <div class="mailbox-height-iscroll">
+                <div class="events-list">
+                    <div>
+                        <ul data-ng-if="mailboxCtrlV2.inboxList.datafiltered">
+                            <li data-ng-repeat="data in mailboxCtrlV2.filteredMails = (mailboxCtrlV2.inboxList.data|filter:mailboxCtrlV2.inboxList.filterText) track by $index"
+                                data-ng-class="{'selected-grid-row':mailboxCtrlV2.isMailSelected(data,mailboxCtrlV2.activeTab) || data.selected==1}">
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-1 checkbox mar-LT8">
+                                        <input type="checkbox" data-ng-checked="mailboxCtrlV2.isMailSelected(data,mailboxCtrlV2.activeTab)" checklist-model="mailboxCtrlV2.inboxList.selectedItems"
+                                            checklist-value="data" />
+                                        <label></label>
+                                    </div>
+                                    <!-- Display if mail is read -->
+                                    <div class="col-md-10 col-sm-10 margin-top10px" data-ng-show="data.is_read==1" data-ng-click="mailboxCtrlV2.getMailThread(data,$index)">
+                                        <div class="row">
+                                            <div class="col-lg-7 col-md-6 col-sm-8 ellipsis pd-ri2">
+                                                {{data.personal}}
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-3 pd-ri2">
+                                                {{data.internaldate|utcDateFilter: 'MM/DD/YY'}}
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-sm-1 padd-smLT10">
+                                                <span data-ng-if="data.hasfiles == 1" class="sprite default-attachment"></span>
+                                            </div>
+                                            <!-- <div class="col-md-2"><span class="sprite default-alert"></span> 
+                                    </div>-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10 ellipsis">
+                                                <p>{{data.subject|replaceNonASCII}}</p>
+                                            </div>
+                                        </div>
+                                        <!--<div class="row">
+                                            <div class="col-md-10 ellipsis">
+                                                <p>{{data.matter_name}}</p>
+                                            </div>
+                                        </div>-->
+
+                                    </div>
+                                    <!-- Display if mail is unread -->
+                                    <div class="col-md-10 margin-top10px" data-ng-hide="data.is_read==1" data-ng-click="mailboxCtrlV2.getMailThread(data,$index)">
+                                        <div class="row">
+                                            <div class="col-md-7 ellipsis">
+                                                <strong>{{data.personal}}</strong>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong>{{data.internaldate|utcDateFilter: 'MM/DD/YY'}}</strong>
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-sm-1 padd-smLT10">
+                                                <span data-ng-if="data.hasfiles == 1" class="sprite default-attachment"></span>
+                                            </div>
+                                            <!-- <div class="col-md-2"><span class="sprite default-alert"></span> 
+                                    </div>-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <p>
+                                                    <strong>{{data.subject|replaceNonASCII}}</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!--<div class="col-md-10">
+                                                <p>
+                                                    <strong>{{data.matter_name}}</strong>
+                                                </p>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="  text-center margin-top10px" data-ng-show="mailboxCtrlV2.inboxList.count>=50">
+                        <a href="javascript:void(0)" class="" data-ng-click="mailboxCtrlV2.getNextLimitMails()">More</a>
+                        <!--<span class="paddingLR-10px">|</span>
+                        <a href="javascript:void(0)" class="" data-ng-click="mailboxCtrlV2.getNextLimitMails('all')">All</a>-->
+                    </div>
+                    <div data-ng-show="mailboxCtrlV2.inboxList.inboxListreceived && mailboxCtrlV2.inboxList.count===0" class="margin-top10px">
+                        No Mail Present
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="mailboxCtrlV2.activeTab !== 'Draftbox'" class="col-md-8 mailbox-height">
+            <div class="row margin-top20px" data-ng-repeat="maildata in mailboxCtrlV2.mailThread">
+                <div class="col-md-10">
+                    <!--<p data-ng-show="maildata.mailDisplay!='' && maildata.mailDisplay!=null && maildata.mailDisplay!='null'" class="word-wrap ">-->
+                    <span class="EmailprofileImage">
+                            <img data-ng-src="{{::maildata.pic}}"
+                                width="28" height="28" />
+                        </span> From:
+                    <strong>{{::maildata.name}} </strong><strong> &#60;{{::maildata.mailDisplay}}&#62;</strong><br> To:
+                    <span ng-if="maildata.mailToThread.length > 0" ng-repeat="mail in maildata.mailToThread"><strong>{{::mail.name | notEmptyString : mail.mailDisplay}} </strong><strong> &#60;{{::mail.mailDisplay}}&#62;</strong><br></span><br>
+                    <span ng-if="maildata.mailCcThread.length > 0">Cc: </span><span ng-if="maildata.mailCcThread.length > 0"
+                        ng-repeat="mail in maildata.mailCcThread"><strong>{{::mail.name | notEmptyString : mail.mailDisplay}} </strong><strong> &#60;{{::mail.mailDisplay}}&#62;</strong><br></span><br>
+                    <div ng-if="mailboxCtrlV2.bccFlag && maildata.mailBccThread.length > 0">Bcc: <span ng-repeat="mail in maildata.mailBccThread"><strong>{{::mail.name | notEmptyString : mail.mailDisplay}} </strong><strong> &#60;{{::mail.mailDisplay}}&#62;</strong><br></span></div>
+                    <!--</p>-->
+                    <p class="ellipsis">{{::maildata.subject|replaceNonASCII}}</p>
+                    <p class="ellipsis">{{::maildata.internaldate|utcDateFilter: 'DD MMMM YYYY hh:mm A'}}</p>
+                    <p class="show-bullet-list" data-ng-bind-html="::maildata.messagebody|replaceNonASCII"></p>
+                    <div data-ng-if="maildata.files.length>0">
+                        <div data-ng-repeat="attachment in maildata.files">
+                            <div class="row">
+                                <div class="pull-left paddingLR-10px ellipsis line-height-28px">{{attachment.docname}}</div>
+                                <div class="col-md-1">
+                                    <a href="javascript:void(0);" data-ng-click="mailboxCtrlV2.downloadAttachment(attachment,maildata.gmailmessageid)">
+                                        <span class="sprite default-sharedown"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" data-ng-show="$index===0">
+                    <div class="col-md-2 pull-left paddingRLR  create checkbox">
+                        <div dropdown is-open="reply.isopen" data-ng-show="mailboxCtrlV2.activeTab=='Inbox'">
+                            <button type="button" class="btn sortby-dropdown" dropdown-toggle ng-disabled="disabled">
+                                Reply{{compose}} <span class="sprite default-downward-arrow "></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right reply-dropdown" role="menu">
+                                <li data-ng-click="mailboxCtrlV2.compose=true;mailboxCtrlV2.reply(maildata,'toSender')">
+                                    <a href="javascript:void(0)">Reply</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li data-ng-click="mailboxCtrlV2.compose=true;mailboxCtrlV2.reply(maildata,'all')">
+                                    <a href="javascript:void(0)">Reply to all</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- compose mail -->
+<div class="compose-wrap" ng-class="{'composeShow' :mailboxCtrlV2.compose, '' : !mailboxCtrlV2.compose, 'cursor-pointer-events-none' :mailboxCtrlV2.matterDocs, 'cursor-pointer-events-all' : !mailboxCtrlV2.matterDocs}">
+    <ng-include src="'mailbox_v2/compose-mail.html'"></ng-include>
+</div>
+
+
+<!-- <li class="seperation-filter"></li> 
+                    <li>
+                        <a>
+                            <span data-ng-click="mailboxCtrlV2.toggleFilterPage();" class="sprite default-filter"></span>
+                        </a>
+                    </li>-->
+
+<!--
+                            <li><a href="#">Reply All</a>
+                            </li>
+                            <li><a href="#">Mark as unread</a>
+                            </li>
+                            <li><a href="#">Mark as Important</a>
+                            </li>
+							-->

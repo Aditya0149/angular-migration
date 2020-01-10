@@ -1,0 +1,633 @@
+<!-- layout d76 start -->
+<div class="row" ng-form="plaintiffform">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Start: Plaintiff Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffs">
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" label="Select Plaintiff"
+                    placeholder="Select plaintiff..." validation="No plaintiff found..." ngexpression="item"
+                    ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown -->
+
+            <!-- Start: Plaintiff Dropdown for plaintiff Insurance Provider from settlement -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_onChange_Insurance">
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" changefn="yes"
+                    affectmodelname="plaintiffEmployerIds"
+                    selected-items-changed="GenerateTemplateCtrl.getPlaintiffInsuranceProviders(GenerateTemplateCtrl.TemplateModelInfo.plaintiffs);"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..."
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown for plaintiff Insurance Provider from settlement -->
+
+            <!-- Start:Insurance Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_InsProvider_settlement">
+                <clx-select list="GenerateTemplateCtrl.plaintiffInsuranceProviders"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffInsuranceIds1"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Negotiations for Settlement Amount"
+                    placeholder="Select settlement amount..." validation="No Negotation found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    selectedviewproperty='<small> {{$select.selected.insurance_provider_name}} </small>'
+                    dropdownviewproperty='<small><strong>Insurance Provider-</strong> {{item.insurance_provider_name}}<br></small>
+                                          <small><strong> Demand Amount-</strong> {{item.demanded_amount|currency}}<br></small>
+                                          <small><strong>Offer Amount-</strong> {{item.offered_amount|currency}}<br></small>
+                                          <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown depend on Plaintiff -->
+
+            <!-- Start:Insurance Dropdown depend on Plaintiff 1-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_InsProvider_settlement_1">
+                <clx-select list="GenerateTemplateCtrl.plaintiffInsuranceProviders"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffInsuranceIds2"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Negotation"
+                    placeholder="Select settlement amount..." validation="No Negotation found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    selectedviewproperty='<small> {{$select.selected.insurance_provider_name}} </small>'
+                    dropdownviewproperty='<small><strong>Insurance Provider-</strong> {{item.insurance_provider_name}}<br></small>
+                                          <small><strong> Demand Amount-</strong> {{item.demanded_amount|currency}}<br></small>
+                                          <small><strong>Offer Amount-</strong> {{item.offered_amount|currency}}<br></small>
+                                          <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown depend on Plaintiff 1-->
+
+            <!-- Start: Plaintiff Dropdown for plaintiff employer -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_onChange_primary">
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" changefn="yes"
+                    affectmodelname="plaintiffEmployerIds"
+                    selected-items-changed="GenerateTemplateCtrl.getPlaintiffEmployersNew(GenerateTemplateCtrl.TemplateModelInfo.plaintiffs);GenerateTemplateCtrl.plaintiffEmployerIds2 = undefined;"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..."
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown for plaintiff employer -->
+
+            <!-- Start:Employer provider Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_employers_primary">
+                <clx-select list="GenerateTemplateCtrl.plaintiffEmployers"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffEmployerIds"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Employer's Names"
+                    placeholder="Select employer..." validation="No plainitff employers found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    ngfilter=" | filter:{new_contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.new_contact_name}} </small>'
+                    dropdownviewproperty='<small> {{item.new_contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Employer provider Dropdown depend on Plaintiff -->
+
+            <!-- Start: Attorney Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.smpAttorney">
+                <clx-select list="GenerateTemplateCtrl.allAttorneysList" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="leadattorneyid" label="Select Attorney" placeholder="Select attorney..."
+                    validation="No attorneys found..." ngexpression="item.uid"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    groupby="GenerateTemplateCtrl.groupAllAttorneys" groupfilter="GenerateTemplateCtrl.attorneyTypes"
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Attorney Dropdown -->
+
+            <!-- Start: Defendant Attorney Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendant_Law_Firm">
+                <clx-select list="GenerateTemplateCtrl.uniqDefendantAttorneyids"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendantLawFirm"
+                    label="Select Defendant Attorney" placeholder="Select defendant attorney..."
+                    validation="No defendant attorneys found..." ngexpression="item"
+                    ngfilter=" | filter:{name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Defendant Attorney Dropdown -->
+
+            <!-- Start: defendant Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendants">
+                <clx-select list="GenerateTemplateCtrl.defendants_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendants" label="Select Defendant"
+                    placeholder="Select Defendant..." validation="No defendants found..."
+                    ngexpression="item.defendantid" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: defendant Dropdown -->
+
+            <!-- Start: defendant Dropdown 1-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendants1">
+                <clx-select list="GenerateTemplateCtrl.defendants_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendants1" label="Select Defendant 1"
+                    placeholder="Select Defendant..." validation="No defendants found..."
+                    ngexpression="item.defendantid" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: defendant Dropdown 1-->
+
+            <!-- Start: defendant Dropdown 2-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendants2">
+                <clx-select list="GenerateTemplateCtrl.defendants_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendants2" label="Select Defendant 2"
+                    placeholder="Select Defendant..." validation="No defendants found..."
+                    ngexpression="item.defendantid" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: defendant Dropdown 2-->
+
+            <!-- Start: Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_adjstor_insured">
+                <clx-select list="GenerateTemplateCtrl.insuranceAdjusorInsured"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>' dropdownviewproperty=' <small><strong>Insurance Provider-</strong>{{item.insuranceproviderid.firstname}} {{item.insuranceproviderid.lastname}}<br> </small>
+                            <small><strong>Adjuster-</strong>{{item.adjusterid.firstname}} {{item.adjusterid.lastname}}<br> </small>
+                            <small ><strong>Claim No-</strong>{{item.claimnumber}} <br> </small> 
+                            <small > <strong>Insured Party- </strong>{{item.insuredpartyid.firstname}} {{item.insuredpartyid.lastname}}<br></small>  
+                            <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown -->
+
+            <!--Start: insurance provider 1 dropdown-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance1">
+                <clx-select list="GenerateTemplateCtrl.uniqOnlyInsuranceProvider"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId1"
+                    label="Insurance Provider 1" validation="No insurance provider found..."
+                    placeholder="Select insurance provider..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small>{{item.contact_name}}</small>'>
+                </clx-select>
+            </div>
+            <!--End: insurance provider 1 dropdown-->
+
+            <!--Start: insurance provider 2 dropdown-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance2">
+                <clx-select list="GenerateTemplateCtrl.uniqOnlyInsuranceProvider"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId2"
+                    label="Insurance Provider 2" validation="No insurance provider found..."
+                    placeholder="Select insurance provider..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small>{{item.contact_name}}</small>'>
+                </clx-select>
+            </div>
+            <!--End: insurance provider 2 dropdown-->
+
+            <!--Start:Hearing Event dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.otherEvent">
+                <clx-select list="GenerateTemplateCtrl.EUOEvents" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="eventid" label="Select Hearing Events" validation="No Hearing events found..."
+                    placeholder="Select event..." ngexpression="item.id"
+                    ngfilter="|filter:{startEndTime:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.startEndTime}}</small>'
+                    dropdownviewproperty='<small>{{item.startEndTime}}</small>'>
+                </clx-select>
+            </div>
+            <!--End:Hearing Event dropdown-->
+
+            <!-- Start: paralegal Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.paralegal_only">
+                <clx-select list="GenerateTemplateCtrl.paralegalListFilter = GenerateTemplateCtrl.OnlyParalegalList"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="paralegalid" label="Select Paralegal"
+                    placeholder="Select Paralegal..." validation="No Paralegals found..." ngexpression="item.uid"
+                    ngfilter=" | filter:{contact_name:$select.search} | filter: {type : 'Paralegal'}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    groupby="GenerateTemplateCtrl.groupParalegals" groupfilter="GenerateTemplateCtrl.paralegalType"
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: paralegal Dropdown -->
+
+            <!-- Start: Assign user from firm Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.user_in_firm">
+                <clx-select list="GenerateTemplateCtrl.allFirmUser" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="firmUserId" label="Select User Name" placeholder="Select user..."
+                    validation="No users found..." ngexpression="item.user_id"
+                    ngfilter=" | filter:{full_name:$select.search}" groupby="GenerateTemplateCtrl.groupFirmUsers"
+                    groupfilter="GenerateTemplateCtrl.firmUserType"
+                    selectedviewproperty='<small> {{$select.selected.full_name}}</small>'
+                    dropdownviewproperty='<small> {{item.full_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Assign user from firm Dropdown -->
+
+            <!-- Start: Assign user Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.assign_user">
+                <clx-select list="GenerateTemplateCtrl.allParalegalList" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="assignUserId" label="User Name" placeholder="Select user..."
+                    validation="No users found..." ngmultiple="yes" ngexpression="item.uid"
+                    ngfilter=" | filter:{contact_name:$select.search}" groupby="GenerateTemplateCtrl.groupParalegals"
+                    groupfilter="GenerateTemplateCtrl.paralegalType"
+                    selectedviewproperty='<small> {{$item.contact_name}}</small>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Assign user Dropdown -->
+
+            <!--Start: Pre-Trial Event dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.pre_trial_event">
+                <clx-select list="GenerateTemplateCtrl.pretrialConferenceEvents"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="trialeventid"
+                    label="Select Pretrial Conference Event" validation="No Pretrial Conference events found..."
+                    placeholder="Select pretrial conference event..." ngexpression="item.id"
+                    ngfilter="| filter:{startEndTime:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.startEndTime}}</small>'
+                    dropdownviewproperty='<small>{{item.startEndTime}}</small>'>
+                </clx-select>
+            </div>
+            <!--End: Pre-Trial Event dropdown-->
+
+            <!-- Start: Primary spoken language textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.primary_language">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="rightTxtOne"
+                    label="Primary Spoken Language" placeholder="Enter the language...">
+                </clx-textbox>
+            </div>
+            <!-- End: Plaintiff’s Vehicle Type textbox -->
+
+            <!-- Start: Proceeding textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.proceeding">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="rightTxtTwo" label="Proceeding"
+                    placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Proceeding textbox -->
+
+            <!-- Start: Defendant Law Firm Address textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendant_Law_Firm_Address">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="custodianName"
+                    label="Defendant Law Firm Address" placeholder="Enter the Address...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant Law Firm Address textbox -->
+
+            <!-- Start: TYPE OF ACCIDENT textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.type_accident">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="desc_Accident"
+                    label="Type of Accident" placeholder="Enter the type...">
+                </clx-textbox>
+            </div>
+            <!-- End: TYPE OF ACCIDENT textbox -->
+
+            <!-- Start: Settlement Amount in Word textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.settlement_amt_words">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="amountInWords"
+                    label="Settlement Amount in Word" placeholder="Enter amount...">
+                </clx-textbox>
+            </div>
+            <!-- End: Settlement Amount in Word textbox -->
+
+            <!-- Start: Shipping ID textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.shipping_id">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="rightTxtThree"
+                    label="Enter Shipping ID" placeholder="Enter id...">
+                </clx-textbox>
+            </div>
+            <!-- End: Shipping ID textbox -->
+
+            <!-- Start:Settlement offer amount Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_InsProvider">
+                <clx-select list="GenerateTemplateCtrl.plaintiffInsuranceProviders"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffInsuranceIds"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Settlement Offer Amount"
+                    placeholder="Select offer amount..." validation="No Settlement offer amount found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    selectedviewproperty='<small> {{$select.selected.offered_amount|currency}} </small>'
+                    dropdownviewproperty='<small> {{item.offered_amount|currency}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Settlement offer amount Dropdown depend on Plaintiff -->
+
+            <!-- Start: Proceeding date -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.proceeding_date">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="proceedingDate" label="Proceeding date">
+                </clx-date>
+            </div>
+            <!-- End: Proceeding date -->
+
+            <!-- Start:Medical provider from medical bill Dropdown with Outstanding Amount -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.medicalBillsAndInfo2">
+                <clx-select list="GenerateTemplateCtrl.medicalProvidersFromBillAndInfoWithBillId"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="medicalproviderid"
+                    label="Medical Provider" placeholder="Select medical provider..."
+                    validation="No medical providers found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: 'providerid.contact_name'"
+                    selectedviewproperty='<small> {{$select.selected.providerid.contact_name}}</small>'
+                    dropdownviewproperty='<small><strong>Medical Provider-</strong>{{item.providerid.contact_name}}<br></strong></small>
+                    <small><strong>Bill Amount-</strong>{{item.totalamount|currency}}<br></strong></small>
+                    <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Medical provider from medical bill Dropdown Outstanding Amount -->
+
+            <!-- Start:Bill Date DatePicker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Deposition_Date">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="depositionDate" label="Deposition Date">
+                </clx-date>
+            </div>
+            <!-- Ends:Bill Date DatePicker -->
+
+            <!-- Start:Date of Order Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.dateOfOrder">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="service_Date" label="Date of Order">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Order Picker -->
+
+            <!-- Start:Date of Entry Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.dateOfEntry">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="check_Date" label="Date of Entry">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Entry Picker -->
+
+            <!-- Start:Date of Notice of Entry Served Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Date_of_Notice_of_Entry_Served">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="request_Date"
+                    label="Date of Notice of Entry Served">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Notice of Entry Served Picker -->
+
+            <!-- Start:Date of serving Summons Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.exhibitsDate">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="exhibitsDate"
+                    label="Date of serving Summons">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of serving Summons Picker -->
+
+            <!-- Start:Date of completion of Service Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.expertDate">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="expertDate"
+                    label="Date of completion of Service">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of completion of Service Picker -->
+
+            <!-- Start:Date of Issue Joined Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffWitnessDate">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffWitnessDate"
+                    label="Date of Issue Joined">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Issue Joined Picker -->
+
+            <!-- Start: Date of Note of Issue Picker -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.thirdPartyDate">
+                <clx-date condition="GenerateTemplateCtrl.openCalender(event)"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="thirdPartyDate"
+                    label=" Date of Note of Issue">
+                </clx-date>
+            </div>
+            <!-- Ends Date of Note of Issue Picker -->
+
+            <!-- Start: Plaintiff’s Residence County Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Plaintiff_Residence_County">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="PlaintiffResidenceCounty"
+                    label="Plaintiff’s Residence County" placeholder="Enter County...">
+                </clx-textbox>
+            </div>
+            <!-- End: Plaintiff’s Residence County Textbox -->
+
+            <!-- Start: Role Textbox-->
+            <div class="col-md-6" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.role">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="leftTxtOne" label="Enter Role"
+                    placeholder="Enter role...">
+                </clx-textbox>
+            </div>
+            <!-- End: v Textbox -->
+
+            <!-- Start: Defendant’s Residence County Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendants_Residence_County">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantsResidenceCounty"
+                    label="Defendant’s Residence County" placeholder="Enter County...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant’s Residence County Textbox -->
+
+            <!-- Start: Defendant’s Residence County 1 Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendants_Residence_County_1">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantsResidenceCounty_1"
+                    label="Defendant’s Residence County 1" placeholder="Enter County...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant’s Residence County Textbox -->
+
+            <!-- Start: Defendant’s Residence County 2 Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendants_Residence_County_2">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantsResidenceCounty_2"
+                    label="Defendant’s Residence County 2" placeholder="Enter County...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant’s Residence County Textbox -->
+
+            <!-- Start: Communication Method Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.communication_method">
+                <clx-select list="GenerateTemplateCtrl.communicationMethod"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="communicationMethod"
+                    label="Communication Method" placeholder="Select method..." ngfilter=" | filter:{id:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.id}}</small>'
+                    dropdownviewproperty='<small>{{item.id}}</small>'>
+                </clx-select>
+            </div>
+            <!-- End: Communication Method Dropdown -->
+
+            <!-- Start: Title Dropdown -->
+            <div class="col-md-6" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.title1">
+                <clx-select list="GenerateTemplateCtrl.title" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="title" label="Contact Title" placeholder="Select title..."
+                    selectedviewproperty='<small>{{$select.selected.id}}</small>'
+                    dropdownviewproperty='<small>{{item.id}}</small>'>
+                </clx-select>
+            </div>
+            <!-- End: Title Dropdown -->
+
+            <!-- Start: Contact Name Dropdown-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.matter_contact_all">
+                <clx-select list="GenerateTemplateCtrl.allMatterContacts" model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="otherpartycontactid" label="Matter Contacts" placeholder="Select contact..."
+                    validation="No contacts found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    groupby="GenerateTemplateCtrl.groupContacts" groupfilter="GenerateTemplateCtrl.contactType"
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Contact Name Dropdown-->
+
+            <!-- Start: Defendant Vehicle's Information Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendant_Vehicle_Information">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantVehicleInformation"
+                    label="Defendant Vehicle's Information" placeholder="Enter Information...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant Vehicle's Information Textbox -->
+
+            <!-- Start: Document Heading Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.document_heading">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="documentheading"
+                    label="Document Heading" placeholder="Enter Document Heading...">
+                </clx-textbox>
+            </div>
+            <!-- End: Document Heading Textbox -->
+
+            <!-- Start: Defendant State of the License Plates Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendant_State_of_the_License_Plates">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantStateoftheLicensePlates"
+                    label="Defendant State of the License Plates" placeholder="Enter Defendant State...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant State of the License Plates Textbox -->
+
+            <!-- Start: Defendant's file number Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendant_File_Number">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendantFileNumber"
+                    label="Defendant's file number" placeholder="Enter the number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant's file number Textbox -->
+
+            <!-- Start: Defendant’s Vehicle Plate Number Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Defendant_Vehicle_Plate_Number">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="DefendantVehiclePlateNumber"
+                    label="Defendant’s Vehicle Plate Number" placeholder="Enter Number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Defendant’s Vehicle Plate Number Textbox -->
+
+            <!-- Start: Plaintiff Vehicle's Information Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Plaintiff_Vehicles_Information">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="PlaintiffVehiclesInformation"
+                    label="Plaintiff Vehicle's Information" placeholder="Enter Information...">
+                </clx-textbox>
+            </div>
+            <!-- End: Plaintiff Vehicle's Information Textbox -->
+
+            <!-- Start: Plaintiff Vehicle Plate Number Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Plaintiff_Vehicle_Plate_Number">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="PlaintiffVehiclePlateNumber"
+                    label="Plaintiff Vehicle Plate Number" placeholder="Enter Number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Plaintiff Vehicle Plate Number Textbox -->
+
+
+
+            <!-- Start: Plaintiff State of the License Plates Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Plaintiff_State_of_the_License_Plates">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="PlaintiffStateoftheLicensePlates"
+                    label="Plaintiff State of the License Plates" placeholder="Enter Number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Plaintiff State of the License Plates Number Textbox -->
+
+
+            <!-- Start: County of the Location of Accident Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.County_of_the_Location_of_Accident">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="CountyoftheLocationofAccident"
+                    label="County of the Location of Accident" placeholder="Enter Location...">
+                </clx-textbox>
+            </div>
+            <!-- End: County of the Location of Accident Textbox -->
+
+            <!-- Start: Accident time Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Accident_time">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="Accidenttime"
+                    label="Accident time" placeholder="Enter time...">
+                </clx-textbox>
+            </div>
+            <!-- End: Accident time Textbox -->
+
+            <!-- Start: Name of the Judge Textbox-->
+            <div class="col-md-6" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.JudgeName">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="JudgeName"
+                    label="Name of the Judge" placeholder="Enter Name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Name of the Judge Textbox -->
+
+        </div>
+    </div>
+</div>
+<!-- layout d76 ends -->

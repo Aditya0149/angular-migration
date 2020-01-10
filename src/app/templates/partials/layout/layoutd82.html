@@ -1,0 +1,297 @@
+<!-- layout d82 start -->
+<div class="row" ng-form="plaintiffform">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Start: Plaintiff Dropdown for plaintiff Insurance Provider from settlement -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_onChange_Insurance">
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" changefn="yes"
+                    affectmodelname="plaintiffEmployerIds"
+                    selected-items-changed="GenerateTemplateCtrl.getPlaintiffInsuranceProviders(GenerateTemplateCtrl.TemplateModelInfo.plaintiffs);"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..."
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown for plaintiff Insurance Provider from settlement -->
+
+            <!-- Start:Insurance Dropdown depend on Plaintiff 1-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_InsProvider_settlement_1">
+                <clx-select list="GenerateTemplateCtrl.plaintiffInsuranceProviders"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffInsuranceIds2"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Negotation"
+                    placeholder="Select settlement amount..." validation="No Negotation found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    selectedviewproperty='<small> {{$select.selected.insurance_provider_name}} </small>'
+                    dropdownviewproperty='<small><strong>Insurance Provider-</strong> {{item.insurance_provider_name}}<br></small>
+                                          <small><strong> Demand Amount-</strong> {{item.demanded_amount|currency}}<br></small>
+                                          <small><strong>Offer Amount-</strong> {{item.offered_amount|currency}}<br></small>
+                                          <hr style="margin:0; border-top:1px solid #ccc">'>
+                </clx-select>
+            </div>
+            <!-- End: Insurance Dropdown depend on Plaintiff 1-->
+
+            <!-- Start: Only Insurance Dropdown -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.only_InsuranceProvider">
+                <clx-select list="GenerateTemplateCtrl.uniqonlyInsuranceProviderNew"
+                    model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId" changefn="yes"
+                    label="Select Insurance Company" placeholder="Select Insurance Company..."
+                    validation="No Insurance Company found..." ngexpression="item"
+                    ngfilter=" | filter:{insuranceProvider_contact_name:$select.search}"
+                    selectedviewproperty='<small> {{$select.selected.insuranceProvider_contact_name}}</small>'
+                    dropdownviewproperty=' <small>{{item.insuranceProvider_contact_name}}<br> </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Only Insurance Dropdown -->
+
+            <!-- Start: Doctor Name Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.doctorName1">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="doctorName1"
+                    label="Doctor Name 1" placeholder="Enter name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Doctor Name Textbox -->
+
+            <!-- Start: Original Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.originalBillAmt1">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="originalBillAmt1"
+                    label="Original Bill Amount 1" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Original Bill Amount textbox-->
+
+            <!-- Start: New Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.newBillAmt1">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="newBillAmt1"
+                    label="New Bill Amount 1" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: New Bill Amount textbox-->
+
+            <!-- Start: Doctor Name Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.doctorName2">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="doctorName2"
+                    label="Doctor Name 2" placeholder="Enter name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Doctor Name Textbox -->
+
+            <!-- Start: Original Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.originalBillAmt2">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="originalBillAmt2"
+                    label="Original Bill Amount 2" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Original Bill Amount textbox-->
+
+            <!-- Start: New Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.newBillAmt2">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="newBillAmt2"
+                    label="New Bill Amount 2" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: New Bill Amount textbox-->
+
+            <!-- Start: Doctor Name Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.doctorName3">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="doctorName3"
+                    label="Doctor Name 3" placeholder="Enter name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Doctor Name Textbox -->
+
+            <!-- Start: Original Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.originalBillAmt3">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="originalBillAmt3"
+                    label="Original Bill Amount 3" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Original Bill Amount textbox-->
+
+            <!-- Start: New Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.newBillAmt3">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="newBillAmt3"
+                    label="New Bill Amount 3" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: New Bill Amount textbox-->
+
+            <!-- Start: Doctor Name Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.doctorName4">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="doctorName4"
+                    label="Doctor Name 4" placeholder="Enter name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Doctor Name Textbox -->
+
+            <!-- Start: Original Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.originalBillAmt4">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="originalBillAmt4"
+                    label="Original Bill Amount 4" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Original Bill Amount textbox-->
+
+            <!-- Start: New Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.newBillAmt4">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="newBillAmt4"
+                    label="New Bill Amount 4" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: New Bill Amount textbox-->
+
+            <!-- Start: Doctor Name Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.doctorName5">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="doctorName5"
+                    label="Doctor Name 5" placeholder="Enter name...">
+                </clx-textbox>
+            </div>
+            <!-- End: Doctor Name Textbox -->
+
+            <!-- Start: Original Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.originalBillAmt5">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="originalBillAmt5"
+                    label="Original Bill Amount 5" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Original Bill Amount textbox-->
+
+            <!-- Start: New Bill Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.newBillAmt5">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="newBillAmt5"
+                    label="New Bill Amount 5" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: New Bill Amount textbox-->
+
+            <!-- Start: Amount from Med pay remember Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.AmountMedPayRemember1">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="AmountMedPayRemember1"
+                    label="Amount from Med Pay Remember" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount from Med pay remember textbox-->
+
+            <!-- Start: Amount from at-fault party Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.AmountAtFaultParty">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="AmountAtFaultParty"
+                    label="Amount from At-Fault Party" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount from at-fault party textbox-->
+
+            <!-- Start: Client Saved Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.clientSavedAmount">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="clientSavedAmount"
+                    label="Client Saved Amount" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Client Saved Amount textbox-->
+
+            <!-- Start: File set up costs Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.FileSetUpCosts">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="FileSetUpCosts"
+                    label="File Set Up Costs" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: File set up costs textbox-->
+
+            <!-- Start: Postage Textbox -->
+            <div class="col-md-6" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.Postage">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="Postage" label="Postage"
+                    step="0.01" placeholder="Enter Postage amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Postage textbox-->
+
+            <!-- Start: Copy fees Textbox -->
+            <div class="col-md-6" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.CopyFees">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="CopyFees" label="Copy Fees"
+                    step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Copy fees textbox-->
+
+            <!-- Start: Faxes & telephone Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.FaxesTelephone">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="FaxesTelephone"
+                    label="Faxes & Telephone" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Faxes & telephone textbox-->
+
+            <!-- Start: Court filing fees, personal service amount Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.CourtFilingFeesPersonalServiceAmount">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo"
+                    modelname="CourtFilingFeesPersonalServiceAmount" label="Court Filing Fees, Personal Service Amount"
+                    step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Court filing fees, personal service amount textbox-->
+
+            <!-- Start: Attorney Costs Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.AttorneyCosts">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="AttorneyCosts"
+                    label="Attorney Costs" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Attorney Costs textbox-->
+
+            <!-- Start: Check Number Textbox-->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.checkNumber">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="checkNumber"
+                    label="Enter Check Number" placeholder="Enter Check Number...">
+                </clx-textbox>
+            </div>
+            <!-- End:  Check Number Textbox -->
+
+            <!-- Start: Medical request and priority postage fees Textbox -->
+            <div class="col-md-6"
+                ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.MedicalRequestPriorityPostage">
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="MedicalRequestPriorityPostage"
+                    label="Medical Request & Priority Postage Fees Amount" step="0.01" placeholder="Enter amount..."
+                    currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Medical request and priority postage fees textbox-->
+
+        </div>
+    </div>
+</div>
+<!-- layout d82 ends -->

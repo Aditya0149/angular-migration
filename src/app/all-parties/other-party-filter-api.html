@@ -1,0 +1,36 @@
+<style>
+	.modal-dialog {
+		width: 40%;
+	}
+</style>
+<div>
+	<div class="">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="filterApiCntrl.cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+			<h1 class="modal-title fl-left" id="myModalLabel">Filters</h1>
+		</div>
+		<div class="modal-body dashboard-tasks-due" style="max-height: 70vh !important; overflow-x: hidden">
+			<div class="row">
+				<div class="row-fluid">
+					<div class="col-md-6">
+						<!-- Category -->
+						<h3>Role</h3>
+						<form>
+							<div ng-repeat="roles in filterApiCntrl.role" class="checkbox checkbox-primary">
+								<input type="checkbox" checklist-model="filterApiCntrl.roleFilter" checklist-value="roles.contactrolename"><label> {{roles.contactrolename}}</label>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterApiCntrl.reset()">Reset</button>
+			<button class="btn btn-default pull-right" ng-disabled="enableApply" ng-click="filterApiCntrl.applyFilters(filterApiCntrl.roleFilter)">Apply</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,111 @@
+<style>
+.grid-col{
+    columns: md 4px;
+}
+</style>
+<div class="child-ul-right subnav-compact">
+    <clx-filter-options fiter-opts="dashboardAnalytics.matterTypesFilters" on-filter-select="dashboardAnalytics.filterMatterTrendData"
+        selected-filter="dashboardAnalytics.selectedMatterTrendFilter"></clx-filter-options>
+</div>
+<div>
+    <div class="row margin0 pricing-panel intake-dash-block" data-ng-show="dashboardAnalytics.display.statusStrip">
+        <div data-ng-class="dashboardAnalytics.isUser ? 'col-md-3' : 'col-md-4' ">
+            <div class="plan plan-selected">
+                <div class="plan-name">
+                    <h2 class="ng-binding">Total Leads Added</h2>
+                </div>
+                <div class="user-matter-block text-center">{{dashboardAnalytics.StatusBarData.totalLeadsAdded | replaceByBlank}}</div>
+            </div>
+        </div>
+        <div data-ng-class="dashboardAnalytics.isUser ? 'col-md-3' : 'col-md-4' ">
+            <div class="plan plan-selected">
+                <div class="plan-name">
+                    <h2 class="ng-binding">Total Leads Accepted</h2>
+                </div>
+                <div class="user-matter-block text-center">{{dashboardAnalytics.StatusBarData.totalLeadsAccepted | replaceByBlank}}</div>
+            </div>
+        </div>
+        <div data-ng-class="dashboardAnalytics.isUser ? 'col-md-3' : 'col-md-4' ">
+            <div class="plan plan-selected">
+                <div class="plan-name">
+                    <h2 class="ng-binding">Lead Conversion Rate</h2>
+                </div>
+                <div class="user-matter-block text-center">{{dashboardAnalytics.StatusBarData.LeadConversionRate}}</div>
+            </div>
+        </div>
+        <div data-ng-show="dashboardAnalytics.isUser" data-ng-class="dashboardAnalytics.isUser ? 'col-md-3' : 'col-md-4' ">
+            <div class="plan plan-selected" >
+                <div class="plan-name">
+                    <h2 class="ng-binding">Average Valuation (Accepted)</h2>
+                </div>
+                <div class="user-matter-block text-center">{{dashboardAnalytics.StatusBarData.AverageAcceptedValuation | currency| replaceByBlank}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--matter trend chart-->
+            <div class="remove-border" data-ng-show="dashboardAnalytics.display.matterTrend">
+                    <div class="page-title-border-links clearfix">
+                            <h2 class="padding-heading ellipsis-nowrap">{{dashboardAnalytics.selectedMatterTrend}}</h2>
+                    </div>
+
+                <!-- <div class="dropdown  pull-left">
+                    <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle heading-black" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        {{dashboardAnalytics.selectedMatterTrend}}
+                        <span class="default-downward-arrow-black sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-click="dashboardAnalytics.getDataForMaterTrend(type)" data-ng-repeat="type in dashboardAnalytics.matterTypes">
+                            <a>{{type}}</a>
+                        </li>
+                    </ul>
+                </div> -->
+                <!-- <div class="child-ul-right subnav-compact">
+                    <clx-filter-options fiter-opts="dashboardAnalytics.matterTypesFilters" on-filter-select="dashboardAnalytics.filterMatterTrendData"
+                        selected-filter="dashboardAnalytics.selectedMatterTrendFilter"></clx-filter-options>
+                </div> -->
+            </div>
+            <div class="flexCont"></div>
+            <div class="clearfix"></div>
+            <div class="margin-top20px">
+                <div id="area-chart" class="intook-matters"></div>
+            </div>
+            <!--matter trend chart end-->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6" data-ng-show="dashboardAnalytics.isUser">
+            <div class="page-title-border-links clearfix">
+                <h2 class="padding-heading ellipsis-nowrap">Average Intake Valuation Accepted</h2>
+            </div>
+
+            <div class="row pie-chart-height">
+                    <div id="avgValDonut-chart" class="intook-matters"></div>
+            </div>
+
+            <div data-ng-show="dashboardAnalytics.selectedAttorney && dashboardAnalytics.resetforDonut" class="col-md-12 graph-info">
+                <div class="arrow-up"></div>
+                <label>{{dashboardAnalytics.selectedAttorney.name}} ({{dashboardAnalytics.selectedAttorney.count}} matters)</label>
+                <div class="dashboard-tasks-due" style="max-height:130px !important;">
+                    <div data-ng-repeat="info in dashboardAnalytics.selectedAttorney.matters | limitTo:dashboardAnalytics.matterLimit" class="ellipsis-nowrap">
+                        {{info.name}}
+                    </div>
+                    <a href="javascript:void(0)" data-ng-show="dashboardAnalytics.matterLimit < dashboardAnalytics.selectedAttorney.count" data-ng-click="dashboardAnalytics.showAllMatters()">{{dashboardAnalytics.selectedAttorney.moreText}}</a>
+                </div>
+            </div>
+        </div>
+        <div data-ng-class="dashboardAnalytics.isUser ? 'col-md-6' : 'col-md-4 col-md-offset-4' ">
+            <div class="page-title-border-links clearfix">
+                <h2 class="padding-heading ellipsis-nowrap">Top Intake Type </h2>
+            </div>
+
+            <div class="row pie-chart-height">
+                    <div id="donut-chart" class="intook-matters"></div>
+            </div>
+        </div>
+    </div>
+</div>

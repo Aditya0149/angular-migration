@@ -1,0 +1,21 @@
+.allIntakeListReport-wrapper {
+	.sol-table-padding{ padding-bottom: 150px;
+}
+.all-matter {
+	.body-row {
+		.cell {
+			&:first-child {
+				div {
+					word-break: keep-all;
+				}
+			}
+		}
+	}
+}
+.all-list-dropdown {
+	width: 180px;
+}
+.custom-cell {
+	width: 150px;
+}
+}

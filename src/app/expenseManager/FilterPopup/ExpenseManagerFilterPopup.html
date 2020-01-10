@@ -1,0 +1,139 @@
+<div class="filterpopup-wrapper">
+    <div class="modal-header clearfix">
+        <h1 class="modal-title fl-left">Filters</h1>
+        <button class="close fl-right" data-ng-click="expenseManagerFilterCtrl.cancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+
+    <div class="filter-greybox container modal-body static-new-scrollbar">
+        <div class=" col-md-12">
+            <div class="row ">
+                <div class=" col-md-6">
+                    <label>Expense Type</label>
+                    <ui-select ng-model="expenseManagerFilterCtrl.filter.expenseTypeId" theme="selectize">
+                        <ui-select-match placeholder="Expense type">
+                            {{expenseManagerFilterCtrl.filter.expenseTypeId.Name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="expense as expense in expenseManagerFilterCtrl.expenseTypes| filter:{Name:$select.search} | orderBy:'Name'">
+                            <small>
+                                {{expense.Name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <label class="margin-top10px">Matter Name</label>
+                    <ui-select multiple ng-model="expenseManagerFilterCtrl.filter.matterid" theme="select2"
+                        class="reviewer-select-height" style="width:94%"
+                        on-remove="expenseManagerFilterCtrl.onSelectMatter(expenseManagerFilterCtrl.filter.matterid)"
+                        on-select="expenseManagerFilterCtrl.onSelectMatter(expenseManagerFilterCtrl.filter.matterid)">
+                        <ui-select-match placeholder="Enter matter name">
+                            {{$item.name}}
+                        </ui-select-match>
+                        <ui-select-choices refresh="expenseManagerFilterCtrl.searchMatters($select.search)"
+                            refresh-delay="300"
+                            repeat="row in expenseManagerFilterCtrl.searchMatterList | filter:{name:$select.search}">
+                            <small>{{row.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <div>
+                        <label class="margin-top10px">Expense Category</label>
+                        <br>
+                        <div ng-repeat="list in expenseManagerFilterCtrl.expense_category_list"
+                            class="pull-left padding-0 margin-right20px" style="margin-top: 0;">
+                            <div class="radio padding-0 margin0">
+                                <input class="margin0" type="radio"
+                                    data-ng-model="expenseManagerFilterCtrl.filter.expenseCategory"
+                                    ng-value="list.id" />
+                                <label class="margin0" style="line-height: inherit;">{{list.Name}}</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class=" col-md-6">
+                    <label>Associated Party</label>
+                    <ui-select ng-model="expenseManagerFilterCtrl.filter.plaintiffId" theme="selectize">
+                        <ui-select-match placeholder="Associated Party">
+                            {{$select.selected.contact_name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="item as item in expenseManagerFilterCtrl.associatedPlaintiffs| filter:{contact_name:$select.search }| orderBy: 'contact_name'">
+                            <small>
+                                {{item.contact_name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <!-- STORY:4735 Date incurred from and to datepicker fields... START-->
+                    <div>
+                        <label class="margin-top10px" style="float:left">Date Incurred Range</label>
+                        <div>
+                            <div style="float:left;clear:both">
+                                <div class="input-group datepicker ">
+                                    <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy"
+                                        data-ng-model="expenseManagerFilterCtrl.filter.start" is-open="openedEndDate"
+                                        data-ng-disabled="false" name="doi" id="expenceStartDatediv" validate-date
+                                        error-div="#expenceStartDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                                        full-day-date="1" close-text="Close"
+                                        ng-change="expenseManagerFilterCtrl.setDates('start','#expenceStartDatediv')"
+                                        placeholder="start" show-button-bar="false" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                            ng-click="expenseManagerFilterCtrl.openCalender($event);openedEndDate = true;openedStartDate=false;">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div class="error" id="expenceStartDateErr">Invalid date format!</div>
+                            </div>
+                        </div>
+                        <div style="float: left; margin-left: 10px;">
+                            <div class="input-group datepicker modi-date">
+                                <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy"
+                                    data-ng-model="expenseManagerFilterCtrl.filter.end" is-open="openedStartDate"
+                                    data-ng-disabled="false" name="doi" id="expenceEndDatediv" validate-date
+                                    error-div="#expenceEndDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                                    full-day-date="1" close-text="Close"
+                                    ng-change="expenseManagerFilterCtrl.setDates('end','#expenceEndDatediv')"
+                                    placeholder="end" show-button-bar="false" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                        ng-click="expenseManagerFilterCtrl.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div>
+                                <span></span>
+                            </div>
+                            <div class="error" id="expenceEndDateErr">Invalid date format!</div>
+                        </div>
+                    </div>
+
+
+                    <!-- ... END-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right ">
+            <button data-ng-click="expenseManagerFilterCtrl.resetFilters()" type="button"
+                class="btn btn-default btn-styleNone">
+                Reset
+            </button>
+            <button data-ng-click="expenseManagerFilterCtrl.apply(expenseManagerFilterCtrl.filter)"
+                ng-disabled="expenseManagerFilterCtrl.isDatesValid() || expenseManagerFilterCtrl.enableApply"
+                type="button" class="btn btn-default">
+                Apply
+            </button>
+        </div>
+    </div>
+</div>

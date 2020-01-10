@@ -1,0 +1,93 @@
+<div data-ng-form="plaintiffRecovery.form">
+        <div class="modal-header">
+            <div class=" clearfix  heading-with-button-bottom-padding">
+                <h2 class="pull-left page-title">Edit Plaintiff Recovery Details</h2>
+                <div class="pull-right">
+                    <button data-ng-disabled="plaintiffRecovery.isDatesValid()" ng-click="plaintiffRecovery.saveDetails(plaintiffRecovery.selectedRecord)" class="btn btn-default pull-right">
+                        Save
+                    </button>
+                    <button data-ng-click="plaintiffRecovery.closeModal()" class="btn btn-default btn-styleNone pull-right margin-right10px">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <div class="row">
+                        <div class="col-md-6">
+                            <label>Plaintiff</label>
+                            <div><strong>{{plaintiffRecovery.selectedRecord.plaintiff_name}}</strong></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Recovery Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input data-ng-disabled="true" type="text" class="form-control ng-pristine ng-untouched ng-valid" step="0.01" custom-currency-filter="" ng-keydown="plaintiffRecovery.checkIfEnterKeyWasPressed($event)" data-ng-model="plaintiffRecovery.selectedRecord.client_recovery_amount" placeholder="Enter Amount ">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6 margin-top10px">
+                            <div>
+                                <label>Retainer Date</label>
+                                <div class="input-group datepicker">
+                                    <input type="text" class="form-control" view-format="MM/DD/YYYY" data-ng-disabled="false" datepicker-popup="MM/dd/yyyy" data-ng-model="plaintiffRecovery.selectedRecord.retainer_date"
+                                        is-open="plaintiffRecovery.datePicker.openRetainerDate" id="retainerStatementDate" validate-date error-div="#retainerStatementDate" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" datepicker-options="dateOptions" close-text="Close" show-button-bar="false"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="plaintiffRecovery.openDatePicker($event,'retainerDate');plaintiffRecovery.datePicker.opencloseStateDate=false;plaintiffRecovery.datePicker.openRetainerDate=true;">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="error" id="retError" style="float: none;">Invalid date format!</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 margin-top10px">
+                            <label>Retainer #</label>
+                            <input type="text" class="form-control" format="number" amount-format data-ng-model="plaintiffRecovery.selectedRecord.retainer_no" placeholder="Enter Retainer number"
+                                maxlength="20" />
+                            <!-- <div ng-if="plaintiffRecovery.paymentform.chequeno.$dirty" ng-messages="plaintiffRecovery.paymentform.chequeno.$error">
+                                <div style="margin-right: 6%;" class="error error-ch" ng-message="pattern">
+                                    Invalid Check no
+                                </div>
+                            </div> -->
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6 margin-top10px">
+                            <div>
+                                <label>Closing Statement Date</label>
+                                <div class="input-group datepicker">
+                                    <input type="text" class="form-control" view-format="MM/DD/YYYY" data-ng-disabled="false" datepicker-popup="MM/dd/yyyy" data-ng-model="plaintiffRecovery.selectedRecord.closing_statement_date"
+                                        is-open="plaintiffRecovery.datePicker.opencloseStateDate" id="closingStatementDate" validate-date error-div="#closingStatementDate" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" datepicker-options="dateOptions" close-text="Close" show-button-bar="false"
+                                        />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="plaintiffRecovery.openDatePicker($event,'opencloseStateDate');plaintiffRecovery.datePicker.opencloseStateDate=true;plaintiffRecovery.datePicker.openRetainerDate=false;">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="error" id="closeStateError" style="float: none;">Invalid date format!</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 margin-top10px">
+                            <label>Closing Statement #</label>
+                            <input type="text" class="form-control" format="number" amount-format data-ng-model="plaintiffRecovery.selectedRecord.closing_statement_no" placeholder="Enter Closing statement number"
+                                maxlength="20" />
+                            <!-- <div ng-if="plaintiffRecovery.paymentform.chequeno.$dirty" ng-messages="plaintiffRecovery.paymentform.chequeno.$error">
+                                <div style="margin-right: 6%;" class="error error-ch" ng-message="pattern">
+                                    Invalid Check no
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

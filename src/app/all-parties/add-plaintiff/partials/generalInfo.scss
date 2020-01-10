@@ -1,0 +1,27 @@
+.general-info-wrapper{
+
+    .manual-drop .dropdown-menu {
+        max-height: 100px;
+        width: 100%;
+        top: -81px !important;
+    }
+
+}
+
+.wizard-accordion{
+    
+    .plaintiffInfo{
+        display:block;
+        border:1px solid #E9EEF0;
+    }
+
+    .emp-memo{
+        white-space: pre-line !important;
+        background-color: white; 
+        border-radius: 0;
+        border: 0;
+        padding: 0;
+        font-family: 'GothamRounded-Book';
+        word-break: break-word;
+    }
+}

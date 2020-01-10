@@ -1,0 +1,209 @@
+<style>
+    .compose-wrap {
+        height: 89% !important;
+    }
+
+    #report-content .scrollArea table th .box,
+    #report-content .scrollableContainer .headerSpacer {
+        background-color: #e9eef0 !important;
+        height: 34px;
+    }
+    .scrollArea table .th-inner{top:12px}
+    .scrollArea.dashboard-tasks-due {
+    margin-top: 12px;
+}
+.checkbox.padding-top10px{
+    padding-top: 6px !important;
+}
+</style>
+<cancel-pending-requests></cancel-pending-requests>
+
+<div >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12" style="padding: 10px 0px 0px 10px;">
+                <div class="col-md-5 pull-left paddingRLR dropdown create top-icon-set">
+                    <span>Allow users to add notes</span> <span class="zero-border" ng-switcher="" ng-model="notes.matterCollaborationNotePermission"
+                        style="display:inline-block;vertical-align: middle" ng-click="notes.matterCollaborationNotePermissionToggle(notes.matterCollaborationNotePermission)">
+                        <div class="switch switch-left" ng-class="{'switch-left': !model, 'switch-right': model}">
+                            <div class="switch-button">&nbsp;</div>
+                        </div>
+                    </span>
+                    <!-- <p ng-if="notes.notesGrid.selectedItems.length > 0">{{notes.notesGrid.selectedItems.length}}
+                        Selected</p> -->
+                </div>
+                <div class="col-md-7 pull-right paddingRLR clearfix">
+                    <ul class="pull-right">
+                        <li data-ng-show="notes.showSearchNote">
+                            <div class="search-input form-control-margin-null" data-ng-model="notes.showSearchNote"
+                                data-ng-init="notes.showSearchNote = false">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="notes.showSearchNote" data-ng-model-options="{ debounce: 0 }"
+                                    data-ng-model="notes.serachInput" data-ng-change="notes.filterRetain();" class="form-control">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="showBy-btns pull-right">
+                        <li>
+                            <a>
+                                <span data-ng-click="notes.openFilters();" class="sprite default-filter" tooltip="Filter"
+                                    tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter"></li>
+                        <li class="search-overlap" data-ng-hide="notes.showSearchNote">
+                            <ul data-ng-hide="notes.showSearchNote">
+                                <li>
+                                    <a data-ng-click="notes.showSearchNote = true">
+                                        <span class=" sprite default-searchico-menu" tooltip=" Search"
+                                            tooltip-placement="right"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- <div class="pull-right border"> </div>
+                    <div class="pull-right"></div> -->
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-right margin-top10px" id="matterNoteFilter">
+                    <clx-filter-tags on-filter-cancel="notes.tagCancelled" tag-list="notes.tags"></clx-filter-tags>
+                </div>
+                <div data-ng-show="notes.notesList.length > 0">
+                    <show-record-count3 more="notes.getMoreNotes()" all="notes.getMoreNotes('all')" displayed="notes.notesList.length"
+                        hide-pager="{{notes.notesList.length < notes.totalCount}}" total="notes.totalCount"></show-record-count3>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="clearfix"></div>
+<div class="" style="width: 100%;text-align: center;" ng-if="notes.isCollapsed">
+    <div data-ng-show="notes.showMoreHTML()">
+        <a data-ng-click="notes.getMoreNotes()">More</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a data-ng-click="notes.getMoreNotes('all')">All</a>
+    </div>
+</div>
+<div id="dailymailupper1"></div>
+<div data-collapse="notes.isCollapsed">
+    <div ng-include src='"app/notes/matter-notes/partials/add-note.html"'></div>
+    <!--  Add note section -->
+</div>
+
+
+<!-- List View -->
+<!-- data-ng-if="notes.notesList.length > 0 && notes.isDataAvailable" -->
+
+
+
+
+<div class="report-responsive" style="margin-right:75px" ng-if="notes.notesList.length > 0">
+    
+    <div>
+        <div >
+            <div class="row header-row">
+                <div class="cell" data-width="05">
+                    <div class="checkbox padding-top10px">
+                        <input type="checkbox" data-ng-model="notes.notesGrid.selectAll" 
+                        data-ng-checked="notes.allNoteselected()"
+                        data-ng-click="notes.selectAllNotes(notes.notesGrid.selectAll)" />
+                        <label></label>
+                    </div>
+                </div>
+                <div class="cell" data-width="25">Note</div>
+                <div class="cell" data-width="15">Category </div>
+                <div class="cell" data-width="15">Added by</div>
+                <div class="cell" data-width="15">Added on</div>
+                <div class="cell" data-width="25">Linked Contact</div>
+            </div>
+        </div>
+        <div>
+            <div class="dashboard-tasks-due" style="max-height:200px;overflow-x: hidden;">
+                    <div class="row body-row contact-sub-border"
+                    ng-repeat="note in notes.notesList | filter: notes.serachInput"
+                    grid-size>
+                    <div class="cell" data-width="05">
+                        <div class="checkbox padding-top10px" style="margin:0;position: relative !important;">
+                            <input type="checkbox" data-ng-checked="notes.isNotesSelected(note.note_id)"
+                                checklist-model="notes.notesGrid.selectedItems" checklist-value="note" />
+                            <label></label>
+                        </div>
+                    </div>
+
+                    <div class="cell" data-width="25">
+                        <div style="padding-top:10px !important;">{{note.displayText | characters:150:
+                            false}}</div>
+                    </div>
+
+                    <div class="cell" data-width="15">
+                        <div style="padding-top:10px !important;">{{notes.getCateogry(note.noteCategory) |
+                            SentenseCase}}</div>
+                    </div>
+
+                    <div class="cell" data-width="15">
+                        <div style="padding-top:10px !important;">{{note.user.first_name}}&nbsp;
+                            {{(note.user.last_name!=null) ? note.user.last_name : ''}}</div>
+                    </div>
+
+                    <div class="cell" data-width="15">
+                        <div style="padding-top:10px !important;">
+                            {{notes.getFormattedDate(note.created_date,'MM/DD/YYYY')}}
+                            <br> {{notes.getFormattedDate(note.created_date, 'hh:mm A')}}</div>
+                    </div>
+
+                    <div class="cell" data-width="25">
+                        <div class=" word-wrap" ng-class="{'cursor-pointer':(note.linked_contact.length > 0)}">
+                            <span style="color: #2a83b1;" data-ng-click="notes.openContactCard(item)" ng-repeat="item in note.linked_contact">
+                                {{item.first_name}} {{item.last_name}}
+                                <span ng-if="!$last">,</span>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+       
+
+    </div>
+    <!-- <div id="moreLink" class="row margin-top20px text-center" style="overflow: hidden !important;position: fixed;width: 100%;bottom: 05px;">
+            <div data-ng-show="events.eventsList.length < events.totalCount">
+                <div data-ng-show="!events.isAllRole" class="col-md-12 relative-container">
+                    <div data-ng-hide="events.eventsList.length == 0" class="text-center pull-left" style="width:94%">
+                        <a data-ng-click="events.getMoreRoleContacts()">More</a>
+                        <span class="paddingLR-10px">|</span>
+                        <a data-ng-click="events.getAllRoleContacts('all')">All</a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+</div>
+
+<div class="text-center  margin-top30px " ng-if="notes.notesList.length == 0">
+    <span>There aren’t any notes associated with this matter.</span>
+</div>
+
+<!--Bug#6367-->
+<div ng-if="notes.isCollapsed" id="moreLink" class="row margin-top20px text-center" style="overflow: hidden !important;position: fixed;width: 94%;bottom: 60px;left:4px">
+    <div data-ng-show="notes.showMoreHTML()">
+        <a data-ng-click="notes.getMoreNotes()">More</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a data-ng-click="notes.getMoreNotes('all')">All</a>
+    </div>
+</div>
+<div class="clearfix"></div>
+</div>
+
+<alert ng-model="notes.alert" type="{{notes.alert.type}}" close="notes.closeAlert()" ng-show="notes.alert && notes.alert.msg">
+    {{notes.alert.msg}}
+</alert>
+
+</div>

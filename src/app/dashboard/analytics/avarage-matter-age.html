@@ -1,0 +1,53 @@
+﻿<div class="child-ul-right subnav-compact">
+    <clx-filter-options
+        fiter-opts="dashboardAnalytics.avarageAgeFilters"
+        on-filter-select="dashboardAnalytics.filterAverageMatterAge"
+        selected-filter="dashboardAnalytics.selectedAverageAgeFilter"></clx-filter-options>
+</div>
+<div class="container" data-ng-show="(dashboardAnalytics.matterAverageAge.length > 0) && dashboardAnalytics.showMatterAge">
+    <div class="row">
+        <div
+            class="col-md-2  matter-age-chart-section"
+            data-ng-repeat="data in dashboardAnalytics.matterAverageAge">
+            <div class="graph-tip">
+                {{data.avg}} Days<div class="matter-stage">{{data.status}}</div>
+            </div>
+        </div>
+
+        <div class="col-md-1 total-matters matter-age-chart-section">
+            <h1>{{dashboardAnalytics.totalDays}}</h1>
+            Total Days
+        </div>
+
+    </div>
+</div>
+
+<div class="margin-top10px text-center" data-ng-show="!dashboardAnalytics.showMatterAge">
+    <p>Loading matter age...</p>
+</div>
+
+<!--<div class="col-md-2  matter-age-chart-section">
+            <div class="graph-tip">
+                25 Days<div class="matter-stage">NEW CASE</div>
+            </div>
+        </div>
+        <div class="col-md-2  matter-age-chart-section">
+            <div class="graph-tip">
+                25 Days<div class="matter-stage">NEW CASE</div>
+            </div>
+        </div>
+        <div class="col-md-2 matter-age-chart-section">
+            <div class="graph-tip">
+                25 Days<div class="matter-stage">NEW CASE</div>
+            </div>
+        </div>
+        <div class="col-md-2  matter-age-chart-section">
+            <div class="graph-tip">
+                25 Days<div class="matter-stage">NEW CASE</div>
+            </div>
+        </div>
+        <div class="col-md-3  matter-age-chart-section">
+            <div class="graph-tip">
+                25 Days<div class="matter-stage">NEW CASE</div>
+            </div>
+        </div>-->

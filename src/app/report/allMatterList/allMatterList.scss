@@ -1,0 +1,54 @@
+.allMatterListReport-wrapper {
+	.table-scroll tr div { 
+    word-break:break-word;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.heading-filter-removed {
+	padding: 14px 47px 0;
+}
+a {
+	word-break: keep-all;
+}
+.dropdown-menu {
+	width: auto;
+	min-width: 160px !important;
+}
+.mattername-wordwrap {
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
+.head-padding-10px {
+	padding: 5px 0;
+}
+.showBy-btns {
+	li.seperation-filter {
+		height: 24px;
+	}
+}
+.tags {
+	li {
+		margin: 0 5px 4px 0;
+		padding: 0px 10px;
+		font-size: 12px;
+	}
+}
+.clear-btn {
+	font-size: 12px;
+	height: 24px;
+	line-height: 19px;
+	padding: 0 10px;
+}
+.width-54per{
+    overflow: hidden !important;
+    position: fixed;
+	bottom: 0px;
+    width: auto;
+    left: 0;
+    right: 0;
+    padding: 8px 0;
+	text-align: center;
+	background: #fff;
+}
+}

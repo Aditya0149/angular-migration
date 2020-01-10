@@ -1,0 +1,199 @@
+<div class="clx-document-wrapper">
+    <div class="modal-header clearfix header-height">
+        <h2 class="pull-left page-title col-md-4 padding-0">Document</h2>
+        <div class="pull-right">
+            <button data-ng-click="sidebarCtrl.close()" class="close fl-right"><span
+                    aria-hidden="true">×</span></button>
+        </div>
+    </div>
+    <div id="content" class="p-0">
+        <div class="filter-greybox container modal-body custom-body">
+          <div class="row">
+            <div class="col-md-4">
+                <div ng-repeat="info in sidebarCtrl.eventFor" class="padding-0">
+                    <div class="radio padding-0 margin0 pull-left margin-right20px">
+                        <input ng-disabled="isIntakeActive != 1 && info.id == 1" class="margin0" type="radio"
+                            data-ng-click="sidebarCtrl.setDefaultValues()" data-ng-model="sidebarCtrl.selectedMode"
+                            ng-value="info.id" />
+                        <label class="margin0 lable-line-height">&nbsp;{{info.name}}</label>
+                    </div>
+                </div>
+               </div>
+                
+                <div class="email-attach-matter-documents col-md-8"
+                    data-ng-if="sidebarCtrl.getMatterDocList.length > 0 || sidebarCtrl.getIntakeDocList.length > 0">
+                        <div class="row">
+                            <div class="search-input form-control-margin-null col-md-8 main-clx-box">
+                                <div class="default-searchico sprite clx-search"></div>
+                                <input type="text" class="form-control" ng-model="sidebarCtrl.searchDocs"
+                                    placeholder="Start typing document name...">
+                            </div> 
+                            <div class="count">
+                                <strong ng-if="sidebarCtrl.getMatterDocList.length > 0">{{sidebarCtrl.getMatterDocList.length}}</strong>
+                                <strong  ng-if="sidebarCtrl.getIntakeDocList.length > 0">{{sidebarCtrl.getIntakeDocList.length}}</strong>
+                                <span
+                                    data-ng-if="sidebarCtrl.getMatterDocList.length<=1 && sidebarCtrl.selectedMode == 0">Document</span>
+                                <span
+                                    data-ng-if="sidebarCtrl.getIntakeDocList.length<=1 && sidebarCtrl.selectedMode == 1">Document</span>
+                                <span
+                                    data-ng-if="sidebarCtrl.getMatterDocList.length>1 && sidebarCtrl.selectedMode == 0">Documents</span>
+                                <span
+                                    data-ng-if="sidebarCtrl.getIntakeDocList.length>1 && sidebarCtrl.selectedMode == 1">Documents</span>
+        
+                            </div>
+                        </div>
+                </div>
+          </div>
+
+            <div class="row-fluid">
+                <div>
+                    <div class="margin-top20px clear-block col-md-12 row" ng-if="sidebarCtrl.selectedMode == 0">
+                        <input type="text" name="matterid" class="form-control margin-bottom10"
+                            data-ng-model-options="{ debounce: 300 }" placeholder="Search Matter"
+                            typeahead="row.matterid as removeunwantedhtml(row.name)+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMattersForDoc($viewValue)"
+                            typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForDoc($model,'doc')"
+                            data-ng-model="sidebarCtrl.docModel.matterid" />
+                    </div>
+                </div>
+                <div>
+                    <div class="margin-top20px clear-block col-md-12 row" ng-if="sidebarCtrl.selectedMode == 1">
+                        <input data-ng-model="sidebarCtrl.docModel.intakeId" type="text" name="intakeId"
+                            class="form-control margin-bottom10" data-ng-model-options="{ debounce: 300 }"
+                            placeholder="Search Intake"
+                            typeahead="row.intakeId as removeunwantedhtml(row.intakeName) + row.dateIntake for row in sidebarCtrl.searchIntakesForDoc($viewValue,0)"
+                            typeahead-input-formatter="sidebarCtrl.formatIntakeTypeaheadDisplayForDoc($model,'doc')" />
+                    </div>
+                </div>
+            </div>
+            <div class="new-scroll-custom-table" ng-if="sidebarCtrl.getMatterDocList.length > 0">
+                <div class="cell checkbox" data-width="5">
+                </div>
+                <scrollable-table tableid="matternotesgrid2" watch="sidebarCtrl.getMatterDocList" to="#contactupper1"
+                    from="#moreLink">
+                    <table class="table contact-list-fixed-table">
+                        <thead>
+                            <tr>
+                                <th class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-disabled="sidebarCtrl.filteredMatters.length==0" data-ng-model="sidebarCtrl.clxGridOptions.selectAll"
+                                            data-ng-checked="sidebarCtrl.allDocumentsSelected()"
+                                            data-ng-click="sidebarCtrl.selectAllDocuments(sidebarCtrl.clxGridOptions.selectAll)" /><label></label>
+                                    </div>
+                                </th>
+                                <th class="contact-list-35">Document Name</th>
+                                <th class="contact-list-28">Associated Party and Category</th>
+                                <th class="contact-list-25">Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class=" body-row "
+                                data-ng-class="{'selected-grid-row':sidebarCtrl.isDocumentSelected(data) || sidebarCtrl.clickedRow === data.doc_id}"
+                                data-highlight-clicked-row="{{data.doc_id}},sidebarCtrl.clickedRow"
+                                data-ng-repeat="data in sidebarCtrl.filteredMatters = (sidebarCtrl.getMatterDocList | filter: sidebarCtrl.searchDocs)">
+                                <td class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-checked="sidebarCtrl.isDocumentSelected(data)"
+                                            checklist-model="sidebarCtrl.clxGridOptions.selectedItems"
+                                            checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td class="contact-list-35">
+                                    <span class="cursor-pointer" data-toggle="name-tooltip" style="word-wrap: break-word;word-break: break-all;"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].doc_name}}"
+                                        data-placement="bottom">{{sidebarCtrl.filteredMatters[$index].doc_name}}</span>
+
+                                </td>
+                                <td class="contact-list-28">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].associated_party.associated_party_name}}">{{sidebarCtrl.filteredMatters[$index].associated_party.associated_party_name}}</span><br
+                                        ng-if="sidebarCtrl.filteredMatters[$index].associated_party.associated_party_name">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].doc_category.doc_category_name}}">{{sidebarCtrl.filteredMatters[$index].doc_category.doc_category_name}}</span>
+                                </td>
+                                <td class="contact-list-25">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].created_by_name}}">
+                                        {{sidebarCtrl.filteredMatters[$index].created_by_name}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+            </div>
+            <div class="text-center" style="margin-top: 95px;"
+                ng-if="sidebarCtrl.selectedMode == 0 && sidebarCtrl.showErrorMsg && sidebarCtrl.docModel.matterid">
+                No Documents found
+            </div>
+            <div class="new-scroll-custom-table" ng-if="sidebarCtrl.getIntakeDocList.length > 0">
+                <div class="cell checkbox" data-width="5">
+                </div>
+                <scrollable-table tableid="matternotesgrid2" watch="sidebarCtrl.getIntakeDocList" to="#contactupper1"
+                    from="#moreLink">
+                    <table class="table contact-list-fixed-table">
+                        <thead>
+                            <tr>
+                                <th class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-disabled="sidebarCtrl.filteredMatters.length==0"
+                                            data-ng-model="sidebarCtrl.clxGridOptions.selectAllforIntake"
+                                            data-ng-checked="sidebarCtrl.allDocumentsSelectedForIntake()"
+                                            data-ng-click="sidebarCtrl.selectAllDocumentsForIntake(sidebarCtrl.clxGridOptions.selectAllforIntake)" /><label></label>
+                                    </div>
+                                </th>
+                                <th class="contact-list-35">Document Name</th>
+                                <th class="contact-list-28">Associated Party and Category</th>
+                                <th class="contact-list-25">Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class=" body-row "
+                                data-ng-class="{'selected-grid-row':sidebarCtrl.isDocumentSelectedForIntake(data) || sidebarCtrl.clickedRow === data.intake_document_id}"
+                                data-highlight-clicked-row="{{data.intake_document_id}},sidebarCtrl.clickedRow"
+                                data-ng-repeat="data in sidebarCtrl.filteredMatters = (sidebarCtrl.getIntakeDocList | filter: sidebarCtrl.searchDocs)">
+                                <td class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox"
+                                            data-ng-checked="sidebarCtrl.isDocumentSelectedForIntake(data)"
+                                            checklist-model="sidebarCtrl.clxGridOptions.selectedItemsForIntake"
+                                            checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td class="contact-list-35">
+                                    <span class="cursor-pointer" data-toggle="name-tooltip" style="word-wrap: break-word;word-break: break-all;"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].documentname}}"
+                                        data-placement="bottom">{{sidebarCtrl.filteredMatters[$index].documentname}}</span>
+
+                                </td>
+                                <td class="contact-list-28">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].associated_party_name}}">{{sidebarCtrl.filteredMatters[$index].associated_party_name}}</span><br
+                                        ng-if="sidebarCtrl.filteredMatters[$index].associated_party_name">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].categoryname}}">{{sidebarCtrl.filteredMatters[$index].categoryname}}</span>
+                                </td>
+                                <td class="contact-list-25">
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{sidebarCtrl.filteredMatters[$index].created_by}}">
+                                        {{sidebarCtrl.filteredMatters[$index].created_by}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+            </div>
+            <div class="text-center" style="margin-top: 95px;"
+                ng-if="sidebarCtrl.selectedMode == 1 && sidebarCtrl.showErrorMsgForIntake && sidebarCtrl.docModel.intakeId">
+                No Documents found
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal-footer">
+    <button ng-if="sidebarCtrl.getMatterDocList.length > 0 || sidebarCtrl.getIntakeDocList.length > 0"
+        data-ng-click="sidebarCtrl.closeDocListModal()" class="btn btn-default btn-style">Cancel</button>
+
+    <button ng-if="sidebarCtrl.getMatterDocList.length > 0 || sidebarCtrl.getIntakeDocList.length > 0" ng-disabled="sidebarCtrl.disableUpload"
+        data-ng-click="sidebarCtrl.saveDocListModal()" class="btn btn-default btn-default">
+        Attach</button>
+</div>

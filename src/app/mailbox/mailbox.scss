@@ -1,0 +1,68 @@
+.mailbox-landing-wrapper {
+    .reply-dropdown 
+        {
+            li a:hover { background-color: #e2e2e2;
+            }
+            li.divider {
+                margin: 5px 0;
+                border-bottom: $divider_border;
+            }
+        }
+    .show-bullet-list 
+        ul {
+            list-style: inside disc;
+        }
+}
+
+
+.compose-mail-wrapper {
+        .compose-fields{height: 72vh;
+    }
+    .radio {
+        label {
+            &::before {
+                width: 19px;
+                height: 19px;
+                border: 2px solid $color_strong_blue;
+            }
+            &::after {
+                background-color: $color_strong_blue;
+                top: 5px;
+                width: 9px;
+                height: 9px;
+                left: 5px;
+            }
+        }
+    }
+    .filter-box {
+        position: relative;
+        top: 0;
+        left: -36px;
+        height: 1px;
+    }
+    .selection-row {
+        width: 24%;
+        margin: 0 50%;
+        position: absolute;
+    }
+    .white-bg {
+        background-color: #fff;
+    }
+    .custom-checkbox {
+        margin: 0;
+        position: relative;
+    }
+    .custom-tab {
+        max-height: 68px;
+        overflow: auto;
+    }
+}
+
+.document-box {
+	width: 70%;
+	height: 82%;
+}
+
+.compose-wrap {
+    height: 87%;
+}

@@ -1,0 +1,185 @@
+<!-- CONTENT SECTION-->
+
+
+    <div class="row margin-top10px">
+        <div class=" clearfix subnav">
+            <ul class="centered-nav">
+                <li data-ng-click="motionCtrl.activateTab('motion',motionCtrl.activeTab)">
+                    <a href="javascript:void(0)" data-ng-class="{'activeLink' : motionCtrl.activeTab.motion}" class="activeLink ">Motion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flexCont"></div>
+    <div class="row  margin0">
+        <div class="col-md-6 paddingRLR head-padding-14px ">
+            <div class="btn-group btn-group paddingLR-10px">
+                <label data-ng-click="motionCtrl.motionByUS(0)"
+                    ng-class="{' active': motionCtrl.motionFieldValue == 0}"
+                    class="btn btn-default btn-styleNone ">
+                    Motion By Us</label>
+                <label data-ng-click="motionCtrl.motionOnUs(1)"
+                    ng-class="{' active': motionCtrl.motionFieldValue == 1}"
+                    class="btn btn-default btn-styleNone">
+                    Motion On Us</label>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6  margin-top25px">
+            <div class="pull-right paddingRLR clearfix">
+                <ul class="showBy-btns pull-right">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="motionCtrl.toggleFilterPage();" class="sprite default-filter" tooltip="Filter"></span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="pull-right border">
+                </div>
+                <div class="pull-right">
+                    <div class="dropdown" style="width: 260px;text-align: right;">
+                        <div class="sortby-align">Sort By:</div>
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{motionCtrl.sortbyOptions[motionCtrl.viewModel.filters.sortByValueForDropDown]}}
+                            <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(1, 'returnableDateASC')"
+                                    data-ng-class="{' active': motionCtrl.viewModel.filters.sortByValueForDropDown == 0}">Returnable date ASC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(1, 'returnableDateDESC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 1}">Returnable date DESC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(2, 'dateOfServiceASC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 2}">Date of Service ASC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(2, 'dateOfServiceDESC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 3}">Date of Service DESC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(3, 'judgeASC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 4}">Judge ASC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(3, 'judgeDESC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 5}">Judge DESC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(4, 'daysOverdueASC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 6}">Days Overdue ASC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(4, 'daysOverdueDESC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 7}">Days Overdue DESC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(5, 'docNameASC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 7}">Document Name ASC</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a data-ng-click="motionCtrl.applySortByFilter(5, 'docNameDESC')"
+                                    data-ng-class="{'active': motionCtrl.viewModel.filters.sortByValueForDropDown == 7}">Document Name DESC</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+        <div class="pull-right ">
+            <clx-filter-tags on-filter-cancel="motionCtrl.tagCancelled" tag-list="motionCtrl.tags"></clx-filter-tags>
+        </div>
+    </div>
+
+    <div class="report-responsive motion-grid" data-ng-if="motionCtrl.viewModel.motions.length >0 ">
+        <div class="row header-row">
+            <div class="cell" data-ng-repeat="header in ::motionCtrl.clxGridOptions.headers" data-width={{header.dataWidth}}>
+                <div ng-if="header.displayName!='Days overdue'">
+                    {{header.displayName}}
+                </div>
+                <div ng-if="header.displayName=='Days overdue'" class="text-right" data-width={{header.dataWidth}}>
+                    {{header.displayName}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row body-row cursor-pointer" data-ng-class="{'selected-grid-row':motionCtrl.display.matterSelected[data.matter_id]}" data-ng-if="motionCtrl.display.filtered" data-ng-repeat="data in motionCtrl.filteredMatters = (motionCtrl.viewModel.motions|filter:motionCtrl.viewModel.filters.filterText) track by data.motion_document_id"  grid-size>
+            <div class="cell " data-ng-repeat="header in ::motionCtrl.clxGridOptions.headers"
+                data-ng-class="{'selected-grid-row':motionCtrl.isMatterSelected(data)}" data-width={{header.dataWidth}}>
+                <ul ng-repeat="field in ::header.field" >
+                    <!--<li ng-click="motionCtrl.redirectTo(data.motion_documentid)" >-->
+                    <li data-ng-click="motionCtrl.redirectTo(data.motion_document_id)">
+                        <div>
+                            <span data-ng-if="field.label">{{field.label}} :</span>
+                            <span data-ng-if="field.href">
+                                <strong data-ng-if="field.template==='bold'"  tooltip="{{::data[field.prop]}}" tooltip-placement="bottom">{{::data[field.prop]}}
+                                </strong>
+                            </span>
+                            <strong data-ng-if="field.template==='bold' && !field.href"  tooltip="{{::data[field.prop]}}" tooltip-placement="bottom">{{::data[field.prop]}}
+                            </strong>
+                            <div ng-if="(header.displayName == 'Days overdue')">
+                                <div class="text-right">
+                                    <span data-ng-if="field.template!=='bold' && field.href"  tooltip="{{::data[field.prop]}}" tooltip-placement="bottom">{{::data[field.prop]}}</span>
+                                </div>
+                            </div>
+                            <div ng-if="header.displayName != 'Days overdue'">
+                                <span data-ng-if="field.template!=='bold' && field.href"  tooltip="{{::data[field.prop]}}" tooltip-placement="bottom">{{::data[field.prop]}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p class="text-center margin-top10px"
+        data-ng-if="motionCtrl.viewModel.motions.length===0 && motionCtrl.display.motionListReceived">
+        There aren’t any motions in this matter.
+    </p>
+    <p class="text-center margin-top10px"
+        data-ng-show="motionCtrl.filteredMatters.length === 0 && motionCtrl.display.motionListReceived">
+        No data for the applied filters
+    </p>
+    <div class="row margin-top20px text-center " data-ng-if="(motionCtrl.viewModel.motions.length >=100 && !motionCtrl.getAllDataFlag)">
+        <a href="javascript:void(0)" class="" data-ng-click="motionCtrl.getMoreData()">More</a>
+        <span class="paddingLR-10px">|</span>
+        <a href="javascript:void(0)" class="" data-ng-click="motionCtrl.getAllMotionList()">All</a>
+    </div>
+
+
+
+<!--<div data-ng-repeat="field in ::header.field" >
+                    <a data-ng-href="{{field.href}}/{{motionCtrl.matterId}}/{{data.motion_documentid}}">
+                        <div>
+                            <span data-ng-if="field.label">{{field.label}} :</span>
+                            <span data-ng-if="field.href">
+                                <strong data-ng-if="field.template==='bold'">{{::data[field.prop]}}
+                                </strong>
+                            </span>
+                            <strong data-ng-if="field.template==='bold' && !field.href">{{::data[field.prop]}}
+                            </strong>
+                        <span data-ng-if="field.template!=='bold' && field.href">{{::data[field.prop]}}
+                        </span>
+                        </div>
+
+                    </a>
+                </div>-->

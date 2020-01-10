@@ -1,0 +1,28 @@
+/*------------------------------------
+ Border Radius Mixin
+-------------------------------------*/
+.border-radius(@radius-all) {
+  border-radius: @radius-all;
+  -webkit-border-radius: @radius-all;
+  -moz-border-radius: @radius-all;
+  -ms-border-radius: @radius-all;
+}
+/* --------------------------------------------------
+    text-shadow
+---------------------------------------------------*/
+.text-shadow (@string: 0 1px 3px rgba(0, 0, 0, 0.2)) {
+  text-shadow: @string;
+}
+
+.transform(@transform){
+  transform: @transform;
+  -webkit-transform: @transform;
+  -moz-transform: @transform;
+  -o-transform: @transform;
+  -ms-transform: @transform;
+}
+
+
+.bordered (@thickness: 1px, @type: solid,  @color: #757171) {
+  border:@thickness @type  @color;
+}

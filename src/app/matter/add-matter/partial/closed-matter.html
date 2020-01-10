@@ -1,0 +1,21 @@
+<!-- CONTENT SECTION-->
+<div class="container-fluid">
+    <div id="wrapper">
+        <div class="modal-body ng-scope" ng-if="onMatter">
+            <p class="ng-binding">Do you want to mark all open events and tasks of this matter as complied and
+                completed?</p>
+        </div>
+        <div class="modal-body ng-scope" ng-if="onIntake">
+            <p class="ng-binding">Do you want to mark all open events and tasks of this intake as complied and
+                completed?</p>
+        </div>
+        <div class="modal-footer ng-scope" style="margin: 10px 0 0 5px;">
+            <button data-ng-click="closedCtrl.cancel()" class="btn btn-default btn-styleNone">Cancel</button>
+            <button data-ng-click="closedCtrl.Confirm()" class="btn btn-default" id="saveButton">
+                Confirm
+            </button>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</div>
+</div>

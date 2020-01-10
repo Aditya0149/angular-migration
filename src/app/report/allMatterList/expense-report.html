@@ -1,0 +1,198 @@
+<style>
+    .heading-filter-removed {
+      padding: 14px 47px 0;
+  }
+  .table {
+        margin-bottom: 0px !important;
+    }
+  </style>
+
+<div scrolly="expenseReportCtrl.scrollReachedBottom()" reached-top="expenseReportCtrl.scrollReachedTop()">
+<div class="row">
+ <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Expense Report</h1>
+</div>
+<div class="flexCont"></div>
+<div class="row  margin0 fixed-grid-report">
+    <div class="col-md-12 paddingRLR heading-filter-removed padding-left-0">
+        <h4 class="pull-left margin-top15px">Total Firm | Expense: {{expenseReportCtrl.expenseDataList.total_expense}}  Paid: {{expenseReportCtrl.expenseDataList.total_paid_amount}} Outstanding: {{expenseReportCtrl.expenseDataList.total_outstanding_amount}}</h4>
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons paddingLR-10px">
+                <li class="seperation-filter"></li>
+                <li> 
+                    <a>
+                        <span data-ng-click="expenseReportCtrl.filterExpense()"
+                                class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                    </a>
+                </li> 
+                <li class="seperation-filter"></li>
+                <li>
+                <a data-ng-click="expenseReportCtrl.print()">
+                    <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                </a>
+                </li>
+                <li class="paddingLR-10px">
+                <a data-ng-click="expenseReportCtrl.downloadexpenses()">
+                    <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span>
+                </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown head-padding-10px pull-right">
+	            Sort By :
+		        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        {{expenseReportCtrl.selectedSort}}
+
+                 <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+                <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                    <li data-ng-repeat="sort in expenseReportCtrl.sorts">
+                        <a data-ng-click="expenseReportCtrl.applySortByFilter(sort)">{{sort.name}}
+                        </a>
+                    </li>
+                </ul> 
+        </div>
+        
+    </div>
+    <div class="pull-right" data-ng-show="expenseReportCtrl.tags.length > 0">
+        <clx-filter-tags
+            on-filter-cancel="expenseReportCtrl.tagCancelled"
+            tag-list="expenseReportCtrl.tags"></clx-filter-tags>
+    </div>
+</div>    
+    <div data-ng-show="expenseReportCtrl.expenseDataList.length >0 ">
+        <show-record-count-only
+            more="expenseReportCtrl.getMore()"
+            all="expenseReportCtrl.getAll()"
+            hide-pager="{{expenseReportCtrl.showPaginationButtons()}}"
+            displayed="expenseReportCtrl.expenseDataList.length"
+            total="expenseReportCtrl.total">
+       </show-record-count-only>
+    </div>
+
+    <!-- Start: New scroll-table tableid  -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <scroll-table class="list-table" sort="expenseReportCtrl.selectedSort" tag="expenseReportCtrl.tags" watch="expenseReportCtrl.expenseDataList" tableid="expenseReportlistGrid" to="#listUpper"
+        from="#moreAllLinkRecord">
+        <table class="table table-scroll">
+            <thead data-ng-show="expenseReportCtrl.expenseDataList.length > 0">
+                <tr>
+                    <th class="th-width-13">
+                        <div>
+                            <span><b>Matter name</b></span>
+                        </div>
+                    </th>
+                    <th class="th-width-12">
+                        <div> <span><b>Expense Name</b></span></div>
+                    </th>
+                    <th class="th-width-14">
+                        <div> <span><b>Associated Party</b></span></div>
+                    </th>
+                    <th class="th-width-10">
+                        <div> <span><b>Expense Type</b></span></div>
+                    </th>
+                    <th class="th-width-11 text-right"> 
+                        <div> <span><b>Expense amount</b></span></div>
+                    </th>
+                    <th class="th-width-10 text-right">
+                        <div> <span><b>Paid amount</b></span></div>
+                    </th>
+                    <th class="th-width-9 text-right">
+                        <div> <span><b>Outstanding amount</b></span></div>
+                    </th>
+                    <th class="th-width-11">
+                        <div> <span><b>Date Incurred</b></span></div>
+                    </th>
+                    <th class="th-width-10">
+                        <div> <span><b>Check #,   Bank Details</b></span></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="dashboard-tasks-due" id="expenseReportlistBody" style="overflow-y:overlay;height: 80vh;">
+                <tr data-ng-repeat="data in expenseReportCtrl.filteredExpensesRecords = (expenseReportCtrl.expenseDataList)"
+                 data-highlight-clicked-row="{{$index}},expenseReportCtrl.clickedRow"
+                data-ng-class="{'selected-grid-row':($index == expenseReportCtrl.clickedRow)}">
+                    <td class="th-width-13">
+                        <div>
+                            <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                href="#/matter-overview/{{data.matter.matter_id}}" class="word-wrap">
+                                {{data.matter_name}}</a>
+                        </div>
+                    </td>
+                    <td class="th-width-12">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.expense_name}}">
+                                {{data.expense_name}}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-14">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.associatedPlaintiff}}">
+                                {{data.associatedPlaintiff}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.expense_type_name}}">
+                                {{data.expense_type_name}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-11">
+                        <div class="text-right">
+                            <span  tooltip-placement="bottom" tooltip="{{data.expense_amount}}">
+                                {{data.expense_amount}}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div class="text-right">
+                            <span  tooltip-placement="bottom" tooltip="{{data.paid_amount}}">
+                                {{data.paid_amount}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-9">
+                        <div class="text-right">
+                            <span  tooltip-placement="bottom" tooltip="{{data.outstandingamount}}">
+                                {{data.outstandingamount}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-11">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.incurred_date}}">
+                                {{data.incurred_date}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.cheque_no}}">
+                                {{data.cheque_no}}
+                            </span><br>
+                            <span tooltip-placement="bottom" tooltip="{{data.bank_account}}">
+                                {{data.bank_account}}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+    <!-- End: New scroll-table tableid  -->
+
+    <div class="row text-center " data-ng-show="expenseReportCtrl.expenseDataList.length < expenseReportCtrl.total">
+        <a href="javascript:void(0)" class="" data-ng-click="expenseReportCtrl.getMore()">More</a>
+        <span class="paddingLR-10px">|</span>
+        <a href="javascript:void(0)" class="" data-ng-click="expenseReportCtrl.getAll()">All</a>
+    </div>
+     <div class="text-center margin-top10px"
+        data-ng-show="expenseReportCtrl.expenseDataList.length <= 0">
+        No data for the applied filters
+    </div>
+
+</div>

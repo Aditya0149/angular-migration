@@ -1,0 +1,70 @@
+<style>
+.reminders-checkbox .checkbox{margin-top: 10px !important;margin-bottom: 10px !important;}
+.header-task-workflow  .checkbox{margin-top: 10px !important;margin-bottom: 10px !important;}
+.count{
+    padding-left: 14px;
+}   
+</style>
+<div class="email-attach-matter-documents">
+    <div class="compose-head page-title-border" style="padding: 10px 10px 35px!important;">
+        <div class="page-title pull-left">
+            Upload Documents of {{mailboxCtrl.selectedMode != 2 ? 'Intake' : 'Matter'}}({{mailboxCtrl.taggedMatterName}})
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-default" ng-disabled="mailboxCtrl.selectedItemsCopy.length == 0" ng-click="mailboxCtrl.getFileSizeNUpload(mailboxCtrl.selectedItemsCopy);">Done</button>
+            <button class="btn btn-default" data-ng-click="mailboxCtrl.matterDocs = false; mailboxCtrlV2.searchDocs = ''">Cancel</button>
+        </div>
+    </div>
+    <div class="search-block">
+        <div class="pull-left search-input form-control-margin-null">
+            <div class="default-searchico sprite"></div>
+            <input type="text" class="form-control" ng-model="mailboxCtrl.searchDocs" placeholder="Start typing document name...">
+        </div>
+        <div class="pull-left count">
+            <!-- <label>{{mailboxCtrl.documentsList.data.length }} Documents</label> -->
+            <strong>{{mailboxCtrl.documentsList.data.length}}</strong>
+            <span data-ng-if="mailboxCtrl.documentsList.data.length<=1">Document</span>
+            <span data-ng-if="mailboxCtrl.documentsList.data.length>1">Documents</span>
+            
+        </div>
+    </div>
+    <div class="container">
+        <div class="container workflow-task-header upload-documents-matter-grid">
+            <div class="row header-task-workflow" style="background-color: #e9eef0 !important;">
+                <div class="col-md-1">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="mailboxCtrl.clxGridOptions.selectAll" data-ng-click="mailboxCtrl.selectAllDocuments(mailboxCtrl.clxGridOptions.selectAll)"
+                        /><label></label>
+                    </div>
+                </div>
+
+                <div class="col-md-4 padding-top-10px">Document Name</div>
+                <div class="col-md-3 padding-top-10px">{{mailboxCtrl.selectedMode != 2 ? 'Category' : 'Associated Party and Category'}}</div>
+                <div class="col-md-3 padding-top-10px">Created By</div>
+            </div>
+            <div class="dashboard-tasks-due row" style="max-height:372px;" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">
+                <div class="col-md-12 reminder-row padding-0" data-ng-class="{'selected-grid-row':mailboxCtrl.isDocSelected(data.doc_id) || mailboxCtrl.clickedRow === data.doc_id}"
+                    data-highlight-clicked-row="{{data.doc_id}},mailboxCtrl.clickedRow" data-ng-repeat="data in mailboxCtrl.documentsList.data | filter: mailboxCtrl.searchDocs ">
+                    <div class="col-md-1  reminders-checkbox">
+                        <div class="cell checkbox" data-width="3">
+                            <input type="checkbox" ng-click="mailboxCtrl.isDocEqual();" data-ng-checked="mailboxCtrl.isDocSelected(data.doc_id)"  checklist-model="mailboxCtrl.selectedItemsCopy"
+                                checklist-value="data" /><label></label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4  padding-top-10px ellipsis-nowrap" style="word-break: break-word;">
+                        {{data.doc_name}} {{data.tags_String}}
+                    </div>
+                    <div class="col-md-3 padding-top-10px">
+                        {{data.associated_party.associated_party_name}} {{data.doc_category.doc_category_name}}
+                    </div>
+                    <div class="col-md-3 reminder-cell padding-top-10px">
+                        {{data.created_by_name}}
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" data-ng-if="mailboxCtrl.documentsList.data.length===0">
+                No document found for tagged {{mailboxCtrl.selectedMode != 2 ? 'intake' : 'matter'}}...
+            </div>
+        </div>
+    </div>

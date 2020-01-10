@@ -1,0 +1,108 @@
+<style>
+    div#matterNotesEdit ul li {
+        list-style: disc;
+        margin-left: 10px;
+    }
+
+    .modal-open .modal {
+        overflow-y: hidden;
+    }
+</style>
+<div ng-form="note.editNote">
+    <div class="modal-header">
+        <div class="view-only-fields row">
+            <div class="col-md-9">
+                <div class="note-subhead">
+                    <strong ng-if="!isIntake">Matter: {{noteToEdit.matter_name}}</strong>
+                    <strong ng-if="isIntake">Intake: {{noteToEdit.matter_name}}</strong>
+                    <br />
+                    <small
+                        title='Added By: {{noteToEdit.fname}}&nbsp;{{noteToEdit.lname}} | {{getFormattedDate(noteToEdit.datereceived)}}'>Added
+                        By: {{noteToEdit.user.first_name}}&nbsp;{{noteToEdit.user.last_name}} |
+                        {{getFormattedDate(noteToEdit.created_date)}}</small>
+                </div>
+
+            </div>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-body static-new-scrollbar" style="height:490px">
+        <label>Note
+            <span class="compulsary-mark">*</span>
+        </label>
+        <wysiwyg textarea-id="matterNotesEdit" textarea-class=" new-editor-height globle-note-color form-control"
+            textarea-name="text" textarea-required ng-model="noteToEdit.text" enable-bootstrap-title="true"
+            form-data="note.editNote.text"></wysiwyg>
+        <div data-ng-show="note.editNote.text.$error.maxSize" ng-messages="note.editNote.text.$error">
+            <div class="error" style="float: right !important;" ng-message="maxSize">
+                Note description max limit exceeded
+            </div>
+        </div>
+
+        <div class="row margin-top10px">
+            <div class="col-md-7">
+                <label>Category</label>
+                <ui-select class="full-width" ng-model="noteToEdit.noteCategory.notecategory_id" name="notecat" theme="selectize">
+                    <ui-select-match placeholder="Enter category">
+                        {{$select.selected.category_name | SentenseCase}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="item.notecategory_id as item in addNoteCategories | filter:{ category_name:$select.search }">
+                        <small>
+                            {{item.category_name | SentenseCase}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="col-md-5 form-inline">
+                <div class="margin-top30px form-group">
+                    <div ng-switcher ng-model="noteToEdit.is_important" class="form-control zero-border remove-bg">
+                    </div>
+                    <label>
+                        <a href="javascript:void(0);">Important</a>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <label>Linked Contact</label>
+                <ui-select multiple ng-model="noteToEdit.linked_contact_temp" theme="select2" class="width100">
+                    <ui-select-match placeholder="Enter Contact">
+                        {{$item.firstname + " " + $item.lastname}}
+                    </ui-select-match>
+                    <ui-select-choices refresh-delay="1000" refresh="getLinkContact($select.search)"
+                        repeat="contact.contactid as contact in contactList1  | orderBy: 'name'">
+                        <small>
+                            {{contact.firstname + " " + contact.lastname}} <br>
+                            {{contact.street}} {{contact.city}}<span
+                                ng-if="((contact.street && contact.street.length > 0)||(contact.city && contact.city.length > 0)) && (contact.state && contact.state.length > 0)">,</span>
+                            {{contact.state}}
+                        </small>
+                        <hr class="custom-hr">
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="col-md-4 form-inline margin-top25px p-0">
+                    <span class="or-connector">OR</span>
+                    <button class="margin-top0px margin0 form-group btn btn-default add-btn" data-ng-click="addNewContact('all_notes')">
+                        Add New
+                    </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button data-ng-click="cancel()" class="btn btn-default btn-styleNone">
+            Cancel</button>
+
+        <button type="button" class="btn btn-default" data-ng-click="editNote(noteToEdit)"
+            data-ng-disabled="note.type == 'email' || note.type == 'sidebar' || note.editNote.$invalid">
+            Save</button>
+    </div>
+</div>

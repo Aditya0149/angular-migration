@@ -1,0 +1,33 @@
+ <div class="modal-header">
+    <h2 class="text-center" style="color:#f30e3f;">SUBSCRIPTION EXPIRED ! </h2>
+</div>   
+ <div class="container modal-body" style="height: 100px;"> 
+     <div>
+         Your CloudLex subscription has expired and will be restricted to read only access on {{gracePeriodEndDate}}. Please contact us to renew.</div><br>
+                <div class="checklist">
+                <div class="row">
+                 <div class="col-md-2"></div>    
+                 <div class="col-md-1">
+                  <div class="checkbox" style="margin-top: 2px;">
+                     <input type="checkbox"
+                                data-ng-checked="isAcknowleged === '1'"
+                                data-ng-model="isAcknowleged"
+                                data-ng-true-value="'1'"
+                                data-ng-false-value="'0'" />
+                     <label></label>
+                      </div>
+                 </div>
+                 <div class="col-md-8">
+                     <label>Acknowledge subscription expiration</label>
+                 </div>
+             </div>  
+     </div>        
+     
+ </div>
+ <div class="modal-footer">
+
+         <div class="text-center">
+            <button class="btn btn-default" 
+                    data-ng-disabled="isAcknowleged==0"
+                    data-ng-click="Acknowledge()">Confirm</button></div>
+</div>  

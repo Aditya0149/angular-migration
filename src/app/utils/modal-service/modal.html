@@ -1,0 +1,17 @@
+﻿<div class="modal-header">
+    <h2>{{modalOptions.headerText}}</h2>
+</div>
+<div class="modal-body">
+    <p>{{modalOptions.bodyText}}</p>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-hide = "modalOptions.closeButtonText==''"
+        class="btn btn-default"
+        data-ng-click="modalOptions.close()">
+        {{modalOptions.closeButtonText}}
+    </button>
+    <button ng-hide = "modalOptions.actionButtonText==''"class="btn btn-default"
+        data-ng-click="modalOptions.ok();">
+        {{modalOptions.actionButtonText}}
+    </button>
+</div>

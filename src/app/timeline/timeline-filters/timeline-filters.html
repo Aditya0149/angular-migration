@@ -1,0 +1,101 @@
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right" data-ng-click="timelineFillterCtrl.cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body">
+    
+          <div class="col-md-6">
+          <label class="margin-top10px">Activity </label>
+          <ui-select ng-model="timelineFillterCtrl.filter.activity_filter"  theme="selectize">
+            <ui-select-match placeholder="Activity">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="activity as activity in timelineFillterCtrl.activities | filter:{name:$select.search} | orderBy:'name'">
+              <small>
+                {{activity.name}}
+              </small>
+            </ui-select-choices>
+          </ui-select>
+
+          <label class="margin-top10px">Updated By</label>
+          <ui-select ng-model="timelineFillterCtrl.filter.updated_by_filter"  theme="selectize">
+            <ui-select-match placeholder="Updated By">
+              {{$select.selected.Name}}
+            </ui-select-match>
+            <ui-select-choices 
+				      repeat="user.uid as user in timelineFillterCtrl.users| filter:{Name:$select.search} | orderBy:'Name'">
+			       <small> {{user.Name}} </small> 
+            </ui-select-choices> 
+          </ui-select>
+         </div> 
+    
+         <div class="col-md-6">
+          <label class="margin-top10px">Created By</label>
+          <ui-select ng-model="timelineFillterCtrl.filter.created_by_filter"  theme="selectize">
+            <ui-select-match placeholder="Created By">
+              {{$select.selected.Name}}
+            </ui-select-match>
+            <ui-select-choices 
+				      repeat="user.uid as user in timelineFillterCtrl.users| filter:{Name:$select.search} | orderBy:'Name'">
+			       <small> {{user.Name}} </small> 
+            </ui-select-choices> 
+          </ui-select>
+
+         <div>
+          <label class="margin-top10px" style="float:left">Date  Range</label>
+          <div>
+            <div style="float:left;clear:both">
+              <div class="input-group datepicker ">
+                <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="timelineFillterCtrl.filter.start_date" is-open="openedEndDate"
+                  data-ng-disabled="false" name="doi" id="timelineStartDatediv" validate-date error-div="#timelineStartDatediv"
+                  tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" full-day-date="1" close-text="Close" ng-change="timelineFillterCtrl.setDates('start_date','#timelineStartDatediv')"
+                  show-button-bar="false"/>
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="timelineFillterCtrl.openCalender($event);openedEndDate = true;openedStartDate=false;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+              </div>
+              <div><span></span></div>
+              <div class="error" id="timelineStartDateErr">Invalid date format!</div>
+            </div>
+          </div>
+          <div style="float: left; margin-left: 10px;">
+            <div class="input-group datepicker">
+              <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="timelineFillterCtrl.filter.end_date" is-open="openedStartDate"
+                data-ng-disabled="false" name="doi" id="timelineEndDatediv" validate-date error-div="#timelineEndDatediv" tooltip="mm/dd/yyyy"
+                placeholder="mm/dd/yyyy" full-day-date="1" close-text="Close" ng-change="timelineFillterCtrl.setDates('end_date','#timelineEndDatediv')"
+                show-button-bar="false"/>
+              <span class="input-group-btn">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="timelineFillterCtrl.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+            </div>
+            <div><span></span></div>
+            <div class="error" id="timelineEndDateErr">Invalid date format!</div>
+          </div>
+        
+      </div>  
+    </div>  
+</div>
+<div class="modal-footer">
+  <div class="pull-right ">
+    <button data-ng-click="timelineFillterCtrl.resetFilters()"
+        type="button"
+        class="btn btn-default btn-styleNone">
+      Reset
+    </button>
+    <button data-ng-click="timelineFillterCtrl.apply(timelineFillterCtrl.filter)"
+      ng-disabled="timelineFillterCtrl.isDateValid()||timelineFillterCtrl.enableApply"  
+      type="button"
+        class="btn btn-default">
+      Apply
+    </button>
+  </div>
+</div>

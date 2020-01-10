@@ -1,0 +1,44 @@
+<!--<div class="page-title-border clearfix">
+    <div class="page-sublinks subnav">
+        <ul>
+            <li data-ng-repeat="option in clxFilters.fiterOpts"
+                data-ng-click="clxFilters.selectedFilter = option.key">
+                <a href="javascript:void(0);"
+                    data-ng-class="{'active': (clxFilters.selectedFilter === option.key)}">{{option.value}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>-->
+<!--<div class="row margin0">
+    <div class="paddingRLR flexCont">
+        <div data-ng-click="clxFilters.selectedFilter = option.key"
+            data-ng-class="{'active': (clxFilters.selectedFilter === option.key)}" class="flex-column card "
+            data-ng-repeat="option in clxFilters.fiterOpts">
+            <h2 class="numb">{{option.count}}</h2>
+            <span class="textA">{{option.value}}</span>
+        </div>
+    </div>
+</div>-->
+<div class="clxfilteroptions-wrapper">
+<div class="clearfix subnav page-title-border-links">
+    <div>
+        <ul data-ng-class="{'centered-nav':clxFilters.centered}">
+            <li
+                data-ng-repeat="option in clxFilters.fiterOpts">
+                <a href="javascript:void(0)"
+                    data-ng-if="clxFilters.showCount"
+                    data-ng-click="clxFilters.selectedFilter = option.key"
+                    data-ng-class="{'activeLink': clxFilters.isActive(clxFilters.selectedFilter,option.key)  }">{{option.value}} ({{option.count}})</a>
+
+                <a
+                    href="javascript:void(0)"
+                    data-ng-click="clxFilters.selectedFilter = option.key"
+                    data-ng-class="{'activeLink': clxFilters.isActive(clxFilters.selectedFilter,option.key)}"
+                    data-ng-if="!clxFilters.showCount">{{option.value}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>

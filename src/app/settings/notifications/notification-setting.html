@@ -1,0 +1,327 @@
+<div class="configuration-main row">
+    <div ng-show="NotificationSelectionCtrl.applicationsInfo.IT.permission.V==1" ng-class="NotificationSelectionCtrl.applicationsInfo.IT.is_active==1 ? 'col-md-12 configuration-left-block ' : 'col-md-12 configuration-left-block switch-gear-disabled'">
+        <div class="row margin-right15px margin-left15px border-bottom-light">
+            <div class="col-md-8 padding-left-0">
+                <h2>Notifications: <span class="graytxt">Manage your notifications better.</span></h2>
+
+                <!-- <div class="col-md-2 text-right padding-0 indication">
+                <div class="dropdown pull-right height-user-dropdown">
+                    <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+                        <span class="sprite default-info">&nbsp;</span>
+                    </a>
+                    <ul class="dropdown-menu username-dropdown username-profile-dropdown" role="menu" aria-labelledby="dropdownMenu5" style="padding: 10px;width: 300px;margin:10px -12px 0 0; font-size: 12px;color: #999;">
+
+                        “With CloudLex you can synchronize your Legal Cloud with other popular systems and services for file storage and calendaring.
+                        You can also link your CloudLex and email accounts or opt to use a custom file-numbering system for
+                        your matters."
+                        <li class="divider"></li>
+                        "Simply use the toggle buttons to configure your CloudLex account to your needs.”
+
+                    </ul>
+                </div>
+            </div> -->
+            </div>
+
+            <div class="text-right col-md-4 margin-bottom10px">
+                <button class="btn btn-default" ng-click="NotificationSelectionCtrl.save(NotificationSelectionCtrl.info)" ng-disabled="NotificationSelectionCtrl.flag">Save</button>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="app-title">Applications</div>
+            <span class="graytxt">Enable notifications from slected applications.
+            </span>
+            <div class="slide-block margin-top15px round-border-top">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-calendar-icon icon-block"></span>
+                    </span>
+                    <p>Matter Manager</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_googleCalender"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom ">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-outlook-icon icon-block"></span>
+                    </span>
+                    <p>Intake Manager</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_microsoftExchange"></span>
+                </div>
+            </div>
+
+
+            <!-- <div class="app-title margin-top15px" ng-if="NotificationSelectionCtrl.userRoleObj.is_admin == 1">Electronic
+                Signatures</div>
+            <span class="graytxt" ng-if="NotificationSelectionCtrl.userRoleObj.is_admin == 1">Sync your CloudLex account with
+                your DocuSign account.
+            </span>
+            <div class="slide-block  margin-top15px whole-round-border"
+                ng-if="NotificationSelectionCtrl.userRoleObj.is_admin == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <img src="styles/images/DocuSign.svg" alt="DocuSign">
+                    </span>
+                    <p>DocuSign</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher
+                        ng-model="NotificationSelectionCtrl.info.is_docusign"></span>
+                </div>
+            </div> -->
+
+        </div>
+        <div class="block">
+            <div class="app-title">Notifications Types</div>
+            <span class="graytxt">Enable notifications from slected types.
+            </span>
+            <div class="slide-block margin-top15px round-border-top">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-drive-icon icon-block"></span>
+                    </span>
+                    <p>Events</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_googleDrive"></span>
+                </div>
+            </div>
+            <div class="slide-block">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite dropbox-icon icon-block"></span>
+                    </span>
+                    <p>Tasks</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_dropBox"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="NotificationSelectionCtrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>Reminders</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_onedrive"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="NotificationSelectionCtrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>Emails</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_onedrive"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="NotificationSelectionCtrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>Clients Messenger</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_onedrive"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="NotificationSelectionCtrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>Firm Post</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_onedrive"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="NotificationSelectionCtrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>DocuSign</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="NotificationSelectionCtrl.info.is_onedrive"></span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div>
+    <!-- <div class="col-md-8">
+        <div class="configuration-right-block">
+            <h2>APPLICATIONS FROM MARKETPLACE</h2>
+            <div ng-if="NotificationSelectionCtrl.applicationcount == 1" ng-repeat="app in NotificationSelectionCtrl.applicationlist | orderBy: ['name']">
+                <div class="block" ng-if="((NotificationSelectionCtrl.launchpadAccess && NotificationSelectionCtrl.applicationsInfo.CCOM.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.CCOM.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.CCOM.is_visible==1) && app.app_code == 'CCOM')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/client-communicator.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Client Communicator</div>
+                            <p>Reduce frequent calls and communicate with your clients in a mutually convenient manner. Firms
+                                can share real time case updates that can be viewed by clients around-the-clock. And clients
+                                can upload important case documents right in the portal, saving your firm valuable time.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.CCOM.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.CCOM)"
+                                ng-disabled="NotificationSelectionCtrl.applicationsInfo.CCOM.permission.E==1" ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.CCOM.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.OPLG.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.OPLG.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.OPLG.is_visible==1) && app.app_code == 'OPLG')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/office-connector.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Word Connector</div>
+                            <p>Work on CloudLex documents while offline. Create and edit documents in Word, while accessing
+                                important case information from CloudLex. Once back online, confidently save and tag documents
+                                to their respective matters in CloudLex.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.OPLG.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.OPLG)"
+                                ng-disabled="NotificationSelectionCtrl.applicationsInfo.OPLG.permission.E==1" ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.OPLG.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+               <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.OTLG.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.OTLG.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.OTLG.is_visible==1) && app.app_code == 'OTLG')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/outlook-connector.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Outlook Connector</div>
+                            <p>Eliminate email chaos - save your important Outlook emails to CloudLex and help your team members
+                                stay informed.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.OTLG.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.OTLG)"
+                                ng-disabled="NotificationSelectionCtrl.applicationsInfo.OTLG.permission.E==1" ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.OTLG.is_active"></span>
+                        </div>
+                    </div>
+                </div> 
+                <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.GA.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.GA.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.GA.is_visible==1) && app.app_code == 'EC')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/Connector-Email.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Email Connector</div>
+                            <p>Eliminate email chaos - save important mails to CloudLex and keep everyone informed.</p>
+                        </div>
+                        <div ng-class="(NotificationSelectionCtrl.applicationsInfo.GA.permission.E==1 || NotificationSelectionCtrl.applicationsInfo.OTLG.permission.E==1) && (NotificationSelectionCtrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.GA)"
+                                ng-disabled="NotificationSelectionCtrl.applicationsInfo.GA.permission.E==1 || NotificationSelectionCtrl.applicationsInfo.OTLG.permission.E==1" ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.GA.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.DA.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.DA.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.DA.is_visible==1) && app.app_code == 'DA') ">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/digital-archival.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Digital Archiver</div>
+                            <p>Switch to digital archiver of your closed cases (in lieu of physical storage) and free up the
+                                space and resources needed to grow your practice. Digitally archive all data related to your
+                                closed matters (even digital correspondence) for a period of 7 years on a secure and easily
+                                searchable platform.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.DA.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe)  ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.DA)"
+                                ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.DA.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.O365.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.O365.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.O365.is_visible==1) && app.app_code == 'O365')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/microsoft-online.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Microsoft Office Online®</div>
+                            <p>Create, edit, and co-author your Word, Excel, and PowerPoint documents without leaving the Legal
+                                Cloud. Updates made in CloudLex are automatically reflected across all team members and devices,
+                                so you can spend less time coordinating and more time collaborating.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.O365.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe) ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.O365)"
+                                ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.O365.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((NotificationSelectionCtrl.applicationsInfo.RE.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.RE.permission.V==1  && NotificationSelectionCtrl.applicationsInfo.RE.is_visible==1) && app.app_code == 'RE')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/referral-engine.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Referral Engine</div>
+                            <p>Refer out and take on matters from a growing community of plaintiff attorneys. Referrals are
+                                easy to setup and even easier to manage. Track changes and easily share information with
+                                partner firms over a secure and HIPAA compliant server.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.RE.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe) ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.RE)"
+                                ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.RE.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((NotificationSelectionCtrl.launchpadAccess && NotificationSelectionCtrl.applicationsInfo.IM.is_active==1 && 
+                    NotificationSelectionCtrl.applicationsInfo.IM.permission.V==1 && NotificationSelectionCtrl.applicationsInfo.IM.is_visible==1) && app.app_code == 'IM')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/launcher-icons/intake-manager.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Intake Manager</div>
+                            <p>It provides you with an effective process to attain and manage prospective clients so you can
+                                boost your firm’s revenue and your client’s satisfaction. And because Intake Manager is part
+                                of CloudLex’s robust legal cloud platform, the transition from potential lead to current
+                                client is seamless.</p>
+                        </div>
+                        <div ng-class="NotificationSelectionCtrl.applicationsInfo.IM.permission.E==1 && (NotificationSelectionCtrl.dissableSubscribe)  ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="NotificationSelectionCtrl.unSubApplications(NotificationSelectionCtrl.applicationsInfo.IM)"
+                                ng-switcher ng-model="NotificationSelectionCtrl.applicationsInfo.IM.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-12 text-center margin-top10px"  ng-if="NotificationSelectionCtrl.applicationcount == 0 && NotificationSelectionCtrl.noData">
+                        There is no application subscribed by you
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

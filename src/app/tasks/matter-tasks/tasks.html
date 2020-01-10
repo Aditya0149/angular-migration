@@ -1,0 +1,377 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div class="matter-tasks-wrapper">
+
+    <div class="row  margin0  margin-top10px custom-header">
+        <matter-info-header matter-info="task.matterInfo"></matter-info-header>
+    </div>
+    <div id="report-content">
+        <clx-filter-options on-filter-select="task.getFilteredTasks" show-count centered selected-filter="task.filters.tab"
+            fiter-opts="task.taskFilters"></clx-filter-options>
+    
+        <div class="row gridSec margin0 page-title-border ">
+            <div class="col-md-12 paddingRLR">
+                <div class="col-md-4 pull-left paddingRLR dropdown create"
+                    ng-hide="task.matterInfomation.archivalMatterReadOnlyFlag">
+                    <a data-ng-click="task.addTask(task.matterId)"
+                        ng-if="(task.isGraceOver != 0) && task.taskPermissions[0].A == 1">
+                        <span class="sprite default-plus" tooltip="Add">&nbsp;</span></a>
+                </div>
+    
+                <div class="col-md-6 pull-right paddingRLR clearfix">
+                    <div class="pull-right">
+                        <div class="search-input">
+                            <div class="default-searchico sprite" tooltip="Search"></div>
+                            <input type="text" data-ng-model="task.taskFilterText"
+                                data-ng-change="task.filterRetain();task.filterTask(task.taskFilterText);"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <div class="dropdown">
+                            <span class="sortby-align">Sort By:</span>
+                            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{task.getSortByLabel(task.sortby)}}
+                                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                            </button>
+                            <ul class="dropdown-menu task-sort-dropdown" role="menu" aria-labelledby="dLabel">
+                                <li data-ng-repeat-start="sort in task.sorts"
+                                    data-ng-class="{' active': task.sortby == sort.key}">
+                                    <a data-ng-click="task.applySortByFilter(sort.key)">{{sort.name}}</a>
+                                </li>
+                                <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="row">
+            <div data-ng-if="task.tasksList.length === 0 && task.display.dataReceived" class="text-center form-margin">
+                <p>{{task.getNoDataMessage(task.taskFilterText)}}</p>
+            </div>
+            <div class="col-md-4">
+                <div class="task-list dashboard-tasks-due custom-task-list">
+                    <div class="list-progress list ">
+                        <ul>
+                            <li class="row" data-ng-class="{'selected-task':task.selectedTask.task_id === data.task_id}"
+                                on-finish-render="ngRepeatFinished" data-ng-repeat="data in task.tasksList">
+                                <div class="list-item-wrapper">
+                                    <div class="checkbox pull-left margin-left10px margin-top15px" >
+                                        <input type="checkbox" data-ng-change="task.isTaskSelected(data);"
+                                            checklist-model="task.taskIds" checklist-value="data" />
+                                        <label></label>
+                                    </div>
+                                    <div class="col-md-2 circle-position" data-ng-click="task.selectTask(data)">
+                                        <div class="circle-small text-center">
+                                            <span>{{data.priority|priorityFilter}}</span>
+                                        </div>
+                                    </div>
+                                    <div id="x{{data.task_id}}" class="col-md-9 list-item-height"
+                                        data-ng-click="task.selectTask(data)">
+                                        <span>{{data.task_name}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" data-ng-click="task.selectTask(data)">
+                                    <progress class="progress-bar-divider">
+                                        <bar ng-repeat="progress in data.completed track by $index" value="progress.value"
+                                            type="{{progress.type}}">
+                                        </bar>
+                                    </progress>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="taskDetails" class="col-md-8 detail-event view-only-fields dashboard-tasks-due  event-box" data-ng-if="task.tasksList.length > 0">
+                <div ng-if="task.taskIds.length <= 1">
+                    <div class="row">
+                        <ul class="showBy-btns pull-left">
+                            <li class="margin-right10px">
+                                <a href="javascript:void(0)"
+                                    data-ng-click="task.editTask(task.matterId,task.selectedTask.task_id)"
+                                    ng-if="(task.isGraceOver != 0) && task.taskPermissions[0].E == 1  && !task.matterInfo.archivalMatterReadOnlyFlag">
+                                    <span class="sprite default-edit " tooltip="Edit" tooltip-placement="right"></span></a>
+                            </li>
+                            <!--US#8147 add print icon -->
+                            <li class="margin-right10px" ng-hide="task.matterInfo.archivalMatterReadOnlyFlag">
+                                <a href="javascript:void(0)" data-ng-click="task.printTask(task.selectedTask)"
+                                    ng-if="(task.isGraceOver != 0)">
+                                    <span class="sprite default-file" tooltip="Print" tooltip-placement="right"></span></a>
+                            </li>
+                            <li class="margin-right10px">
+                                <a href="javascript:void(0);" data-ng-click="task.deleteTask(task.selectedTask.task_id)"
+                                    ng-if="(task.isGraceOver != 0) && task.taskPermissions[0].D == 1 && !task.matterInfo.archivalMatterReadOnlyFlag">
+                                    <span class="sprite default-delete " tooltip="Delete" tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="pull-right col-md-4 up-level">
+                            <div class="search-overlap" ng-if="task.taskIds.length > 0">
+                                <div>
+                                    <label class="pull-left">Update Status</label>
+                                </div>
+                                <div>
+                                    <ui-select class="full-width" ng-model="task.status" theme="selectize">
+                                        <ui-select-match placeholder="Select status">
+                                            {{$select.selected}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in task.statusList">
+                                            <small>{{item}}</small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div class="col-md-12 padding-0 margin-top10px margin-bottom10px text-center">
+                                        <!--<div>Please confirm the status update for <strong>{{task.taskIds.length}}</strong> task as <strong>{{task.status}}</strong> </div>-->
+                                        <button type="button" class="small-btn btn btn-default btn-styleNone"
+                                            ng-click="task.cancelStatus()">Cancel</button>
+                                        <button type="button" class="small-btn btn btn-default"
+                                            ng-click="task.updateStatus()"
+                                            ng-hide="task.matterInfomation.archivalMatterReadOnlyFlag">Confirm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" data-ng-class="{'dynamic-tasks-position':task.taskIds.length == 1 }">
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Task Name:</div>
+                            <div class="col-md-6 value task-width-dynamic"><strong>{{task.selectedTask.task_name}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Assigned To:</div>
+                            <div class="col-md-5 value">
+                                <strong data-ng-show="task.selectedTask.is_other == '1'">{{task.fullname}} </strong>
+                                <strong data-ng-show="task.selectedTask.is_other == '0'">{{task.fullname}}</strong>
+                            </div>
+    
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Description:</div>
+                            <div class="col-md-8  padding-0">
+                                <span ng-if="task.selectedTask.task_name=='Document Review'"
+                                    ng-bind-html="task.taskDescription"></span>
+                                <pre class="dashboard-tasks-due custom-review" ng-if="task.selectedTask.task_name!='Document Review'">{{task.selectedTask.notes}}</pre>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Assigned on:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.assignment_date |utcImpDateFilter: 'MM-DD-YYYY'}}</strong>
+                            </div>
+                        </div>
+                        <!--US#4813 Assigned By Field added ...start -->
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Assigned By:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.assigned_by.first_name}}
+                                    {{task.selectedTask.assigned_by.last_name}}</strong>
+                            </div>
+                        </div>
+                        <!--...End-->
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Due Date:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.due_date |utcImpDateFilter: 'MM-DD-YYYY'}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Priority:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.priority}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Status:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.status}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Percentage Complete:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.percentage_complete}} %</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 ">Reminder Days Prior to Due Date:</div>
+                            <div class="col-md-9 add-event-popup padding-0">
+                                <div class="col-md-1 checkbox padding-0 margin0"
+                                    data-ng-repeat="reminder_days in task.reminderDaysList">
+                                    <input type="checkbox" data-ng-disabled="true" checklist-value="reminder_days"
+                                        checklist-model="task.selectedTask.reminder_days" /><label>{{reminder_days | replaceTextTask}}</label>
+                                </div>
+                            </div>
+    
+                        </div>
+                        <div class="row-fluid" ng-if="task.selectedTask.custom_reminder">
+                            <div class="col-md-3 ">And/Or Custom Date Reminder:</div>
+                            <div class="col-md-8 value">
+                                <strong>{{task.selectedTask.custom_reminder |utcImpDateFilter: 'MM-DD-YYYY'}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid margin-bottom-0">
+                            <div class="col-md-3 ">
+                                Remind Users:
+                            </div>
+                            <div class="col-md-9 padding-0">
+                                <div ng-repeat="user in task.userSelectedType"
+                                    class="pull-left margin-right-radio padding-0">
+                                    <div class="radio padding-0 mt-0">
+                                        <input class="ml-0" type="radio" data-ng-model="task.userSelectedMode"
+                                            ng-click="task.setUserMode(user)" ng-value="user.id" ng-disabled="true" />
+                                        <label class="custom-line-height">{{user.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                        <div class="row-fluid" ng-show="(task.userSelectedMode == '3')">
+                            <div class="col-md-3 ">
+                            </div>
+                            <div class="pull-left task-width">
+                                <ui-select multiple ng-model="task.selectedTask.remind_users_temp" theme="select2"
+                                    class="width100" ng-disabled="true">
+                                    <ui-select-match placeholder="Enter User">
+                                        {{$item.full_name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="user.user_id as user in task.remindUserList | filter:{full_name:$select.search} | orderBy: 'full_name'">
+                                        <small>
+                                            {{user.full_name}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="task.taskIds.length >= 2">
+                    <!--<div class="col-md-8" style="margin-top: 50px;">
+                    <div data-ng-repeat="item in task.taskIds" class="row">
+                        <div class="row">
+                            <div class="col-md-3 ">Task Name: </div>
+                            <div class="col-md-6 value">{{item.taskname}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 ">Status: </div>
+                            <div class="col-md-6 value">{{item.status}}</div>
+                        </div>
+                    </div>
+                </div>-->
+                    <div class="pull-left col-md-4">
+                        <div class="search-overlap">
+                            <div>
+                                <label class="pull-left">Update Status</label>
+                            </div>
+                            <div>
+                                <ui-select class="full-width" ng-model="task.status" theme="selectize">
+                                    <ui-select-match placeholder="Select status">
+                                        {{$select.selected}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in task.statusList">
+                                        <small>{{item}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div class="col-md-12 padding-0 margin-top10px margin-bottom10px text-center">
+                                    <!-- <div style="margin-bottom: 10px;">Please confirm the status update for <strong>{{task.taskIds.length}}</strong>
+                                        task as <strong>{{task.status}}</strong> </div> -->
+                                    <button type="button" class="small-btn btn btn-default btn-styleNone"
+                                        ng-click="task.cancelStatus()">Cancel</button>
+                                    <button type="button" class="small-btn btn btn-default" ng-click="task.updateStatus()"
+                                        ng-hide="task.matterInfomation.archivalMatterReadOnlyFlag">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+    
+                </div>
+                <!--         US#12912- Task history grid start    -->
+    
+                <div class="row-fluid task-history" ng-if="task.taskIds.length <= 1">
+                    <div class="col-md-3 ">Task History:</div>
+    
+                    <div class="task-event-reminders">
+                        <div class="fl-right"><a data-ng-click="task.exportTaskHistory()"
+                                ng-hide="task.matterInfomation.archivalMatterReadOnlyFlag"><span
+                                    class="sprite default-sharedown sortby-icons" tooltip="Export History"
+                                    tooltip-placement="left"></span></a></div>
+                        <div class="margin-top20px clear-both">&nbsp;</div>
+    
+    
+                        <div class="event-table-scrollable-grid">
+                            <table class="event-table-grid">
+                                <thead class="grey-bg">
+                                    <tr>
+                                        <th class="th-width-19">Last Updated</th>
+                                        <th class="th-width-19">Due date</th>
+                                        <th class="th-width-23">Reason</th>
+                                        <th class="th-width-23">Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="dashboard-tasks-due table">{{tasklist}}
+                                    <tr data-ng-repeat="tasklist in task.taskHistoryData">
+                                        <td class="th-width-19">
+                                            {{tasklist.modified_date | utcDateFilter: 'MM/DD/YYYY'}}
+                                            <br> {{tasklist.modified_date | utcDateFilter: 'hh:mm A'}}
+                                        </td>
+                                        <td class="th-width-19">
+                                            {{tasklist.due_date | utcImpDateFilter:'MM/DD/YYYY'}}
+    
+                                        </td>
+                                        <td class="th-width-23">{{tasklist.reason}}</td>
+                                        <td class="cell custom-wrap">
+                                            {{tasklist.comments}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <div class="text-center margin-top10px clear-both" data-ng-show="task.taskHistoryData.length == 0">
+                            <p>No Task history found...</p>
+                        </div>
+    
+    
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+<footer position-center delayRender='true'>
+    <ul>
+        <li><a href="#/matter-overview/{{task.matterId}}">Overview</a>
+        </li>
+        <li><a href="#/allParties/{{task.matterId}}">All Parties</a>
+        </li>
+        <li><a href="#/matter-details/{{task.matterId}}">Details</a>
+        </li>
+        <li><a href="#/matter-documents/{{task.matterId}}">Documents</a>
+        </li>
+        <li><a href="#/notes/{{task.matterId}}">Notes</a>
+        </li>
+        <li><a href="#/events/{{task.matterId}}">Events </a>
+        </li>
+        <li><a href="javascript:void(0)" class="active-footer">Tasks</a>
+        </li>
+        <li data-ng-show="is_workflow_active"><a href="#/workflow/{{task.matterId}}">Workflow</a>
+        </li>
+        <li><a href="#/timeline/{{task.matterId}}">Timeline</a>
+        </li>
+
+    </ul>
+</footer>
+<div class="compose-wrap" ng-if="task.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :task.compose, '' : !task.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="task.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :task.compose, '' : !task.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

@@ -1,0 +1,80 @@
+<div class="filter-greybox container">
+            <!--<div class="arroowUp"></div>-->
+        	<div class=" border-Bottom">
+                <div  class="container-fluid">
+                    <div class="row-fluid">
+            	<div class="col-md-2">
+                	<div class="checklist">
+                    	<h3 class="subtitle">Substatus</h3>
+                    	<ul>
+                        	<li class="checkbox"><input type="checkbox"><label>Ready for arbitration</label></li>
+                            <li class="checkbox"><input type="checkbox"><label>New arbitration (AR1)</label></li>
+                            <li class="checkbox"><input type="checkbox" ><label>Arbitration filed</label></li>
+                            <li class="checkbox"><input type="checkbox"><label>Arbitration in progress</label></li>
+                            <li class="checkbox"><input type="checkbox" ><label>Arbitration settled</label></li>
+                            <li class="checkbox"><input type="checkbox"><label>Arbitration closed</label></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checklist">
+                    <h3 class="subtitle">Type and Subtype</h3>
+                        <ul>
+							 <li class="checkbox" ng-repeat="item in matterCtrl.viewModel.masterList.type">
+								<input checklist-value="item" checklist-model="matterCtrl.selectionModel.multiFilters.types" type="checkbox" >
+								<label>{{item.name}}</label>
+								<ul>
+									 <li class="checkbox" ng-repeat="subitem in item['sub-type']">
+										<input checklist-value="subitem" checklist-model="matterCtrl.selectionModel.multiFilters.subtypes" type="checkbox">
+										<label>{{subitem.name}}</label>
+									</li>
+                                </ul>								
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checklist">
+                        <h3 class="subtitle">Category</h3>
+						<ul>
+                            <li class="checkbox" ng-repeat="item in matterCtrl.viewModel.masterList.category">
+								<input checklist-value="item" checklist-model="matterCtrl.selectionModel.multiFilters.categories" type="checkbox">
+										<label>{{item.name}}</label>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checklist">
+                        <h3 class="subtitle">Venue</h3>
+                       <ul>
+                            <li class="checkbox" ng-repeat="item in matterCtrl.viewModel.masterList.venues.slice(0,(viewModel.masterList.venues).length/2)">
+								<input checklist-value="item" checklist-model="matterCtrl.selectionModel.multiFilters.venues"  type="checkbox">
+								<label>{{item.name}}</label>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checklist">
+                        <h3 class="subtitle">&nbsp;</h3>
+                        <ul>
+                            <li class="checkbox" ng-repeat="item in matterCtrl.viewModel.masterList.venues.slice((matterCtrl.viewModel.masterList.venues.length)/2,matterCtrl.viewModel.masterList.venues.length)">
+								<input checklist-value="item" checklist-model="matterCtrl.selectionModel.multiFilters.venues" type="checkbox">
+								<label>{{item.name}}</label>
+							</li>
+                        </ul>
+                    </div>
+                    </div></div></div>
+      <div class="container-fluid button-container">
+                    <div class="col-lg-3 col-md-3 pull-right">
+                           <button ng-click="matterCtrl.applyMultiSelectFilter()" type="button" class="btn btn-default pull-right">Apply</button>
+                        <button ng-click="matterCtrl.resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone pull-right">Reset</button>
+                     
+                    </div>
+                </div>
+      
+    </div>
+
+              
+        </div>

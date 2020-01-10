@@ -1,0 +1,79 @@
+<div id="content">
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+        <h2 class="col-md-5 page-title ng-binding">View Document</h2>
+
+        <div class="pull-right">
+            <button data-ng-click="documentData.goOnline(documentData.documentId, documentData.matterId)" ng-if="!documentData.viewable && documentData.officeOnlineStat"
+                class="btn btn-default btn-styleNone">
+                Open Online</button>
+            <button data-ng-click="documentData.gotoPreStat()" class="btn btn-default btn-styleNone">
+                Cancel</button>
+            <button data-ng-show="!documentData.globalDocview" data-ui-sref="intakedocument-edit({'intakeId': {{documentData.matterId}}, 'documentId': {{documentData.documentId}} })"
+                class="btn btn-default">
+                Edit</button>
+            <button data-ng-show="documentData.globalDocview" data-ui-sref="intakeglobaldocument-edit({'intakeId': {{documentData.matterId}}, 'documentId': {{documentData.documentId}} })"
+                class="btn btn-default">
+                Edit</button>
+        </div>
+        <div class="pull-right margin-right10px">
+            <open-doc-intake doc-id="{{[{intake_document_id:documentData.documentId}]}}"></open-doc-intake>
+        </div>
+    </div>
+    <div class="row-fluid margin-top30px">
+        <div class="col-md-6">
+            <div class="row">
+                <button data-ng-click="documentData.generateDocLink();" class="btn btn-default pull-right margin-topbottom10px"
+                    ng-show="documentData.viewable && documentData.singleDoc.viewdocumenturi">Download</button>
+            </div>
+
+            <div class="margin-top10px ipad-document-scroll">
+                <iframe data-ng-show="documentData.viewable && documentData.singleDoc.viewdocumenturi && (documentData.singleDoc.doc_ext == 'pdf'|| documentData.singleDoc.doc_ext =='txt')"
+                    data-ng-src="{{documentData.singleDoc.viewdocumenturi}}" height="380" width="100%"></iframe>
+
+                <div class="image-div" ng-show="documentData.viewable && documentData.singleDoc.viewdocumenturi && (documentData.singleDoc.doc_ext =='png' || documentData.singleDoc.doc_ext =='jpg' || documentData.singleDoc.doc_ext =='jpeg')">
+                    <img ng-show="documentData.viewable && documentData.singleDoc.viewdocumenturi && (documentData.singleDoc.doc_ext =='png' || documentData.singleDoc.doc_ext =='jpg' || documentData.singleDoc.doc_ext =='jpeg')"
+                        data-ng-src="{{documentData.singleDoc.viewdocumenturi}}" width="100%;" />
+                </div>
+                <!-- <iframe ng-show="documentData.viewable && documentData.singleDoc.viewdocumenturi" ng-src="{{documentData.singleDoc.viewdocumenturi}}"
+                    height="500" width="100%"></iframe> -->
+
+            </div>
+            <div class="clearfix"></div>
+            <p class="text-center margin-top30px" ng-show="(!documentData.viewable || documentData.singleDoc.viewdocumenturi=='') && documentData.officeOnlineStat"
+                href="javascipt:void(0)">This document is not viewable. To view this document open it in Office Online.</p>
+            <p class="text-center margin-top30px" ng-show="(!documentData.viewable || documentData.singleDoc.viewdocumenturi=='') && !documentData.officeOnlineStat"
+                href="javascipt:void(0)">This document is not viewable.</p>
+            <p class="text-center">
+                <a ng-show="!documentData.viewable || documentData.singleDoc.viewdocumenturi==''" href="javascipt:void(0)"
+                    data-ng-click="documentData.generateDocLink()">Download from here<span class="sprite default-sharedown adjust-download-document"></span></a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class=" document-upload-form col-md-6 ">
+                    <div class="">
+                        <label>Document Name</label>
+                        <div>{{documentData.singleDoc.doc_name}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="margin-top30px">
+                        <label>Document Category</label>
+                        <div>{{documentData.singleDoc.doc_category.doc_category_name}}</div>
+                    </div>
+                    <div class="clearfix" data-ng-show="documentData.globalDocview"></div>
+                    <div class="margin-top30px">
+                        <label>Intake</label>
+                        <div>{{documentData.singleDoc.intake.intake_name}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="margin-top30px">
+                        <label>Tags</label>
+                        <div>{{documentData.singleDoc.allTags}}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

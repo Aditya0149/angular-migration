@@ -1,0 +1,21 @@
+<ul class="pagination" style="float:right;">
+        <li ng-class="{disabled:pagerCtrl.pager.currentPage === 1}">
+            <a  href="" ng-click="((!(pagerCtrl.pager.currentPage === 1)) && pagerCtrl.setPage(1))" class="ng-binding glyphicon glyphicon-backward"></a>
+        </li>
+        <li ng-class="{disabled:pagerCtrl.pager.currentPage === 1}">
+            <a href="" ng-click="((!(pagerCtrl.pager.currentPage === 1)) && pagerCtrl.setPage(pagerCtrl.pager.currentPage - 1))" class="ng-binding glyphicon glyphicon-chevron-left"></a>
+        </li>              
+        <li ng-class="{disabled:pagerCtrl.pager.currentPage === pagerCtrl.pager.totalPages}">
+            <a  href=""ng-click="((!(pagerCtrl.pager.currentPage === pagerCtrl.pager.totalPages)) && pagerCtrl.setPage(pagerCtrl.pager.currentPage + 1))" class="ng-binding glyphicon glyphicon-chevron-right"></a>
+        </li>
+        <li ng-class="{disabled:pagerCtrl.pager.currentPage === pagerCtrl.pager.totalPages}">
+            <a href="" ng-click="((!(pagerCtrl.pager.currentPage === pagerCtrl.pager.totalPages)) && pagerCtrl.setPage(pagerCtrl.pager.totalPages))" class="ng-binding glyphicon glyphicon-forward"></a>
+        </li>
+        <div ng-show="pagerCtrl.showPageLable" style="margin-top: 40px;">
+            <span style="float:right;">{{pagerCtrl.pager.startIndex + 1}} - {{pagerCtrl.pager.endIndex +1}} of {{pagerCtrl.pager.totalItems}}</span>
+        </div>
+</ul>
+
+
+
+

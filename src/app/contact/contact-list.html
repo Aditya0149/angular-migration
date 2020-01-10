@@ -1,0 +1,443 @@
+<div class="contact-list-wrapper">
+    <div id="report-content">
+        <div ng-if="onMatter" class="clearfix subnav page-title-border-links margin-bottom10px">
+            <div>
+                <ul class="centered-nav">
+                    <li><a data-ng-click="contactList.setSelectedTab('directories')"
+                            data-ng-class="{'activeLink' :contactList.isDirectories}">Directory
+                            View</a></li>
+                    <li><a data-ng-click="contactList.setSelectedTab('roleview')"
+                            data-ng-class="{'activeLink' :contactList.isRoleView}">Role
+                            View</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-ng-if="contactList.isDirectories == true" id="" scrolly="contactList.reachedBottom()"
+            reached-top="contactList.reachedTop()"
+            ng-class="{'cursor-pointer-events-none' :contactList.compose, '' : !contactList.compose}">
+            <div class="row gridSec margin0" id="contactListStyle">
+                <div class="col-md-12 paddingRLR">
+                    <div class="col-md-4 pull-left paddingRLR dropdown create top-icon-set">
+                        <a data-ng-click="contactList.openAddContact()" ng-if=" (contactList.isGraceOver != 0)">
+                            <span class="sprite default-plus" tooltip="Add" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                            data-ng-show="contactList.clxGridOptions.selectedItems.length === 1 && contactList.isGraceOver != 0"
+                            data-ng-click="contactList.openEditContact()">
+                            <span class="sprite default-edit" tooltip="Edit" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                            data-ng-click="contactList.deleteContacts(contactList.clxGridOptions.selectedItems,contactList.filteredMatters)"
+                            data-ng-show="contactList.clxGridOptions.selectedItems.length > 0 && contactList.isGraceOver != 0">
+                            <span class="sprite default-delete" tooltip="Delete" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!--<a data-ng-click="contactList.nodeGraph(contactList.clxGridOptions.selectedItems)"
+                        data-ng-show="contactList.clxGridOptions.selectedItems.length == 1 && contactList.isGraceOver != 0">
+                        <span class="sprite default-node-graph col-md-offset-1"
+                            tooltip="Relationship Graph" tooltip-placement="right">&nbsp;</span>
+                    </a>-->
+                    </div>
+    
+                    <div class="col-md-8 pull-right paddingRLR clearfix">
+                        <ul class="pull-right">
+                            <li>
+                                <div class="search-input form-control-margin-null" data-ng-show="contactList.showSearch">
+                                    <div class="default-searchico sprite"></div>
+                                    <input type="text" focus-me="contactList.showSearch"
+                                        data-ng-model-options="{ debounce: 0 }"
+                                        data-ng-model="contactList.filters.filterText"
+                                        data-ng-change="contactList.filterRetain();" class="form-control">
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="showBy-btns pull-right">
+                            <li class="seperation-filter"></li>
+                            <li>
+                                <a>
+                                    <span data-ng-click="contactList.openFilters();" class="sprite default-filter"
+                                        tooltip="Filter" tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                            <li class="seperation-filter"></li>
+                            <li data-ng-click="contactList.exportContact()"><a class="list"><span
+                                        class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                        tooltip-placement="right"></span></a></li>
+                            <li><a class="list"><span class="sprite default-file sortby-icons"
+                                        data-ng-click="contactList.print()" tooltip="Print"
+                                        tooltip-placement="right"></span></a></li>
+                            <a class="list"></a>
+                            <li class="search-overlap">
+                                <ul data-ng-hide="contactList.showSearch">
+                                    <li><a data-ng-click="contactList.clickSearch($event)"><span
+                                                class="sprite default-searchico-menu " tooltip="Search"
+                                                tooltip-placement="right"></span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+    
+                        <div class="pull-right border">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-right ">
+                        <clx-filter-tags on-filter-cancel="contactList.tagCancelled" tag-list="contactList.tags">
+                        </clx-filter-tags>
+                    </div>
+                </div>
+            </div>
+    
+            <div data-ng-show="contactList.contacts.length > 0">
+                <show-record-count3 more="contactList.getMoreContacts()" all="contactList.getAllContacts()"
+                    displayed="contactList.contacts.length" hide-pager="{{contactList.contacts.length < contactList.total}}"
+                    total="contactList.total"></show-record-count3>
+            </div>
+            <div class="clearfix"></div>
+            <div id="contactupper1"></div>
+    
+            <div data-ng-if="contactList.contacts.length > 0 " class="new-scroll-custom-table">
+                <div class="cell checkbox" data-width="5">
+                </div>
+                <scrollable-table tableid="matternotesgrid1" watch="contactList.contacts" to="#contactupper1"
+                    from="#moreLink">
+                    <table class="table contact-list-fixed-table">
+                        <thead>
+                            <tr>
+                                <th class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-disabled="contactList.filteredMatters.length==0"
+                                            data-ng-model="contactList.clxGridOptions.selectAll"
+                                            data-ng-checked="contactList.allContactSelected()"
+                                            data-ng-click="contactList.selectAllContact(contactList.clxGridOptions.selectAll)" /><label></label>
+                                    </div>
+                                </th>
+                                <th class="contact-list-15">Name</th>
+                                <th class="contact-list-15">Type & Specialty</th>
+                                <th class="contact-list-17">Email ID</th>
+                                <th class="contact-list-22">Phone</th>
+                                <th class="contact-list-11">Fax#</th>
+                                <th class="contact-list-17">Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                            <tr class=" body-row "
+                                data-ng-class="{'selected-grid-row':contactList.isContactSelected(data) || contactList.clickedRow === data.contact_id}"
+                                data-highlight-clicked-row="{{data.contact_id}},contactList.clickedRow"
+                                data-ng-repeat="data in contactList.filteredMatters = ( contactList.contacts | filter:contactList.filters.filterText)">
+                                <td class="contact-list-3">
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-checked="contactList.isContactSelected(data)"
+                                            checklist-model="contactList.clxGridOptions.selectedItems"
+                                            checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td class="contact-list-12">
+                                    <span class="cursor-pointer saved-search-link" data-toggle="name-tooltip"
+                                        tooltip="{{contactList.filteredMatters[$index].name}}" data-placement="bottom" 
+                                        ng-click="contactList.openContactCard(data)">{{contactList.filteredMatters[$index].name}}</span>
+    
+                                </td>
+                                <td>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{contactList.filteredMatters[$index].type}}">{{contactList.filteredMatters[$index].type}}</span><br>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{contactList.filteredMatters[$index].specialty}}">
+                                        {{contactList.filteredMatters[$index].specialty | replaceByDash}}
+                                </td>
+                                <td>
+                                    <span class="default-cursor" tooltip-placement="right" data-toggle="name-tooltip"
+                                        tooltip="{{contactList.filteredMatters[$index].email_ids}}">
+                                        {{contactList.filteredMatters[$index].email_ids}}</span>
+                                </td>
+                                <td>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType1 == 1">
+                                        <span class="sprite default-contactPhone-new icon--alignment"></span>
+                                        <span class="default-cursor contact-list-icons" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].phone1}}">{{contactList.filteredMatters[$index].phone1}}</span>
+                                    </div>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType1 == 2">
+                                        <span class="sprite default-contactPhone-home-new icon--alignment"></span>
+                                        <span class="default-cursor contact-list-icons" data-toggle="name-tooltip" tooltip="{{contactList.filteredMatters[$index].phone1}}">
+                                            {{contactList.filteredMatters[$index].phone1}}</span>
+                                    </div>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType1 == 3">
+                                        <span class="sprite default-contactPhone-work-new icon--alignment"></span>
+                                        <span class="default-cursor contact-list-icons" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].phone1}}">{{contactList.filteredMatters[$index].phone1}}</span>
+                                    </div>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType2 == 3">
+                                        <span class="sprite default-contactPhone-work-new icon--alignment"></span><span class="default-cursor contact-list-icons"
+                                            data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].phone2}}">{{contactList.filteredMatters[$index].phone2}}</span>
+                                    </div>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType2 == 1"><span class="sprite default-contactPhone-new icon--alignment"></span><span
+                                            class="default-cursor contact-list-icons" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].phone2}}">{{contactList.filteredMatters[$index].phone2}}</span>
+                                    </div>
+                                    <div class="margin-top5px" ng-show="contactList.filteredMatters[$index].phoneType2 == 2">
+                                        <span class="sprite default-contactPhone-home-new icon--alignment"></span><span class="default-cursor contact-list-icons"
+                                            data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].phone2}}">{{contactList.filteredMatters[$index].phone2}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{contactList.filteredMatters[$index].fax_numbers}}">{{contactList.filteredMatters[$index].fax_numbers}}</span>
+                                </td>
+                                <td>
+                                    <div class="home-greed">
+                                        <span
+                                            ng-show="contactList.filteredMatters[$index].address[0].address_type == 'Home'"
+                                            class="sprite default-contactPhone-home-new icon--alignment"></span>
+                                        <span
+                                            ng-show="contactList.filteredMatters[$index].address[0].address_type == 'Work'"
+                                            class="sprite default-contactPhone-work-new icon--alignment"></span>
+                                        <span
+                                            ng-show="contactList.filteredMatters[$index].address[0].address_type == 'Other'"
+                                            class="sprite default-location-new icon--alignment"></span>
+                                    </div>
+                                    <div class="contact-list-custom-wrapper">
+                                        <div class="default-cursor" tooltip-placement="left" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].address[0].street}}">
+                                            {{contactList.filteredMatters[$index].address[0].street}}</div>
+                                        <div class="default-cursor" tooltip-placement="left" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].address[0].city}}">
+                                            {{contactList.filteredMatters[$index].address[0].city}}</div>
+                                        <div class="default-cursor" tooltip-placement="left" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].address[0].state}}">
+                                            {{contactList.filteredMatters[$index].address[0].state}}</div>
+                                        <div class="default-cursor" tooltip-placement="left" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].address[0].zip_code}}">
+                                            {{contactList.filteredMatters[$index].address[0].zip_code}}</div>
+                                        <div class="default-cursor" tooltip-placement="left" data-toggle="name-tooltip"
+                                            tooltip="{{contactList.filteredMatters[$index].address[0].country}}">
+                                            {{contactList.filteredMatters[$index].address[0].country}}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+            </div>
+    
+    
+            <div id="moreLink" class="text-right morelink-box">
+                <div data-ng-show=" contactList.contacts.length < contactList.total">
+                    <div data-ng-hide="contactList.contacts.length == 0 || contactList.isAll">
+                        <a data-ng-click="contactList.getMoreContacts()">More</a>
+                        <span class="paddingLR-10px">|</span>
+                        <a data-ng-click="contactList.getAllContacts()">All</a>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-show="contactList.contacts.length == 0" class="text-center">
+                <span>No data found</span>
+            </div>
+        </div>
+    
+    
+    
+        <div>
+            <div class="col-md-12 paddingRLR" data-ng-if="contactList.isRoleView == true">
+                <div class="col-md-8 pull-right paddingRLR clearfix">
+                    <ul class="pull-right">
+                        <li>
+                            <!--<div class="search-input form-control-margin-null" data-ng-show="contactList.showSearchForRole">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="contactList.showSearchForRole" data-ng-model-options="{ debounce: 0 }" data-ng-model="contactList.filters.filterTextForRole"
+                                    data-ng-change="contactList.filterRetainForRole();" class="form-control">
+                            </div>-->
+                        </li>
+                    </ul>
+                    <ul class="showBy-btns pull-right">
+                        <li class="seperation-filter"></li>
+                        <li>
+                            <a>
+                                <span data-ng-click="contactList.openFilterForRole();" class="sprite default-filter"
+                                    tooltip="Filter" tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter"></li>
+                        <li class="search-overlap">
+                            <ul>
+                                <li class="search-overlap">
+                                    <ul>
+                                        <li><a data-ng-click="contactList.exportForRole()"
+                                                ng-class="{'linkDisabled':contactList.updatedData.length == 0}"><span
+                                                    class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                                    tooltip-placement="right"></span></a></li>
+                                        <li><a data-ng-click="contactList.printRoleView(contactList.contactRoleGrid.selectedItems)"
+                                                ng-class="{'linkDisabled':contactList.updatedData.length == 0}"><span
+                                                    class="sprite default-file sortby-icons" tooltip="Print"
+                                                    tooltip-placement="right"></span></a></li>
+                                        <!--<li><a data-ng-click="contactList.search($event)"><span class="sprite default-searchico-menu " tooltip="Search" tooltip-placement="right"></span></a></li>-->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+    
+                    <div class="pull-right border">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row col-md-12">
+                    <div class="col-md-12 pull-right paddingRLR">
+                        <clx-filter-tags on-filter-cancel="contactList.tagCancelForRoleView" class="pull-right"
+                            tag-list="contactList.tagList"></clx-filter-tags>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="text-center"
+                        data-ng-show="contactList.roleDataCallOnGoing == false && contactList.updatedData.length == 0 && !contactList.noRoleData">
+                        To
+                        view specific roles, you must first apply a filter.</div>
+                    <div class="text-center"
+                        data-ng-show="contactList.roleDataCallOnGoing == false && contactList.noRoleData">
+                        No
+                        data for applied filter</div>
+                </div>
+            </div>
+        </div>
+    
+        <div data-ng-if="contactList.isRoleView == true" class="report-responsive mr-75" 
+            ng-class="{'cursor-pointer-events-none' :contactList.compose, '' : !contactList.compose}">
+            <div data-ng-show="contactList.allContacts.length > 0">
+                <show-record-count3 more="contactList.getMoreRoleContacts()" all="contactList.getAllRoleContacts('all')"
+                    displayed="contactList.allContacts.length"
+                    hide-pager="{{contactList.allContacts.length < contactList.totalCount}}" total="contactList.totalCount">
+                </show-record-count3>
+            </div>
+            <div>
+                <div>
+                    <div class="row header-row" data-ng-show="contactList.updatedData.length > 0">
+                        <div class="cell" data-width="04">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                    data-ng-click="contactList.selectAllRoleContact(contactList.contactRoleGrid.selectAll)"
+                                    data-ng-model="contactList.contactRoleGrid.selectAll"
+                                    data-ng-checked="contactList.allContactRoleSelected()" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="cell" data-width="15">Contact Name</div>
+                        <div class="cell" data-width="15">Type & Specialty</div>
+                        <div class="cell" data-width="15">Matter Name</div>
+                        <div class="cell" data-width="15">Role</div>
+                        <div class="cell" data-width="10">Status</div>
+                        <div class="cell" data-width="25">Sub Status</div>
+                    </div>
+                </div>
+                <div>
+                    <div ng-show="contact.isFirst" class="row body-row contact-sub-border"
+                        data-ng-repeat-start="contact in contactList.filteredRoleRec = ( contactList.updatedData | filter:contactList.filters.filterTextForRole)"
+                        data-ng-class="{'selected-grid-row':contactList.isContactRoleSelected(contact)==true}" grid-size>
+                        <div class="cell" data-width="04">
+                            <div ng-show={{contact.isFirst}} class="checkbox">
+                                <input type="checkbox" data-ng-checked="contactList.isContactRoleSelected(contact)"
+                                    checklist-model="contactList.contactRoleGrid.selectedItems" checklist-value="contact" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div class="cursor-pointer padding-top-10px"
+                                data-ng-click="contactList.openContactCard(contact)">
+                                <strong class="saved-search-link">{{contact.contact_name}}</strong>
+                            </div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div class="padding-top-10px">{{contact.type}}</div>
+                            <div class="pt-2">{{contact.specialty ? contact.specialty : '-'}}</div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div class="padding-top-10px">{{contact.matter_name}}</div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div class="padding-top-10px">{{contact.role}}</div>
+                        </div>
+                        <div class="cell" data-width="10">
+                            <div class="padding-top-10px">{{contact.status}}</div>
+                        </div>
+                        <div class="cell padding-top-10px" data-width="25">
+                            <div class="contact-sub-status">
+                                {{contact.sub_status}}
+                            </div>
+                            <div ng-show="contact.hasSubRecords" class="search-overlap search-overlap-inline">
+                                <ul class="showBy-btns pull-right">
+                                    <li class="showBy-btns-li" data-ng-click="contactList.toggleAccordionGroup(contact)">
+                                        <a class="showBy-btns-li-a" ng-hide="contact.open">
+                                            {{contact.totalRecords}}
+                                            More
+                                        </a>
+                                        <a>
+                                            <i class="pull-right glyphicon showBy-btns-glyphicon"
+                                                ng-class="{'default-upward-arrow sprite': contact.open, 'default-downward-arrow sprite': !contact.open}"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+    
+                    <div ng-show="contact.isFirst == false && contact.open" class="row body-row contact-sub-border-none"
+                        data-ng-repeat-end="contact in contactList.filteredRoleRec = ( contactList.updatedData | filter:contactList.filters.filterTextForRole)"
+                        grid-size>
+    
+                        <div class="cell" data-width="04">
+    
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div class="cursor-pointer" data-ng-click="contactList.openContactCard(contact)">
+                                <strong class="saved-search-link">{{contact.contact_name}}</strong>
+                            </div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div>{{contact.type}}</div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div>{{contact.matter_name}}</div>
+                        </div>
+                        <div class="cell" data-width="15">
+                            <div>{{contact.role}}</div>
+                        </div>
+                        <div class="cell" data-width="10">
+                            <div>{{contact.status}}</div>
+                        </div>
+                        <div class="cell" data-width="25">
+                            <div class="contact-sub-status">{{contact.sub_status}}</div>
+    
+                        </div>
+    
+    
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div id="moreLink" class="row margin-top20px text-center morelink-outer">
+                <div data-ng-show="contactList.allContacts.length < contactList.totalCount">
+                    <div data-ng-show="!contactList.isAllRole" class="col-md-12 relative-container">
+                        <div data-ng-hide="contactList.allContacts.length == 0" class="text-center pull-left w-94">
+                            <a data-ng-click="contactList.getMoreRoleContacts()">More</a>
+                            <span class="paddingLR-10px">|</span>
+                            <a data-ng-click="contactList.getAllRoleContacts('all')">All</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="compose-wrap" ng-if="contactList.firmData.API === 'PHP'"
+            data-ng-controller="MailboxController as mailboxCtrl"
+            ng-class="{'composeShow' :contactList.compose, '' : !contactList.compose}">
+            <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+        </div>
+        <div class="compose-wrap" ng-if="contactList.firmData.API === 'JAVA'"
+            data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+            ng-class="{'composeShow' :contactList.compose, '' : !contactList.compose}">
+            <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+        </div>
+        </div>
+</div>

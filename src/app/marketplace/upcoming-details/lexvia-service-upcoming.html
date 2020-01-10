@@ -1,0 +1,61 @@
+<div class="marketplace-details-main">
+	<div class="ng-scope row">
+		<div class="container col-md-12 main-top">
+			<div class="pull-left back-btn-block">
+				<a href="#/marketplace/services" data-ng-click="servicesCtrl.clearStorage()" class="marketplace-back-btn"></a>
+			</div>
+			<div class="pull-left left-img">
+                <img src="styles/images/marketplace-images/icon/lexvia.png">
+            </div>
+			<div class="col-md-7 marketplace-details-block border-right">
+				<div class="title">Lexvia Services</div>
+				<div class="text col-md-10 padding-0">Increase your firm’s productivity by outsourcing your legal pleadings and processing of legal documents. Take on seamless paralegal support for financing cases, handling paperwork, dealing with overworked or under-utilized staff and even following up with unresponsive clients.</div>
+			</div>
+			<div class="col-md-2 padding-right-0 marketplace-details-block">
+				<div class="text clear-both">
+                    <!--<b class="pull-left" style="color: #1bb8b2;">Coming Soon</b>-->
+                    <div class="margin-top30px">
+                        <button class="btn btn-default" ng-disabled="servicesCtrl.dissableSubscribe"  ng-if="servicesCtrl.isLexviaServices==0" ng-click="servicesCtrl.save(true)">SUBSCRIBE</button>
+				        <button class="btn btn-default" ng-disabled="servicesCtrl.dissableSubscribe"  ng-if="servicesCtrl.isLexviaServices==1" ng-click="servicesCtrl.save(false)">UNSUBSCRIBE</button>
+                    </div>
+                </div>   
+                <!--<div class="text margin-top15px">
+					<b>Whats New</b><br>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+				</div>-->
+			</div>
+			
+		</div>
+	</div>
+	 <div id="report-content">
+		<div class="marketplace-details-vedeo-block col-md-9 col-centered">
+			<carousel interval="servicesCtrl.myInterval">
+				<slide ng-repeat="slide in servicesCtrl.slides" active="slide.active">
+					<img ng-src="{{slide.image}}">
+					<div class="carousel-caption">
+					</div>
+				</slide>
+			</carousel>
+		</div>
+	</div> 
+</div>
+<!--<div data-ng-if="upcompingAppsCtrl.showapplications">
+	<div data-ng-controller='upcompingAppsCtrl as upcompingAppsCtrl'
+	    data-ng-include="'app/marketplace/applications/applications.html'">
+	</div>
+	</div>-->
+
+<footer position-center>
+	<ul>
+		<li>
+			<a href="#/marketplace">Applications</a>
+		</li>
+		<li>
+			<a href="#/marketplace/services" class="active-footer">Services</a>
+		</li>
+		<!-- <li>
+			<a href="#/marketplace/upcoming">Upcoming</a>
+		</li> -->
+
+	</ul>
+</footer>

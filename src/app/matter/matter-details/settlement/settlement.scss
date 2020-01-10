@@ -1,0 +1,192 @@
+.settlement-calculator-main {
+  .panel-body {
+    padding: 0 15px !important;
+  }
+  .panel-default {
+    .panel-title {
+      .sprite {
+        margin: 5px 0 0 0 !important;
+      }
+    }
+  }
+  .scrollArea {
+    table {
+      th {
+        .box {
+          @include set_background_color($color_mystic);
+        }
+      }
+    }
+  }
+  .scrollableContainer {
+    .headerSpacer {
+      @include set_background_color($color_mystic);
+    }
+  }
+}
+.container-block {
+  border-bottom: 1px solid $color_mystic;
+  padding-bottom: 15px;
+}
+.settlement-calculator-right-block {
+  padding-right: 0px;
+  @include set_background_color($color_aqua_haze);
+  padding: 10px;
+  display: inline-block;
+}
+.calc-title {
+  padding: 10px 15px 18px 15px;
+  border-bottom: 1px solid $color_light_grayish_blue;
+}
+.insurance-details-popup {
+  margin: 0 15px;
+  top: -150px;
+  font-size: 12px;
+  width: 90%;
+  padding: 10px 0;
+  overflow: inherit;
+  z-index: 9;
+  &:before {
+    position: absolute;
+    bottom: -7px;
+    left: 10px !important;
+    display: inline-block;
+    border-right: 7px solid transparent;
+    border-top: 7px solid $color_dark_grayish_red;
+    border-left: 7px solid transparent;
+    border-bottom-color: $color_red;
+    content: "";
+    width: 10px;
+  }
+}
+.settlement-pagination {
+  border-top: 1px solid $color_light_grayish_blue;
+  padding-top: 10px;
+  margin-top: 10px;
+  text-align: center;
+  a {
+    font-size: 18px;
+  }
+  span {
+    position: relative;
+    top: -1px;
+    margin: 0 10px;
+  }
+  .all-first {
+    background-position: -54px -824px;
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+  }
+  .first {
+    background-position: -44px -824px;
+    height: 12px;
+    width: 7px;
+    display: inline-block;
+  }
+  .all-last {
+    background-position: -54px -855px;
+    height: 12px;
+    width: 12px;
+    display: inline-block;
+  }
+  .last {
+    background-position: -44px -855px;
+    height: 12px;
+    width: 7px;
+    display: inline-block;
+  }
+}
+.settlement-info {
+  display: inline-block;
+  width: 100%;
+  padding: 0px 0 0px 0;
+  margin-bottom: -5px;
+  label {
+    word-wrap: break-word;
+  }
+  .last-updated {
+    color: $color_gray_dark;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  textarea {
+    @include set_background_color($color_white);
+  }
+}
+.info-edit {
+  @include set_background_color($color_aqua_haze_2);
+  border: solid 1px rgba(177, 190, 199, 0.4);
+  padding-bottom: 10px;
+}
+.settlement-top-info {
+  border-bottom: 1px solid $color_mystic;
+  margin-bottom: 10px;
+  .total-amount-main {
+    margin-bottom: 0;
+    padding: 15px 15px;
+    clear: none;
+  }
+}
+.settlement-selected-grid-row {
+  @include set_background_color($color_early_dawn);
+  textarea {
+    @include set_background_color($color_early_dawn);
+  }
+}
+.settlement-right-btn-block {
+  float: right;
+  margin-top: 13px;
+  height: 30px;
+}
+.settlement-info-first-entry {
+  border-top: 1px solid $color_mystic !important;
+  margin-top: 10px;
+}
+.insurance-details-dropdown-set {
+  margin: -200px -6px 0 0 !important;
+  left: 12px;
+  width: max-content !important;
+  li {
+    padding: 0 10px;
+    label {
+      color: $color_tundora;
+      font-size: 12px;
+    }
+    span {
+      display: block;
+    }
+  }
+  &:before {
+    bottom: -7px;
+    top: inherit;
+    border-top: 7px solid $color_gray_dark;
+    border-bottom: 0px;
+  }
+  &:after {
+    display: none !important;
+  }
+}
+a.insurance-details-open {
+  &:hover {
+    ul.profile-custom-width {
+      display: block !important;
+      position: relative !important;
+    }
+  }
+}
+.edit-recovery-popup-top {
+  .modal-dialog {
+    top: -26.5% !important;
+  }
+}
+
+.matter-details-wrapper {
+  .report-content-padding {
+    padding: 0 20px !important;
+  }
+  .top-row-style {
+    width: calc(100% - 95px) !important;
+    padding: 0 0 0 20px;
+  }
+}

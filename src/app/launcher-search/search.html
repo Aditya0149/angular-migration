@@ -1,0 +1,458 @@
+<div class="launcher-search-wrapper">
+    <div class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" data-ng-click="search.resetPage()" href="javascript:void(0)">Reset
+            </a>
+            <!-- <a class="paddingLR-10px" data-ng-click="search.resetPage('Close');launcher.closeSearch();" href="javascript:void(0)">Close
+            </a> -->
+            <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer();" href="javascript:void(0)">Close
+            </a>
+        </div>
+    </div>
+    <!-- <div class="content-class-popup long-tooltip" scrolly="search.reachedBottom()" reached-top="search.reachedTop()"> -->
+    <div class="content-class-popup long-tooltip">
+        <form name="searchForm">
+            <div>
+                <div class="col-md-12 input-group page-title-border-links margin0">
+                    <div class="subnav pull-left ">
+                        <ul>
+                            <li ng-if="!onIntake">
+                                <a href="javascript:void(0)"
+                                    data-ng-click="search.activeTab = 'Matters'; search.searchParam = 'matters'"
+                                    ng-class="{' activeLink': search.activeTab == 'Matters'}">Matters</a>
+                            </li>
+                            <li ng-if="!onMatter && isIntakeActiveUI && isUserIntakeActive">
+                                <a href="javascript:void(0)"
+                                    data-ng-click="search.activeTab = 'Intakes'; search.searchParam = 'intakes'"
+                                    ng-class="{' activeLink': search.activeTab == 'Intakes'}">Intakes</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"
+                                    data-ng-click="search.activeTab = 'Contacts'; search.searchParam = 'contacts'"
+                                    ng-class="{' activeLink': search.activeTab == 'Contacts'}">Contacts</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"
+                                    data-ng-click="search.activeTab = 'Documents'; search.searchParam = 'documents'"
+                                    ng-class="{' activeLink': search.activeTab == 'Documents'}">Documents</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"
+                                    data-ng-click="search.activeTab = 'TaskAndEvents'; search.searchParam = 'task_event'"
+                                    ng-class="{' activeLink': search.activeTab == 'TaskAndEvents'}">Tasks & Events</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    
+        <div data-ng-show="search.activeTab == 'Matters'">
+            <div class="col-md-12">
+                <div class="row padding-top-10px">
+                    <form name="searchForm">
+                        <div class="col-md-7">
+                            <input focus-me="search.activeTab == 'Matters'" class="form-control full-width"
+                                data-ng-model="search.searchString" placeholder="Type Here" type="text">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                ng-disabled="search.searchString == '' || search.searchString == undefined"
+                                data-ng-click="search.getSearchedData(search.searchString,search.searchParam)"
+                                class="btn btn-default global-search-btn" aria-hidden="true">
+                                Search</button>
+                        </div>
+                    </form>
+                    <div class="col-md-2 margin-top7px">
+                        <!-- <strong>{{search.matters.length || 0}} </strong>Matters</div> -->
+    
+                        <span data-ng-show="(search.matters.length == 1 || search.matters.length == 0) && search.showSearchResultsMatter"><strong>{{search.matters.length}}</strong> Matter</span>
+                        <span data-ng-show="search.matters.length > 1 && search.showSearchResultsMatter"><strong>{{search.matters.length}}</strong> Matters</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px ">
+                <div class="checkbox margin-top20px">
+                    <input type="checkbox" data-ng-model="search.includeArchived" data-ng-true-value="1"
+                        data-ng-false-value="0" />
+                    <label class="custom-label">
+                        Include Archived Matters
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3 margin-top10px ellipsis-nowrap"
+                data-ng-repeat="matter in search.matters | limitTo:search.limit track by matter.matter_id ">
+                <div class="">
+                    <div class="col-md-1 padding-left-0">
+                        <span ng-show="matter.is_archived == 1" class="default-archive-small sprite"
+                            tooltip="Archived Matter" tooltip-append-to-body="true" tooltip-placement="top"></span>
+                    </div>
+                    <div class="col-md-11 padding-right-0 search-word-ellipsis padding-left-10px custom-width">
+    
+                        <strong>
+                            <a href="#/matter-overview/{{matter.matter_id}}" tooltip="{{matter.matter_name}}"
+                                tooltip-append-to-body="true"
+                                tooltip-placement="top-left">{{matter.matter_name|replaceByDash}}</a>
+                        </strong>
+                        <br />
+                        <span tooltip="{{matter.file_number}}" tooltip-append-to-body="true"
+                            tooltip-placement="top-left">File #
+                            :{{matter.file_number|replaceByDash}}</span>
+                        <br />
+                        <span tooltip="{{matter.index_number}}" tooltip-append-to-body="true"
+                            tooltip-placement="top-left">Index/Docket#
+                            :{{matter.index_number|replaceByDash}}</span>
+                        <br />
+                        <span tooltip="{{search.getStatusString(matter)}}" tooltip-append-to-body="true"
+                            tooltip-placement="top-left">{{search.getStatusString(matter)}}</span>
+                    </div>
+                    <div class="flexCont padding-top-10px clear-both"></div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px text-center" data-ng-show="search.matters.length == 0 && search.showSearchResultsMatter">
+                No matters found...
+            </div>
+        </div>
+        <div data-ng-show="search.activeTab == 'Intakes'">
+            <div class="col-md-12">
+                <div class="row padding-top-10px">
+                    <form name="searchForm">
+                        <div class="col-md-7">
+                            <input focus-me="search.activeTab == 'Intakes'" class="form-control full-width"
+                                data-ng-model="search.searchString" placeholder="Type Here" type="text">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                ng-disabled="search.searchString == '' || search.searchString == undefined"
+                                data-ng-click="search.getSearchedData(search.searchString,search.searchParam)"
+                                class="btn btn-default global-search-btn" aria-hidden="true">
+                                Search</button>
+                        </div>
+                    </form>
+                    <div class="col-md-2 margin-top7px">
+                        <!-- <strong>{{search.intakes.length || 0}} </strong>Intakes</div> -->
+                        
+                        <span data-ng-show="(search.intakes.length == 1 || search.intakes.length == 0) && search.showSearchResultsIntake"><strong>{{search.intakes.length}}</strong> Intake</span>
+                        <span data-ng-show="search.intakes.length > 1 && search.showSearchResultsIntake"><strong>{{search.intakes.length}}</strong> Intakes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 margin-top10px ellipsis-nowrap"
+                data-ng-repeat="intake in search.intakes | limitTo:search.limit track by intake.intake_id ">
+                <strong>
+                    <a tooltip="{{intake.intake_name}}" tooltip-append-to-body="true" tooltip-placement="top-left"
+                        href="#/intake/intake-overview/{{intake.intake_id}}">{{intake.intake_name|replaceByDash}}</a>
+                </strong>
+                <br />
+                <span tooltip="{{intake.intake_status_name}}" tooltip-append-to-body="true"
+                    tooltip-placement="top-left">Status
+                    :{{intake.intake_status_name|replaceByDash}}</span>
+                <br />
+                <span tooltip="{{intake.intake_sub_status_name}}" tooltip-append-to-body="true"
+                    tooltip-placement="top-left">Sub-status
+                    :{{intake.intake_sub_status_name|replaceByDash}}</span>
+                <br />
+                <div class="flexCont margin-top10px"></div>
+            </div>
+            <div class="col-md-12 margin-top10px text-center" data-ng-show="search.intakes.length == 0 && search.showSearchResultsIntake">
+                No intakes found...
+            </div>
+        </div>
+        <div data-ng-show="search.activeTab == 'Documents'">
+            <div class="col-md-12">
+                <div class="row padding-top-10px">
+                    <form name="searchForm">
+                        <div class="col-md-7">
+                            <input focus-me="search.activeTab == 'Documents'" class="form-control full-width"
+                                data-ng-model="search.searchString" placeholder="Type Here" type="text">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                ng-disabled="search.searchString == '' || search.searchString == undefined"
+                                data-ng-click="search.getSearchedData(search.searchString,search.searchParam)"
+                                class="btn btn-default global-search-btn" aria-hidden="true">
+                                Search</button>
+                        </div>
+                    </form>
+                    <div class="col-md-2 margin-top7px">
+                        <!-- <strong>{{search.documents.length || 0}} </strong>Documents</div> -->
+                        
+                        
+                        <span data-ng-if="(search.documents.length == 1 || search.documents.length == 0) && search.showSearchResultsDocument"><strong>{{search.documents.length}}</strong> Document</span>
+                        <span data-ng-if="search.documents.length > 1 && search.showSearchResultsDocument"><strong>{{search.documents.length}}</strong> Documents</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px " ng-if="!onIntake">
+                <div class="checkbox margin-top20px">
+                    <input type="checkbox" data-ng-model="search.includeArchived" data-ng-true-value="1"
+                        data-ng-false-value="0" />
+                    <label class="custom-label">
+                        Include Archived Matter Documents
+                    </label>
+                </div>
+            </div>
+            <div data-ng-repeat="doc in search.documents | limitTo:search.limit"
+                class="col-md-3 margin-top10px ellipsis-nowrap padding-0 data-box">
+                <div>
+                    <div class="col-md-11 padding-0 search-word-ellipsis">
+                        <div class="">
+                            <div class="col-md-1 padding-left-0">
+                                <div ng-if="onLauncher && isIntakeActiveUI && isUserIntakeActive" class="col-md-1 padding-0 "
+                                    tooltip="{{doc.is_Matter == 0 ? 'Intake Document' : 'Matter Document'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top"
+                                    ng-class="{'search-intake-icon' :doc.is_Matter == 0, 'search-matter-icon' : doc.is_Matter == 1}">
+                                </div>
+                                <div class="col-md-1 padding-0 bl-0">
+                                    <span class="default-archive-small sprite margin-top10px" tooltip="Archived Matter"
+                                        tooltip-append-to-body="true" tooltip-placement="top" ng-show="doc.is_archived == 1">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-11 padding-right-0 search-word-ellipsis padding-left-10px custom-width">
+                                <strong>
+                                    <a href="javascript:void(0)" tooltip="{{doc.document_name}}"
+                                        tooltip-append-to-body="true" tooltip-placement="top-left"
+                                        data-ng-click="search.goToDocuments(doc)">{{doc.document_name|replaceByDash}}</a>
+                                </strong>
+                                <br />
+                                <span tooltip="{{doc.name}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">{{doc.name|replaceByDash}}</span>
+                                <br />
+                                <span
+                                    tooltip="{{doc.created_by_firstname | replaceByDash}} {{''}} {{doc.created_by_lastname | replaceByDash}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-left">Created by
+                                    :{{doc.created_by_firstname|replaceByDash}} {{doc.created_by_lastname|replaceByDash}}
+                                </span>
+                                <br />
+                                <span
+                                    tooltip="{{doc.lastupdated_by_firstname | replaceByDash}} {{''}} {{doc.lastupdated_by_lastname | replaceByDash}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-left">Last Updated
+                                    :{{doc.lastupdated_by_firstname|replaceByDash}}
+                                    {{doc.lastupdated_by_lastname|replaceByDash}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px text-center"
+                data-ng-show="search.documents.length == 0 && search.showSearchResultsDocument">
+                No documents found...
+            </div>
+        </div>
+        <div data-ng-show="search.activeTab == 'Contacts'">
+            <div class="col-md-12">
+                <div class="row padding-top-10px">
+                    <form name="searchForm">
+                        <div class="col-md-7">
+                            <input focus-me="search.activeTab == 'Contacts'" class="form-control full-width"
+                                data-ng-model="search.searchString" placeholder="Type Here" type="text">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                ng-disabled="search.searchString == '' || search.searchString == undefined"
+                                data-ng-click="search.getSearchedData(search.searchString,search.searchParam)"
+                                class="btn btn-default global-search-btn" aria-hidden="true">
+                                Search</button>
+                        </div>
+                    </form>
+                    <div class="col-md-2 margin-top7px">
+                        <!-- <strong>{{search.contacts.length || 0}} </strong>Contacts</div> -->
+    
+                        <span data-ng-if="(search.contacts.length == 1 || search.contacts.length == 0) && search.showSearchResultsContact"><strong>{{search.contacts.length}}</strong> Contact</span>
+                        <span data-ng-if="search.contacts.length > 1 && search.showSearchResultsContact"><strong>{{search.contacts.length}}</strong> Contacts</span>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-repeat="contact in search.contacts | limitTo:search.limit "
+                class="margin-top10px col-md-3 ellipsis-nowrap" ng-show="!search.azureCallFlag">
+                <strong>
+                    <a class="search-word-ellipsis" href="javascript:void(0)"
+                        tooltip="{{contact.firstname}} {{' '}} {{contact.lastname}}" tooltip-append-to-body="true"
+                        tooltip-placement="top-left" data-ng-click="search.goToContact(contact)">{{contact.firstname}}
+                        {{contact.lastname}}</a>
+                </strong>
+                <br />
+                <span tooltip="{{contact.emailid}}" tooltip-append-to-body="true"
+                    tooltip-placement="top-left">{{contact.emailid|replaceByDash}}</span>
+                <br />
+                <span tooltip="{{contact.phones_phone_number}}" tooltip-append-to-body="true"
+                    tooltip-placement="top-left">{{contact.phones_phone_number|replaceByDash}}</span>
+                <div class="flexCont margin-top10px"></div>
+            </div>
+    
+            <div data-ng-repeat="contact in search.contacts " class="margin-top10px col-md-3 ellipsis-nowrap"
+                ng-show="search.azureCallFlag">
+                <strong>
+                    <a class="search-word-ellipsis" href="javascript:void(0)" tooltip="{{contact.full_name}}"
+                        tooltip-append-to-body="true" tooltip-placement="top-left"
+                        data-ng-click="search.goToContact(contact)">{{contact.full_name}}</a>
+                </strong>
+                <br />
+                <span tooltip="{{contact.emailid}}" tooltip-append-to-body="true" tooltip-placement="top-left">{{contact.emailid
+                    | replaceByDash}}</span>
+                <br />
+                <span tooltip="{{contact.phones_phone_number}}" tooltip-append-to-body="true" tooltip-placement="top-left">{{contact.phones_phone_number
+                    |replaceByDash}}</span>
+                <div class="flexCont margin-top10px"></div>
+            </div>
+            <div class="col-md-12 margin-top10px text-center"
+                data-ng-show="search.contacts.length == 0 && search.showSearchResultsContact">
+                No contacts found...
+            </div>
+        </div>
+        <div data-ng-show="search.activeTab == 'TaskAndEvents'">
+            <div class="col-md-12">
+                <div class="row padding-top-10px">
+                    <form name="searchForm">
+                        <div class="col-md-7">
+                            <input focus-me="search.activeTab == 'TaskAndEvents'" class="form-control full-width"
+                                data-ng-model="search.searchString" placeholder="Type Here" type="text">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit"
+                                ng-disabled="search.searchString == '' || search.searchString == undefined"
+                                data-ng-click="search.getSearchedData(search.searchString,search.searchParam)"
+                                class="btn btn-default global-search-btn" aria-hidden="true">
+                                Search</button>
+                        </div>
+                    </form>
+                    <div class="col-md-3 margin-top7px" data-ng-if="search.showSearchResultsTaskAndEvent">
+                        <!-- <strong>{{search.tasks.length || 0}} </strong>Tasks and
+                        <strong>{{search.events.length || 0}} </strong>Events</div> -->
+    
+                        
+                        <span data-ng-show="(search.tasks.length == 0 || search.tasks.length == 1) && search.showSearchResultsTaskAndEvent"><strong>{{search.tasks.length}}</strong> Task and</span>
+                        <span data-ng-show="search.tasks.length > 1 && search.showSearchResultsTaskAndEvent"><strong>{{search.tasks.length}}</strong> Tasks and</span>
+    
+                        
+                        <span data-ng-show="(search.events.length == 0 || search.events.length == 1) && search.showSearchResultsTaskAndEvent"><strong>{{search.events.length}}</strong> Event</span>
+                        <span data-ng-show="search.events.length > 1 && search.showSearchResultsTaskAndEvent"><strong>{{search.events.length}}</strong> Events</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px " ng-if="!onIntake">
+                <div class="checkbox margin-top20px">
+                    <input type="checkbox" data-ng-model="search.includeArchived" data-ng-true-value="1"
+                        data-ng-false-value="0" />
+                    <label class="custom-label">
+                        Include Archived Matter Tasks & Events
+                    </label>
+                </div>
+            </div>
+            <div data-ng-repeat="task in search.tasks | limitTo:(search.limit/2) "
+                class="col-md-3 margin-top10px ellipsis-nowrap padding-0 data-box">
+                <div>
+    
+                    <div class="col-md-11 padding-0 search-word-ellipsis">
+                        <div class="">
+                            <div class="col-md-1 padding-left-0">
+                                <div ng-if="onLauncher  && isIntakeActiveUI && isUserIntakeActive" class="col-md-1 padding-0 "
+                                    tooltip="{{task.is_Matter == 0 ? 'Intake Task' : 'Matter Task'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top"
+                                    ng-class="{'search-intake-icon' :task.is_Matter == 0, 'search-matter-icon' : task.is_Matter == 1}">
+                                </div>
+                                <div class="col-md-1 padding-0 bl-0">
+                                    <span class="default-archive-small sprite margin-top10px" tooltip="Archived Matter"
+                                        tooltip-append-to-body="true" tooltip-placement="top"
+                                        ng-show="task.is_archived == 1"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-11 padding-right-0 search-word-ellipsis padding-left-10px custom-width">
+    
+                                <strong>
+                                    <a ng-class="{'cursor-pointer' : task.id != 0 , 'cursor-auto':task.id == 0}"
+                                        href="javascript:void(0)" tooltip="{{task.task_name}}" tooltip-append-to-body="true"
+                                        tooltip-placement="top-left"
+                                        data-ng-click="search.goToTask(task)">{{task.task_name|replaceByDash}} </a>
+                                </strong>
+                                <br />
+                                <span tooltip="{{task.name}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">{{task.name|replaceByDash}}</span>
+                                <br />
+                                <span tooltip="{{task.assigned_to}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">{{task.assigned_to}}</span>
+                                <br />
+                                <span tooltip="{{task.due_date|utcImpDateFilter:'MM/DD/YYYY'}}"
+                                    tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">{{task.due_date|utcImpDateFilter:'MM/DD/YYYY'}} </span>
+                                <div class="margin-top10px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-repeat="event in search.events| limitTo:(search.limit/2) "
+                class="col-md-3 margin-top10px ellipsis-nowrap padding-0 data-box">
+                <div>
+                    <div class="col-md-11 padding-0 search-word-ellipsis">
+                        <div class="">
+                            <div class="col-md-1 padding-left-0">
+                                <div ng-if="onLauncher  && isIntakeActiveUI && isUserIntakeActive" class="col-md-1 padding-0 "
+                                    tooltip="{{event.is_Matter == 0 ? 'Intake Event' : 'Matter Event'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top"
+                                    ng-class="{'search-intake-icon' :event.is_Matter == 0, 'search-matter-icon' : event.is_Matter == 1}">
+                                </div>
+                                <div class="col-md-1 padding-0 bl-0">
+                                    <span class="default-archive-small sprite margin-top10px" tooltip="Archived Matter"
+                                        tooltip-append-to-body="true" tooltip-placement="top"
+                                        ng-show="event.is_archived == 1"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-11 padding-right-0 search-word-ellipsis padding-left-10px custom-width">
+    
+    
+                                <strong>
+                                    <a ng-class="{'cursor-pointer' : event.id != 0 , 'cursor-auto': event.id == 0}"
+                                        href="javascript:void(0)" tooltip="{{event.event_name}}"
+                                        tooltip-append-to-body="true" tooltip-placement="top-left"
+                                        data-ng-click="search.goToEvent(event)">{{event.event_name}}</a>
+                                </strong>
+                                <br />
+                                <span tooltip="{{event.name}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">{{event.name|replaceByDash}}</span>
+                                <br />
+                                <span
+                                    tooltip="{{event.start_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'start'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-left">Start :
+                                    {{event.start_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'start'}}</span>
+                                <br />
+                                <span data-ng-show="event.start_date != event.end_date"
+                                    tooltip="{{event.end_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'end'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-left">End :
+                                    {{event.end_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'end'}}</span>
+                                <span data-ng-show="event.start_date == event.end_date"
+                                    tooltip="{{event.start_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'start'}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-left">End :
+                                    {{event.start_date|utcDateFilter:'MM/DD/YYYY hh:mm A':event.all_day:'start'}}</span>
+                                <br />
+    
+                                <span tooltip="{{event.location|replaceByDash}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-left">Location
+                                    :{{event.location|replaceByDash}}</span>
+                                <div class="margin-top10px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 margin-top10px text-center"
+                data-ng-show="(search.events.length == 0 && search.tasks.length == 0) && search.showSearchResultsTaskAndEvent">
+                No tasks and events found...
+            </div>
+        </div>
+    
+        <div class="clearfix"></div>
+    
+    </div>
+    <div class="compose-wrap" ng-if="search.firmData.API == 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :search.compose, '' : !search.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+    <div class="compose-wrap" ng-if="search.firmData.API == 'JAVA'"
+        data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+        ng-class="{'composeShow' :search.compose, '' : !search.compose}">
+        <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+    </div>
+</div>

@@ -1,0 +1,371 @@
+<div class="add-matter-wrapper">
+    <div class="page-title-border clearfix">
+        <div class="col-md-12">
+            <h2 ng-if="addCtrl.pageMode == 'add'" class="pull-left page-title">Add Intake</h2>
+            <h2 ng-if="addCtrl.pageMode == 'edit'" class="pull-left page-title">Edit Intake</h2>
+            <div class="pull-right">
+                <div data-ng-show="!addCtrl.goToPage">
+                    <button class="btn btn-default btn-styleNone" ng-click="addCtrl.cancel()">Cancel</button>
+                    <button class="btn btn-default" data-ng-disabled="addCtrl.isDatesValid()"
+                        ng-click="addCtrl.addEditIntake(addCtrl.intakeInfo)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-tasks-due">
+
+        <div data-ng-form="addCtrl.form" data-ng-show="!addCtrl.goToPage" class="row margin-top20px add-intake-form ">
+            <!-- <div class="dashboard-tasks-due"> -->
+            <div class="container">
+                <label class="col-md-12">Name
+                    <span class="compulsary-mark">*</span>
+                </label>
+                <div ng-if="addCtrl.pageMode == 'add'" class="col-md-12" ng-repeat="nameList in addCtrl.nameList">
+                    <div class="col-md-12  padding-0 custom-dropdown">
+                        <input type="text" name="intakeName{{$index+1}}" class="pull-left form-control custom-width"
+                            data-ng-required="true" data-ng-model="nameList.name"
+                            data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+                            typeahead-template-url="../intake/matter/contact-tpl.html"
+                            typeahead="row as row.name +' '+ row.street +' '+ row.city +' '+ row.state for row in addCtrl.getContacts($viewValue,'intake_name')"
+                            typeahead-input-formatter="addCtrl.formatTypeaheadDisplay($model)">
+                        <span data-ng-hide="$index===0" class="sprite default-delete"
+                            data-ng-click="addCtrl.deleteNameList($index)"></span>
+                        <!-- <span>
+                                        <a data-ng-hide="!($index===0)" ng-click="addCtrl.addNameList()" class="sprite default-plus">
+                                            <span></span>
+                                    </a>
+                                    </span> -->
+                        <div class="pull-left margin-top5px">
+                            <span class="col-md-2">OR</span>
+                            <button class="btn btn-default margin-left20px"
+                                data-ng-click="addCtrl.addNewPlaintiff($index)">Add
+                                New</button>
+                            <div ng-repeat="nameList in addCtrl.nameList">
+                                <div class="form-group">
+                                    <div data-ng-if="addCtrl.form['intakeName'+($index+1)].$dirty"
+                                        ng-messages="addCtrl.form['intakeName'+($index+1)].$error">
+                                        <div class="error pull-left" ng-message="intakeName">
+                                            intake name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="addCtrl.pageMode == 'edit'" class="col-md-12">
+                    <input type="text" placeholder="Intake name" class="form-control full-width"
+                        ng-model="addCtrl.intakeInfo.intakeName" />
+                </div>
+            </div>
+            <div class="container margin-top15px">
+                <div class="col-md-4">
+                    <label class="col-md-12 padding-0">Lead Source</label>
+                    <br>
+                    <div class="checklist">
+                        <!--<h2 class="subtitle">Type</h2>-->
+                        <ui-select data-ng-required="true" ng-model="addCtrl.intakeInfo.leadSource" theme="selectize">
+                            <ui-select-match placeholder="Select Type...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="type in addCtrl.typeList| filter:{name:$select.search} | orderBy: 'name'">
+                                <small>
+                                    {{type.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-8" ng-if="addCtrl.intakeInfo.leadSource.id ==6">
+                    <label>Description</label>
+                    <div>
+                        <input type="text" placeholder="Enter Description" class="form-control custom-input-width"
+                            ng-model="addCtrl.intakeInfo.leadSourceDescription" maxlength="150" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="container margin-top15px">
+                <div class="col-md-8 padding-0">
+                    <div class="col-md-6">
+                        <label>Campaign</label>
+                        <div>
+                            <input type="text" placeholder="Enter campaign" class="form-control width100"
+                                ng-model="addCtrl.intakeInfo.campaign" maxlength="1000" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Estimated Case Value</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" custom-currency-filter-intake placeholder="Enter value"
+                                class="form-control" ng-model="addCtrl.intakeInfo.intakeAmount">
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top15px">
+                        <div class="checklist">
+                            <label class="subtitle">Status</label>
+                            <ui-select ng-model="addCtrl.intakeInfo.statusname"
+                                on-select="addCtrl.getSubstatuses(addCtrl.intakeInfo.statusname)" theme="selectize">
+                                <ui-select-match placeholder="Select Status...">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="status in addCtrl.masterDataList.status| filter:{name:$select.search}">
+                                    <small>
+                                        {{status.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 margin-top15px">
+                        <label>Substatus</label>
+                        <ui-select ng-model="addCtrl.intakeInfo.substatus" theme="selectize">
+                            <ui-select-match placeholder="Select Substatus...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="status in addCtrl.substatus| filter:{name:$select.search}">
+                                <small>
+                                    {{status.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Assign To</label>
+                    <br>
+                    <!--placeholder="Select assign user.."-->
+                    <ui-select class="custom-assign-to-height full-width" multiple ng-model="addCtrl.intakeInfo.user_id"
+                        name="userid" theme="select2">
+                        <ui-select-match placeholder="Select assign to">
+                            {{$item.fullName}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="user as user in addCtrl.users  | filter:{fullName:$select.search} | orderBy: 'fullName' ">
+                            <small>{{user.fullName}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+            <div class="container margin-top15px">
+                <div class="col-md-4">
+                    <label>Type <span class="compulsary-mark">*</span></label>
+                    <br>
+                    <div class="checklist">
+                        <!--<h2 class="subtitle">Type</h2>-->
+                        <ui-select data-ng-required="true" ng-model="addCtrl.intakeInfo.type"
+                            on-select="addCtrl.intakeInfo.subtype = ''" theme="selectize">
+                            <ui-select-match placeholder="Select Type...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="type in addCtrl.masterDataList.type| filter:{name:$select.search} | orderBy: 'name'">
+                                <small>
+                                    {{type.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Subtype <span class="compulsary-mark">*</span></label>
+                    <div class="checklist">
+                        <ui-select ng-model="addCtrl.intakeInfo.subtype" theme="selectize">
+                            <ui-select-match placeholder="Select subtype...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="type in addCtrl.intakeInfo.type.subtype| filter:{name:$select.search} | orderBy: 'name'">
+                                <small>
+                                    {{type.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Category</label>
+                    <br>
+                    <ui-select ng-model="addCtrl.intakeInfo.category" theme="selectize" class="width100">
+                        <ui-select-match placeholder="Select category">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="item as item in addCtrl.masterDataList.category | filter:{ name:$select.search } | orderBy : 'name'">
+                            <small>
+                                {{item.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="container margin-top20px">
+                <div class="col-md-6" data-ng-if="addCtrl.display.importantDates">
+                    <intake-important-dates dates="addCtrl.intakeInfo.importantDates" class="impDates borderTop row">
+                    </intake-important-dates>
+                </div>
+                <div class="col-md-6" data-ng-if="!addCtrl.display.importantDates">
+
+                </div>
+                <div class="col-md-6 margin-top20px">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <label>Referred To</label>
+                                    <input type="text" data-ng-model="addCtrl.intakeInfo.referredTo"
+                                        data-ng-model-options="{ debounce: 500 }" placeholder="Enter referred to"
+                                        typeahead="row as row.name for row in addCtrl.getContacts($viewValue ,'refTo')"
+                                        typeahead-input-formatter="addCtrl.formatTypeaheadDisplay($model)"
+                                        typeahead-loading="addCtrl.display.loadingRefrerredToId"
+                                        typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+                                        class="form-control">
+
+                                </div>
+
+                                <div class="add-now-wrap col-md-6">
+                                    <span class="or-connector">OR</span>
+                                    <button class="btn btn-default"
+                                        data-ng-click="addCtrl.addNewContact(addCtrl.intakeInfo,'referredTo')">
+                                        Add New
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row margin-top10px">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Referred By</label>
+
+                                    <input type="text" data-ng-model="addCtrl.intakeInfo.referredBy"
+                                        data-ng-model-options="{ debounce: 500 }" placeholder="Enter referred by"
+                                        typeahead="row as row.name for row in addCtrl.getContacts($viewValue ,'refBy')"
+                                        typeahead-input-formatter="addCtrl.formatTypeaheadDisplay($model)"
+                                        typeahead-loading="addCtrl.display.loadingRefrerredById"
+                                        typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+                                        class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="add-now-wrap">
+                                        <span class="or-connector">OR</span>
+                                        <button class="btn btn-default"
+                                            data-ng-click="addCtrl.addNewContact(addCtrl.intakeInfo,'referredBy')">
+                                            Add New
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container margin-top20px">
+                <div class="col-md-3">
+                    <label>Date of Incident</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" view-format="MM/DD/YYYY" datepicker-popup="MM/dd/yyyy"
+                            data-ng-model="addCtrl.intakeInfo.dateOfIncident" is-open="opened" id="date_of_Incident"
+                            validate-date error-div="#date_of_Incident" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            datepicker-options="dateOptions" close-text="Close" show-button-bar="false" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                ng-click="addCtrl.open($event);opened=true;openedDOI=false;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="error no-float" id="dateofIncident">Invalid date format!</div>
+                </div>
+
+                <div class="col-md-3">
+                    <label>Date of Intake</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" data-ng-disabled="false" datepicker-popup="MM/dd/yyyy"
+                            data-ng-model="addCtrl.intakeInfo.dateOfIntake" is-open="openedDOI" id="openedDOI"
+                            validate-date error-div="#openedDOI" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            datepicker-options="dateOptions" show-button-bar="false" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                ng-click="addCtrl.open($event);openedDOI=true;opened=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="error no-float" id="dateOfIntake">Invalid date format!</div>
+                </div>
+                <div class="col-md-6">
+                    <label>Location of Incident</label>
+                    <div>
+                        <textarea class="form-control" placeholder="Enter Location of Incident" ng-trim='false'
+                            maxlength="200" data-ng-model="addCtrl.intakeInfo.placeOfIncident"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="container margin-top20px">
+                <div class="col-md-6">
+                    <label>Description of Incident</label>
+                    <textarea class="form-control height-110" placeholder="Enter Description of Incident"
+                        ng-trim='false' maxlength="5120" data-ng-model="addCtrl.intakeInfo.description"></textarea>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="margin-top10px form-group" data-ng-form="addCtrl.addJurisdiction">
+                        <label>
+                            Jurisdiction
+                            <span class="compulsary-mark">*</span>
+                        </label>
+                        <ui-select name="jurisdiction" ng-required="true"
+                            on-select="addCtrl.setVenues(addCtrl.intakeInfo.jurisdictionId)"
+                            ng-model="addCtrl.intakeInfo.jurisdictionId" theme="selectize">
+                            <ui-select-match placeholder="Select Jurisdiction...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="jurisdiction.id as jurisdiction in addCtrl.jurisdictionList| filter:{name:$select.search} | orderBy: 'name'">
+                                <small>
+                                    {{jurisdiction.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group">
+                        <ui-select ng-model="addCtrl.intakeInfo.venueId" theme="selectize">
+                            <ui-select-match placeholder="Select Venue...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="venue.id as  venue in addCtrl.venues | filter:{name:$select.search} track by venue.id| orderBy: 'name'">
+                                <small>
+                                    {{venue.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <div class="container margin-top20px">
+                <div class="col-md-12">
+                    <label>Please indicate which of the following emergency services responded:</label>
+                    <div class="clearfix"></div>
+                    <div class="checkbox pull-left w-17" data-ng-repeat="incidentservices in addCtrl.incidentList">
+                        <input type="checkbox" checklist-value="incidentservices"
+                            checklist-model="addCtrl.intakeInfo.incidentservices" />
+                        <label>{{incidentservices}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="container margin-top20px margin-left10px">
+                <hr>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h1 class="page-title pull-left ">{{referInfo.title}}</h1>
+        <button type="button" class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            data-ng-click="referInfo.close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+<div class="p-mb-0">
+        <div class="row">
+            <div class="col-md-3 text-right">Matter Name:</div>
+            <div class="col-md-9 value">
+                <p>{{referInfo.referOutInfo.matter_name}}</p>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">File #:</div>
+            <div class="col-md-9 value">
+                <p>{{referInfo.referOutInfo.file_number|replaceByDash}}</p>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">Index/Docket#:</div>
+            <div class="col-md-9 value">
+                <p>{{referInfo.referOutInfo.index_number|replaceByDash}}</p>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">{{referInfo.referOutInfo.referrerText}}</div>
+            <div class="col-md-9 value">
+                <p>{{referInfo.referOutInfo.referrerName}}</p>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">Refer Out On:</div>
+            <div class="col-md-9 value">
+                <p>{{referInfo.referOutInfo.ref_out_on|replaceByDash}}</p>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">Message:</div>
+            <div class="col-md-9 value">
+                <div>{{referInfo.referOutInfo.message|replaceByDash}}</div>
+            </div>
+        </div>
+
+        <div class="margin-top10px"></div>
+
+        <div class="row">
+            <div class="col-md-3 text-right">Fee agreement:</div>
+            <div class="col-md-9 value">
+                <div data-ng-bind-html="referInfo.referOutInfo.fee"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!--<div class="row margin-top20px"></div>
+
+        <div class="row margin-top20px">
+            <div class="col-md-6">
+                <div class="row ">
+                    <div class=" col-md-6">
+                        <label>
+                            Refer Out To 
+                        </label>
+                        <input type="text"
+                            data-ng-disabled="true"
+                            data-ng-model="referInfo.referOutInfo.name" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row ">
+                    <div class=" col-md-6">
+                        <label>
+                            Refer Out On 
+                        </label>
+                        <input type="text"
+                            data-ng-disabled="true"
+                            data-ng-model="referInfo.referOutInfo.ref_out_on"
+                            class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top20px"></div>
+
+        <div class="row margin-top20px">
+            <div class="col-md-6">
+                <label>
+                    Message 
+                </label>
+                <textarea rows="6"
+                    data-ng-disabled="true"
+                    data-ng-model="referInfo.referOutInfo.message"
+                    class="form-control"></textarea>
+            </div>
+            <div class="col-md-6">
+                <label>Attach Fee Agreement</label>
+                <div
+                    data-ng-bind-html="referInfo.referOutInfo.fee"
+                    class="fee-agreement form-control margin-top10px">
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top20px"></div>
+    </div>-->

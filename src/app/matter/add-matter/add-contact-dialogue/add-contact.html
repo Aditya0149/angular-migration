@@ -1,0 +1,65 @@
+<div>
+    <label for="indexNumber">Type</label>
+    <!--select class="form-control" ng-model="dataModel.type" ng-options="type.type.name for type in viewModel.type"></select-->
+	
+	<select class="form-control" ng-model="dataModel.type">
+        <option></option>
+        <option data-ng-repeat="(key,val) in contactType" value="{{key}}">{{key}}</option>
+    </select>
+	
+</div>
+<div ng-show="dataModel.type=='Person' || dataModel.type=='Estate Administrator'">
+    <label for="Name">First Name</label>
+    <input class="form-control" ng-model="dataModel.firstname">
+</div>
+
+<div ng-show="dataModel.type=='Court'">
+    <label for="Name">Venue</label>
+    <input class="form-control" ng-model="dataModel.venue_id">
+</div>
+
+<div ng-show="dataModel.type!='Person' &&  dataModel.type!='Estate Administrator'">
+    <label for="Name">Name</label>
+    <input class="form-control" ng-model="dataModel.firstname">
+</div>
+
+<div ng-show="dataModel.type=='Person' || dataModel.type=='Estate Administrator'">
+    <label for="Name">Middle Name</label>
+    <input class="form-control" ng-model="dataModel.middlename">
+</div>
+<div ng-show="dataModel.type=='Person' || dataModel.type=='Estate Administrator'">
+    <label for="Name">Last Name</label>
+    <input class="form-control" ng-model="dataModel.lastname">
+</div>
+<div>
+    <label for="Name">Email Address</label>
+    <input class="form-control" ng-model="dataModel.email">
+</div>
+<div>
+    <label for="Name">Contact Number</label>
+    <input class="form-control" ng-model="dataModel.phone">
+</div>
+<div>
+    <label for="Name">Fax Number</label>
+    <input class="form-control" ng-model="dataModel.faxnumber">
+</div>
+<div>
+    <label for="Name">Street Address</label>
+    <input class="form-control" ng-model="dataModel.street">
+</div>
+<div>
+    <label for="Name">City</label>
+    <input class="form-control" ng-model="dataModel.city">
+</div>
+<div>
+    <label for="Name">Zip Code</label>
+    <input class="form-control" ng-model="dataModel.zipcode">
+</div>
+<div>
+    <label for="Name">Country</label>
+    <input class="form-control" ng-model="dataModel.country">
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok(dataModel)">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

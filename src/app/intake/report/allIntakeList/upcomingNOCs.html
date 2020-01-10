@@ -1,0 +1,108 @@
+
+<div class="allIntakeListReport-wrapper">
+    <div class="clearfix">
+        <div class="row">
+            <!--<h1 class="col-md-5 ">{{upcomingNOCsCtrl.selectionModel.statusName}} Matters  </h1>-->
+            <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Upcoming NOCs </h1>
+            <div class="col-md-7 pull-right page-sublinks subnav">
+                <ul class="pull-right">
+                    <li><a href="javascript:void(0);"
+                        ng-class="{' active': intakeupcomingNOCsCtrl.selectionModel.allMatter == 1}"
+                        ng-click="intakeupcomingNOCsCtrl.filterByUser(1);">
+                        <h2>My Intakes</h2>
+                    </a></li>
+                    <li><a href="javascript:void(0);"
+                        ng-class="{' active': intakeupcomingNOCsCtrl.selectionModel.allMatter == 0}"
+                        ng-click="intakeupcomingNOCsCtrl.filterByUser(0);">
+                        <h2>All Intakes</h2>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="row  margin0 fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed ">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="intakeupcomingNOCsCtrl.filterNOCReport()" class="sprite default-filter"
+                                tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="intakeupcomingNOCsCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="intakeupcomingNOCsCtrl.downloadMatters()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="left"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group btn-group pull-right  paddingLR-10px">
+                <label data-ng-click="intakeupcomingNOCsCtrl.upcomingNOCs15Days(0)" ng-class="{' active': intakeupcomingNOCsCtrl.selectionModel.dateFieldValue == 0}"
+                    class="btn btn-default btn-styleNone ">
+                    Next 15 Days</label>
+                <label data-ng-click="intakeupcomingNOCsCtrl.upcomingNOCs30Days(1)" ng-class="{' active': intakeupcomingNOCsCtrl.selectionModel.dateFieldValue == 1}"
+                    class="btn btn-default btn-styleNone">
+                    Next 30 Days</label>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="intakeupcomingNOCsCtrl.tagCancelled" tag-list="intakeupcomingNOCsCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="intakeupcomingNOCsCtrl.viewModel.matters.length >0">
+        <show-record-count more="intakeupcomingNOCsCtrl.applyFilterLazyLoading()" all="intakeupcomingNOCsCtrl.getAllMatterList()"
+            hide-pager="{{intakeupcomingNOCsCtrl.viewModel.matters.length < intakeupcomingNOCsCtrl.total}}" displayed="intakeupcomingNOCsCtrl.viewModel.matters.length"
+            total="intakeupcomingNOCsCtrl.total"></show-record-count>
+    </div>
+    <div class="report-responsive noc-table" id="all-matter" data-ng-if="intakeupcomingNOCsCtrl.viewModel.matters.length >0 "
+        id="nocTable">
+        <div class="row header-row">
+            <div class="cell" data-ng-repeat="header in ::intakeupcomingNOCsCtrl.clxGridOptions.headers" data-width='{{header.dataWidth}}'>
+                {{header.displayName}}
+            </div>
+        </div>
+
+        <div class="row body-row" data-ng-class="{'selected-grid-row':($index == intakeupcomingNOCsCtrl.clickedRow) }"
+            data-highlight-clicked-row="{{$index}},intakeupcomingNOCsCtrl.clickedRow" data-ng-if="intakeupcomingNOCsCtrl.display.filtered"
+            data-ng-repeat="data in intakeupcomingNOCsCtrl.viewModel.matters" grid-size>
+            <div class="cell" data-width="{{header.dataWidth}}" data-ng-repeat="header in ::intakeupcomingNOCsCtrl.clxGridOptions.headers"
+                data-ng-class="{'selected-grid-row':intakeupcomingNOCsCtrl.isMatterSelected(data)}">
+                <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell
+                    data-ng-class="{'display-inline-block':field.showInline === true}">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-top20px text-center " data-ng-show="intakeupcomingNOCsCtrl.showPager">
+        <a href="javascript:void(0)" class="" data-ng-click="intakeupcomingNOCsCtrl.applyFilterLazyLoading()">More</a>
+        <span class="paddingLR-10px">|</span>
+        <a href="javascript:void(0)" class="" data-ng-click="intakeupcomingNOCsCtrl.getAllMatterList()">All</a>
+    </div>
+
+
+    <p class="text-center margin-top10px" data-ng-if="intakeupcomingNOCsCtrl.viewModel.matters.length===0
+        && intakeupcomingNOCsCtrl.display.matterListReceived">
+        No data for the applied filters
+    </p>
+    <p class="text-center margin-top10px" data-ng-show="intakeupcomingNOCsCtrl.filteredMatters.length === 0 && intakeupcomingNOCsCtrl.display.matterListReceived">
+        No data for the applied filters
+    </p>
+
+</div>
+<script>
+
+</script>

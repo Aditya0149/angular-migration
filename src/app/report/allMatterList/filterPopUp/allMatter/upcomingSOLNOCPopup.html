@@ -1,0 +1,116 @@
+<style>
+    .form-control {
+    width: 72%
+    }
+    .custom-input-list ul.dropdown-menu{width: 67%;max-height: 37vh;}
+    .modal-open .modal {
+    overflow-y: hidden;
+}
+</style>
+
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right" data-ng-click="filter.cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body">
+
+    <div class="clearfix">
+
+        <span class="custom-input-list">
+            <label class="margin-top10px">Matter Name</label>
+            <input type="text" name="matterid" class=" form-control dashboard-tasks-due" data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+            typeahead="row as removeunwantedhtml(row.name) for row in filter.searchMatters($viewValue)"  typeahead-input-formatter="filter.formatTypeaheadDisplay($model)"
+            data-ng-model="filter.viewModel.filter.matterId" />
+        </span>
+        
+
+        <div class="row margin-top20px" data-ng-show="filter.viewModel.filter.selectedReport">
+            <div class="row-fluid">
+                <div class="col-md-8">
+                    <clx-btn-group btn-list="filter.compliedTypes"
+                                   value="filter.viewModel.filter.complied" 
+                                   btn-click="filter.setComplied"></clx-btn-group>
+                </div>        
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-fluid ">
+                <div class="col-md-12 margin-top20px">
+                    <h2>Date Range</h2>
+                </div>
+                <div class="col-md-4 margin-top20px">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" 
+                               datepicker-popup="MM/dd/yyyy" 
+                               data-ng-model="filter.viewModel.filter.s" is-open="openedEndDate"
+                               data-ng-disabled="false" name="doi"
+                               id="SOLNOLstartDatediv"
+                               validate-date error-div="#SOLNOLstartDatediv"       
+                               tooltip="mm/dd/yyyy"
+                               placeholder="mm/dd/yyyy"
+                               full-day-date="1" show-button-bar="false"
+                               close-text="Close" ng-change="filter.setDates('start','#SOLNOLstartDatediv')" placeholder="start" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="filter.openCalender($event);openedEndDate = true;openedStartDate=false;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="solnolstartDateErr">Invalid date format!</div>
+                </div>
+                <div class="col-md-4 margin-top20px">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" 
+                               data-ng-model="filter.viewModel.filter.e" is-open="openedStartDate"
+                               data-ng-disabled="false" name="doi"
+                               id="SOLNOLendDatediv"
+                               validate-date error-div="#SOLNOLendDatediv"       
+                               tooltip="mm/dd/yyyy"
+                               placeholder="mm/dd/yyyy"
+                               full-day-date="1"
+                               close-text="Close"  show-button-bar="false"
+                               ng-change="filter.setDates('end','#SOLNOLendDatediv')"
+                               placeholder="end" />
+                        <span class="input-group-btn">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="filter.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="solnolendDateErr">Invalid date format!</div>
+                </div>
+            </div>
+            <div class="col-md-4 margin-top20px" style="line-height: 33px;">{{filter.viewModel.noofdays}} Days </div>
+        </div>
+        <!-- <div class="row" style="margin-left: 0px;margin-top: 9px;">
+            <div class="checklist">
+                <div class="checkbox" style="margin-top: 20px;">
+                    <input type="checkbox" data-ng-model="filter.viewModel.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                    />
+                    <label style="font-size: 14px;">
+                        Include Archived Matters
+                    </label>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+<div class="modal-footer">
+    <div>
+        <div class="pull-right">
+            <button ng-click="filter.resetFilters()" 
+                    type="button" class="btn btn-default btn-styleNone">Reset</button>
+            <button ng-click="filter.apply(filter.viewModel.filter)" 
+                    ng-disabled="filter.isDatesValid()"
+                    type="button" class="btn btn-default">Apply</button>
+        </div>
+    </div>
+</div>
+

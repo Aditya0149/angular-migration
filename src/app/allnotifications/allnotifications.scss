@@ -1,0 +1,131 @@
+.allnotification-wrapper {
+  padding: 0 50px 0 20px;
+  strong {
+    font-weight: normal;
+    color: #303030;
+  }
+
+  .filters {
+    .form-group {
+      margin-bottom: 0px;
+    }
+  }
+
+  .hackyhack .input-group {
+    position: relative;
+
+    //position it on top of input
+    .dropdown-menu {
+      top: -292px !important;
+    }
+  }
+
+  .top-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+  }
+  .search-input {
+    input {
+      height: 30px;
+      width: 100%;
+    }
+    .default-searchico {
+      top: 3px;
+    }
+  }
+  .top-links {
+    padding: 5px 15px 0 0;
+    font-size: 12px;
+    text-align: right;
+  }
+  .right-divider {
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+    margin-right: 6px;
+  }
+  .parent-box {
+    padding: 5px 15px;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    p {
+      margin-bottom: 0px;
+    }
+  }
+  .dashboard-tasks-due {
+    width: auto;
+    max-height: 78vh;
+  }
+  .moreLink {
+    overflow: hidden;
+    position: fixed;
+    width: inherit;
+    bottom: 10px;
+  }
+  .client-names {
+    font-size: 11px;
+    span {
+      color: #aaa;
+    }
+  }
+  .period-info {
+    color: #aaa;
+    font-size: 11px;
+  }
+  .left-outer {
+    border-right: 1px solid #ccc;
+    padding: 0;
+  }
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .radio {
+    margin-top: 0;
+    input {
+      margin-left: 0;
+      width: 20px;
+      height: 20px;
+      top: -3px;
+      outline: none;
+      box-sizing: initial;
+    }
+    label {
+      padding-left: 25px;
+      &::after {
+        background-color: #2097c6;
+        top: 5px;
+        width: 9px;
+        height: 9px;
+        left: 5px;
+      }
+      &::before {
+        width: 19px;
+        height: 19px;
+        border: 2px solid #2097c6;
+      }
+    }
+  }
+  .hidden-option {
+    box-shadow: 0 0 2px #ccc;
+    font-size: 12px;
+    text-align: left;
+    border-radius: 4px;
+    width: 86px;
+    margin: 0 auto;
+    float: right;
+    p {
+      padding: 3px 5px;
+      cursor: pointer;
+      margin-bottom: 0;
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+  }
+
+  .dots {
+    cursor: pointer;
+    margin-bottom: 0 !important;
+  }
+}

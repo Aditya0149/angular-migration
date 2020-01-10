@@ -1,0 +1,143 @@
+<div class="add-user-wrapper">
+    <div class="modal-header">
+        <h2 class="pull-left page-title margin-top10px">{{addUser.mode|SentenseCase}} User</h2>
+    
+        <div class="pull-right btn-box">
+            <button class="btn btn-default btn-styleNone"
+                data-ng-click="addUser.cancel()">
+                Close
+            </button>
+            <button
+                data-ng-disabled="addUser.form.$invalid"
+                data-ng-click="addUser.save(addUser.userInfo)"
+                class="btn btn-default">
+                Save
+            </button>
+        </div>
+        <div class="pull-right">
+                <div class="progress-wrapper text-center">
+                    <round-progress
+                       max="addUser.maxUsers"
+                       current="addUser.activeUsers"
+                       color="{{addUser.graphColor}}"
+                       bgcolor="#eaeaea"
+                       radius="27"
+                       stroke="5"
+                       semi="false"
+                       rounded="true"
+                       clockwise="true"
+                       responsive="false"
+                       duration="800"
+                       animation="easeInOutQuart"
+                       animation-delay="0"></round-progress>    
+                    <div class="circle-info">{{addUser.userCapacity}}%</div>
+                    </div>
+                    <span class="user-capacity">User Capacity</span>
+                </div>
+        
+    </div>
+    
+    <div class="filter-greybox container modal-body" data-ng-form="addUser.form">
+        <div class="form-group relative-container margin-top10px">
+            <label>
+                First Name<span class="compulsary-mark">*</span>
+            </label>
+            <input type="text"
+                data-ng-required="true"
+                name="fname"
+                data-ng-model="addUser.userInfo.fname"
+                class="form-control">
+            <span class=" ng-hide"></span>
+            <div data-ng-if="addUser.form.fname.$dirty"
+                ng-messages="addUser.form.fname.$error">
+                <div class="error"
+                    ng-message="required">
+                    first name is required
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group relative-container margin-top10px">
+            <label>
+                Last Name<span class="compulsary-mark">*</span>
+            </label>
+            <input type="text"
+                data-ng-required="true"
+                name="lname"
+                data-ng-model="addUser.userInfo.lname"
+                class="form-control">
+            <span class="sprite default-caution error-icon ng-hide"></span>
+            <div data-ng-if="addUser.form.lname.$dirty"
+                ng-messages="addUser.form.lname.$error">
+                <div class="error"
+                    ng-message="required">
+                    last name is required
+                </div>
+            </div>
+        </div>
+        <div class="form-group relative-container margin-top10px">
+            <label>
+                Role<span class="compulsary-mark">*</span>
+            </label>
+            <ui-select
+                ng-model="addUser.userInfo.rid"
+                data-ng-required="true"
+                name="role"
+                theme="selectize">
+                            <ui-select-match placeholder="Enter Role">
+                               {{$select.selected.role}}
+                            </ui-select-match>
+                            <ui-select-choices 
+                                 repeat="role.rid as role in addUser.roles| filter:{role:$select.search}">
+                                <small>
+                                    {{role.role}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+            <span class="ng-hide"></span>
+            <div data-ng-if="addUser.form.role.$dirty"
+                ng-messages="addUser.form.role.$error">
+                <div class="error"
+                    ng-message="required">
+                    role is required
+                </div>
+            </div>
+        </div>
+       
+        <div class="form-group relative-container margin-top10px">
+            <label>
+                Email/Username<span class="compulsary-mark">*</span>
+            </label>
+            <input type="email"
+                data-ng-required="true"
+                name="mail"
+                data-ng-disabled="addUser.mode === 'edit'"
+                data-ng-model="addUser.userInfo.mail"
+                ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"   
+                class="form-control">
+            <span class="ng-hide"></span>
+            <div data-ng-if="addUser.form.mail.$dirty"
+                ng-messages="addUser.form.mail.$error">
+                <div class="error no-float" ng-message="required">
+                    mail is required
+                </div>
+                <div class="error no-float" ng-message="pattern">
+                    invalid email id
+                </div>
+            </div>
+        </div>
+       
+        <!-- 5668: Checkbox added for Role managment Access -- Start -->
+        <div class="form-group relative-container margin-top10px">
+            <div class="pull-left"><label> Is Admin: </label> </div>                    
+            <div class="col-md-2 checkbox">
+                <input type="checkbox"
+                    data-ng-model="addUser.userInfo.is_admin"
+                    data-ng-true-value="'1'"
+                    data-ng-false-value="'0'"
+                    data-ng-disabled="addUser.disableAdmAccess"/><label></label> 
+            </div>
+        </div>
+        <!-- End  -->
+    </div>
+</div>

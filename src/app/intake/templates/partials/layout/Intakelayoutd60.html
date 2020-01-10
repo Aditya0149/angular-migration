@@ -1,0 +1,612 @@
+<!-- layout d60 start -->
+<div class="row" ng-form="plaintiffform">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Start: Plaintiff Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffs">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.plaintiff_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" label="Select Plaintiff"
+                    placeholder="Select plaintiff..." validation="No plaintiff found..." ngexpression="item"
+                    ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Plaintiff Dropdown -->
+
+            <!-- Start: Plaintiff Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_multi">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.plaintiff_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" label="Select Plaintiff"
+                    placeholder="Select plaintiff..." validation="No plaintiff found..." ngmultiple="yes"
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$item.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Plaintiff Dropdown -->
+
+
+
+
+            <!-- Start: Plaintiff Dropdown for plaintiff employer -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_onChange_secondary">
+                <clx-select list="IntakeGenerateTemplateCtrl.plaintiff_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" changefn="yes"
+                    affectmodelname="plaintiffEmployerIdsNew"
+                    selected-items-changed="IntakeGenerateTemplateCtrl.getPlaintiffEmployers(IntakeGenerateTemplateCtrl.TemplateModelInfo.plaintiffs);"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..."
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown for plaintiff employer -->
+
+            <!-- Start:Employer provider Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_employers_pri2">
+                <clx-select list="IntakeGenerateTemplateCtrl.employer_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffEmployerIdsNew"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Plaintiff Employer"
+                    placeholder="Select employer..." validation="No plainitff employers found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    ngfilter=" | filter:{intakeEmployerName:$select.search} | orderBy: 'intakeEmployerName'"
+                    selectedviewproperty='<small> {{$select.selected.intakeEmployerName}} </small>'
+                    dropdownviewproperty='<small> {{item.intakeEmployerName}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Employer provider Dropdown depend on Plaintiff -->
+
+
+
+
+
+
+            <!-- Start: Plaintiff Dropdown for plaintiff employer -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_onChange">
+                <clx-select list="IntakeGenerateTemplateCtrl.plaintiff_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs" changefn="yes"
+                    affectmodelname="plaintiffEmployerIds"
+                    selected-items-changed="IntakeGenerateTemplateCtrl.getPlaintiffEmployers(IntakeGenerateTemplateCtrl.TemplateModelInfo.plaintiffs);"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..."
+                    ngexpression="item" ngfilter=" | filter:{name:$select.search} | orderBy: 'name'"
+                    selectedviewproperty='<small> {{$select.selected.name}}</small>'
+                    dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Plaintiff Dropdown for plaintiff employer -->
+
+
+
+            <!-- Start:Employer provider Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_employers_pri">
+                <clx-select list="IntakeGenerateTemplateCtrl.employer_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffEmployerIds"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Plaintiff Employer 1"
+                    placeholder="Select employer..." validation="No plainitff employers found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    ngfilter=" | filter:{intakeEmployerName:$select.search} | orderBy: 'intakeEmployerName'"
+                    selectedviewproperty='<small> {{$select.selected.intakeEmployerName}} </small>'
+                    dropdownviewproperty='<small> {{item.intakeEmployerName}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Employer provider Dropdown depend on Plaintiff -->
+
+            <!-- Start:Employer provider 2 Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_employers_sec">
+                <clx-select list="IntakeGenerateTemplateCtrl.employer_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffEmployerIds_sec"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Plaintiff Employer 2"
+                    placeholder="Select employer..." validation="No plainitff employers found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    ngfilter=" | filter:{intakeEmployerName:$select.search} | orderBy: 'intakeEmployerName'"
+                    selectedviewproperty='<small> {{$select.selected.intakeEmployerName}} </small>'
+                    dropdownviewproperty='<small> {{item.intakeEmployerName}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Employer provider 2 Dropdown depend on Plaintiff -->
+
+            <!-- Start:Employer provider 3 Dropdown depend on Plaintiff -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiff_employers_ter">
+                <clx-select list="IntakeGenerateTemplateCtrl.employer_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffEmployerIds_ter"
+                    dependmodelname="plaintiffs" dependchangefn="yes" label="Select Plaintiff Employer 3"
+                    placeholder="Select employer..." validation="No plainitff employers found..."
+                    dependvalidation="Please select plaintiff..." ngexpression="item"
+                    ngfilter=" | filter:{intakeEmployerName:$select.search} | orderBy: 'intakeEmployerName'"
+                    selectedviewproperty='<small> {{$select.selected.intakeEmployerName}} </small>'
+                    dropdownviewproperty='<small> {{item.intakeEmployerName}} </small>'>
+                </clx-select>
+            </div>
+            <!-- End: Employer provider 3 Dropdown depend on Plaintiff -->
+
+            <!--Start: insurance provider  dropdown-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.insuranceProvider_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId"
+                    label="Insurance Provider" validation="No insurance provider found..."
+                    placeholder="Select insurance provider..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search}"
+                    selectedviewproperty='<small>{{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small>{{item.contact_name}}</small>'>
+                </clx-intake-select>
+            </div>
+            <!--End: insurance provider  dropdown-->
+
+            <!-- Start:Medical provider Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.medicalProviderAndPhysician"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="medicalproviderId"
+                    label="Select Medical Provider 1" placeholder="Select medical provider..."
+                    validation="No medical providers found..." ngexpression="item"
+                    ngfilter=" | filter:{medProviderName:$select.search} | orderBy: 'medProviderName'"
+                    selectedviewproperty='<small> {{$select.selected.medProviderName}}</small>'
+                    dropdownviewproperty='<small> {{item.medProviderName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Medical provider Dropdown -->
+
+            <!-- Start:Medical provider Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider1">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.medicalProviderAndPhysician"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="medicalproviderId2"
+                    label="Select Medical Provider 2" placeholder="Select medical provider..."
+                    validation="No medical providers found..." ngexpression="item"
+                    ngfilter=" | filter:{medProviderName:$select.search} | orderBy: 'medProviderName'"
+                    selectedviewproperty='<small> {{$select.selected.medProviderName}}</small>'
+                    dropdownviewproperty='<small> {{item.medProviderName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Medical provider Dropdown -->
+
+            <!-- Start:Medical provider Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider2">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.medicalProviderAndPhysician"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="medicalproviderId3"
+                    label="Select Medical Provider 3" placeholder="Select medical provider..."
+                    validation="No medical providers found..." ngexpression="item"
+                    ngfilter=" | filter:{medProviderName:$select.search} | orderBy: 'medProviderName'"
+                    selectedviewproperty='<small> {{$select.selected.medProviderName}}</small>'
+                    dropdownviewproperty='<small> {{item.medProviderName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Medical provider Dropdown -->
+
+            <!-- Start:Treatment Date Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.service_Date">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.medicalInfoDates"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="serviceDates"
+                    label="Select Treatment Date" placeholder="Select Treatment Date..."
+                    validation="No treatment dates found..." ngexpression="item"
+                    ngfilter=" | filter:{startEndDate:$select.search} | orderBy: 'startEndDate'"
+                    selectedviewproperty='<small> {{$select.selected.startEndDate}}</small>'
+                    dropdownviewproperty='<small> {{item.startEndDate}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Treatment Date Dropdown -->
+
+            <!-- Start: Insured Party Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.insured_Party">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.insuranceInsuredAdjuster"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="insuredParty"
+                    label="Select Insured Party" placeholder="Select Insured Party..."
+                    validation="No insured party found..." ngexpression="item"
+                    ngfilter=" | filter:{insuredPartyName:$select.search} | orderBy: 'insuredPartyName'"
+                    selectedviewproperty='<small> {{$select.selected.insuredPartyName}}</small>'
+                    dropdownviewproperty='<small> {{item.insuredPartyName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Insured Party Dropdown -->
+
+            <!-- Start: Physician Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.medicalProvider_Physicians">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.onlyPhysicians"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="medicalProviderPhysicians"
+                    label="Select Physician" placeholder="Select Physician..." validation="No Physician found..."
+                    ngexpression="item" ngfilter=" | filter:{firstName:$select.search} | orderBy: 'firstName'"
+                    selectedviewproperty='<small> {{$select.selected.firstName}}</small>'
+                    dropdownviewproperty='<small> {{item.firstName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Physician Dropdown -->
+
+            <!-- Start: Medical Provider Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.serviceProvider">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.medicalProviderOnly"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="medicalServiceProvider"
+                    label="Select Medical Provider" placeholder="Select Medical Provider..."
+                    validation="No Medical Provider found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: 'contact_name'"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Medical Provider Dropdown -->
+
+            <!-- Start: Witness Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.witness">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.witness_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="witnessId" label="Select Witness 1"
+                    placeholder="Select witness..." validation="No witness found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: 'contact_name'"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Witness Dropdown -->
+
+            <!-- Start: Witness Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.witness1">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.witness_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="witnessId1" label="Select Witness 2"
+                    placeholder="Select witness..." validation="No witness found..." ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: 'contact_name'"
+                    selectedviewproperty='<small> {{$select.selected.contact_name}}</small>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Witness Dropdown -->
+            <!-- ngfilter=" | filter:{fullName:$select.search} | orderBy: 'fullName'" -->
+
+            <!-- Start: Assign user Dropdown -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.assignUser">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.assignUsers"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="assign_user" label="Assign User"
+                    placeholder="Select user..." validation="No user found..." ngexpression="item"
+                    selectedviewproperty='<small> {{$select.selected.fullName}}</small>'
+                    dropdownviewproperty='<small> {{item.fullName}} </small>'>
+                </clx-intake-select>
+            </div>
+            <!-- End: Assign user Dropdown -->
+
+            <!-- Start: physician dropdown-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.physicianProvider">
+                <clx-intake-select list="IntakeGenerateTemplateCtrl.physician_dropdown"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="physicianId"
+                    label="Select Physician" placeholder="Select physician..." validation="No Physician found..."
+                    ngexpression="item"
+                    ngfilter=" | filter:{contact_name:$select.search} | orderBy: &apos;contact_name&apos;"
+                    selectedviewproperty="<span>{{ $select.selected.contact_name }}</span>"
+                    dropdownviewproperty="<small> {{item.contact_name }}</small>">
+                </clx-intake-select>
+            </div>
+            <!-- End: physician dropdown -->
+
+            <!-- Start: Emergency Contact Number Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.emergency_number">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxOne"
+                    label="Emergency Contact Number" placeholder="Enter the number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Emergency Contact Number Textbox -->
+
+            <!-- Start: Accident Time Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.accident_Time">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="accidentTime"
+                    label="Accident Time" placeholder="Enter time...">
+                </clx-textbox>
+            </div>
+            <!-- End: Accident Time Textbox -->
+
+            <!-- Start: Accident Description Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.accident_description">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxTwo"
+                    label="Accident Description" placeholder="Enter description of accident...">
+                </clx-textbox>
+            </div>
+            <!-- End: Accident Description Textbox -->
+
+            <!-- Start: Vehicle's Information Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.Vehicle_Information">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="vehicleInformation"
+                    label="Vehicle's Information" placeholder="Enter Vehicle's Information...">
+                </clx-textbox>
+            </div>
+            <!-- End: Vehicle's Information Textbox -->
+
+            <!-- Start: Time Restricted to Bed Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.bedTime">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxThree"
+                    label="Time Restricted to Bed" placeholder="Enter the value...">
+                </clx-textbox>
+            </div>
+            <!-- End: Time Restricted to Bed Textbox -->
+
+            <!-- Start: Time Restricted to House Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.houseTime">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxFour"
+                    label="Time Restricted to House" placeholder="Enter the value...">
+                </clx-textbox>
+            </div>
+            <!-- End: Time Restricted to House Textbox -->
+
+            <!-- Start: Loss of Services Description Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.serviceDescription">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxFive"
+                    label="Loss of Services Description" placeholder="Enter loss of services description...">
+                </clx-textbox>
+            </div>
+            <!-- End: Loss of Services Description Textbox -->
+
+            <!-- Start: Police Officer Accident Report Information Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.policeAccidentInfo">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxSix"
+                    label="Police Officer Accident Report Information" placeholder="Enter the information...">
+                </clx-textbox>
+            </div>
+            <!-- End: Police Officer Accident Report Information Textbox -->
+
+            <!-- Start: Prior Accidents or Injuries Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.prioirAccidents">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxSeven"
+                    label="Prior Accidents or Injuries" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Prior Accidents or Injuries Textbox -->
+
+            <!-- Start: Subsequent Accidents or Injuries Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.subsequentAccidents">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxEight"
+                    label="Subsequent Accidents or Injuries" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Subsequent Accidents or Injuries Textbox -->
+
+            <!-- Start: Prior Related Medical Conditions Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.priorMedicalCondition">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxNine"
+                    label="Prior Related Medical Conditions" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Prior Related Medical Conditions Textbox -->
+
+            <!-- Start: Means of Calculation Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.meansOfCalculation">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="textBoxTen"
+                    label="Means of Calculation" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Means of Calculation Textbox -->
+
+            <!-- Start: Liability Basis Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.liabilityBasis">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueOne"
+                    label="Liability Basis" placeholder="Enter liability basis...">
+                </clx-textbox>
+            </div>
+            <!-- End: Liability Basis Textbox -->
+
+            <!-- Start: Social Security Disability Information Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.socialSecInfo">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueTwo"
+                    label="Social Security Disability Information" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: Social Security Disability Information Textbox -->
+
+            <!-- Start: defendant Statement Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.userAddress">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueThree"
+                    label="User Address" placeholder="Enter the details...">
+                </clx-textbox>
+            </div>
+            <!-- End: defendant Statement Textbox -->
+
+            <!-- Start: User Residence State Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.userState">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueFour"
+                    label="User Residence State" placeholder="Enter the state...">
+                </clx-textbox>
+            </div>
+            <!-- End: User Residence State Textbox -->
+
+            <!-- Start: user County Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.userCounty">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueFive"
+                    label="User Residence County" placeholder="Enter the county...">
+                </clx-textbox>
+            </div>
+            <!-- End: user County Textbox -->
+
+            <!-- Start: Spouse SSN Textbox-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.spouse_ssn">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="userValueSix"
+                    label="Spouse SSN" placeholder="Enter the number...">
+                </clx-textbox>
+            </div>
+            <!-- End: Spouse SSN Textbox -->
+
+            <!-- Start: Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_lost_income">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers1"
+                    label="Amount of Lost Income" step="0.01" placeholder="Enter amount..." currency="yes"
+                    dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount textbox-->
+
+            <!-- Start: Billed Amount 1 Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.billed_amount1">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers2"
+                    label="Billed Amount 1" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Billed Amount 1 textbox-->
+
+            <!-- Start: Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.gross_pay1">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers5"
+                    label="Gross Pay 1" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount textbox-->
+
+            <!-- Start: Billed Amount 2 Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.billed_amount2">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers3"
+                    label="Billed Amount 2" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Billed Amount 2 textbox-->
+
+            <!-- Start: Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.gross_pay2">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers6"
+                    label="Gross Pay 2" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount textbox-->
+
+            <!-- Start: Billed Amount 3 Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.billed_amount3">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers4"
+                    label="Billed Amount 3" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Billed Amount 3 textbox-->
+
+            <!-- Start: Amount Textbox -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.gross_pay3">
+                <clx-textbox model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers7"
+                    label="Gross Pay 3" step="0.01" placeholder="Enter amount..." currency="yes" dollarbox="yes">
+                </clx-textbox>
+            </div>
+            <!--End: Amount textbox-->
+
+            <!-- Start:Date of Marriage DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.marriage_date">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="marriage_date"
+                    label="Date of Marriage">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Marriage DatePicker -->
+
+            <!-- Start:Date of Filing DatePicker style="padding-left: 31px;"-->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.filling_date">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="filling_date"
+                    label="Date of Filing">
+                </clx-date>
+            </div>
+            <!-- Ends:Date of Filing DatePicker -->
+
+            <!-- Start:Custom Date DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.custom_date">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="custom_date"
+                    label="Date of Retainer Agreement">
+                </clx-date>
+            </div>
+            <!-- Ends:Custom Date DatePicker -->
+
+            <!-- Start:Employed From Date 1 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_From1">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_From1"
+                    label="Employed From Date 1">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed From Date 1 DatePicker -->
+
+            <!-- Start:Employed Till Date 1 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_To1">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_To1"
+                    label="Employed Till Date 1">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed Till Date 1 DatePicker -->
+
+            <!-- Start:Employed From Date 2 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_From2">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_From2"
+                    label="Employed From Date 2">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed From Date 2 DatePicker -->
+
+            <!-- Start:Employed Till Date 2 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_To2">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_To2"
+                    label="Employed Till Date 2">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed Till Date 2 DatePicker -->
+
+            <!-- Start:Employed From Date 3 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_From3">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_From3"
+                    label="Employed From Date 3">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed From Date 3 DatePicker -->
+
+            <!-- Start:Employed Till Date 3 DatePicker -->
+            <div class="col-md-6"
+                ng-if="IntakeGenerateTemplateCtrl.configure_template.display_prop.display_fields.date_Employed_To3">
+                <clx-date condition="IntakeGenerateTemplateCtrl.openCalender(event)"
+                    model="IntakeGenerateTemplateCtrl.TemplateModelInfo" modelname="date_Employed_To3"
+                    label="Employed Till Date 3">
+                </clx-date>
+            </div>
+            <!-- Ends:Employed Till Date 3 DatePicker -->
+        </div>
+    </div>
+</div>

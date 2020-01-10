@@ -1,0 +1,111 @@
+
+    <div>
+        <div class=" clearfix">
+            <div class="row">
+                <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Upcoming SOLs</h1>
+                <div class="col-md-7 pull-right page-sublinks subnav">
+                    <ul class="pull-right">
+                        <li><a href="javascript:void(0);"
+                            ng-class="{' active': intakeupcomingSOLsCtrl.selectionModel.allMatter == 1}"
+                            ng-click="intakeupcomingSOLsCtrl.filterByUser(1);">
+                            <h2>My Intakes</h2>
+                        </a></li>
+                        <li><a href="javascript:void(0);"
+                            ng-class="{' active': intakeupcomingSOLsCtrl.selectionModel.allMatter == 0}"
+                            ng-click="intakeupcomingSOLsCtrl.filterByUser(0);">
+                            <h2>All Intakes</h2>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flexCont"></div>
+        <div class="fixed-grid-report">
+            <div class="col-md-12 paddingRLR heading-filter-removed ">
+                <div class="pull-right head-padding-10px ">
+                    <ul class="showBy-btns pull-right heading-right-buttons">
+                        <li class="seperation-filter"></li>
+                        <li>
+                            <a>
+                                <span data-ng-click="intakeupcomingSOLsCtrl.filterSOLReport()"
+                                    class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter"></li>
+                        <li>
+                            <a data-ng-click="intakeupcomingSOLsCtrl.print()">
+                                <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="paddingLR-10px">
+                            <a data-ng-click="intakeupcomingSOLsCtrl.downloadMatters()">
+                                <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="left"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group btn-group pull-right  paddingLR-10px">
+                    <label data-ng-click="intakeupcomingSOLsCtrl.upcomingSOLs15Days(0)"
+                        ng-class="{' active': intakeupcomingSOLsCtrl.selectionModel.dateFieldValue == 0}"
+                        class="btn btn-default btn-styleNone ">
+                        Next 15 Days</label>
+                    <label data-ng-click="intakeupcomingSOLsCtrl.upcomingSOLs30Days(1)"
+                        ng-class="{' active': intakeupcomingSOLsCtrl.selectionModel.dateFieldValue == 1}"
+                        class="btn btn-default btn-styleNone">
+                        Next 30 Days</label>
+                </div>
+            </div> 
+            <div class="clearfix">
+                <div class="pull-right">
+                    <clx-filter-tags on-filter-cancel="intakeupcomingSOLsCtrl.tagCancelled"
+                                    tag-list="intakeupcomingSOLsCtrl.tags"></clx-filter-tags>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="intakeupcomingSOLsCtrl.viewModel.matters.length > 0">
+            <show-record-count
+                more="intakeupcomingSOLsCtrl.applyFilterLazyLoading()"
+                all="intakeupcomingSOLsCtrl.getAllMatterList()"
+                 hide-pager="{{intakeupcomingSOLsCtrl.viewModel.matters.length < intakeupcomingSOLsCtrl.total}}"
+                displayed="intakeupcomingSOLsCtrl.viewModel.matters.length"
+                total="intakeupcomingSOLsCtrl.total"></show-record-count>
+        </div>
+        <div class="report-responsive " id="all-matter"  ng-class="{'sol-table-padding': intakeupcomingSOLsCtrl.filteredMatters.length < 8 && intakeupcomingSOLsCtrl.filteredMatters.length > 3}"
+            data-ng-if="intakeupcomingSOLsCtrl.viewModel.matters.length >0 ">
+            <div class="row header-row">
+                <div class="cell custom-cell" data-ng-repeat="header in ::intakeupcomingSOLsCtrl.clxGridOptions.headers" data-width="{{header.dataWidth}}">
+                    {{header.displayName}}
+                </div>
+            </div>
+    
+            <div class="row body-row"
+                data-ng-if="intakeupcomingSOLsCtrl.display.filtered"
+                data-ng-init="intakeupcomingSOLsCtrl.clickedRow = -1"
+                data-highlight-clicked-row="{{$index}},intakeupcomingSOLsCtrl.clickedRow"
+                data-ng-class="{'selected-grid-row':$index == intakeupcomingSOLsCtrl.clickedRow}"
+                data-ng-repeat="data in intakeupcomingSOLsCtrl.filteredMatters = (intakeupcomingSOLsCtrl.viewModel.matters|filter:intakeupcomingSOLsCtrl.viewModel.filters.filterText)" grid-size>
+                <div class="cell" data-ng-repeat="header in ::intakeupcomingSOLsCtrl.clxGridOptions.headers"
+                    data-width="{{header.dataWidth}}" data-ng-class="{'selected-grid-row':intakeupcomingSOLsCtrl.isMatterSelected(data)}">
+                    <div data-ng-repeat="field in ::header.field"
+                        cell-data="{{data}}" field="{{field}}" render-cell
+                        data-ng-class="{'display-inline-block':field.showInline===true}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top20px text-center"  data-ng-show="intakeupcomingSOLsCtrl.showPager">
+            <a href="javascript:void(0)" class="" data-ng-click="intakeupcomingSOLsCtrl.applyFilterLazyLoading()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" class="" data-ng-click="intakeupcomingSOLsCtrl.getAllMatterList()">All</a>
+        </div>
+        <p class="text-center margin-top10px"
+            data-ng-if="intakeupcomingSOLsCtrl.viewModel.matters.length===0
+            && intakeupcomingSOLsCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+        <p class="text-center margin-top10px"
+            data-ng-show="intakeupcomingSOLsCtrl.filteredMatters.length === 0 && intakeupcomingSOLsCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+    </div>
+    

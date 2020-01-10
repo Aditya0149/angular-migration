@@ -1,0 +1,65 @@
+<!-- table starts here -->
+<!-- #clxTable is only used to make height of this table dynamic -->
+<table class="table table-scroll" #table>
+    <thead>
+        <tr>
+            <th *ngFor="let option of tableOptions" [class]="'th-width-' + option.width">{{option.header}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cell of tableData | clxFilter : searchKey : ['pic']; let i = index;" (click)="selectedRow = i" [ngClass]="{'selected-grid-row':i == selectedRow}">
+            <td *ngFor="let option of tableOptions" [class]="'th-width-' + option.width">
+                <span *ngFor="let key of option.keys" [ngClass]="key.class" [ngSwitch]="key?.type">
+                    <ng-container  *ngSwitchCase="'image'">
+                        <img [src]="cell[key.name]" [alt]="cell[key.name]">
+                    </ng-container>
+                    <ng-container  *ngSwitchDefault>
+                        {{cell[key.name]}}
+                    </ng-container>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- table ends here -->
+
+<!-- <table class="table table-scroll" data-ng-if="!root.requestPending">
+    <thead>
+        <tr>
+            <th class="th-width-10">User</th>
+            <th class="th-width-30">Activity</th>
+            <th class="th-width-45">Details</th>
+            <th class="th-width-15">Date and Time</th>
+        </tr>
+    </thead>
+    <tbody class="dashboard-tasks-due height-52-vh">
+
+        <tr class=" body-row " data-highlight-clicked-row="{{$index}},timeline.clickedRow"
+            data-ng-class="{'selected-grid-row':$index == timeline.clickedRow}"
+            data-ng-repeat="data in timeline.fltTimelineList = (timeline.timelineList  | filter: timeline.filterText) ">
+            <td class="th-width-10">
+                <div class="defaultprofileImage"><img ng-src="{{data.pic}}" width="35" height="35"></div>
+
+            </td>
+            <td class="th-width-30">
+                <div>
+                    <span data-placement="top" tooltip="{{data.user_name}}">{{data.user_name}}</span>
+                </div>
+                <div>
+                    <strong data-placement="top" tooltip="{{data.event}}">{{data.event}}</strong>
+                </div>
+            </td>
+            <td class="th-width-45">
+                <span class="default-cursor" tooltip-placement="top" tooltip="{{data.details}}">
+                    {{data.details}}
+                </span>
+            </td>
+            <td class="th-width-15">
+                <span class="default-cursor" tooltip-placement="top" tooltip="{{data.date}}">
+                    {{data.date}}
+                </span>
+            </td>
+
+        </tr>
+    </tbody>
+</table> -->

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>ic_close copy 4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="ic_close-copy-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#D8D8D8" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <path d="M8,1.95 C4.65867726,1.95 1.95,4.65867726 1.95,8 C1.95,11.3413227 4.65867726,14.05 8,14.05 C11.3413227,14.05 14.05,11.3413227 14.05,8 C14.05,4.65867726 11.3413227,1.95 8,1.95 Z" id="plus_copy-copy" stroke="#677885" stroke-width="0.9"></path>
+        <g id="Group" transform="translate(5.500000, 5.500000)" stroke="#677885" stroke-linecap="round" stroke-width="0.9">
+            <path d="M5,3.8191672e-14 L0.0502525317,4.94974747" id="Line-3"></path>
+            <path d="M4.94974747,3.90798505e-14 L1.77635684e-15,4.94974747" id="Line-3" transform="translate(2.474874, 2.474874) scale(-1, 1) translate(-2.474874, -2.474874) "></path>
+        </g>
+    </g>
+</svg>

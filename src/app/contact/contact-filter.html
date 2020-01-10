@@ -1,0 +1,49 @@
+<style>.modal-dialog {width: 40%;}</style>
+<div>
+	<div class="">
+		<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="filterCntrl.cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h1 class="modal-title fl-left" id="myModalLabel">Filters</h1>
+		</div>
+		<div class="modal-body dashboard-tasks-due" style="max-height: 70vh !important; overflow-x: hidden">
+			<div class="row">
+				<div class="row-fluid">
+					<div class="col-md-6">
+						<!-- Category -->
+						<h3>Type</h3>
+						<form>
+                            
+                            <div ng-repeat="(key,val) in filterCntrl.type" class="checkbox checkbox-primary">
+                                <input type="checkbox" checklist-model="filterCntrl.currentFilter.type" checklist-value="val"><label> {{val}}</label>
+                            </div>
+
+						</form>
+						<div class="checkbox checkbox-primary">
+							<input type="checkbox" ng-model="filterCntrl.extraFilter.egc_type"><label>Exclude Global Contacts</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<!--Added By -->
+						<h3>State</h3>
+                        <ui-select ng-model="filterCntrl.currentFilter.statename" theme="selectize" class="margin-top5px">
+                            <ui-select-match placeholder="Select state">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item.name as item in filterCntrl.states | filter:{ name:$select.search }">
+                                <small>
+                                    {{item.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterCntrl.reset()">Reset</button>
+            <button class="btn btn-default pull-right" ng-disabled="filterCntrl.enableApply" ng-click="filterCntrl.applyFilters(filterCntrl.currentFilter, filterCntrl.extraFilter)">Apply</button>
+		</div>
+	</div>
+</div>

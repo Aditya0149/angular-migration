@@ -1,0 +1,374 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div class="notes-wrapper">
+    <div class="row notes-header">
+        <matter-info-header matter-info="notes.matterInfo"></matter-info-header>
+    </div>
+    <div id="report-content" class="report-container" ng-if="notes.notesPermissions[0].V == 1"
+        ng-class="{'cursor-pointer-events-none' :notes.compose, '' : !notes.compose}">
+        <div class="row  margin0 container">
+            <div class="col-md-12 paddingRLR heading-with-add-icons">
+                <div class="col-md-3 pull-left paddingRLR dropdown create"
+                    ng-hide="notes.matterInfo.archivalMatterReadOnlyFlag">
+                    <a data-ng-click="notes.addNotes(notes)" ng-if="(notes.isGraceOver != 0)">
+                        <!--  Add Note Icon -->
+                        <span has-access="{{notes.notesPermissions[0].A}}" class="sprite default-plus"
+                            tooltip="Add">&nbsp;</span>
+                    </a>
+                    <a class="margin-left20px" data-ng-click="notes.openNotesEdit(notes.notesGrid.selectedItems[0]);"
+                        ng-if="(notes.isGraceOver != 0)" data-ng-disabled="notes.isUser"
+                        data-ng-show="notes.notesGrid.selectedItems.length === 1 ">
+                        <span has-access="{{notes.notesPermissions[0].E}}" class="sprite default-edit" tooltip="Edit "
+                            tooltip-placement="right">&nbsp;</span>
+                    </a>
+    
+                    <a class="margin-left20px"
+                        data-ng-click="notes.deleteNotes(notes.notesGrid.selectedItems[0],notes.notesGrid.selectedItems,notes.filterdNotes)"
+                        ng-if="(notes.isGraceOver != 0)" data-ng-disabled="notes.isUser"
+                        data-ng-show="notes.notesGrid.selectedItems.length > 0 ">
+                        <span has-access="{{notes.notesPermissions[0].D}}" class="sprite default-delete" tooltip="Delete"
+                            tooltip-placement="right">&nbsp;</span>
+                    </a>
+                    <a class="margin-left15px" data-ng-click="notes.composeNotesMail();" ng-if="(notes.isGraceOver != 0)"
+                        data-ng-show="(notes.notesGrid.selectedItems.length > 0 && notes.email_subscription == 1)">
+                        <!--  Mail Note Icon -->
+                        <span class="sprite default-mailbox notes-icon" tooltip="E-mail"
+                            tooltip-placement="right">&nbsp;</span>
+                    </a>
+                    <a ng-click="notes.getCollaboration(notes.notesGrid.selectedItems[0])"
+                        data-ng-show="(notes.notesGrid.selectedItems.length == 1 && notes.collaboratedEntityFlag && notes.isCollaborationActive && (notes.notesGrid.selectedItems[0].noteCategory.notecategory_id != 1001 && notes.notesGrid.selectedItems[0].noteCategory.notecategory_id != 1002))">
+                        <!-- Collaboration Icon -->
+                        <span class="sprite default-userprofile margin-left20px notes-icon"
+                            tooltip="Share" tooltip-placement="right">&nbsp;</span>
+                    </a>
+    
+                </div>
+    
+                <div class="col-md-9 pull-right paddingRLR clearfix ">
+                    <ul class="showBy-btns pull-right">
+                        <li>
+                            <a data-ng-click="notes.clearFilter()">Clear
+                            </a>
+                        </li>
+                        <li class="seperation"></li>
+                        <li>
+                            <a data-ng-click="notes.openFilters()">
+                                <span class="sprite default-filter" tooltip="Filter"></span>
+                            </a>
+                        </li>
+                        <li class="seperation"></li>
+    
+                        <li data-ng-class="{'active-link': notes.currentView=='GRID'}">
+                            <a data-ng-click="notes.setCurrentView('GRID')">
+                                <span class="sprite default-gridico" tooltip="Grid View"></span>
+                            </a>
+                        </li>
+    
+                        <li data-ng-class="{'active-link': notes.currentView=='LIST'}">
+                            <a data-ng-click="notes.setCurrentView('LIST')">
+                                <span class="sprite default-listico " tooltip="List View"></span>
+                            </a>
+                        </li>
+                        <!--  Conversation view -->
+                        <li data-ng-class="{'active-link': notes.currentView=='CONV'}">
+                            <a data-ng-click="notes.setCurrentView('CONV')">
+                                <span class="sprite default-conver-view " tooltip="Conversation View"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter" ng-hide="notes.matterInfo.archivalMatterReadOnlyFlag"></li>
+                        <li ng-hide="notes.matterInfo.archivalMatterReadOnlyFlag">
+                            <a data-ng-click="notes.printMatterNotes()">
+                                <span class="sprite default-file " tooltip="Print"></span>
+                            </a>
+                        </li>
+                        <li class="paddingLR-10px" ng-hide="notes.matterInfo.archivalMatterReadOnlyFlag">
+                            <a data-ng-click="notes.exportMatterNotes()">
+                                <span class="sprite default-sharedown " tooltip="Export"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="pull-right">
+                        <div class="search-input">
+                            <div class="default-searchico sprite" tooltip="Search"></div>
+                            <input type="text" class="form-control" data-ng-model="notes.serachInput"
+                                data-ng-change="notes.filterRetain();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="paddingRLR flexCont">
+            <!-- ngRepeat: item in viewModel.statusWiseCounts -->
+        </div>
+    
+        <div class="pull-right margin-top10px" id="matterNoteFilter">
+            <clx-filter-tags on-filter-cancel="notes.tagCancelled" tag-list="notes.tags"></clx-filter-tags>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center" ng-if="notes.isCollapsed">
+            <div data-ng-show="notes.showMoreHTML() && notes.showMoreAll">
+                <a data-ng-click="notes.getMoreNotes()">More</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a data-ng-click="notes.getMoreNotes('all')">All</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="matterNoteupper1"></div>
+        <div data-collapse="notes.isCollapsed">
+            <div ng-include src='"app/notes/matter-notes/partials/add-note.html"'></div>
+            <!--  Add note section -->
+        </div>
+    
+        <div class="notes-list margin-top10px" ng-if="notes.isCollapsed">
+            <!-- Grid View -->
+            <div class="row-fluid gridViewNote dashboard-tasks-due" ng-if="notes.currentView == 'GRID'" id="gridViewNotes">
+                <div class="col-md-4 cursor-pointer" ng-repeat="note in notes.notesList | filter: notes.serachInput"
+                    data-ng-click="notes.openNotesView(note)" ng-show="notes.notesList.length > 0">
+                    <div class="note" ng-class="notes.getNoteClass(note.noteCategory.notecategory_id)">
+                        <div class="col-md-12 note-overflow">
+                            <ul class="notes-status">
+    
+                                <li ng-show="note.is_important == 1">
+                                    <a href="javascript:void(0);" class="sprite default-alert" tooltip="Important"></a>
+                                </li>
+                                <li ng-show="note.attachment_count != ''">
+                                    <span class="pull-left sprite default-attachment margin-top2px"></span>
+                                    <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="sprite"
+                                        ng-class="notes.getNoteIcon(note.noteCategory.notecategory_id)"></a>
+                                </li>
+    
+                            </ul>
+                            <strong>{{notes.getCateogry(note.noteCategory) | SentenseCase}}</strong>
+                            <small>{{note.user.first_name}}&nbsp;{{note.user.last_name}}</small>
+                            <span data-ng-show="note.created_date">{{notes.getFormattedDate(note.created_date)}}</span>
+                            <p class="ellipsis word-wrap pre-line cursor-pointer">
+                                {{note.displayText| characters:150: false}}</p>
+                            <p class="word-wrap pre-wrap" data-ng-show="note.type =='email'">{{note.text| characters:100:
+                                false}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- List View -->
+            <div ng-if="notes.currentView == 'LIST'">
+                <div data-ng-if="notes.notesList.length > 0 && notes.isDataAvailable">
+                    <scrollable-table tableid="matternotesgrid1" watch="notes.notesList" to="#matterNoteupper1"
+                        from="#matterNotesmoreLink">
+                        <table class="table fix-layout">
+                            <thead>
+                                <tr>
+                                    <th class="th-width-8"></th>
+                                    <th class="th-width-35">Note</th>
+                                    <th class="th-width-15">Category</th>
+                                    <th class="th-width-20">Added by</th>
+                                    <th class="th-width-10">Added on</th>
+                                    <th class="th-width-12">Linked Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="note in notes.notesList | filter: notes.serachInput" row-id="{{ $index }}">
+                                    <td>
+                                        <span ng-show="note.is_important == 1"
+                                            class="default-alert sprite pull-left"></span>
+                                        <span ng-show="note.attachment_count != ''">
+                                            <span
+                                                class="pull-left margin-left5px sprite default-attachment margin-top2px"></span>
+                                            <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="file-field">
+                                        <span class="ellipsis word-wrap cursor-pointer"
+                                            data-ng-click="notes.openNotesView(note)">
+                                            {{note.displayText| characters:150: false}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="cursor-pointer" data-ng-click="notes.openNotesView(note)">{{notes.getCateogry(note.noteCategory)
+                                            | SentenseCase}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="cursor-pointer" data-ng-click="notes.openNotesView(note)">{{note.user.first_name}}&nbsp;{{(note.user.last_name!=null)
+                                            ? note.user.last_name : ''}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="cursor-pointer" data-ng-click="notes.openNotesView(note)">{{notes.getFormattedDate(note.created_date,
+                                            'MM/DD/YYYY')}}
+                                            <br> {{notes.getFormattedDate(note.created_date, 'hh:mm A')}}</span>
+                                    </td>
+                                    <td class=" word-wrap" ng-class="{'cursor-pointer':(note.linked_contact.length > 0)}">
+                                        <span class="saved-search-link" data-ng-click="notes.openContactCard(item)"
+                                            ng-repeat="item in note.linked_contact">
+                                            {{item.first_name}} {{item.last_name}}
+                                            <span ng-if="!$last">,</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </scrollable-table>
+                </div>
+            </div>
+    
+            <!-- Conversation View -->
+            <div data-ng-if="notes.currentView == 'CONV'">
+                <div data-ng-if="notes.notesList.length > 0 && notes.isDataAvailable">
+                    <scrollable-table tableid="matternotesgrid2" watch="notes.notesList" to="#matterNoteupper1"
+                        from="#matterNotesmoreLink">
+                        <table class="table fix-layout">
+                            <thead>
+                                <tr>
+                                    <th class="th-width-3">
+                                        <div class="checkbox margin0">
+                                            <input type="checkbox" data-ng-disabled="notes.filterdNotes.length==0"
+                                                data-ng-model="notes.notesGrid.selectAll"
+                                                data-ng-checked="notes.allNoteselected()"
+                                                data-ng-click="notes.selectAllNotes(notes.notesGrid.selectAll)" />
+                                            <label></label>
+                                        </div>
+                                    </th>
+                                    <th class="th-width-5"></th>
+                                    <th class="th-width-9">Added on</th>
+                                    <th class="th-width-20">Added by</th>
+                                    <th class="th-width-25">Note</th>
+                                    <th class="th-width-18">Category</th>
+                                    <th class="th-width-15">Linked Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-class="{'selected-grid-row':(notes.display.noteSelected[note.note_id] )}"
+                                    ng-repeat="note in notes.filterdNotes = (notes.notesList | filter: notes.serachInput)"
+                                    row-id="{{ $index }}">
+                                    <td>
+                                        <div class="checkbox cust-checkbox">
+                                            <input type="checkbox" data-ng-checked="notes.isNotesSelected(note.note_id)"
+                                                checklist-model="notes.notesGrid.selectedItems" checklist-value="note" />
+                                            <label></label>
+                                        </div>
+                                    </td>
+                                    <td class="padding-left-0 cursor-pointer" data-width="6"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        <span ng-show="note.is_important == 1"
+                                            class="default-alert sprite pull-left"></span>
+                                        <span ng-show="note.attachment_count != ''">
+                                            <span class="pull-left sprite default-attachment margin-top2px"></span>
+                                            <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                        </span>
+                                    </td>
+    
+                                    <td class="cursor-pointer" ng-show="note.is_important == 1" data-width="10"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        <strong>{{notes.getFormattedDate(note.created_date, 'MM/DD/YYYY')}}
+                                            <br> {{notes.getFormattedDate(note.created_date, 'hh:mm A')}}
+                                        </strong>
+                                    </td>
+                                    <td class="cursor-pointer" ng-show="note.is_important != 1" data-width="10"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        {{notes.getFormattedDate(note.created_date, 'MM/DD/YYYY')}}
+                                        <br> {{notes.getFormattedDate(note.created_date, 'hh:mm A')}}
+                                    </td>
+                                    <td class="cursor-pointer file-field" ng-show="note.is_important == 1" data-width="10"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        <strong>{{note.user.first_name}}&nbsp;{{note.user.last_name}}</strong>
+                                    </td>
+                                    <td class="cursor-pointer file-field" ng-show="note.is_important != 1" data-width="10"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        {{note.user.first_name}}
+                                        {{note.user.last_name}}
+                                    </td>
+                                    <td class="word-wrap cursor-pointer" data-width="20"
+                                        data-ng-click="notes.openNotesView(note)">
+                                        <p class="ellipsis word-wrap pre-line cursor-pointer">
+                                            {{note.displayText}} </p>
+                                        <p ng-if="note.type == 'email'"
+                                            data-ng-bind-html="note.text | decodeHtmlEncoding | cut:false:508"
+                                            class="word-wrap"></p>
+                                    </td>
+                                    <td class="cursor-pointer" data-width="10" data-ng-click="notes.openNotesView(note)">{{notes.getCateogry(note.noteCategory)
+                                        | SentenseCase}}</td>
+                                    <td class="word-wrap" data-width="11"
+                                        ng-class="{'cursor-pointer':(note.linked_contact.length > 0)}">
+                                        <span class="saved-search-link" data-ng-click="notes.openContactCard(item)"
+                                            ng-repeat="item in note.linked_contact">{{item.first_name}}
+                                            {{item.last_name}}
+                                            <span ng-if="!$last">,</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </scrollable-table>
+                </div>
+    
+            </div>
+    
+            <!--Bug#6367-->
+            <div class="text-center"
+                data-ng-if="notes.loaderFlagStatus && notes.notesList.length == 0 && notes.isDataAvailable">
+                There aren’t any notes associated with this matter.
+            </div>
+            <div ng-show="notes.isCollapsed" id="matterNotesmoreLink" class="row margin-top20px text-center moreLink">
+                <div data-ng-show="false">
+                    <a data-ng-click="notes.getMoreNotes()">More</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a data-ng-click="notes.getMoreNotes('all')">All</a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    
+        <alert ng-model="notes.alert" type="{{notes.alert.type}}" close="notes.closeAlert()"
+            ng-show="notes.alert && notes.alert.msg">
+            {{notes.alert.msg}}
+        </alert>
+    
+    </div>
+    <div data-ng-show="notes.notesPermissions[0].V == 0" class="text-center margin-top20px">
+        You are not authorized to view notes
+    </div>
+    
+    <footer position-center>
+        <ul>
+            <li>
+                <a href="#/matter-overview/{{notes.matterId}}">Overview</a>
+            </li>
+            <li>
+                <a href="#/allParties/{{notes.matterId}}">All Parties</a>
+            </li>
+            <li>
+                <a href="#matter-details/{{notes.matterId}}">Details</a>
+            </li>
+            <li>
+                <a href="#/matter-documents/{{notes.matterId}}">Documents</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="active-footer">Notes</a>
+            </li>
+            <li class="active-footer">
+                <a href="#/events/{{notes.matterId}}">Events </a>
+            </li>
+            <li>
+                <a href="#/tasks/{{notes.matterId}}">Tasks</a>
+            </li>
+            <li data-ng-show="is_workflow_active">
+                <a href="#/workflow/{{notes.matterId}}">Workflow</a>
+            </li>
+            <li>
+                <a href="#/timeline/{{notes.matterId}}">Timeline</a>
+            </li>
+    
+        </ul>
+    </footer>
+    
+    <!-- Compose mail -->
+    <div class="compose-wrap box-index" ng-if="notes.firmData.API === 'PHP' && !notes.reloadEmail"
+        data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :notes.compose, '' : !notes.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+    <div class="compose-wrap box-index" ng-if="notes.firmData.API === 'JAVA' && !notes.reloadEmail"
+        data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+        ng-class="{'composeShow' :notes.compose, '' : !notes.compose}">
+        <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+    </div>
+</div>

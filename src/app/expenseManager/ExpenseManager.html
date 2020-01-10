@@ -1,0 +1,570 @@
+<div class="expense-wrapper">
+    <div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li>
+                <a data-toggle="tab" href="#home" data-ng-class="{'activeLink' : expenseManager.selectedView == 'new'}"
+                   data-ng-click="expenseManager.setSelectedView('new');">
+                    New
+                    Requests({{expenseManager.expense_count}})
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#record"
+                   data-ng-class="{'activeLink' : expenseManager.selectedView == 'recorded'}"
+                   data-ng-click="expenseManager.setSelectedView('recorded');">
+                    Recorded
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="margin-top10px">
+
+            <div class="row gridSec margin0" id="documentListStyle">
+                <div class="col-md-12 paddingRLR">
+                    <div class="col-md-5">
+                        <button class="btn btn-default" ng-if="expenseManager.selectedView == 'new'"
+                                ng-disabled="expenseManager.clxGridOptions.selectedItems.length == 0 || expenseManager.clxGridOptions.selectedItems.length > 1 "
+                                data-ng-click="expenseManager.addRecordToExpeseManager(expenseManager.clxGridOptions.selectedItems)">
+                            Add
+                            to Records
+                        </button>
+
+                        <a ng-class="{'margin-left25px' : expenseManager.selectedView == 'new', '' : expenseManager.selectedView != 'new'}"
+                           data-ng-if="expenseManager.clxGridOptions.selectedItems.length == 1 &&  (expenseManager.isGraceOver != 0)">
+                            <span tooltip="Edit" class="sprite default-edit" tooltip-placement="right"
+                                  data-ng-click="expenseManager.editRecord(expenseManager.clxGridOptions.selectedItems)">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                           data-ng-if="expenseManager.clxGridOptions.selectedItems.length > 0 &&  (expenseManager.isGraceOver != 0)">
+                            <span class="sprite default-delete" tooltip="Delete" tooltip-placement="right"
+                                  data-ng-click="expenseManager.deleteRecord(expenseManager.clxGridOptions.selectedItems)">&nbsp;</span>
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-7 pull-right paddingRLR clearfix">
+                        <ul class="pull-right">
+                            <li>
+                                <div class="search-input form-control-margin-null"
+                                     data-ng-show="expenseManager.showSearch">
+                                    <div class="default-searchico sprite"></div>
+                                    <input type="text" focus-me="expenseManager.showSearch"
+                                           data-ng-model-options="{ debounce: 0 }"
+                                           data-ng-model="expenseManager.filterText"
+                                           data-ng-change="expenseManager.filterRetain();" class="form-control">
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="showBy-btns pull-right">
+                            <li>
+                                <a>
+                                    <span data-ng-click="expenseManager.filterExpense()" class="sprite default-filter"
+                                          tooltip="Filter"></span>
+                                </a>
+                            </li>
+                            <li class="seperation-filter"></li>
+                            <li class="search-overlap">
+                                <ul data-ng-hide="expenseManager.showSearch">
+
+                                    <li>
+                                        <a data-ng-click="expenseManager.showSearch = true">
+                                            <span class="sprite default-searchico-menu " tooltip="Search"
+                                                  tooltip-placement="left"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+
+                         <div class="pull-right border">
+                        </div>
+                        <div class="pull-right" ng-if="expenseManager.selectedView == 'new'">
+                            <div class="dropdown">
+                                Sort By :
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{expenseManager.selectedSort}}
+
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu divider-alt sortby-dropdown-height" role="menu"
+                                    aria-labelledby="dLabel">
+                                    <div class="">
+                                        <li data-ng-repeat="sort in expenseManager.sorts">
+                                            <a data-ng-click="expenseManager.applySortByFilter(sort)">{{sort.name}}
+                                            </a>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div> 
+                        <!-- sortBy for requested -->
+                        <div class="dropdown pull-right" ng-if="expenseManager.selectedView == 'recorded'">
+                            Sort By :
+                            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{expenseManager.selectedSortRecorded}}
+
+                                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                            </button>
+                            <ul class="dropdown-menu divider-alt sortby-dropdown-height" role="menu"
+                                aria-labelledby="dLabel">
+                                <div class="">
+                                    <li data-ng-repeat="sortrecord in expenseManager.sortRecorded">
+                                        <a data-ng-click="expenseManager.applySortByRecordedFilter(sortrecord)">{{sortrecord.name}}
+                                        </a>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-right" data-ng-show="expenseManager.tags.length > 0">
+                        <clx-filter-tags on-filter-cancel="expenseManager.tagCancelled" tag-list="expenseManager.tags">
+                        </clx-filter-tags>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="home" class="tab-pane fade in active">
+            <div class="col-md-7 padding-left-0 add-record-btn">
+
+            </div>
+
+            <div class="col-md-12 pull-right"
+                 data-ng-if="expenseManager.ExpenseList.length > 0 && expenseManager.selectedViewForGridShow == 'new' && expenseManager.isDataRecived">
+                <div class="total-amount-main pull-right margin-bottom-0">
+                    <div>
+                        <b>Total</b>
+                        <span class="total-amount-sepretor"></span>
+                    </div>
+                    <div class="lable">
+                        Expense:
+                        <span>{{expenseManager.ExpenseList.total_expense}}</span>
+                    </div>
+                    <div class="lable">
+                        Paid:
+                        <span>{{expenseManager.ExpenseList.total_paid_amount}}</span>
+                    </div>
+                    <div class="lable">
+                        Outstanding:
+                        <span>{{expenseManager.ExpenseList.total_outstanding_amount}}</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div ng-show="expenseManager.ExpenseList.length > 0 && expenseManager.selectedViewForGridShow == 'new' && expenseManager.isDataRecived">
+                <div data-ng-show="expenseManager.ExpenseList.length >0 ">
+                    <show-record-count more="expenseManager.getMore()" all="expenseManager.getAll()"
+                        hide-pager="{{expenseManager.showPaginationButtons()}}"
+                        displayed="expenseManager.ExpenseList.length" total="expenseManager.total">
+                    </show-record-count>
+                </div>
+                <div class="clearfix"></div>
+                <div id="expenselistupper"></div>
+                <scrollable-table class="document-list-table" watch="expenseManager.expenseManagerGroup"
+                                  tableid="expenselistgrid1" to="#expenselistupper" from="#moreAllLinkExpense">
+                    <table class="table fix-layout">
+                        <thead>
+                            <tr>
+                                <th class="th-width-3">
+                                    <!-- <div class="checkbox">
+                                        <input type="checkbox" data-ng-model="expenseManager.clxGridOptions.selectAll" data-ng-checked="expenseManager.allExpeseRecordSelected()" data-ng-click="expenseManager.selectAllExpensesRecord(expenseManager.clxGridOptions.selectAll)" /><label></label>
+                                    </div> -->
+                                </th>
+                                <th class="th-width-4">
+
+                                </th>
+                                <th class="th-width-16">
+                                    <div>
+                                        <span><b>Expense name,<br> Type</b></span>
+                                    </div>
+                                </th>
+                                <th class="th-width-16">
+                                    <div> <span><b>Matter Name</b></span></div>
+                                </th>
+                                <th class="th-width-9">
+                                    <div> <span><b>Added by</b></span></div>
+                                </th>
+                                <th class="th-width-14">
+                                    <div> <span><b>Associated Party</b></span></div>
+                                </th>
+                                <th class="th-width-9">
+                                    <div> <span><b>Disburable</b></span></div>
+                                </th>
+                                <th class="th-width-9">
+                                    <div> <span><b>Expense <br>Amount</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Paid Amount</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Outstanding <br>Amount</b></span></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="body-row margin0 relative-container"
+                                data-ng-repeat-start="rec in expenseManager.expenseManagerGroup  | filter: expenseManager.filterText">
+                                <td colspan="3" class="custom-padding">
+                                    <div>
+                                        <strong class="expense-date">{{expenseManager.getDisplayDate(rec.date)}}</strong>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class=" body-row margin0 relative-container" data-ng-repeat-end
+                                ng-repeat="data in rec.events | filter: expenseManager.filterText">
+                                <td>
+                                    <div class="cell checkbox">
+                                        <input type="checkbox"
+                                               data-ng-checked="expenseManager.isExpenseRecordSelected(data)"
+                                               checklist-model="expenseManager.clxGridOptions.selectedItems"
+                                               checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span data-ng-show="data.memo" class="sprite default-view-comment"
+                                          data-ng-click="expenseManager.viewMemoInfo(data)" tooltip="View Memo"
+                                          tooltip-append-to-body="true" tooltip-placement="right"></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="javascript:void(0)"
+                                           data-ng-click="expenseManager.redirectToExpenseDeatils(data)"
+                                           class="custom-word-break" tooltip-placement="top"
+                                           tooltip="{{data.expense_name}}">
+                                            {{data.expense_name | replaceByDash}}
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor custom-word-break" tooltip-placement="top"
+                                              tooltip="{{data.expense_type.expense_type_name}}">
+                                            {{data.expense_type.expense_type_name | replaceByDash}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="#/matter-overview/{{data.matter.matter_id}}"
+                                           tooltip="{{data.matter.matter_name}}"
+                                           class="word-wrap">{{data.matter.matter_name | replaceByDash}}</a><br>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top" tooltip="{{data.addedBy}}">
+                                            {{data.addedBy | replaceByDash}}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="saved-search-link cursor-pointer" tooltip-placement="top"
+                                              href="javascript:void(0)"
+                                              data-ng-click="expenseManager.openContactCard(data.contact)"
+                                              tooltip="{{data.associated_party.associated_party_name}}">
+                                            {{data.associated_party.associated_party_name }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.disbursableForExpense}}">
+                                            {{data.disbursableForExpense | replaceByDash}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.expense_amount | number:2}}">
+                                            {{data.expense_amount || data.expense_amount == 0 ? "$" : "-"}}{{data.expense_amount | number:2 }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.paid_amount | number:2}}">
+                                            {{data.paid_amount || data.paid_amount == 0 ? "$" : "-"}}{{data.paid_amount | number:2}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.outstandingamount | number:2}}">
+                                            {{data.outstandingamount || data.outstandingamount == 0 ? "$" : "-"}}{{data.outstandingamount | number:2}}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+
+                <div class="col-md-12 more-link-wrapper" id="moreAllLinkExpense">
+                </div>
+
+            </div>
+            <div class="row margin-top20px text-center "
+                data-ng-show="expenseManager.ExpenseList.length < expenseManager.total && !root.requestPending">
+                <a href="javascript:void(0)" class="" data-ng-click="expenseManager.getMore()">More</a>
+                <span class="paddingLR-10px">|</span>
+                <a href="javascript:void(0)" class="" data-ng-click="expenseManager.getAll()">All</a>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="mt-100" ng-if="(expenseManager.ExpenseList.length == 0 && expenseManager.tags.length > 0 && !expenseManager.isDataRecived) || 
+                (expenseManager.tags.length == 0 && !expenseManager.isDataRecived && !root.requestPending)">
+                <div class="text-center"
+                     data-ng-show="expenseManager.ExpenseList.length == 0 && expenseManager.tags.length > 0 && !expenseManager.isDataRecived">
+                    No data for the applied filters
+                </div>
+                <div class="no-expenses text-center"
+                     data-ng-if="expenseManager.tags.length == 0 && !expenseManager.isDataRecived && !root.requestPending">
+                    <h1>You have no new expenses to be recorded.</h1>
+                    <!-- <p>When an attorney requests to record an expense, you will receive the details here.</p> -->
+                    <!-- <img src="./styles/images/DocuSign.svg"> -->
+                </div>
+            </div>
+        </div>
+
+        <div id="record" class="tab-pane fade">
+
+
+            <div class="col-md-12 pull-right"
+                 data-ng-if="expenseManager.ExpenseList.length > 0 && expenseManager.selectedViewForGridShow == 'recorded' && expenseManager.isDataRecived">
+                <div class="total-amount-main pull-right margin-bottom-0">
+                    <div>
+                        <b>Total</b>
+                        <span class="total-amount-sepretor"></span>
+                    </div>
+                    <div class="lable">
+                        Expense:
+                        <span>{{expenseManager.ExpenseList.total_expense}}</span>
+                    </div>
+                    <div class="lable">
+                        Paid:
+                        <span>{{expenseManager.ExpenseList.total_paid_amount}}</span>
+                    </div>
+                    <div class="lable">
+                        Outstanding:
+                        <span>{{expenseManager.ExpenseList.total_outstanding_amount}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="pull-right" data-ng-show="expenseManager.tags.length > 0 ">
+                <clx-filter-tags on-filter-cancel="expenseManager.tagCancelled" tag-list="expenseManager.tags">
+                </clx-filter-tags>
+            </div> -->
+
+            <div ng-show="expenseManager.ExpenseList.length > 0 && expenseManager.selectedViewForGridShow == 'recorded' && expenseManager.isDataRecived">
+                <div data-ng-show="expenseManager.ExpenseList.length >0 ">
+                    <show-record-count more="expenseManager.getMore()" all="expenseManager.getAll()"
+                        hide-pager="{{expenseManager.showPaginationButtons()}}"
+                        displayed="expenseManager.ExpenseList.length" total="expenseManager.total">
+                    </show-record-count>
+                </div>
+
+                <div class="clearfix"></div>
+                <div id="expenserecordlistupper"></div>
+                <scrollable-table class="document-list-table" watch="expenseManager.ExpenseList"
+                                  tableid="expenserecordlistgrid1" to="#expenserecordlistupper" from="#moreAllLinkExpenseRecord">
+                    <table class="table fix-layout">
+                        <thead>
+                            <tr>
+                                <th class="th-width-3">
+
+                                </th>
+                                <th class="th-width-4">
+
+                                </th>
+                                <th class="th-width-15">
+                                    <div>
+                                        <span><b>Expense name,<br> Type</b></span>
+                                    </div>
+                                </th>
+                                <th class="th-width-15">
+                                    <div> <span><b>Matter Name</b></span></div>
+                                </th>
+                                <th class="th-width-9">
+                                    <div> <span><b>Added by</b></span></div>
+                                </th>
+                                <th class="th-width-11">
+                                    <div> <span><b>Associated Party</b></span></div>
+                                </th>
+                                <th class="th-width-8">
+                                    <div> <span><b>Disburable</b></span></div>
+                                </th>
+                                <th class="th-width-8">
+                                    <div> <span><b>Recorded On</b></span></div>
+                                </th>
+                                <th class="th-width-9">
+                                    <div> <span><b>Expense <br>Amount</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Paid Amount</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Outstanding <br>Amount</b></span></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class=" body-row margin0 relative-container"
+                                data-ng-repeat="data in expenseManager.ExpenseList | filter:expenseManager.filterText">
+                                <td>
+                                    <div class="cell checkbox">
+                                        <input type="checkbox"
+                                               data-ng-checked="expenseManager.isExpenseRecordSelected(data)"
+                                               checklist-model="expenseManager.clxGridOptions.selectedItems"
+                                               checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span data-ng-show="data.memo " class="sprite default-view-comment "
+                                          data-ng-click="expenseManager.viewMemoInfo(data) " tooltip="View Memo "
+                                          tooltip-append-to-body="true " tooltip-placement="right "></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="javascript:void(0)"
+                                           data-ng-click="expenseManager.redirectToExpenseDeatils(data)"
+                                           class="custom-word-break" tooltip-placement="top"
+                                           tooltip="{{data.expense_name}}">
+                                            {{data.expense_name | replaceByDash}}
+                                        </a>
+
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.expense_type.expense_type_name}}">
+                                            {{data.expense_type.expense_type_name | replaceByDash}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="#/matter-overview/{{data.matter.matter_id}}" class="word-wrap"
+                                           tooltip="{{data.matter.matter_name}}">{{data.matter.matter_name | replaceByDash}}</a><br>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor " tooltip-placement="top "
+                                              tooltip="{{data.addedBy}} ">
+                                            {{data.addedBy | replaceByDash}}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="cursor-pointer saved-search-link" tooltip-placement="top"
+                                              href="javascript:void(0)"
+                                              data-ng-click="expenseManager.openContactCard(data.contact)"
+                                              tooltip="{{data.associated_party.associated_party_name}}">
+                                            {{data.associated_party.associated_party_name}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.disbursableForExpense}}">
+                                            {{data.disbursableForExpense | replaceByDash}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor " tooltip-placement="top "
+                                              tooltip="{{data.qbAddedOn}} ">
+                                            {{data.qbAddedOn | replaceByDash}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.expense_amount | number:2}}">
+                                            {{data.expense_amount || data.expense_amount == 0 ? "$" : "-"}}{{data.expense_amount | number:2 }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.paid_amount | number:2}}">
+                                            {{data.paid_amount || data.paid_amount == 0 ? "$" : "-"}}{{data.paid_amount | number:2}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                              tooltip="{{data.outstandingamount | number:2}}">
+                                            {{data.outstandingamount || data.outstandingamount == 0 ? "$" : "-"}}{{data.outstandingamount | number:2}}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+
+                <div class="col-md-12 more-link-wrapper" id="moreAllLinkExpenseRecord">
+
+                </div>
+
+
+            </div>
+            <div class="row margin-top20px text-center "
+                data-ng-show="expenseManager.ExpenseList.length < expenseManager.total && !root.requestPending">
+                <a href="javascript:void(0)" class="" data-ng-click="expenseManager.getMore()">More</a>
+                <span class="paddingLR-10px">|</span>
+                <a href="javascript:void(0)" class="" data-ng-click="expenseManager.getAll()">All</a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="mt-100" ng-if="(expenseManager.ExpenseList.length == 0 && expenseManager.tags.length > 0 && !expenseManager.isDataRecived) || 
+                (expenseManager.tags.length == 0 && !expenseManager.isDataRecived && !root.requestPending)">
+                <div class="text-center"
+                     data-ng-show="expenseManager.ExpenseList.length == 0 && expenseManager.tags.length > 0 && !expenseManager.isDataRecived">
+                    No data for the applied filters
+                </div>
+                <div class="no-expenses text-center"
+                     data-ng-if="expenseManager.tags.length == 0 && !expenseManager.isDataRecived && !root.requestPending">
+                    <h1>You have no recorded expenses.</h1>
+                    <!-- <p>When an attorney requests to record an expense, you will receive the details here.</p> -->
+                    <!-- <img src="./styles/images/DocuSign.svg"> -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="compose-wrap" ng-if="expenseManager.firmData.API === 'PHP'"
+     data-ng-controller="MailboxController as mailboxCtrl"
+     ng-class="{'composeShow' :expenseManager.compose, '' : !expenseManager.compose}">
+    <ng-include src="'../mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="expenseManager.firmData.API === 'JAVA'"
+     data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+     ng-class="{'composeShow' :expenseManager.compose, '' : !expenseManager.compose}">
+    <ng-include src="'../mailbox_v2/compose-mail.html'"></ng-include>
+</div>

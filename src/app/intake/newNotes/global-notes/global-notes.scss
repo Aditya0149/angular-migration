@@ -1,0 +1,95 @@
+.global-notes-container {
+        .heading-with-add-icons ul li { height: 38px;
+    }
+    .panel-content-overflow {
+        height: 100%;
+        overflow-y: hidden;
+    }
+    .gray-bg {
+        background-color: $color_gray80;
+    }
+    .report-responsive {
+        .row {
+            display: inherit;
+            margin: 0;
+            padding: 0;
+        }
+        width: 100%;
+    }
+    .custom-note-filter-flag {
+        overflow-y: scroll;
+        height: 450px;
+        overflow-x: hidden;
+    }
+    .select2-result-single {
+        overflow-y: auto;
+        max-height: 100px;
+        overflow-x: hidden;
+    }
+    .note-matter-globale-height .dropdown-menu  {
+            max-height: 240px;
+    }
+    .radio {
+        label {
+            &::before {
+                width: 19px;
+                height: 19px;
+                border: 2px solid $color_strong_blue;
+            }
+            &::after {
+                background-color: $color_strong_blue;
+                top: 5px;
+                width: 9px;
+                height: 9px;
+                left: 5px;
+            }
+            padding-left: 25px
+        }
+    }
+    .heading-with-add-icons {
+        padding-top: 5px;
+        border-top: 1px solid $color_geyser;
+    }
+    .default-mailbox {
+        top: 2px;
+        position: relative;
+    }
+    .gridview {
+        max-height: 67vh;
+    }
+    .custom-checkbox {
+        margin: 0;
+        position: relative;
+    }
+    .custom-morelink {
+        overflow: hidden;
+        margin-bottom: 5px;
+        position: fixed;
+        width: 80%;
+        bottom: 0;
+    }
+    .custom-note {
+        margin-top: 10px;
+        padding-left: 15px;
+    }
+    .reduce-left-space {
+        margin-left: -15px;
+    }
+    .custom-contact {
+        width: 94%;
+    }
+    .main-box {
+        position: relative;
+        top: 12px;
+        left: -36px;
+        height: 1px;
+    }
+    .info-box {
+        width: 24%;
+        margin: 0 50%;
+        position: absolute;
+    }
+    .custom-line-height {
+        line-height: inherit;
+    }
+}

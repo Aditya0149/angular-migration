@@ -1,0 +1,40 @@
+
+.compose-wrap {
+    height: 86%;
+}
+.efax-landing-wrapper {
+    .reply-dropdown {
+        li.divider {
+            margin: 5px 0;
+            border-bottom: $divider_border;
+        }
+        li a:hover{background-color: #e2e2e2;
+        }
+    }
+    .custom-height {
+        height: 34px;
+    }
+    .mailbox-height-iscroll {
+        max-height: 72vh;
+    }
+}
+
+.compose-fax-wrapper {
+        .compose-fields { height: 72vh;
+    }
+    .ui-select-dropdown {
+        border: $divider_border;
+        border-top: none;
+    }
+    .left-space {
+        padding-left: 17px;
+    }
+    .custom-tab {
+        max-height: 68px;
+        overflow: auto;
+    }
+    .document-box {
+        width: 70%;
+        height: 82%;
+    }
+}

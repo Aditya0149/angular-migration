@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <title>Error</title>
+        <style>
+            @font-face {
+                font-family: 'GothamRounded-Bold';
+                src: url('GothamRounded-Bold.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+            .centered {
+                position: fixed;
+                top: 42%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transform: -webkit-translate(-50%, -50%);
+                transform: -moz-translate(-50%, -50%);
+                transform: -ms-translate(-50%, -50%);
+                font-size: 18px;
+                font-weight: bold;
+                font-family: 'GothamRounded-Bold';
+                color: #777777;
+                width: 100%;
+                text-align: center;
+            }
+            .btn-centered {
+                top: 53%;
+            }
+            .error-icon{position: relative;top: 0px;margin-right: 5px;}
+            .resend-button{border: 0;color: #fff;padding: 8px 25px;background: #F48267;border-radius: 4px;font-family: 'GothamRounded-Bold';text-decoration: none;font-size: 14px;}
+            .resend-button:hover{color: #fff;}
+        </style>
+    </head>
+    <body>
+        <div class="centered"><img class="error-icon" src="../styles/images/error-icon-red.png">&nbsp;Token expired</div>
+        <div class="centered btn-centered"><button data-ng-click="referralExpTokenCtrl.resendRequest()" class="resend-button">Resend</button></div>
+    </body>
+</html>

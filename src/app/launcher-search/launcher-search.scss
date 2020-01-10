@@ -1,0 +1,25 @@
+.launcher-search-wrapper {
+    .search-word-ellipsis { 
+        width: 260px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        line-height: 17px;
+    }
+    .custom-label {
+        font-size: 14px;
+        padding-left: 26px;
+    }
+    .custom-width {
+        width: 91%;
+    }
+    .data-box {
+        border-bottom: 1px solid $color_geyser;
+        margin: 0 10px;
+        width: 23%;
+    }
+    .bl-0 {
+        border-left: none !important;
+    }
+}

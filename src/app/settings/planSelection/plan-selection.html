@@ -1,0 +1,358 @@
+<style>
+#report-content { 
+    width: 100%;
+}
+</style>
+<div class="planSelection-wrapper">
+    <div class="topper-div clearfix">
+        <h2 class="pull-left page-title">Matter Manager Plan Selection</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12 pricing-panel">
+            <div ng-if="planselectionctrl.selectedPlan.name != 'Referral Plan'" class="col-md-3">
+                <div class="plan plan-selected">
+                    <div class="plan-name">
+                        <h2>{{planselectionctrl.selectedPlan.name}}</h2>
+                    </div>
+                    <div class="user-matter-block col-centered col-md-12 text-center">
+                        <div class="col-md-6 left-block">{{planselectionctrl.selectedPlan.max_users}}<br>Users</div>
+                        <div class="col-md-6">{{planselectionctrl.selectedPlan.max_cases }}<br>Matters</div>
+                    </div>
+                    <div class="current-usage-block col-md-12">
+                        <div class="progress-text"><span>Matters </span>({{planselectionctrl.total_matter_count}})</div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="planselectionctrl.total_matter_count" aria-valuemin="0" aria-valuemax="planselectionctrl.max_cases_count" ng-style="{'width':(planselectionctrl.total_matter_count / planselectionctrl.max_cases_count * 100)}">
+                            </div>
+                        </div>
+                        <div class="progress-text"><span>Users </span>({{planselectionctrl.active_user_count}})</div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="planselectionctrl.active_user_count" aria-valuemin="0" aria-valuemax="planselectionctrl.max_users_count" ng-style="{'width':(planselectionctrl.active_user_count / planselectionctrl.max_users_count * 100)}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pricing-cal-block">
+                        For more details<br>Call: +1.646.415.8307
+                    </div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightSelfStarterFlag==true"><b>Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span></div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightTop100Flag==true"><b>Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-3" ng-if="planselectionctrl.selectedPlan.name != planselectionctrl.level_10_MonthlyInfo.name">
+                <div class="{{planselectionctrl.highlightSelfStarter}}">
+                    <div class="plan-name">
+                        <h2>{{planselectionctrl.level_10_MonthlyInfo.name}}</h2>
+                    </div>
+                    <div class="user-matter-block col-centered col-md-12 text-center">
+                        <div class="col-md-6 left-block">{{planselectionctrl.level_10_YearlyInfo.max_users}}<br>Users</div>
+                        <div class="col-md-6">{{planselectionctrl.level_10_YearlyInfo.max_cases }}<br>Matters</div>
+                    </div>
+                    <div class="current-usage-block-empty"></div>
+                    <div class="pricing-cal-block">
+                        For more details<br>Call: +1.646.415.8307
+                    </div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightSelfStarterFlag==true"><b>Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-3" ng-if="planselectionctrl.selectedPlan.name != planselectionctrl.level_11_YearlyInfo.name">
+                <div class={{planselectionctrl.highlightRisingStar}}>
+                    <div class="plan-name">
+                        <h2>{{planselectionctrl.level_11_YearlyInfo.name}}</h2>
+                    </div>
+                    <div class="user-matter-block col-centered col-md-12 text-center">
+                        <div class="col-md-6 left-block">{{planselectionctrl.level_11_YearlyInfo.max_users}}<br>Users</div>
+                        <div class="col-md-6">{{planselectionctrl.level_11_YearlyInfo.max_cases }}<br>Matters</div>
+                    </div>
+                    <div class="current-usage-block-empty"></div>
+                    <div class="pricing-cal-block">
+                        For more details<br>Call: +1.646.415.8307
+                    </div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightRisingStarFlag==true"><b>Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-3" ng-if="planselectionctrl.selectedPlan.name != planselectionctrl.level_12_MonthlyInfo.name">
+                <div class="{{planselectionctrl.highlightElite}}">
+                    <div class="plan-name">
+                        <h2>{{planselectionctrl.level_12_MonthlyInfo.name}}</h2>
+                    </div>
+                    <div class="user-matter-block col-centered col-md-12 text-center">
+                        <div class="col-md-6 left-block">{{planselectionctrl.level_12_YearlyInfo.max_users}}<br>Users</div>
+                        <div class="col-md-6">{{planselectionctrl.level_12_YearlyInfo.max_cases }}<br>Matters</div>
+                    </div>
+                    <div class="current-usage-block-empty"></div>
+                    <div class="pricing-cal-block">
+                        For more details<br>Call: +1.646.415.8307
+                    </div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightEliteFlag==true"><b>Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span></div>
+                </div>
+            </div>
+            <div ng-if="planselectionctrl.selectedPlan.name != planselectionctrl.level_13_YearlyInfo.name" class="col-md-3">
+                <div class="{{planselectionctrl.highlightElite}}">
+                    <div class="plan-name">
+                        <h2>{{planselectionctrl.level_13_YearlyInfo.name}}</h2>
+                    </div>
+                    <div class="user-matter-block col-centered col-md-12 text-center">
+                        <div class="col-md-6 left-block">{{planselectionctrl.level_13_YearlyInfo.max_users}}<br>Users</div>
+                        <div class="col-md-6">{{planselectionctrl.level_13_YearlyInfo.max_cases }}<br>Matters</div>
+                    </div>
+                    <div class="current-usage-block-empty"></div>
+                    <div class="pricing-cal-block">
+                        For more details<br>Call: +1.646.415.8307
+                    </div>
+                    <div class="renewal-date" data-ng-if="planselectionctrl.highlightEliteFlag==true">
+                        <b>
+                            Renewal Date:
+                        </b><span>{{planselectionctrl.renewalDate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center margin-top20px" data-ng-if="planselectionctrl.freePlanFlag==true">
+                <span> You are on Free Trial and it will expired on {{planselectionctrl.renewalDate}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="topper-div title-box">
+        <h2 class="padding-bottom0">Your Subscriptions</h2>
+    </div>
+    <div class="configuration-right-block">
+        <div ng-if="planselectionctrl.applicationcount == 1 && (
+        (((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.CCOM.is_active==1 &&
+        planselectionctrl.applicationsInfo.CCOM.permission.V==1 && planselectionctrl.applicationsInfo.CCOM.is_visible==1) && app.app_code == 'CCOM')) ||
+        (((planselectionctrl.applicationsInfo.OPLG.is_active==1 &&
+        planselectionctrl.applicationsInfo.OPLG.permission.V==1 && planselectionctrl.applicationsInfo.OPLG.is_visible==1) && app.app_code == 'OPLG')) ||
+        (((planselectionctrl.applicationsInfo.GA.is_active==1 &&
+        planselectionctrl.applicationsInfo.GA.permission.V==1 && planselectionctrl.applicationsInfo.GA.is_visible==1) && app.app_code == 'EC')) ||
+        (((planselectionctrl.applicationsInfo.DA.is_active==1 &&
+        planselectionctrl.applicationsInfo.DA.permission.V==1 && planselectionctrl.applicationsInfo.DA.is_visible==1) && app.app_code == 'DA')) ||
+        (((planselectionctrl.applicationsInfo.O365.is_active==1 &&
+        planselectionctrl.applicationsInfo.O365.permission.V==1 && planselectionctrl.applicationsInfo.O365.is_visible==1) && app.app_code == 'O365')) ||
+        (((planselectionctrl.applicationsInfo.RE.is_active==1 &&
+        planselectionctrl.applicationsInfo.RE.permission.V==1  && planselectionctrl.applicationsInfo.RE.is_visible==1) && app.app_code == 'RE')) ||
+        (((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.IM.is_active==1 &&
+        planselectionctrl.applicationsInfo.IM.permission.V==1 && planselectionctrl.applicationsInfo.IM.is_visible==1) && app.app_code == 'IM')) || 
+        (((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.LG.is_active==1 &&
+        planselectionctrl.applicationsInfo.LG.permission.V==1 && planselectionctrl.applicationsInfo.LG.is_visible==1) && app.app_code == 'LG')) ||
+        (((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.EM.is_active==1 &&
+        planselectionctrl.applicationsInfo.EM.permission.V==1 && planselectionctrl.applicationsInfo.EM.is_visible==1) && app.app_code == 'EM')) ||
+        (((planselectionctrl.applicationsInfo.SMS.is_active==1 && planselectionctrl.applicationsInfo.SMS.permission.V==1 && planselectionctrl.applicationsInfo.SMS.is_visible==1) && app.app_code == 'SMS')))" class="col-md-4 clearme" ng-repeat="app in planselectionctrl.applicationlist">
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('CCOM')" ng-if="((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.CCOM.is_active==1 &&
+                            planselectionctrl.applicationsInfo.CCOM.permission.V==1 && planselectionctrl.applicationsInfo.CCOM.is_visible==1) && app.app_code == 'CCOM')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('CCOM')">
+                        <img src="styles/images/marketplace-images/icon/client-communicator.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('CCOM')">
+                        <div class="app-title pl-15">Client Communicator</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.CCOM, $event)" ng-disabled="planselectionctrl.applicationsInfo.CCOM.permission.E==0" ng-model="planselectionctrl.applicationsInfo.CCOM.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('OPLG')"  ng-if="((planselectionctrl.applicationsInfo.OPLG.is_active==1 &&
+                            planselectionctrl.applicationsInfo.OPLG.permission.V==1 && planselectionctrl.applicationsInfo.OPLG.is_visible==1) && app.app_code == 'OPLG')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('OPLG')">
+                        <img src="styles/images/marketplace-images/icon/office-connector.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('OPLG')">
+                        <div class="app-title pl-15">Word Connector</div>
+    
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.OPLG, $event)" ng-disabled="planselectionctrl.applicationsInfo.OPLG.permission.E==0" ng-model="planselectionctrl.applicationsInfo.OPLG.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('OTLG')"  ng-if="((planselectionctrl.applicationsInfo.GA.is_active==1 &&
+                            planselectionctrl.applicationsInfo.GA.permission.V==1 && planselectionctrl.applicationsInfo.GA.is_visible==1) && app.app_code == 'EC')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('OTLG')">
+                        <img src="styles/images/marketplace-images/icon/Connector-Email.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('OTLG')">
+                        <div class="app-title pl-15">Email Connector</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.GA, $event)" ng-disabled="planselectionctrl.applicationsInfo.GA.permission.E==0 || planselectionctrl.applicationsInfo.OTLG.permission.E==0" ng-model="planselectionctrl.applicationsInfo.GA.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('DA')"  ng-if="((planselectionctrl.applicationsInfo.DA.is_active==1 &&
+                            planselectionctrl.applicationsInfo.DA.permission.V==1 && planselectionctrl.applicationsInfo.DA.is_visible==1) && app.app_code == 'DA') ">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('DA')">
+                        <img src="styles/images/marketplace-images/icon/digital-archival.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('DA')">
+                        <div class="app-title pl-15">Digital Archiver</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.DA, $event)" ng-model="planselectionctrl.applicationsInfo.DA.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('O365')" ng-if="((planselectionctrl.applicationsInfo.O365.is_active==1 &&
+                            planselectionctrl.applicationsInfo.O365.permission.V==1 && planselectionctrl.applicationsInfo.O365.is_visible==1) && app.app_code == 'O365')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('O365')">
+                        <img src="styles/images/marketplace-images/icon/microsoft-online.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer" ng-click="planselectionctrl.navigateToApp('O365')">
+                        <div class="app-title">Microsoft Office Online®</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.O365, $event)" ng-model="planselectionctrl.applicationsInfo.O365.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('RE')" ng-if="((planselectionctrl.applicationsInfo.RE.is_active==1 &&
+                            planselectionctrl.applicationsInfo.RE.permission.V==1  && planselectionctrl.applicationsInfo.RE.is_visible==1) && app.app_code == 'RE')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('RE')">
+                        <img src="styles/images/marketplace-images/icon/referral-engine.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('RE')">
+                        <div class="app-title pl-15">Referral Engine</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.RE, $event)" ng-model="planselectionctrl.applicationsInfo.RE.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('IM')" ng-if="((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.IM.is_active==1 &&
+                            planselectionctrl.applicationsInfo.IM.permission.V==1 && planselectionctrl.applicationsInfo.IM.is_visible==1) && app.app_code == 'IM')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('IM')">
+                        <img src="styles/images/launcher-icons/intake-manager.png">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0">
+                        <div class="app-title pl-15" ng-click="planselectionctrl.navigateToApp('IM')">
+                            Intake Manager</div>
+                        <!-- <div class="greytxt">
+                        <p>Subscription : {{planselectionctrl.planDetails.intake.current_intake_plan[0].name}}</p>
+                        <div class="progress" style="margin-left: 16px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="planselectionctrl.planDetails.intake.total_intake_count"
+                             aria-valuemin="0" aria-valuemax="planselectionctrl.planDetails.intake.max_intake_count" style="width:{{planselectionctrl.planDetails.intake.total_intake_count / planselectionctrl.planDetails.intake.max_intake_count * 100}}px">
+                            </div>
+                        </div> -->
+                        <!-- {{planselectionctrl.planDetails.intake.current_intake_plan[0].name}} plan:
+                        {{planselectionctrl.planDetails.intake.total_intake_count}}/{{planselectionctrl.planDetails.intake.max_intake_count}}
+                        of intakes allotted per month remaining -->
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.IM, $event)" ng-model="planselectionctrl.applicationsInfo.IM.isactive" tooltip="{{planselectionctrl.tooltipForIntakeApplication}}">
+                            Unsubscribe
+                        </button>
+                        <!-- <button class="btn cursor-pointer subscrib" style="margin-top: 8px;padding: 0px 22px;" ng-click="planselectionctrl.getPlanDetails($event, false)">Upgrade</button> -->
+                    </div>
+                </div>
+            </div>
+            <div>
+            </div>
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('EM')" ng-if="((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.EM.is_active==1 &&
+                            planselectionctrl.applicationsInfo.EM.permission.V==1 && planselectionctrl.applicationsInfo.EM.is_visible==1) && app.app_code == 'EM')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('EM')">
+                        <img src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=1">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0">
+                        <div class="app-title pl-15" ng-click="planselectionctrl.navigateToApp('EM')">
+                            Expense Manager</div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.EM, $event)" ng-model="planselectionctrl.applicationsInfo.EM.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="block cursor-pointer planselectionctrl" ng-click="planselectionctrl.navigateToApp('SMS')" ng-if="((planselectionctrl.applicationsInfo.SMS.is_active==1 && planselectionctrl.applicationsInfo.SMS.permission.V==1 && planselectionctrl.applicationsInfo.SMS.is_visible==1) && app.app_code == 'SMS')">
+                <div class="row">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('SMS')">
+                        <img src="styles/images/launcher-icons/sms.png">
+                    </div>
+                    <div class="col-md-5 cursor-pointer padding-0">
+                        <div class="app-title pl-15">
+                            Client Messenger</div>
+                        <!-- <div class="greytxt">
+                            <p>
+                                Subscription : {{planselectionctrl.planDetails.sms.current_sms_plan[0].name}}
+                            </p>
+                            <p>
+                                {{planselectionctrl.date}}: &nbsp;{{
+                                planselectionctrl.planDetails.sms.max_sms_count -
+                                planselectionctrl.planDetails.sms.total_sms_count
+                                }} texts
+                            </p> -->
+                        <!-- <div class="progress" style="margin-left: 16px;">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="planselectionctrl.planDetails.sms.total_sms_count"
+                                     aria-valuemin="0" aria-valuemax="planselectionctrl.planDetails.sms.max_sms_count" style="width:{{planselectionctrl.planDetails.sms.total_sms_count / planselectionctrl.planDetails.sms.max_sms_count * 100}}px">
+                                </div>
+                            </div> -->
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-md-5 text-right">
+                        <!-- <button class="btn cursor-pointer subscrib" style="padding: 0px 14px;" ng-click="planselectionctrl.getPlanDetails($event, true)">Upgrade</button> -->
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.SMS, $event)" ng-model="planselectionctrl.applicationsInfo.SMS.isactive" ng-if="planselectionctrl.applicationsInfo.SMS.unsubscribed_on == null">
+                            Unsubscribe
+                        </button>
+                        <button ng-click="$event.stopPropagation();" class="btn subscrib messenger-btn" ng-if="planselectionctrl.applicationsInfo.SMS.unsubscribed_on != null" tooltip="{{planselectionctrl.tooltipForSMSApplication}}">
+                            Unsubscribe
+                        </button>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="block cursor-pointer digital-box" ng-click="planselectionctrl.navigateToApp('LG')" ng-if="((planselectionctrl.applicationsInfo.LG.is_active==1 &&
+            planselectionctrl.applicationsInfo.LG.permission.V==1 && planselectionctrl.applicationsInfo.LG.is_visible==1) && app.app_code == 'LG')">
+    
+                <div class="row" ng-click="planselectionctrl.navigateToApp('LG')">
+                    <div class="col-md-2 img-block text-center cursor-pointer" ng-click="planselectionctrl.navigateToApp('LG')">
+                        <img src="styles/images/marketplace-images/icon/lead-generator.png?v=787">
+                    </div>
+                    <div class="col-md-6 cursor-pointer padding-left-0" ng-click="planselectionctrl.navigateToApp('LG')">
+                        <div class="app-title pl-15">Lead Generator</div>
+    
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn subscrib" ng-click="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.LG, $event)" ng-disabled="planselectionctrl.applicationsInfo.LG.permission.E==0" ng-model="planselectionctrl.applicationsInfo.LG.isactive">
+                            Unsubscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div>
+            <div class="col-md-12 text-center margin-top10px" ng-if="planselectionctrl.applicationcount == 0 && planselectionctrl.noData">
+                There is no application subscribed by you.
+            </div>
+        </div>
+    </div>
+
+</div>

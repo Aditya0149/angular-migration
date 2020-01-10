@@ -1,0 +1,29 @@
+    <div id="report-content">
+    <div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('analytics')}" data-ui-sref="intakedashboard.analytics">Analytics</a>
+            </li>
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('critical-dates')}" data-ui-sref="intakedashboard.critical-dates">Events</a>
+            </li>
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('tasks')}" data-ui-sref="intakedashboard.tasks">Tasks</a>
+            </li>
+        </ul>
+    </div>
+    <div ui-view></div>
+    <footer class="intake-header" position-center>
+        <ul>
+            <li>
+                <a ui-sref="intake-list">Intakes</a>
+            </li>
+            <li>
+                <a ui-sref="intakeglobalContact">Contacts</a>
+            </li>
+            <li>
+                <a ui-sref="intakereport.allIntakeListReport">Reports</a>
+            </li>
+        </ul>
+    </footer>
+</div>

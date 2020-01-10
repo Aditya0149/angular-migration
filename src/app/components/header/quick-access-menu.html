@@ -1,0 +1,246 @@
+<div class="quick-access-menu-wrapper">
+    <div class="dropdown pull-left header-dots-icon dots-popup quick-access">
+        <a class="dropdown-toggle" ng-click="pageheader.toggled()" id="dropdownMenu6" data-toggle="dropdown"
+            aria-expanded="true"></a>
+        <ul class="launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown" role="menu"
+            aria-labelledby="dropdownMenu6">
+            <li>
+                <div class="top-title">
+                    <p class="small-app-title"> your subscriptions</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="hover quick-hover" ng-click="pageheader.isActive('MM', 'dashboard.analytics')">
+                            <div class="img">
+                                <a class="p-0" href="#/dashboard">
+                                    <img class="app-icon" src="../styles/images/launcher-icons/matter-manager.png">
+                                </a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">MATTERS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" data-ng-show="isIntakeActiveUI">
+                        <div class="hover quick-hover"
+                            ng-click="pageheader.isActive('IM', 'intakedashboard.analytics')">
+                            <div class="img">
+                                <a class="p-0"
+                                    ng-href="{{isUserIntakeActive ? '#/intake/dashboard':'javascript:void(0)'}}">
+                                    <img class="app-icon" src="../styles/images/launcher-icons/intake-manager.png"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">INTAKES</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="hover quick-hover" ng-click="pageheader.isActive('CM')">
+                            <div class="img">
+                                <a class="p-0" href="#/launcher/contacts">
+                                    <img class="app-icon"
+                                        src="../styles/images/marketplace-images/icon/contact-manager.png">
+                                </a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">CONTACTS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- US16929: Expense Manager (Quickbooks integration) -->
+                    <div class="col-md-4" data-ng-show="isExpenseActiveUI">
+                        <div class="hover quick-hover" ng-click="pageheader.isActive('EM')">
+                            <div class="img">
+                                <a class="p-0"
+                                    ng-href="{{isUserExpenseActive ? '#/expenseManager':'javascript:void(0)'}}">
+                                    <img class="app-icon"
+                                        src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=1">
+                                </a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">EXPENSES</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4" data-ng-show="isReferalActiveUI">
+                        <div class="hover quick-hover" ng-click="pageheader.isActive('RE')">
+                            <div class="img">
+                                <a class="p-0"
+                                    ng-href="{{isUserReferalActive ? '#/referred-matters':'javascript:void(0)'}}">
+                                    <img class="app-icon" src="../styles/images/launcher-icons/referral-engine.png"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">REFERRAL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-ng-show="isDigiArchivalSubUI">
+                        <div class="hover quick-hover" ng-click="pageheader.isActive('DA')">
+                            <div class="img">
+                                <a class="p-0" ng-href="{{isUserDigiArchivalSub ? '#/archival':'javascript:void(0)'}}">
+                                    <img class="app-icon"
+                                        src="../styles/images/launcher-icons/digital-archiver.png"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">ARCHIVER</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="add-ons"
+                    data-ng-if="!isReferalActiveUI || !isDigiArchivalSubUI || !isIntakeActiveUI || !isSmsActiveUI">
+                    <p> Add-ons</p>
+                </div>
+                <div class="row blueback tm9">
+                    <div class="col-md-4" ng-click="pageheader.showDetailsData('IM')" class="cursor-pointer"
+                        data-ng-if="!isIntakeActiveUI">
+                        <div class="hover quick-hover">
+                            <div class="img">
+                                <a class="p-0" href="#/application-details/intake-manager">
+                                    <img class="app-icon" src="../styles/images/launcher-icons/intake-manager.png">
+                                </a>
+
+                            </div>
+                            <div class="text-center">
+                                <span class="title">INTAKES</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-click="pageheader.showDetailsData('RE')" data-ng-if="!isReferalActiveUI">
+                        <div class="hover quick-hover">
+                            <div class="img">
+                                <a class="p-0" href="#/application-details/referral">
+                                    <img class="app-icon" src="../styles/images/launcher-icons/referral-engine.png"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">REFERRAL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-click="pageheader.showDetailsData('DA')" data-ng-if="!isDigiArchivalSubUI">
+                        <div class="hover quick-hover">
+                            <div class="img">
+                                <a class="p-0" href="#/application-details/digital-archival">
+                                    <img class="app-icon"
+                                        src="../styles/images/launcher-icons/digital-archiver.png"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">ARCHIVER</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-click="pageheader.showDetailsData('SMS')"
+                        data-ng-if="!hideSMS && !isSmsActiveUI">
+                        <div class="hover quick-hover">
+                            <div class="img">
+                                <a class="p-0" href="#/application-details/sms">
+                                    <img class="app-icon"
+                                        src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677"
+                                        tooltip-placement="bottom" tooltip="Client Messenger"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">MESSENGER</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- US16929: Expense Manager (Quickbooks integration) -->
+                    <!-- <div class="col-md-4" ng-click="pageheader.showDetailsData('EM')"
+                        data-ng-if="!isExpenseActiveUI">
+                        <div class="hover quick-hover">
+                            <div class="img">
+                                <a class="p-0" href="#/application-details/expense-manager">
+                                    <img class="app-icon"
+                                        src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=1"></a>
+                            </div>
+                            <div class="text-center">
+                                <span class="title">EXPENSE MANAGER</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-md-12">
+                        <div class="small-boxes" data-ui-sref="launcher">
+                            <div class="img">
+                                <img data-ui-sref="launcher" style="cursor: pointer;display: block;margin-left: auto; margin-right: auto;" src="../styles/images/launcher-icons/home.png">
+                            </div>
+                            <div style="text-align: center;">
+                                <span data-ui-sref="launcher" style="cursor: pointer;" class="title">LAUNCHPAD</span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row">
+
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- <ol class="carousel-indicators">
+                        <li data-target="myCarousel" data-slide-to="0"></li>
+                        <li data-target="myCarousel" data-slide-to="1"></li>
+                        <li data-target="myCarousel" data-slide-to="2"></li>
+                    </ol> -->
+                        <div class="carousel-inner">
+
+
+                            <!-- <div class="item active">
+                            <img src="../styles/images/launcher-icons/Banner_IntakeManager-small.svg?v=166"
+                                class="cursor-pointer" ng-click="pageheader.showDetailsData('IM')" alt="Chicago"
+                                style="width:100%;">
+                        </div>
+                        <div class="item">
+                            <img src="../styles/images/launcher-icons/sms-banner-small.svg?v=1662" class="cursor-pointer"
+                                ng-click="pageheader.showDetailsData('SMS')" alt="Los Angeles" style="width:100%;">
+                        </div> -->
+                            <!-- <div class="item active">
+                                <img src="../styles/images/launcher-icons/Banner_Expense Manager_Launchpad.svg?v=787"
+                                    class="cursor-pointer" ng-click="pageheader.showDetailsData('EM')" alt="Los Angeles"
+                                    style="width:100%;">
+                            </div> -->
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="small-app-title1">
+
+                </div>
+                <div class="row hamburger-menu tm9">
+
+                    <div class="col-md-6">
+                        <div class="small-boxes" data-ui-sref="launcher">
+                            <div class="img">
+                                <a data-ui-sref="launcher">
+                                    <img src="../styles/images/launcher-icons/home.png">
+                                </a>
+                            </div>
+                            <div class="txtdiv">
+                                <a data-ui-sref="launcher">
+                                    <span class="title">LaunchPad</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="small-boxes" data-ui-sref="marketplace.applications">
+                            <div class="img">
+                                <a data-ui-sref="marketplace.applications">
+                                    <img src="../styles/images/launcher-icons/marketplace-icon.png">
+                                </a>
+                            </div>
+                            <div class="txtdiv">
+                                <a data-ui-sref="marketplace.applications">
+                                    <span class="title">Marketplace</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="marketplace-details-main">
+	<div class="ng-scope row">
+		<div class="container col-md-12 main-top">
+			<div class="pull-left back-btn-block">
+				<a href="#/marketplace/upcoming" data-ng-click="upcompingAppsCtrl.clearStorage()" class="marketplace-back-btn"></a>
+			</div>
+			<div class="pull-left left-img">
+				<img src="styles/images/marketplace-images/icon/communicator-cloudlex.png">
+			</div>
+			<div class="col-md-7 marketplace-details-block border-right">
+				<div class="title">Client Communicator</div>
+				<div class="text col-md-10 padding-0">Reduce frequent calls and communicate with your clients in a mutually convenient manner.  Firms can share real time case updates that can be viewed by clients around-the-clock. And clients can upload important case documents right in the portal, saving your firm valuable time.</div>
+			</div>
+			<div class="col-md-2 padding-right-0 marketplace-details-block margin-top30px">
+				<div class="text"><b style="color: #1bb8b2;">Now available for preview. </b></div>
+			</div>
+			<div class="">
+				<!--<div class="adopted-by"><span><span style="font-size: 22px;">40</span><br>Laws Firms</span><br>Adopted By</div>-->
+			</div>
+		</div>
+	</div>
+	<div id="report-content">
+		<div class="marketplace-details-vedeo-block col-md-9 col-centered">
+			<carousel interval="upcompingAppsCtrl.myInterval">
+				<slide ng-repeat="slide in upcompingAppsCtrl.slides" active="slide.active">
+					<img ng-src="{{slide.image}}">
+					<div class="carousel-caption">
+					</div>
+				</slide>
+			</carousel>
+		</div>
+	</div>
+</div>
+<footer position-center>
+    <ul>
+        <li>
+            <a href="#/marketplace">Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+        <li>
+            <a href="#/marketplace/upcoming" class="active-footer">Upcoming</a>
+        </li>
+
+    </ul>
+</footer>

@@ -1,0 +1,84 @@
+<style>
+    .paddingbottom0 {
+        padding-bottom: 0px !important;
+    }
+</style>
+<cancel-pending-requests></cancel-pending-requests>
+<div class="row  margin0  margin-top10px" style="width: calc( 100% - 100px) !important;padding:0 11px 0 20px;">
+    <matter-info-header matter-info="allParties.matterInfo"></matter-info-header>
+</div>
+<div id="report-content" data-ng-if="allParties.dataReceived" ng-class="{'cursor-pointer-events-none' :allParties.compose, '' : !allParties.compose}">
+    <div class=" form-margin">
+        <div class=" clearfix subnav">
+            <div>
+                <ul class="centered-nav">
+                    <li><a href="javascript:void(0)" data-ng-click="allParties.showView(allParties.views.PLAINTIFF_VIEW)"
+                            data-ng-class="{'activeLink' : allParties.currentView == allParties.views.PLAINTIFF_VIEW}">Plaintiffs
+                            <span>({{plaintiffsCount}})</span></a></li>
+                    <li><a href="javascript:void(0)" data-ng-click="allParties.showView(allParties.views.DEFENDANT_VIEW)"
+                            data-ng-class="{'activeLink' : allParties.currentView == allParties.views.DEFENDANT_VIEW}">Defendants
+                            <span>({{defendantsCount}})</span></a></li>
+                    <li><a href="javascript:void(0)" data-ng-click="allParties.showView(allParties.views.OTHER_PARTY_VIEW)"
+                            data-ng-class="{'activeLink' : allParties.currentView == allParties.views.OTHER_PARTY_VIEW}">Other
+                            Parties <span>({{otherPartiesCount}})</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="paddingRLR flexCont ng-scope"></div>
+
+        <div data-ng-show="allParties.currentView == allParties.views.PLAINTIFF_VIEW">
+            <div data-ng-controller="PlaintiffsViewCtrl as plaintiffsViewCtrl" data-ng-include="'app/all-parties/plaintiffs/plaintiffs-view.html'">
+            </div>
+        </div>
+
+        <div data-ng-show="allParties.currentView == allParties.views.DEFENDANT_VIEW">
+            <div data-ng-controller="DefendantsViewCtrl as defendantsViewCtrl" data-ng-include="'app/all-parties/defendants/defendants-view.html'">
+            </div>
+        </div>
+
+        <div data-ng-show="allParties.currentView == allParties.views.OTHER_PARTY_VIEW">
+            <div data-ng-controller="OtherPartiesViewCtrl as otherPartiesViewCtrl" data-ng-include="'app/all-parties/other-parties/other-parties-view.html'">
+            </div>
+        </div>
+    </div>
+</div>
+<footer position-center delayRender='true' id="allPartiesFooter">
+    <ul>
+        <li>
+            <a href="#/matter-overview/{{allParties.matterId}}">Overview</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="active-footer">All Parties</a>
+        </li>
+        <li>
+            <a href="#/matter-details/{{allParties.matterId}}">Details</a>
+        </li>
+        <li>
+            <a href="#/matter-documents/{{allParties.matterId}}">Documents</a>
+        </li>
+        <li>
+            <a href="#/notes/{{allParties.matterId}}">Notes</a>
+        </li>
+        <li>
+            <a href="#/events/{{allParties.matterId}}">Events</a>
+        </li>
+        <li>
+            <a href="#/tasks/{{allParties.matterId}}">Tasks</a>
+        </li>
+        <li data-ng-show="is_workflow_active">
+            <a href="#/workflow/{{allParties.matterId}}">Workflow</a>
+        </li>
+        <li>
+            <a href="#/timeline/{{allParties.matterId}}">Timeline</a>
+        </li>
+
+    </ul>
+</footer>
+<div class="compose-wrap" ng-if="allParties.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :allParties.compose, '' : !allParties.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="allParties.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :allParties.compose, '' : !allParties.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

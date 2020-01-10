@@ -1,0 +1,242 @@
+<style type="text/css">
+    .table {
+        margin-bottom: 0px !important;
+    }
+</style>
+<!-- CONTENT SECTION-->
+<div scrolly="matterInTookByDateCtrl.scrollReachedBottom()"
+    reached-top="matterInTookByDateCtrl.scrollReachedTop()">
+    <div class=" clearfix">
+        <div class="row">
+            <!--<h1 class="col-md-5 ">{{matterInTookByDateCtrl.selectionModel.statusName}} Matters  </h1>-->
+            <h1 class="col-md-5 ellipsis-nowrap">New Matters Opened by date</h1>
+            <div class="col-md-7 pull-right page-sublinks subnav">
+                <ul class="pull-right">
+                    <li><a href="javascript:void(0);"
+                        ng-class="{' active': matterInTookByDateCtrl.selectionModel.allMatter == 1}"
+                        ng-click="matterInTookByDateCtrl.filterByUser(1);matterInTookByDateCtrl.selectedTab=1;">
+                        <h2>My Matters</h2>
+                    </a></li>
+                    <li><a href="javascript:void(0);"
+                        ng-class="{' active': matterInTookByDateCtrl.selectionModel.allMatter == 0}"
+                        ng-click="matterInTookByDateCtrl.filterByUser(0);matterInTookByDateCtrl.selectedTab=0;">
+                        <h2>All Matters</h2>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="fixed-grid-report">
+        <div class="col-md-12 custom-padding">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="matterInTookByDateCtrl.filterMatterIntookByDate()"
+                                class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="matterInTookByDateCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="matterInTookByDateCtrl.downloadMatters()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pull-right head-padding-10px ">
+                <button type="button"
+                    data-ng-click="matterInTookByDateCtrl.clearFilters()"
+                    class="btn btn-default  pull-right">
+                    Clear Filter</button>
+            </div>
+
+            <div class="dropdown head-padding-10px pull-right">
+                Sort By :
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{matterInTookByDateCtrl.selectedSort}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                    <li data-ng-repeat="sort in matterInTookByDateCtrl.sorts">
+                        <a data-ng-click="matterInTookByDateCtrl.applySortByFilter(sort)">{{sort.name}}
+                        </a>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags
+                    on-filter-cancel="matterInTookByDateCtrl.tagCancelled"
+                    tag-list="matterInTookByDateCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>     
+    <div data-ng-show="matterInTookByDateCtrl.viewModel.matters.length >0 ">
+        <show-record-count-only
+            more="matterInTookByDateCtrl.applyFilterLazyLoading()"
+            all="matterInTookByDateCtrl.getAllMatterList()"
+            hide-pager="{{matterInTookByDateCtrl.showMoreAllBtn()}}"
+            displayed="matterInTookByDateCtrl.viewModel.matters.length"
+            total="matterInTookByDateCtrl.total"></show-record-count-only>
+    </div>
+
+
+              <!-- Start: New scroll-table tableid  -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <div class="report-scroll-all-matter">
+
+
+        <scroll-table tabselected="matterInTookByDateCtrl.selectedTab" sort="matterInTookByDateCtrl.selectedSort" tag="matterInTookByDateCtrl.tags" watch="matterInTookByDateCtrl.viewModel.matters" tableid="listGrid" to="#listUpper"
+            from="#moreAllLinkRecord">
+
+            <table class="table table-scroll">
+                <thead data-ng-show="matterInTookByDateCtrl.viewModel.matters.length > 0">
+                    <tr>
+                        <th class="th-width-10">
+                            <div>
+                                <b>Intake date &<br> Date of Incident</b>
+                            </div>
+                        </th>
+                        <th class="th-width-30">
+                            <div>
+                                <span><b>Matter Name, File number, Index/Docket#</b></span>
+                            </div>
+                        </th>
+                        <th class="th-width-20">
+                            <div> <span><b>Type & Subtype</b></span></div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span><b>Category</b></span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div> <span><b>Status & Substatus</b></span></div>
+                        </th>
+                        <th class="th-width-20">
+                            <div> <span><b>Court & Venue</b></span></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="dashboard-tasks-due" id="mattereventreportlistbody" style="overflow-y:overlay">
+                    <tr data-ng-class="{'selected-grid-row':matterInTookByDateCtrl.display.matterSelected[data.matter_id] || data.file_number === matterInTookByDateCtrl.clickedRow}"
+                        data-ng-if="matterInTookByDateCtrl.display.filtered"
+                        data-highlight-clicked-row="{{data.file_number}},matterInTookByDateCtrl.clickedRow"
+                        data-ng-repeat="data in matterInTookByDateCtrl.filteredMatters = (matterInTookByDateCtrl.viewModel.matters | filter:matterInTookByDateCtrl.viewModel.filters.filterText)">
+
+                        <td class="th-width-10">
+                            <div>
+                                <span class="big-num-val-grid" tooltip-placement="bottom"
+                                    tooltip="{{data.intake_date_utc1}}">
+                                    {{data.intake_date_utc1 }}</span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.intake_date_utc2}}">
+                                    {{data.intake_date_utc2 }}</span><br>
+                                <span tooltip-placement=" bottom" tooltip="{{data.date_of_incidence}}">
+                                    {{data.date_of_incidence }} </span>
+                            </div>
+                        </td>
+                        <td class="th-width-30">
+                            <div>
+                                <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                    href="#/matter-overview/{{data.matter_id}}" class="word-wrap">
+                                    {{data.matter_name}}</a><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.file_number}}">
+                                    File#{{data.file_number}}</span><br>
+                                <span> Index/Docket#{{data.index_number}} </span>
+                            </div>
+                        </td>
+
+                        <td class="th-width-20">
+                            <div>
+                                <strong tooltip-placement="bottom" tooltip="{{data.type}}">
+                                    {{data.type}}</strong><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_type}}">
+                                    {{data.sub_type}} </span>
+                            </div>
+                        </td>
+
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.category}}">
+                                    {{data.category}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <strong tooltip-placement="bottom" tooltip="{{data.status}}">
+                                    {{data.status}}
+                                </strong><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_status}}">
+                                    {{data.sub_status}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-20">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.courtName}}">
+                                    {{data.courtName}}</span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.courtVenue}}"> {{data.courtVenue}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </scroll-table>
+        <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+            style="overflow: hidden !important;position: fixed;bottom: 0px;">
+        </div>
+    </div>
+    <!-- Start: New scroll-table tableid  -->
+
+
+    <div class="row text-center " data-ng-if="matterInTookByDateCtrl.showMoreAllBtn()">
+        <a href="javascript:void(0)" class="" data-ng-click="matterInTookByDateCtrl.applyFilterLazyLoading()">More</a>
+        <span class="paddingLR-10px">|</span>
+        <a href="javascript:void(0)" class="" data-ng-click="matterInTookByDateCtrl.getAllMatterList()">All</a>
+    </div>
+    <!--
+    <div class="row col-md-2" data-ng-if="matterInTookByDateCtrl.viewModel.matters.length >0 ">
+        <a href="javascript:void(0)" class="col-md-4" data-ng-click="matterInTookByDateCtrl.applyFilterLazyLoading()">More</a>
+        <a href="javascript:void(0)" class="col-md-1">|</a>
+        <a href="javascript:void(0)" class="col-md-4" data-ng-click="matterInTookByDateCtrl.getAllMatterList()">All</a>
+    </div>-->
+
+    <p class="text-center margin-top10px"
+        data-ng-show="matterInTookByDateCtrl.viewModel.matters.length === 0 && matterInTookByDateCtrl.display.matterListReceived">
+        No data for the applied filters
+    </p>
+</div>
+
+
+
+
+
+
+
+<!--  <span data-ng-if="field.label">{{field.label}} :</span>
+                    <strong data-ng-if="field.template==='bold' && !field.href">{{::data[field.prop]}}
+                    </strong>
+                    <span data-ng-if="field.template!=='bold' && !field.href && field.showBig" class="big-num-val-grid">{{::data[field.prop]}}
+                    </span>
+                    <span data-ng-if="field.template!=='bold' && !field.href && !field.showBig && !field.showSmall">{{::data[field.prop]}}
+                    </span>
+                    <div data-ng-if="field.template!=='bold' && !field.href && !field.showBig && field.showSmall">
+                        {{::data[field.prop]}}
+                    </div>-->

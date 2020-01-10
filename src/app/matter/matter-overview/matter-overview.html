@@ -1,0 +1,334 @@
+<style>
+    .search-overlap ul>li {
+        padding: 0 10px !important;
+    }
+</style>
+<cancel-pending-requests></cancel-pending-requests>
+
+<div class="row  margin0  margin-top10px"  style="width: calc( 100% - 100px) !important;padding:0 11px 0 20px;">
+    <matter-info-header matter-overview="matterOverview" is-matter-overview="true" matter-info="matterOverview.matterInfo"></matter-info-header>
+</div>
+</div>
+
+<div class="" id="report-content">
+
+    <div>
+
+
+        <!--graph-->
+        <div class="custom-well height-motiongraph">
+            <div class="col-md-11">
+
+
+                <div class="col-md-2 matter-age-chart-section" data-ng-repeat="data in matterOverview.matterOverviewData.matterAge">
+                    <div class="col-md-6 matter-age-chart-section " data-ng-class="{'dark-blue':data.isComplete,'green':data.isCurrent}">
+                        <div class="graph-tip">
+                            {{data.days}}
+                            <div class="matter-stage">{{data.status}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6   matter-age-chart-subsection  matter-age-chart-section" data-ng-class="{'dark-blue':data.isComplete}">
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-1 total-matters">
+                <h1>{{matterOverview.matterOverviewData.totalAge}}</h1>
+                <span data-ng-show="matterOverview.matterOverviewData.totalAge <=1">Total Day</span>
+                <span data-ng-show="matterOverview.matterOverviewData.totalAge >1">Total Days</span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div data-ng-if="matterOverview.motionServedByUs.total > 0 || matterOverview.motionServedOnUs.total > 0" class="show-hide-handler margin-top20px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6" data-ng-if='matterOverview.motionServedByUs.total > 0'>
+                            <h2>Motion served by us</h2>
+                            <div class="motion-accordion-head margin-top10px" data-ng-click="motionOnPlaintiff = !motionOnPlaintiff">
+                                <strong>{{matterOverview.motionServedByUs.open}}</strong>
+                                <span>of</span>
+                                <strong>{{matterOverview.motionServedByUs.total}}</strong>
+                                <span>are open</span>
+                                <div class="pull-right">
+                                    <span class="pull-right motion-accordion-arrow" data-ng-class="{'default-upward-arrow sprite': motionOnPlaintiff,
+                                'default-downward-arrow sprite': !motionOnPlaintiff}"></span>
+                                </div>
+                                <div class="pull-right">
+                                    <span>Earliest returnable date:</span>
+                                    <strong>
+                                        {{matterOverview.motionServedByUs.data[0].motion_datereturnable }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div collapse="!motionOnPlaintiff" class="cursor-pointer">
+                                <ul ng-repeat="motionByUsData in matterOverview.motionServedByUs.data">
+                                    <li ng-click="matterOverview.redirectToDocument(motionByUsData.matterid, motionByUsData.motion_documentid)">
+                                        <div class="motion-accordion-row ">
+                                            <div class="row">
+                                                <div class="col-md-8">{{motionByUsData.motion_title}}</div>
+                                                <div class="col-md-4 text-right">{{motionByUsData.motion_datereturnable }}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div data-ng-if='matterOverview.motionServedOnUs.total > 0' class="col-md-6">
+                            <h2>Motion served on us</h2>
+                            <div class="motion-accordion-head margin-top10px" data-ng-click="motionByPlaintiff = !motionByPlaintiff">
+                                <strong>{{matterOverview.motionServedOnUs.open}}</strong>
+                                <span>of</span>
+                                <strong>{{matterOverview.motionServedOnUs.total}}</strong>
+                                <span>are open</span>
+                                <div class="pull-right">
+                                    <span class="pull-right motion-accordion-arrow" data-ng-class="{'default-upward-arrow sprite': motionByPlaintiff,
+                                'default-downward-arrow sprite': !motionByPlaintiff}"></span>
+                                </div>
+                                <div class="pull-right">
+                                    <span>Earliest returnable date:</span>
+                                    <strong> {{matterOverview.motionServedOnUs.data[0].motion_datereturnable }}</strong>
+                                </div>
+                            </div>
+                            <div collapse="!motionByPlaintiff " class="cursor-pointer">
+                                <ul ng-repeat="motionServedOnUsData in matterOverview.motionServedOnUs.data">
+                                    <li ng-click="matterOverview.redirectToDocument(motionServedOnUsData.matterid, motionServedOnUsData.motion_documentid)">
+                                        <div class="motion-accordion-row">
+                                            <div class="row">
+                                                <div class="col-md-8">{{motionServedOnUsData.motion_title}}</div>
+                                                <div class="col-md-4 text-right">
+                                                    {{ motionServedOnUsData.motion_datereturnable }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--activities-->
+        <div class="custom-well">
+            <div class="container-fluid">
+                <div class="row-fluid activity">
+                    <div class="col-md-3 ellipsis" tooltip="{{matterOverview.matterOverviewData.matterInfo.status_name}}">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-last-activity "></span>
+                        </a>
+                        <strong>Status: </strong>{{matterOverview.matterOverviewData.matterInfo.status_name}}
+                    </div>
+                    <div class="col-md-3 ellipsis" tooltip="{{matterOverview.matterOverviewData.matterInfo.sub_status_name}}">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-prev-activity "></span>
+                        </a>
+                        <strong>Sub-Status: </strong>{{matterOverview.matterOverviewData.matterInfo.sub_status_name}}
+                    </div>
+                    <div class="col-md-3 ellipsis" data-ng-show="matterOverview.checkRefferaldata(matterOverview.matterOverviewData.matterInfo.referred_to_data.firstname, matterOverview.matterOverviewData.matterInfo.referred_to_data.lastname)"
+                        tooltip="{{matterOverview.matterOverviewData.matterInfo.referred_to_data.firstname}} {{matterOverview.matterOverviewData.matterInfo.referred_to_data.lastname}}">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-prev-activity "></span>
+                        </a>
+                        <strong>Referred To: </strong>{{matterOverview.matterOverviewData.matterInfo.referred_to_data.firstname}}
+                        {{matterOverview.matterOverviewData.matterInfo.referred_to_data.lastname}}
+                    </div>
+                    <div class="col-md-3 ellipsis" data-ng-show="!matterOverview.checkRefferaldata(matterOverview.matterOverviewData.matterInfo.referred_to_data.firstname, matterOverview.matterOverviewData.matterInfo.referred_to_data.lastname)">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-prev-activity "></span>
+                        </a>
+                        <strong>Referred To: </strong>{{matterOverview.matterOverviewData.matterInfo.referred_to_data.firstname}}
+                        {{matterOverview.matterOverviewData.matterInfo.referred_to_data.lastname}}
+                    </div>
+
+                    <div class="col-md-3 ellipsis" data-ng-show="matterOverview.checkRefferaldata(matterOverview.matterOverviewData.matterInfo.referred_by_data.firstname,matterOverview.matterOverviewData.matterInfo.referred_by_data.lastname)"
+                        tooltip="{{matterOverview.matterOverviewData.matterInfo.referred_by_data.firstname}} {{matterOverview.matterOverviewData.matterInfo.referred_by_data.lastname}}">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-prev-activity "></span>
+                        </a>
+                        <strong>Referred By: </strong>{{matterOverview.matterOverviewData.matterInfo.referred_by_data.firstname}}
+                        {{matterOverview.matterOverviewData.matterInfo.referred_by_data.lastname}}
+                    </div>
+                    <div class="col-md-3 ellipsis" data-ng-show="!matterOverview.checkRefferaldata(matterOverview.matterOverviewData.matterInfo.referred_by_data.firstname,matterOverview.matterOverviewData.matterInfo.referred_by_data.lastname)">
+                        <a href="javascript:void(0);">
+                            <span class="sprite default-prev-activity "></span>
+                        </a>
+                        <strong>Referred By: </strong>{{matterOverview.matterOverviewData.matterInfo.referred_by_data.firstname}}
+                        {{matterOverview.matterOverviewData.matterInfo.referred_by_data.lastname}}
+                    </div>
+                    <!--<div class="col-md-2 pull-right">
+                        <a href="javascript:void(0);" class=" pull-right">Show All</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--important dates-->
+        <div class="clearfix">
+            <h2 class="margin-top10px pull-left">Important Dates</h2>
+            <a class="btn-reffer pull-right valuation-link label label-success" data-ng-click="matterOverview.valuation()" data-ng-show="matterOverview.role.is_admin==='1' || matterOverview.matterValuatiion[0].V == 1">
+                <span class="sign" tooltip="Matter Valuation">$</span>
+                <span class="value">
+                    {{ matterOverview.valuationInfo.expected_value ? (matterOverview.valuationInfo.expected_value | nrFormat) : "" }}
+                </span>
+            </a>
+			<a class="btn-reffer pull-right valuation-link label label-success margin-right15px" ng-show="isPortalEnabled" data-ng-click="matterOverview.clientCommunicator()">
+            <span class="sign" ng-if="matterOverview.matterOverviewData.plaintiffsCount!=0" tooltip="Client Communicator - {{matterOverview.matterOverviewData.enabledClientsCount}} of {{matterOverview.matterOverviewData.plaintiffsCount}}"><b class="sprite client-icon"></b></span>
+            <span class="sign" ng-if="matterOverview.matterOverviewData.plaintiffsCount==0" tooltip="Client Communicator"><b class="sprite client-icon"></b></span>
+            <span class="value"></span>
+        </a>
+        </div>
+
+        <important-dates-timeline ng-class="{'cursor-pointer-events-none' :matterOverview.matterInfo.archivalMatterReadOnlyFlag, '' : !matterOverview.matterInfo.archivalMatterReadOnlyFlag}" dates="matterOverview.matterOverviewData.importantDates"></important-dates-timeline>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-12">
+                </div>
+            </div>
+        </div>
+        <div class="paddingRLR"></div>
+        <!--matter summary-->
+        <div class="container-fluid">
+            <div class="row-fluid">
+
+                <div class="col-md-5 margin-top20px dashboard-tasks-due summery-box">
+
+                <div class="ellipsis bulleted-list-editor" ng-bind-html="matterOverview.matterOverviewData.matterInfo.summary">
+                </div>
+                <div class="col-md-12 detail-event">
+
+                        <div class="row-fluid">
+                            <div class="col-md-5 text-right">
+                                <strong>Type:</strong>
+                            </div>
+                            <div class="col-md-7 ellipsis-nowrap">
+                                <span>{{matterOverview.matterOverviewData.matterInfo.matter_type_name}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-5 text-right">
+                                <strong>Subtype:</strong>
+                            </div>
+                            <div class="col-md-7 ellipsis-nowrap">
+                                <span>{{matterOverview.matterOverviewData.matterInfo.matter_sub_type_name}}</span>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-5 text-right">
+                                <strong>Category:</strong>
+                            </div>
+                            <div class="col-md-7 ellipsis-nowrap">
+                                <span>{{matterOverview.matterOverviewData.matterInfo.category_name}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-5 text-right">
+                                <strong>Law Type:</strong>
+                            </div>
+                            <div class="col-md-7 ellipsis-nowrap">
+                                <span>{{matterOverview.matterOverviewData.matterInfo.law_type_name}}</span>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="col-md-5 text-right">
+                                <strong>Court Details:</strong>
+                            </div>
+                            <div class="col-md-7">
+                                <span class="display-block">{{matterOverview.matterOverviewData.matterInfo.mattercourt}}</span>
+                                <span ng-show="matterOverview.matterOverviewData.matterInfo.state !='' || matterOverview.matterOverviewData.matterInfo.street != ''">
+                                    <span class="display-block">
+                                        {{matterOverview.matterOverviewData.matterInfo.street}}
+                                        <span ng-show="matterOverview.matterOverviewData.matterInfo.street"></span>
+                                    </span>
+                                    <span class="display-block">
+                                        {{matterOverview.matterOverviewData.matterInfo.city}}
+                                        <span ng-show="matterOverview.matterOverviewData.matterInfo.city"></span>
+                                    </span>
+                                    <span class="display-block">
+                                        {{matterOverview.matterOverviewData.matterInfo.state}}
+                                        <span ng-show="matterOverview.matterOverviewData.matterInfo.state "></span>
+                                    </span>
+                                </span>
+                                <span ng-show="matterOverview.matterOverviewData.matterInfo.zipcode !=''">
+                                    {{matteroverview.matteroverviewdata.matterinfo.zipcode}}
+                                </span>
+                                <span>
+                                    {{matterOverview.matterOverviewData.matterInfo.country}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-5 text-right">
+                                <strong> Location of Incident:</strong>
+                            </div>
+                            <div class="col-md-7 word-wrap">
+                                <span>{{matterOverview.matterOverviewData.matterInfo.accident_location}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-7 matter-overview-tabs">
+                    <clx-filter-options fiter-opts="matterOverview.overviewOptions" on-filter-select="matterOverview.activateTab" selected-filter="matterOverview.activeTab"></clx-filter-options>
+                    <div data-ng-show="matterOverview.activeTab ==='Staff'" data-ng-include="'app/matter/matter-overview/partials/staff.html'"></div>
+                    <div data-ng-show="matterOverview.activeTab ==='Events'" data-ng-include="'app/matter/matter-overview/partials/events.html'"></div>
+                    <div data-ng-show="matterOverview.activeTab ==='Tasks'" data-ng-include="'app/matter/matter-overview/partials/tasks.html'"></div>
+                    <div data-ng-show="matterOverview.activeTab ==='Notes'" data-ng-include="'app/matter/matter-overview/partials/notes.html'"></div>
+                    <div data-ng-show="matterOverview.activeTab ==='Photos'" data-ng-include="'app/matter/matter-overview/partials/evidences.html'"></div>
+                    <div data-ng-show="matterOverview.activeTab ==='Details'" data-ng-include="'app/matter/matter-overview/partials/details.html'"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<footer position-center>
+    <ul>
+        <li>
+            <a href="javascript:void(0)" class="active-footer">Overview</a>
+        </li> 
+        <li>
+            <a href="#/allParties/{{matterOverview.matterId}}">All Parties</a>
+        </li>
+        <li>
+            <a href="#/matter-details/{{matterOverview.matterId}}">Details</a>
+        </li>
+        <li>
+            <a href="#/matter-documents/{{matterOverview.matterId}}">Documents</a>
+        </li>
+        <li>
+            <a href="#/notes/{{matterOverview.matterId}}">Notes</a>
+        </li>
+        <li>
+            <a href="#/events/{{matterOverview.matterId}}">Events </a>
+        </li>
+        <li>
+            <a href="#/tasks/{{matterOverview.matterId}}">Tasks</a>
+        </li>
+        <li data-ng-show="is_workflow_active">
+            <a href="#/workflow/{{matterOverview.matterId}}">Workflow</a>
+        </li>
+
+        <li>
+            <a href="#/timeline/{{matterOverview.matterId}}">Timeline</a>
+        </li>
+
+    </ul>
+</footer>
+<div class="compose-wrap" ng-if="matterOverview.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :matterOverview.compose, '' : !matterOverview.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="matterOverview.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :matterOverview.compose, '' : !matterOverview.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

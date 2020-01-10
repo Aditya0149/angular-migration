@@ -1,0 +1,100 @@
+<cancel-pending-requests></cancel-pending-requests>
+
+<div class="timeline-wrapper">
+    <div id="report-content" class="padding-bottom0" scrolly="timeline.scrollReachedBottom()" reached-top="timeline.scrollReachedTop()">
+        <div class="row  margin0 margin-top10px">
+            <matter-info-header matter-info="timeline.matterHInfo"></matter-info-header>
+    
+            <div class="col-md-12 paddingRLR padding-top-10px">
+                <ul class="showBy-btns pull-right head-padding-10px ">
+                    <ul class="pull-right">
+                        <li>
+                            <div class="search-input form-control-margin-null" data-ng-show="timeline.showSearch">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="timeline.showSearch" data-ng-model-options="{ debounce: 0 }"
+                                    data-ng-model="timeline.filterText;" data-ng-change="timeline.filterRetain();"
+                                    class="form-control">
+                            </div>
+                        </li>
+                    </ul>
+                    <li class="seperation-filter"></li>
+                    <li tooltip="Filter" tooltip-placement="right">
+                        <a>
+                            <span data-ng-click="timeline.filterTimelineList();" class="sprite default-filter"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter" ng-hide="timeline.matterInformation.archivalMatterReadOnlyFlag"></li>
+                    <li ng-hide="timeline.matterInformation.archivalMatterReadOnlyFlag">
+                        <a data-ng-click="timeline.downloadTimelineList()" class="list">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li ng-hide="timeline.matterInformation.archivalMatterReadOnlyFlag">
+                        <a data-ng-click="timeline.print()" class="list">
+                            <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <a class="list"></a>
+                    <li class="search-overlap">
+                        <ul data-ng-hide="timeline.showSearch">
+                            <li>
+                                <a data-ng-click="timeline.showSearch = true">
+                                    <span class="sprite default-searchico-menu " tooltip="Search"
+                                        tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+    
+                <div class="dropdown head-padding-10px pull-right">
+                    Sort By :
+                    <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{timeline.selectedSort}}
+    
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-repeat="sort in timeline.sorts">
+                            <a data-ng-click="timeline.applySortByFilter(sort)">{{sort.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pull-right">
+            <clx-filter-tags on-filter-cancel="timeline.tagCancelled" tag-list="timeline.tags"></clx-filter-tags>
+        </div>
+        
+        <div class="clearfix"></div>
+        
+        <show-record-count more="timeline.getMore()" all="timeline.getAll()"
+            hide-pager="{{(timeline.showPaginationButtons() && (timeline.timelineList.length > 0))}}"
+            displayed="timeline.timelineList.length" total="timeline.total" data-ng-if="!root.requestPending">
+        </show-record-count>
+        <clx-grid [table-data]='timeline.timelineList' [table-options]='timeline.tableOtions' [search-key]='timeline.filterText'></clx-table>
+        <div class="col-md-11 relative-container timeline-box" id="moreLinkTimeline">
+        </div>
+        <p class="text-center margin-top10px"
+            data-ng-show="timeline.dataLoaderFlag && timeline.fltTimelineList.length <= 0">
+            No data for the applied filters
+        </p>
+    
+    </div>
+</div>
+
+<clx-footer [nav-id]="timeline.matterId" [type]="'Timeline'"></clx-footer>
+
+<div class="compose-wrap" ng-if="timeline.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :timeline.compose, '' : !timeline.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="timeline.firmData.API === 'JAVA'"
+    data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :timeline.compose, '' : !timeline.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>ic_Expense Manager option 6</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="62.7201112%" x2="50%" y2="104.67293%" id="linearGradient-1">
+            <stop stop-color="#48AFD4" offset="0%"></stop>
+            <stop stop-color="#00328F" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="180" height="180" rx="45"></rect>
+        <rect id="path-4" x="0" y="0" width="180" height="180" rx="45"></rect>
+        <path d="M42,39.375 C42,40.824875 40.824875,42 39.375,42 L2.625,42 C1.175125,42 0,40.824875 0,39.375 L0,2.625 C0,1.175125 1.175125,0 2.625,0 L39.375,0 C40.824875,0 42,1.175125 42,2.625 L42,39.375 Z" id="path-6"></path>
+    </defs>
+    <g id="ic_Expense-Manager-option-6" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-3" fill="white">
+            <use xlink:href="#path-2"></use>
+        </mask>
+        <use id="Mask" fill="url(#linearGradient-1)" fill-rule="nonzero" xlink:href="#path-2"></use>
+        <mask id="mask-5" fill="white">
+            <use xlink:href="#path-4"></use>
+        </mask>
+        <use id="Mask" fill="url(#linearGradient-1)" fill-rule="nonzero" xlink:href="#path-4"></use>
+        <rect id="Combined-Shape" fill="#FFFFFF" mask="url(#mask-5)" x="43" y="35" width="93" height="111.6" rx="5"></rect>
+        <g id="Group-4" mask="url(#mask-5)" fill="#D4D6E3" fill-rule="nonzero">
+            <g transform="translate(56.000000, 49.000000)">
+                <rect id="Rectangle-18-Copy-19" x="0" y="0" width="36.7116597" height="5"></rect>
+                <rect id="Rectangle-18-Copy-20" x="0" y="11" width="48.7279959" height="5"></rect>
+                <rect id="Rectangle-18-Copy-21" x="0" y="22" width="36.7116597" height="5"></rect>
+            </g>
+        </g>
+        <g id="svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSI1NzIyOTUzNl9MYXllcl8xX2dyaWQiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2a" mask="url(#mask-5)">
+            <g transform="translate(109.000000, 78.000000)">
+                <g id="Group" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="57229536_SVGID_1__grid-link">
+                        <g id="Path">
+                            <mask id="mask-7" fill="white">
+                                <use xlink:href="#path-6"></use>
+                            </mask>
+                            <use id="Mask" fill="#F7C90B" fill-rule="nonzero" xlink:href="#path-6"></use>
+                            <polygon fill-opacity="0.3" fill="#47475E" fill-rule="nonzero" opacity="0.300000012" mask="url(#mask-7)" points="42.510125 42.875 19.376875 42.707 10.85175 27.94225 19.86425 30.715125 13.56075 19.796 13.853875 16.625 22.75 5.25 25.375 9.799125 30.300375 13.2405 42.60375 34.55025"></polygon>
+                        </g>
+                    </g>
+                </g>
+                <path d="M30.6118752,25.8545 C30.61275,21.665 28.077,19.684 21.399,18.587625 C17.9375,18.01975 17.408125,16.58825 17.5,15.51725 C17.609375,14.245875 18.696125,13.125 21,13.125 C24.79225,13.125 25.806375,15.134 26.124,15.69225 L30.2995,13.2405 C28.800625,10.604125 26.6455,9.212 22.749125,8.84975 L22.749125,5.25 L19.249125,5.25 L19.249125,8.822625 C15.365875,9.233875 12.536125,11.550875 12.249125,14.875 C11.97525,18.052125 13.355125,22.12175 20.559875,23.41325 C24.117625,24.05025 25.375,25.088875 25.375,26.25 C25.375,27.91775 23.520875,28.875 21,28.875 C18.230625,28.875 16.027375,27.251 15.028125,25.49225 L10.85175,27.94225 C12.628875,31.070375 15.106,32.732875 19.25,33.144125 L19.25,36.75 L22.75,36.75 L22.75,33.189625 C27.37875,32.795875 30.6118752,30.2645 30.6118752,25.8545 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+        <g id="svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwI-(2)" mask="url(#mask-5)">
+            <g transform="translate(54.000000, 89.000000)">
+                <path d="M19.8679245,18.0555556 L9.22754717,36.2078889 C12.3600566,37.9802222 15.9914717,39 19.8679245,39 C23.7443774,39 27.3757925,37.9802222 30.5083019,36.2078889 C33.7489811,34.3734444 36.4517547,31.7293889 38.3303774,28.5537778 L19.8679245,18.0555556 Z" id="Path" fill="#DD7046" fill-rule="nonzero"></path>
+                <path d="M2.67922642,8.281 C0.978679245,11.1554444 0,14.4921111 0,18.0555556 C0,21.619 0.978679245,24.9556667 2.67922642,27.8301111 C4.42760377,30.7861667 6.9434717,33.2475 9.96118868,34.9555556 L19.8679245,18.0555556 L2.67922642,8.281 Z" id="Path" fill="#E9BF54" fill-rule="nonzero"></path>
+                <path d="M7.77277358,11.1785556 C6.57628302,13.2015 5.8875283,15.5487222 5.88826356,18.0555556 C5.88826356,20.5631111 6.57701887,22.9110556 7.77350943,24.9325556 C9.00458491,27.0132778 10.773566,28.7451667 12.8972264,29.9469444 L19.8679245,18.0555556 L7.77277358,11.1785556 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero" opacity="0.3"></path>
+                <path d="M32.0050189,24.8603333 C30.824717,26.8926667 29.103566,28.6570556 26.895283,29.9166111 C24.687,31.1776111 22.2726792,31.7727222 19.89,31.7741691 C17.4388868,31.7756111 15.0238302,31.1451111 12.8979623,29.9476667 L19.8679245,18.0555556 L32.0050189,24.8603333 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero" opacity="0.3"></path>
+                <path d="M10.6948302,2.40716667 C7.90081132,3.98811111 5.57184906,6.26744444 3.95224528,9.00466667 L19.8679245,18.0555556 L19.8679245,0 C16.526434,0 13.3961321,0.878944444 10.6948302,2.40716667 Z" id="Path" fill="#93C1CF" fill-rule="nonzero"></path>
+                <path d="M10.6948302,2.40716667 C7.90081132,3.98811111 5.57184906,6.26744444 3.95224528,9.00466667 L7.77277358,11.1778333 C9.00384906,9.09855556 10.773566,7.36666667 12.8964906,6.16488889 C14.9487736,5.00427778 17.3285094,4.3355 19.8671887,4.3355 L19.8671887,0 C16.526434,0 13.3961321,0.878944444 10.6948302,2.40716667 Z" id="Path" fill-opacity="0.15" fill="#7D1CC7" fill-rule="nonzero"></path>
+                <path d="M28.3073774,3.65877778 C25.8216792,2.25405556 22.9423019,1.44444444 19.8679245,1.44444444 L19.8679245,18.0548333 L34.5098491,9.72905556 C33.0204906,7.21138889 30.8776981,5.11405556 28.3073774,3.65877778 Z" id="Path" fill="#D4D6E3" fill-rule="nonzero"></path>
+                <path d="M26.8570189,6.175 C24.7326226,4.97394444 22.3197736,4.33838889 19.8679245,4.33622222 L19.8679245,18.0555556 L31.9630755,11.1785556 C30.6907925,9.022 28.9100377,7.33561111 26.8570189,6.175 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero" opacity="0.400000006"></path>
+                <path d="M35.3207547,18.0555556 C35.3207547,15.2836667 34.5598868,12.6887222 33.2368302,10.4534444 L19.8679245,18.0555556 L35.3207547,18.0555556 Z" id="Path" fill="#D4D6E3" fill-rule="nonzero" opacity="0.200000003"></path>
+                <g id="Group" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(3.867925, 18.055556)">
+                    <path d="M16,0 L16,0 L28.0958868,6.877 C29.2923774,4.85405556 29.9811321,2.50827778 29.9811321,0 L16,0 Z" id="Path" fill="#D4D6E3" fill-rule="nonzero"></path>
+                    <path d="M0.132075472,1.94444444 L0.132075472,1.94444444 L12.2279623,8.82144444 C13.4244528,6.7985 14.1132075,4.45272222 14.1132075,1.94444444 L0.132075472,1.94444444 Z" id="Path" fill="#D4D6E3" fill-rule="nonzero" opacity="0.15"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,403 @@
+<style>
+    .selectize-dropdown-content {
+        max-height: 150px !important;
+    }
+
+    .drop-dwon-up-open .selectize-dropdown.single .select2-results {
+        top: -150px;
+        border-top: 1px solid #ccc;
+        height: 150px;
+    }
+
+    .select2-results {
+        max-height: 150px !important;
+    }
+
+
+    .modalXLargeDialog .modal-dialog {
+        width: 50%;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .radio input[type=radio] {
+        margin-left: 0px !important;
+    }
+
+    .radio {
+        padding-left: 0;
+    }
+</style>
+<div class="modal-header clearfix ng-scope">
+    <h1 class="modal-title fl-left">Migrate to Matter Manager</h1>
+    <button class="close fl-right" data-ng-click="intakeMigCtrl.cancelList()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="static-new-scrollbar" style="height: 65vh !important;overflow-x:scroll;">
+    <div ng-hide="intakeMigCtrl.selectedMode == 2 || intakeMigCtrl.fromOverViewFlag">
+        <span style="margin-left: 25px;">Select the intake whose DOI, Location, Valuation, Referred to and Referred by
+            will be</span><br>
+        <span style="margin-left: 25px;">carried over your newly created case.</span>
+        <ul style="padding-top: 8px;margin-bottom: -10px;margin-left: 20px;max-height: 20vh !important;overflow-y: auto !important;width: auto !important;margin-right: 260px; "
+            class="static-new-scrollbar reason-list-order filter-greybox">
+            <li data-ng-repeat="item in intakeMigCtrl.intakeList">
+                <div class="radio">
+                    <input type="radio" name="response" data-ng-model="intakeMigCtrl.intakeMigrationInfo.primaryIntake"
+                        ng-init="$index == 0 ? (intakeMigCtrl.intakeMigrationInfo.primaryIntake = item):''"
+                        ng-value="item" />
+                    <label style="padding-left:24px">{{item.intakeName}}</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="filter-greybox container modal-body" style="padding-left: 5px;padding-right: 5px;">
+        <div class="col-md-12">
+            <span>How would you like to migrate?</span>
+            <div ng-repeat="info in intakeMigCtrl.typeOfMigration" class="padding-0 margin-top10px">
+                <div class="radio padding-0 margin0 pull-left margin-right20px">
+                    <input class="margin0" type="radio" data-ng-model="intakeMigCtrl.selectedMode"
+                        ng-click="intakeMigCtrl.setData(intakeMigCtrl.selectedMode)" ng-value="info.id" />
+                    <label class="margin0" style="line-height: inherit;">&nbsp;{{info.name}}</label>
+                </div>
+            </div>
+        </div>
+        <div ng-if="intakeMigCtrl.selectedMode == 1">
+            
+            <div class="col-md-12 padding-0 margin-top10px">
+                <div class="col-md-12" ng-if="intakeMigCtrl.showFields">
+                    <label>Intake Name</label>
+                    <input style="width: 100%;" data-ng-disabled="true" type="text" placeholder="Intake name"
+                        class="form-control" ng-model="intakeMigCtrl.intakeMigrationInfo.intakeName" maxlength="200" />
+                </div>
+
+                <div class="col-lg-6 col-md-6 margin-top10px ">
+                    <label>Matter Name</label>
+                    <span class="compulsary-mark">*</span>
+                    <input style="width: 100%;" type="text" placeholder="Matter name" class="form-control"
+                        ng-model="intakeMigCtrl.intakeMigrationInfo.matterName" maxlength="200" />
+                </div>
+
+                <div class="col-lg-6 col-md-6 margin-top10px" data-ng-if="intakeMigCtrl.categoryList.length > 0">
+                    <label>Category</label>
+                    <ui-select style="width:100% !important;"
+                        ng-model="intakeMigCtrl.intakeMigrationInfo.matter_category_id" theme="selectize">
+                        <ui-select-match placeholder="Select Category...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="category.id as category in intakeMigCtrl.categoryList| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>{{category.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div data-ng-show="intakeMigCtrl.isCustomFileNumber == 1" class="col-lg-6 col-md-6 margin-top10px ">
+                    <label>Matter File#</label>
+                    <input style="width: 100% !important;" type="text" placeholder="Enter Matter File#"
+                        class="form-control" ng-model="intakeMigCtrl.intakeMigrationInfo.fileNumber" maxlength="200" />
+                </div>
+            </div>
+
+            <div class="col-md-12 padding-0">
+
+                <div class="col-lg-6 col-md-6 margin-top10px ">
+                    <label>Status</label>
+
+                    <ui-select style="width:100% !important;"
+                        ng-model="intakeMigCtrl.intakeMigrationInfo.matter_status_id"
+                        on-select="intakeMigCtrl.getSubstatus(intakeMigCtrl.intakeMigrationInfo.matter_status_id);"
+                        theme="selectize">
+                        <ui-select-match placeholder="Select Status">
+                            {{$select.selected.label}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="status as status in intakeMigCtrl.statuses| filter:{label:$select.search} ">
+                            <small>{{status.label}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="col-lg-6 col-md-6 margin-top10px">
+                    <label>Substatus</label>
+                    <ui-select style="width:100% !important;" ng-model="intakeMigCtrl.intakeMigrationInfo.sub_status_id"
+                        theme="selectize">
+                        <ui-select-match placeholder="Select Substatus...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="item as item in intakeMigCtrl.subStatusList| filter:{name:$select.search}">
+                            <small> {{item.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div data-ng-form="intakeMigCtrl.addJurisdiction">
+                <div class="col-md-12  padding-0 margin-top10px drop-dwon-up-open form-group">
+                    <div class="col-lg-6 col-md-6 margin-top10px">
+                        <label>Jurisdiction
+                            <span class="compulsary-mark">*</span>
+                        </label>
+                        <ui-select style="width:100% !important;" name="jurisdiction" ng-required="true"
+                            on-select="intakeMigCtrl.setVenues(intakeMigCtrl.intakeMigrationInfo.jurisdiction_id)"
+                            ng-model="intakeMigCtrl.intakeMigrationInfo.jurisdiction_id" theme="selectize">
+                            <ui-select-match placeholder="Select Jurisdiction...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="jurisdiction.id as jurisdiction in intakeMigCtrl.jurisdictionList| filter:{name:$select.search} | orderBy: 'name'">
+                                <small>{{jurisdiction.name}}</small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-lg-6 col-md-6 margin-top10px">
+                        <label>Venue</label>
+                        <ui-select style="width:100% !important;" ng-model="intakeMigCtrl.intakeMigrationInfo.venueId"
+                            on-select="intakeMigCtrl.getCourtContactList(intakeMigCtrl.intakeMigrationInfo.venueId)"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select Venue...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="venue.id as  venue in intakeMigCtrl.venues | filter:{name:$select.search} track by venue.id| orderBy: 'name'">
+                                <small>
+                                    {{venue.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+
+
+                <div ng-if="intakeMigCtrl.showCourt" class="col-md-12 form-group">
+                    <div class="col-md-6 row" style="width: 55%;">
+                        <label>Court</label>
+                        <ui-select ng-model="intakeMigCtrl.intakeMigrationInfo.court_contact_id"
+                            on-select="intakeMigCtrl.setCourtContactInfo(intakeMigCtrl.intakeMigrationInfo.court_contact_id,intakeMigCtrl.courtContactList,intakeMigCtrl.intakeMigrationInfo.court_contact_id.contactid)"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select Court...">
+                                {{$select.selected.firstname}}
+                            </ui-select-match>
+                            <ui-select-choices group-by="intakeMigCtrl.groupCoutcontact"
+                                group-filter="intakeMigCtrl.test"
+                                repeat="courtContact in intakeMigCtrl.courtContactList | filter:{firstname:$select.search}">
+                                <small>
+                                    {{courtContact.firstname}}
+                                </small>
+                                <br>
+                                <small
+                                    style="font-size:10px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 175px;display: block;">
+                                    {{courtContact.street}} {{courtContact.city}} {{courtContact.zipcode}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-1 or-connector margin-top30px pull-left">OR</div>
+                    <div class="col-md-4 row margin-top25px">
+                        <button class="btn btn-default"
+                            data-ng-click="intakeMigCtrl.addNewCourtContact(intakeMigCtrl.intakeMigrationInfo,intakeMigCtrl.intakeMigrationInfo.venueId,'Court')">
+                            Add New
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col--md-12">
+                <div class="col-lg-6 drop-dwon-up-open">
+                    <label>Type</label>
+
+                    <ui-select style="width:100% !important;"
+                        ng-model="intakeMigCtrl.intakeMigrationInfo.matter_type_id"
+                        on-select="intakeMigCtrl.getMatterSubtype(intakeMigCtrl.intakeMigrationInfo.matter_type_id.id)"
+                        theme="selectize">
+                        <ui-select-match placeholder="Select Type">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="type in intakeMigCtrl.matterTypes| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>{{type.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-lg-6 drop-dwon-up-open">
+                    <label>Subtype</label>
+                    <ui-select style="width:100% !important;"
+                        ng-model="intakeMigCtrl.intakeMigrationInfo.matter_sub_type_id" theme="selectize">
+                        <ui-select-match placeholder="Select Subtype...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="subtype in intakeMigCtrl.intakeMigrationInfo.matter_type_id.subtype| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>{{subtype.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="userAssignment col-md-12 form-group margin-top15px">
+
+                <div class="row margin-top10px">
+                    <div class="col-md-12">
+                        <h3>User Assignment </h3>
+                    </div>
+                </div>
+                <div class="row margin-top10px">
+                    <div class="col-md-6">
+
+                        <div class="row">
+                            <div class="col-md-12 drop-dwon-up-open">
+                                <label>
+                                    Managing Partner
+                                </label>
+                                <ui-select class="width100per z-index-select" multiple
+                                    ng-model="intakeMigCtrl.intakeMigrationInfo.managing_att_id" theme="select2">
+                                    <ui-select-match placeholder="Select person...">
+                                        {{$item.name}} {{$item.lname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="partner.uid as partner in intakeMigCtrl.partner| filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>{{partner.name}} {{partner.lname}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row margin-top10px">
+                            <div class="col-md-12 drop-dwon-up-open">
+                                <label>
+                                    Lead Attorney
+                                </label>
+                                <ui-select class="width100per" multiple
+                                    ng-model="intakeMigCtrl.intakeMigrationInfo.leadattorny" theme="select2">
+                                    <ui-select-match placeholder="Select person...">
+                                        {{$item.name}} {{$item.lname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="leadAttorney.uid as leadAttorney in intakeMigCtrl.leadAttorneyList| filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>{{leadAttorney.name}} {{leadAttorney.lname}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row margin-top10px">
+                            <div class="col-md-12 drop-dwon-up-open">
+                                <label>
+                                    Attorney
+                                </label>
+                                <ui-select class="width100per" multiple
+                                    ng-model="intakeMigCtrl.intakeMigrationInfo.atterney_id" theme="select2">
+                                    <ui-select-match placeholder="Select person...">
+                                        {{$item.name}} {{$item.lname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="attorney.uid as attorney in intakeMigCtrl.attorneyList| filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>{{attorney.name}} {{attorney.lname}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12"></div>
+                            <div class="col-md-12 drop-dwon-up-open">
+                                <label>
+                                    Paralegal
+                                </label>
+                                <ui-select class="width100" multiple
+                                    ng-model="intakeMigCtrl.intakeMigrationInfo.paralegal" theme="select2"
+                                    ng-disabled="disabled">
+                                    <ui-select-match placeholder="Select person...">
+                                        {{$item.name}} {{$item.lname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="paralegal.uid as paralegal in intakeMigCtrl.paralegal| filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>{{paralegal.name}} {{paralegal.lname}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row margin-top10px">
+                            <div class="col-md-12 drop-dwon-up-open">
+                                <label>
+                                    Staff
+                                </label>
+                                <ui-select class="width100per" multiple
+                                    ng-model="intakeMigCtrl.intakeMigrationInfo.user_staff_id" theme="select2"
+                                    ng-disabled="disabled">
+                                    <ui-select-match ui-lock-choice="$item.name == 'Lexvia'"
+                                        placeholder="Select person...">
+                                        {{$item.name}} {{$item.lname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="staff.uid as staff in intakeMigCtrl.staffList| filter:{name:$select.search} | orderBy: 'name'">
+                                        <small>{{staff.name}} {{staff.lname}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="intakeMigCtrl.selectedMode == 2">
+            <div class="col-md-12" style="margin-top: 10px;">
+                <label>Matter Name</label><span class="compulsary-mark">*</span>
+                <input type="text" class="form-control" data-ng-model-options="{ debounce: 500 }"
+                    placeholder="Search matter "
+                    typeahead="row.matterid as row.name for row in intakeMigCtrl.searchMatters($viewValue)"
+                    typeahead-input-formatter="intakeMigCtrl.formatTypeaheadDisplay($model)" data-ng-required="true"
+                    data-ng-model="intakeMigCtrl.matterId" />
+            </div>
+            <div style="margin-top: 10px;" ng-if="!intakeMigCtrl.isEmpty(intakeMigCtrl.matterInfoFromSearch)">
+                <div class="col-md-6  margin-top10px">
+                    <label>Type: </label>
+                    <span>{{intakeMigCtrl.matterInfoFromSearch.matter_type_name}}</span>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Sub-Type: </label>
+                    <span>{{intakeMigCtrl.matterInfoFromSearch.matter_sub_type_name}}</span>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>Category: </label>
+                    <span>{{intakeMigCtrl.matterInfoFromSearch.category_name}}</span>
+                </div>
+                <div class="col-md-6 margin-top10px">
+                    <label>File Number: </label>
+                    <span>{{intakeMigCtrl.matterInfoFromSearch.filenumber}}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-lg-offset-8 col-md-offset-7">
+            <button type="button" ng-click="intakeMigCtrl.save(intakeMigCtrl.intakeMigrationInfo)"
+                class="btn btn-default">Migrate</button>
+        </div>
+    </div>
+</div>

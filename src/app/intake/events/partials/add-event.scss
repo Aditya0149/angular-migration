@@ -1,0 +1,53 @@
+.add-event-wrapper {
+        .checkbox { padding-top: 0;
+    }
+    .radio {
+        margin-top: 0;
+        input{
+            margin-left: 0;
+            width: 20px;
+            height: 20px;
+            top: -3px;
+            outline: none;
+            box-sizing: initial;
+        }
+        label {
+            padding-left: 25px;
+            &::after {
+                background-color: $color_strong_blue;
+                top: 5px;
+                width: 9px;
+                height: 9px;
+                left: 5px;
+            }
+            &::before {
+                width: 19px;
+                height: 19px;
+                border: 2px solid $color_strong_blue;
+            }
+        }
+    }
+    .reason-list-order {
+        li {
+            float: left;
+            margin-left: 20px;
+            width: 95px;
+        }
+    }
+    .custom-form-control {
+        .select2-choices {
+            width: 94%;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+        }
+    }
+    .select2-container-multi {
+        .select2-choices {
+            height: 70px !important;
+            overflow-y: auto;
+        }
+    }
+    .inline-form-label label {
+        line-height: 18px;
+    }
+}

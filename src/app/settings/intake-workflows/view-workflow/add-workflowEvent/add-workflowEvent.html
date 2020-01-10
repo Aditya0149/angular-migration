@@ -1,0 +1,321 @@
+<style type="text/css">
+    .radio {
+        margin-top: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio input {
+        outline: none !important;
+        box-sizing: initial !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .add-workflow-block>.radio+.radio,
+    .checkbox+.checkbox {
+        margin-top: 10px;
+    }
+
+    .modal-dialog {
+        width: 42% !important;
+    }
+
+    .add-workflow-block .checkbox label {
+        padding-left: 30px;
+    }
+
+    .add-workflow-block .radio {
+        float: left;
+        margin-right: 35px !important;
+    }
+
+    .add-workflow-block .checkbox {
+        float: left;
+        margin-right: 35px !important;
+    }
+</style>
+<div data-ng-if="addEvent.display.page=='openAddEvent'" class="row">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="addEvent.resetAddEventPage()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div data-ng-if="addEvent.display.page =='openAddEvent'" class="container">
+    <div class="page-title-border clearfix form-group heading-with-button-bottom-padding row-fluid global-page-title">
+        <h2 class="pull-left page-title">{{addEvent.mode}} Event</h2>
+        <div class="pull-right">
+            <button data-ng-click="addEvent.cancel()" class="btn btn-default">
+                Back
+            </button>
+            <button data-ng-disabled="addEvent.form.$invalid" data-ng-click="addEvent.save(addEvent.eventInfo)"
+                class="btn btn-default">
+                Save
+            </button>
+        </div>
+    </div>
+
+    <div class="filter-greybox container add-workflow-block" data-ng-form="addEvent.form">
+        <div class="form-group relative-container margin-top10px">
+            <div class="col-md-12 padding-0">
+
+
+
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="margin-top10px">Event type:<span class="compulsary-mark">*</span> </label>
+                    </div>
+                    <div class="col-md-8">
+                        <ui-select ng-model="addEvent.eventInfo.label_id"
+                            ng-disabled="addEvent.eventInfo.name == 'Personal Event'? true : false "
+                            on-select="addEvent.showhideDates(addEvent.eventInfo, addEvent.mode)" ng-required="true"
+                            title=" " theme="selectize">
+                            <ui-select-match placeholder="Enter Event Type">
+                                {{$select.selected.Name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="item.LabelId as item in addEvent.eventTypes | filter:{ Name:$select.search }">
+                                <small>
+                                    {{item.Name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row form-group"
+                    data-ng-show="addEvent.eventInfo.label_id==100 || addEvent.eventInfo.label_id==19 || addEvent.eventInfo.label_id==32">
+                    <div class="col-md-3">
+                        <label>Event Title:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" maxlength="250" data-ng-model="addEvent.eventInfo.event_title"
+                            class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="margin-top10px">Location:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" maxlength="500" data-ng-model="addEvent.eventInfo.location"
+                            class="form-control" /> </div>
+                </div>
+
+                <!-- <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="margin-top10px">Assign To:</label>
+                    </div>                   
+                    <div class="col-md-6 padding-right-0">
+                           <div class="checkbox" data-ng-repeat="roleid in addEvent.rolesId">
+                                    <input type="checkbox" ng-change="addEvent.changeAssignedUser(addEvent.eventInfo.roleid)" checklist-value="roleid.rid" checklist-model="addEvent.eventInfo.roleid"
+                                     /><label>{{roleid.role}}</label>
+                            </div>
+                     </div>
+            </div> -->
+
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="margin-top10px">Create Task for event:</label>
+                    </div>
+                    <div class="col-md-6 padding-right-0 checkbox">
+                        <input type="checkbox" data-ng-checked="addEvent.eventInfo.is_task_created == '1'"
+                            data-ng-model="addEvent.eventInfo.is_task_created" data-ng-true-value="1"
+                            data-ng-false-value="0" /><label></label>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-3 padding-right-0">
+                        <label class="margin-top10px">Event Description:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control height-110" maxlength="2400"
+                            data-ng-model="addEvent.eventInfo.description"></textarea>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-3 padding-right-0">
+                        <label>Workflow Event date Calculation: <span class="compulsary-mark">*</span> </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" allow-only-numbers name="noofday" title=" " ng-pattern="/^[0-9]*$/"
+                            data-ng-required="true" maxlength="50" placeholder="Number of days"
+                            data-ng-model="addEvent.eventInfo.no_of_days" class="form-control" />
+                        <div data-ng-if="addEvent.form.noofday.$dirty || addEvent.form.noofday.$valid"
+                            ng-messages="addEvent.form.noofday.$error">
+                            <div class="error" ng-message="required">
+                                number of days required
+                            </div>
+                            <div class="error" ng-message="pattern"
+                                ng-show="profileCtrl.profileForm.firmSize_name.$error">
+                                Invalid number of days
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 margin-top5px">
+                        <div class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" data-ng-model="addEvent.eventInfo.day_type" value="Calendar days" />
+                                <label>Calendar Days</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" data-ng-model="addEvent.eventInfo.day_type" value="Business Days" />
+                                <label>Business Days</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-3 padding-0 padding-right-0"></div>
+                    <div class="pull-left  margin-top5px padding-0">
+                        <div class="col-md-12 btn-group btn-group">
+                            <label data-ng-click="addEvent.beforeDates(0)"
+                                ng-class="{' active': addEvent.dateFieldValue == 0}"
+                                class="btn btn-default btn-styleNone ">
+                                Before</label>
+                            <label data-ng-click="addEvent.afterDates(1)"
+                                ng-class="{' active': addEvent.dateFieldValue == 1}"
+                                class="btn btn-default btn-styleNone">
+                                After</label>
+                        </div>
+                    </div>
+                    <div class="pull-left margin-top15px">
+                        <span class="sprite default-workflow-note pull-left margin-right10px"></span>
+                        <label style="display: initial;"> Event will be created {{addEvent.eventInfo.no_of_days}}
+                            {{addEvent.eventInfo.day_type}}
+                            {{addEvent.eventInfo.beforeAfter}} the workflow<br>
+                            <label style="display: initial;    margin-left: 28px;"
+                                ng-hide="addEvent.eventInfo.optionSelected === 'custom_date1' || addEvent.eventInfo.optionSelected === 'custom_date2' ">{{(addEvent.eventInfo.optionSelected == "MCD" ? "ICD" : addEvent.eventInfo.optionSelected)}}
+                            </label>
+                            <label style="display: initial;    margin-left: 28px;"
+                                ng-show="addEvent.eventInfo.optionSelected === 'custom_date1'">{{addEvent.eventInfo.custom_date_label1}}
+                            </label>
+
+                            <label style="display: initial;    margin-left: 28px;"
+                                ng-show="addEvent.eventInfo.optionSelected === 'custom_date2'">{{addEvent.eventInfo.custom_date_label2}}
+                            </label> </label>
+                        <label style="display: initial;    margin-left: 0px;"
+                            ng-if="addEvent.eventInfo.isEventFullday==0"> from {{addEvent.c_start}} to
+                            {{addEvent.c_end}}</label> </label>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-3 padding-right-0">
+                        <label>Calculate Due Date From: <span class="compulsary-mark">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                        <div ng-if="addEvent.eventInfo.DOI == '1'" class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected" value="DOI" /><label>Date of
+                                    Incident</label>
+                            </div>
+                        </div>
+                        <div ng-if="addEvent.eventInfo.DOIn == '1'" class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected" value="DOIn" /><label>Date of
+                                    Intake</label>
+                            </div>
+                        </div>
+                        <div ng-if="addEvent.eventInfo.SOL == '1'" class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected" value="SOL" /><label>SOL</label>
+                            </div>
+                        </div>
+
+                        <div ng-if="addEvent.eventInfo.MCD == '1'" class="col-md-6 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected" value="MCD" /><label>Intake
+                                    Created Date</label>
+                            </div>
+                        </div>
+
+                        <div ng-if="addEvent.eventInfo.custom_date1 == '1'" class="col-md-10 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected" value="custom_date1" />
+                                <label>{{addEvent.eventInfo.custom_date_label1}}</label>
+                            </div>
+                        </div>
+                        <div ng-if="addEvent.eventInfo.custom_date2=='1'" class="col-md-10 padding-0">
+                            <div class="radio">
+                                <input type="radio" title=" " data-ng-required="true"
+                                    data-ng-model="addEvent.eventInfo.optionSelected"
+                                    value="custom_date2" /><label>{{addEvent.eventInfo.custom_date_label2}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row form-group">
+                    <div class="col-md-3 padding-right-0"></div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <input type="checkbox" data-ng-model="addEvent.eventInfo.isEventFullday"
+                                ng-click="addEvent.setStartEndTime(addEvent.eventInfo)" data-ng-true-value="'1'"
+                                data-ng-false-value="'0'" data-ng-disabled="addEvent.eventInfo.criticalDatesClicked" />
+                            <label>Full Day</label>
+                        </div>
+                    </div>
+                    <div ng-if="addEvent.eventInfo.isEventFullday==0">
+                        <div class="col-md-2">
+                            <clx-timepicker class="form-field" ng-model="theStartTime"
+                                the-real-time="addEvent.eventInfo.start_time"
+                                on-select="addEvent.setEndTime(addEvent.eventInfo.start_time)">
+                            </clx-timepicker>
+
+                        </div>
+                        <div class="col-md-2">
+                            <clx-timepicker class="form-field" ng-model="theEndTime" the-real-time="addEvent.eventInfo.end_time">
+                            </clx-timepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div data-ng-if="addEvent.display.page == 'closeAddEditEvent'">
+    <div data-ng-controller="viewintakeWorkflowCtrl as viewWorkflow"
+        data-ng-include="'app/settings/intake-workflows/view-workflow/view-workflow.html'">
+    </div>
+</div>

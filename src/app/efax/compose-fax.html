@@ -1,0 +1,136 @@
+<div class="compose-fax-wrapper">
+
+<!-- Compose Mail -->
+<div ng-class="{'cursor-pointer-events-none' :efaxCtrl.matterDocs, '' : !efaxCtrl.matterDocs}">
+    <div class="compose-head">
+        <h2 class="pull-left">Compose</h2>
+        <a href="javascript:void(0)" class="pull-right" id="closeComposeMail" ng-click="efaxCtrl.closeCompose();globalNotes.closeComposeMail();notes.closeComposeMail();">x</a>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding ">
+            <div class="pull-left left-space"><b>Note: In order to use eFax you must be subscribed to a third party eFax service.</b></div>
+        <div class=" pull-right paddingLR-10px">
+            <button class="btn btn-default" data-ng-click="efaxCtrl.sendMail()" data-ng-disabled="!efaxCtrl.enableSave || (efaxCtrl.isGraceOver != 1)">
+                Send</button>
+        </div>
+    </div>
+
+    <div class="compose-fields static-new-scrollbar">
+
+        <div class="compose-input-fields">
+            <div class="row">
+                <div class="pull-left">To:</div>
+                <div class="col-md-9">
+                    <ui-select multiple ng-model="efaxCtrl.composeEmail.recipientsUsers" theme="select2" ng-disabled="disabled">
+                        <ui-select-match placeholder="">
+                            {{$item.mail}}
+                        </ui-select-match>
+                        <ui-select-choices refresh="efaxCtrl.getSendToList($select.search)" refresh-delay="300" repeat="firmU as firmU in efaxCtrl.sendToList| filter:{firstLastname:$select.search}">
+                            <small>{{firmU.name}} {{firmU.lname}} &#60;{{firmU.mail}}&#62;</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-left">From:</div>
+                <div class="col-md-9" ng-form="efaxCtrl.myform">
+
+                    <input type="email" data-ng-required="true" class="pull-right form-control" name="mail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                        ng-model="efaxCtrl.composeEmail.fromEmail">
+
+                    <div data-ng-if="efaxCtrl.myform.mail.$dirty" ng-messages="efaxCtrl.myform.mail.$error">
+                        <div class="error pull-left" ng-message="pattern">
+                            Invalid email id
+                        </div>
+                    </div>
+                    <div data-ng-if="efaxCtrl.myform.mail.$invalid" ng-messages="efaxCtrl.myform.mail.$error">
+                        <div class="error pull-left" ng-message="required">
+                            Email is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="pull-left">Subject:</div>
+                <div class="col-md-9">
+                    <input type="text" placeholder="" strip-extended-ascii data-ng-model="efaxCtrl.composeEmail.subject">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="pull-left">Tag Matter:</div>
+                <div class="col-md-9">
+                    <input type="text" name="matterid" class="form-control" data-ng-model-options="{ debounce: 200 }" placeholder="Start typing matter name here..."
+                        data-ng-change="efaxCtrl.formatTypeaheadDisplay($model)" typeahead="row.matterid as row.name for row in efaxCtrl.searchMatters($viewValue)"
+                        typeahead-wait-ms="500" typeahead-input-formatter="efaxCtrl.formatTypeaheadDisplay($model)" data-ng-required="true" data-ng-model="efaxCtrl.composeEmail.matter_id"
+                    />
+                </div>
+            </div>
+
+            <div class="row" ng-if="efaxCtrl.composeEmail.matter_id">
+                <div class="pull-left">Attach Matter Documents:</div>
+                <div class="col-md-9">
+                    <div class="sprite pull-left default-tag-matter-document cur-pointer" ng-click="efaxCtrl.openTagMatterDocument(efaxCtrl.composeEmail.matter_id);">
+                        &nbsp;
+                    </div>
+                    <clx-filter-tags class="costum-tags" on-filter-cancel="efaxCtrl.tagCancelled" tag-list="efaxCtrl.documentTags"></clx-filter-tags>
+
+                </div>
+            </div>
+
+            <div class="row border-none">
+                <div class="pull-left">Upload Files:</div>
+                <div class="col-md-10">
+                    <div class="sprite pull-left default-attachment cur-pointer" ngf-select ng-model="efaxCtrl.files" ngf-multiple="true">
+                        &nbsp;
+                    </div>
+                    <div>
+                        <div class="margin-left20px custom-tab-java-block custom-tab">
+                            <div class=" border-none pull-left attchment-items" data-ng-show="efaxCtrl.composeEmail.file.length>0" 
+                                data-ng-repeat="file in efaxCtrl.composeEmail.file track by $index">
+                                <span class="pull-left">{{file.docname}} {{file.docSize}}</span>
+
+                                <div class="pull-left file-buttons">
+                                        <ul class="showBy-btns ">
+                                            <!-- <li>
+                                                <a href="#" data-ng-show="(mailboxCtrlV2.compose!==true) && file.docuri && file.docuri!=''" data-ng-click="mailboxCtrlV2.downloadAttachment(file.docuri)"><span class="sprite default-sharedown"></span></a>
+                                            </li> -->
+                                            <li> <!-- data-ng-show="file.docuri && file.docuri!=''" -->
+                                                <a href="#" class=""  data-ng-click="$event.preventDefault(); efaxCtrl.cancleAttachment($index)" aria-hidden="true">×</a>
+                                            </li><!-- data-ng-show="file.docname && file.docname!=''" -->
+                                        </ul>
+                                    </div>
+                                <div class="clearfix"></div>
+                                <div class="progress-attachment">
+                                    <progressbar class="progress active" animate="true" max="100" data-ng-show="file.fileProgress && file.fileProgress!=''" value="file.fileProgress"
+                                        type="info"></progressbar>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- max charcter length removed  -->
+            <div class="row-fluid margin-top5px">
+                <div class="col-md-12">
+                    <!-- <text-angular  ng-model="efaxCtrl.composeMailMsg" value="" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough','redo', 'undo'],
+                                ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']]"></text-angular> -->
+                                <wysiwyg textarea-id="composeMailMsg" textarea-class="new-editor-height globle-note-color form-control" textarea-name="composeMailMsg"
+            textarea-required ng-model="efaxCtrl.composeMailMsg"  value="" enable-bootstrap-title="true"></wysiwyg>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+
+</div>
+<!-- matter documents  -->
+<div class="compose-wrap document-box" ng-init="efaxCtrl.matterDocs = false" ng-class="{'matterDocsShow cursor-pointer-events-all' :efaxCtrl.matterDocs, '' : !efaxCtrl.matterDocs}">
+    <ng-include src="'efax/matter-documents.html'"></ng-include>
+</div>
+</div>

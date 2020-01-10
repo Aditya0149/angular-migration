@@ -1,0 +1,128 @@
+<style>
+.cell.checkbox.padding-top10px{
+    padding-top: 10px !important;
+}
+.report-responsive .body-row .cell a {
+    color: #000000;
+    font-size: 13px;
+}
+.selected-grid-row {
+    background: transparent;
+}
+</style>
+<cancel-pending-requests></cancel-pending-requests>
+<div >
+    <div data-scrolly="documentlist.increaseLimit()">
+        <div class="row gridSec margin0" id="documentListStyle">
+            <div class="col-md-12 paddingRLR">
+
+                <div class="col-md-5 pull-left paddingRLR dropdown create top-icon-set">
+                    <span>Allow users to add documents</span> <span class="zero-border"
+                        ng-switcher="" ng-model="documentlist.matterCollaborationDocPermission" style="display:inline-block;vertical-align: middle"
+                        ng-click="documentlist.matterCollaborationDocPermissionToggle(documentlist.matterCollaborationDocPermission)">
+                        <div class="switch switch-left" ng-class="{'switch-left': !model, 'switch-right': model}">
+                            <div class="switch-button">&nbsp;</div>
+                        </div>
+                    </span>
+                    <!-- <p ng-if="documentlist.clxGridOptions.selectedItems.length > 0">{{documentlist.clxGridOptions.selectedItems.length}}
+                        Selected</p> -->
+                </div>
+
+                <div class="col-md-7 pull-right paddingRLR clearfix">
+                    <ul class="pull-right">
+                        <li>
+                            <div class="search-input form-control-margin-null" data-ng-show="documentlist.showSearch">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="documentlist.showSearch" data-ng-model-options="{ debounce: 0 }"
+                                    data-ng-model="documentlist.display.filterText" data-ng-change="documentlist.filterReatain();"
+                                    class="form-control">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="showBy-btns pull-right">
+                        <li>
+                            <a>
+                                <span data-ng-click="documentlist.toggleFilterPage();" class="sprite default-filter"
+                                    tooltip="Filter" tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter"></li>
+                        <li class="search-overlap">
+                            <ul data-ng-hide="documentlist.showSearch">
+                                <li style="margin:0px;margin-right: -10px">
+                                    <a data-ng-click="documentlist.showSearch = true">
+                                        <span class="sprite default-searchico-menu " tooltip="Search" tooltip-placement="right"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <div class="pull-right border"> </div>
+                    <div class="pull-right"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-right ">
+                    <clx-filter-tags on-filter-cancel="documentlist.cancleFilterTags" tag-list="documentlist.display.filtertags"></clx-filter-tags>
+                </div>
+            </div>
+        </div>
+
+        <div data-ng-show="documentlist.documentsList.data.length > 0">
+            <show-record-count3 displayed="documentlist.documentsList.data.length" more="documentlist.getNextLimitDocuments()"
+                all="documentlist.getAllDocs()" hide-pager="{{documentlist.documentsList.data.length < documentlist.total}}"
+                total="documentlist.total"></show-record-count3>
+        </div>
+
+        <div class="report-responsive icon-setup ng-scope" data-ng-if="documentlist.documentsList.data.length">
+            <div>
+                <div class="row header-row cust-header-doc">
+                    <div class="cell checkbox" data-width="3" cal-width>
+                        <input type="checkbox" data-ng-model="documentlist.clxGridOptions.selectAll" data-ng-checked="documentlist.allDocumentsSelected()"
+                            data-ng-click="documentlist.selectAllDocuments(documentlist.clxGridOptions.selectAll)" /><label></label>
+                    </div>
+
+                    <div class="cell" cal-width data-ng-repeat="header in ::documentlist.clxGridOptions.headers" data-width="{{header.dataWidth}}">
+                        {{header.displayName}}
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-tasks-due" style="max-height:200px;overflow-x: hidden;">
+                <!--data-ng-class="{'selected-grid-row':documentlist.display.documentSelected[data.documentid] }"-->
+                <div class="row body-row" 
+                    data-ng-repeat="data in documentlist.filteredDocuments = (documentlist.documentsList.data | filter:documentlist.display.filterText | limitTo:documentlist.limit) track by data.doc_id"
+                    grid-size-updated>
+
+                    <div class="cell checkbox padding-top10px" data-width="3" cal-width>
+                        <input type="checkbox" data-ng-checked="documentlist.isDocSelected(data)" checklist-model="documentlist.clxGridOptions.selectedItems"
+                            checklist-value="data" /><label></label>
+                    </div>
+                    <div class="cell" cal-width data-ng-repeat="header in ::documentlist.clxGridOptions.headers "
+                        data-width="{{header.dataWidth}}">
+
+                        <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell
+                            data-ng-class="{'display-table-cell':field.inline}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top20px text-center" data-ng-init="documentlist.showAllOptions=true" data-ng-show="documentlist.documentsList.data.length < documentlist.total && documentlist.documentsList.data.length > 0">
+            <a href="javascript:void(0)" data-ng-show="documentlist.showAllOptions" data-ng-click="documentlist.getNextLimitDocuments()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" data-ng-show="documentlist.showAllOptions" data-ng-click="documentlist.getNextLimitDocuments('all');
+                documentlist.showAllOptions=false">All</a>
+        </div>
+
+        <p class="text-center" data-ng-if="documentlist.documentsList.data.length == 0">
+            There aren’t any documents associated to this matter.
+        </p>
+    </div>
+</div>
+
+<!-- <div>
+        <p class="text-center  margin-top30px" data-ng-if="documentlist.documentsList.data.length == 0">
+                There aren’t any documents associated to this matter.
+            </p>
+</div> -->

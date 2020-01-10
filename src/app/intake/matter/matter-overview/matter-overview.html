@@ -1,0 +1,314 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div class="matter-overview-wrapper">
+    <div id="report-content">
+        <div class="row  margin0  margin-top10px">
+    
+            <div class="col-md-12 paddingRLR">
+                <div class="col-md-8 pull-left paddingRLR dropdown create">
+    
+                    <h1 tooltip-placement="bottom-left" append-to-body="true"
+                        tooltip="{{matterOverview.matterOverviewData.intakeName}}" class="ellipsis-nowrap">
+                        {{matterOverview.matterOverviewData.intakeName}}
+                    </h1>
+                </div>
+                <div ng-if="matterOverview.dataReceived" class="col-md-4 pull-right paddingRLR clearfix search-overlap">
+                    <ul class="showBy-btns pull-right heading-right-buttons">
+    
+                        <li ng-if="matterOverview.matterOverviewData.isMigrated != 1" tooltip="Edit">
+                            <a data-ng-click="matterOverview.openEditmatterview({matterId:matterOverview.intakeId})"
+                                ng-if="matterOverview.isGraceOver != 0">
+                                <span class="sprite default-edit "></span>
+                            </a>
+                        </li>
+                        <!-- Refer-out start -->
+    
+                        <li>
+                            <a data-ng-if="isReferalActive == 1 && matterOverview.matterOverviewData.isMigrated != 1 "
+                                href="#/intake/refer-out-intake/{{matterOverview.matterOverviewData.intakeId}}">
+                                <span class="sprite default-refer" tooltip="Refer Out" tooltip-placement="top"></span>
+                            </a>
+                        </li>
+                        <!--- Refer-out end----->
+                        <li>
+                            <a data-ng-click="matterOverview.printMatterOverview()" href="javascript:void(0);">
+                                <span class="sprite default-file " tooltip="Print"></span>
+                            </a>
+                        </li>
+    
+                        <li ng-if="matterOverview.matterOverviewData.isMigrated != 1" tooltip="Migrate to Matter Manager">
+                            <a href="javascript:void(0)" data-ng-click="matterOverview.openMigrationPopUp()"
+                                data-ng-show="matterOverview.isGraceOver != 0">
+                                <span class="sprite default-migration-icon col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+    
+                        <!-- <li ng-if="matterOverview.matterOverviewData.isMigrated == 1" tooltip="Migrated on {{matterOverview.matterOverviewData.migrationDate}}">
+                            <span class="sprite default-migrated-icon col-md-offset-1">&nbsp;</span>
+                        </li> -->
+    
+                        <li tooltip="Delete" ng-if="matterOverview.matterOverviewData.isMigrated != 1">
+                            <a href="javascript:void(0)"
+                                data-ng-click="matterOverview.deleteMatter(matterOverview.intakeId)"
+                                data-ng-show="matterOverview.isGraceOver != 0">
+                                <span class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ng-if="matterOverview.dataReceived && matterOverview.matterOverviewData.isMigrated == 1"
+            class="row  margin0  margin-top10px">
+    
+            <div class="col-md-12 alert-box">
+                <div>
+                    <h2 class="ellipsis-nowrap title-text">
+                        <span class="default-alert sprite"></span>Note
+                        : This Intake can now be found as a Matter in Matter Manager. If you wish to edit it, please access
+                        this Matter in Matter Manager
+    
+                    </h2>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-md-12 intake-dashboard-border-main padding-0 subnav intake-details-page">
+            <div class="col-md-3 intake-dashboard-left padding-left-0">
+                <div class="page-title-border-links clearfix">
+                    <ul>
+                        <li>
+                            <b class="activeLink border-bttom-none">Basic Details</b>
+                        </li>
+                    </ul>
+                </div>
+                <div class="intake-details-content left">
+                    <div>
+                        <strong>Name:</strong>
+                        <b class="ellipsis">{{matterOverview.matterOverviewData.intakeName | emptyValDash:'-'}}</b>
+                    </div>
+                    <div>
+                        <strong>Type:</strong>
+                        <div>
+                            <b>{{matterOverview.matterOverviewData.intakeType.intakeTypeName }}</b>
+                            <div data-ng-show="matterOverview.matterOverviewData.intakeType.intakeTypeName == null">-
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <strong>Subtype:</strong>
+                        <div>
+                            <b>{{matterOverview.matterOverviewData.intakeSubType.intakeSubTypeName}}</b>
+                            <div data-ng-show="matterOverview.matterOverviewData.intakeSubType.intakeSubTypeName == null">-
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <strong>Category:</strong>
+                        <div>
+                            <b>{{matterOverview.matterOverviewData.intakeCategory.intakeCategoryName}}</b>
+                            <div data-ng-show="matterOverview.matterOverviewData.intakeCategory.intakeCategoryName == null">
+                                -
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div ng-hide="matterOverview.matterOverviewData.leadSource == 'Other'">
+                            <strong>Lead Source:</strong>
+    
+                            <b>{{matterOverview.matterOverviewData.leadSource}}</b>
+                            <div
+                                data-ng-show="matterOverview.matterOverviewData.leadSource == null || matterOverview.matterOverviewData.leadSource == ''">
+                                -
+                            </div>
+                        </div>
+                        <div ng-show="matterOverview.matterOverviewData.leadSource == 'Other'">
+                            <strong>Lead Source:</strong>
+                            <b class="reminders-popup">{{matterOverview.matterOverviewData.leadSourceDescription}}</b>
+                            <div
+                                data-ng-show="matterOverview.matterOverviewData.leadSourceDescription == null || matterOverview.matterOverviewData.leadSourceDescription == ''">
+                                -
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <strong>Date of Intake:</strong>
+                        <b>{{matterOverview.matterOverviewData.dateOfIntake}}</b>
+                    </div>
+                    <div>
+                        <strong>Referred To:</strong>
+                        <b>{{matterOverview.matterOverviewData.referredTo}}</b>
+                    </div>
+                    <div>
+                        <strong>Referred By:</strong>
+                        <b>{{matterOverview.matterOverviewData.referredBy}}</b>
+                    </div>
+                    <div class="btn-reffer valuation-link label label-success margin-top10px pull-left">
+                        <span class="sign pull-left margin-top5px">$</span>
+                        <span class="value">
+                            {{matterOverview.matterOverviewData.intakeAmount
+                            | nrFormat}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 intake-dashboard-right padding-right-0">
+                <div class="page-title-border-links clearfix">
+                    <ul>
+                        <li>
+                            <!--<a data-ng-click="matterOverview.setSelectedTab('plaintiff')" data-ng-class="{'activeLink' :matterOverview.isPlaintiff}">Plaintiff {{matterOverview.plantiffInfo ? '('+ matterOverview.plantiffInfo.length +')' : '(0)'}}</a>-->
+                            <a data-ng-click="matterOverview.setSelectedTab('plaintiff')"
+                                data-ng-class="{'activeLink' :matterOverview.isPlaintiff}">Plaintiff</a>
+                        </li>
+                        <li>
+                            <a data-ng-click="matterOverview.setSelectedTab('incident')"
+                                data-ng-class="{'activeLink' :matterOverview.isIncident}">Incident
+                                Details</a>
+                            <!--<a href="#">Incident Details</a>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="margin-top10px plaintiffs-custom-table" data-ng-if="matterOverview.isPlaintiff == true" id="">
+                    <div class="flex-grid-row flex-grid-header-row">
+                        <b class="flex-grid-item">Name</b>
+                        <!--   <div class="flex-grid-item">Role</div>-->
+                        <b class="flex-grid-item">Phone</b>
+                    </div>
+                    <div class="flex-grid-row" data-ng-repeat="plantiff in matterOverview.plantiffInfo" grid-size>
+                        <div class="cell w-50" data-width="25">
+                            <div class="cursor-pointer saved-search-link" data-ng-click="matterOverview.getContactCard(plantiff.estateAdminId)"
+                                ng-if="plantiff.isAlive == 0 && plantiff.estateAdminId">
+                                <strong>{{plantiff.estateAdminId.firstName}} {{plantiff.estateAdminId.lastName}}
+                                    (Administrator)
+                                </strong>
+                            </div>
+                            <!-- <div data-ng-click="matterOverview.getContactCard(plantiff.estateAdminId)" ng-if="plantiff.isAlive == 0" class="cursor-pointer">
+                                <strong>{{plantiff.estateAdminId.firstName}} {{plantiff.estateAdminId.lastName}}
+                                </strong>
+                            </div> -->
+                            <div data-ng-click="matterOverview.getContactCard(plantiff.poa)"
+                                ng-if="plantiff.isAlive != 0 && plantiff.poa" class="cursor-pointer">
+                                <strong class="attorney-box"
+                                    href="javascript:void(0);">{{plantiff.poa.firstName}}
+                                    {{plantiff.poa.lastName}} (Power Of Attorney)
+                                </strong>
+                            </div>
+                            <div data-ng-click="matterOverview.getContactCard(plantiff.contact)">
+                                <span class="cursor-pointer saved-search-link">{{plantiff.contact.firstName}}
+                                    {{plantiff.contact.lastName}}</span>
+                                <li data-ng-show="plantiff.contact.firstName == ''">-
+                                </li>
+                            </div>
+                        </div>
+    
+                        <div class="cell w-50" data-width="20">
+                                <div ng-if="plantiff.estateAdminId">
+                                    <span tooltip-placement="bottom" tooltip="Work"
+                                        ng-if="plantiff.estateAdminId.phoneType == 'w'"
+                                        class="sprite default-contactPhone-work-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Home"
+                                        ng-if="plantiff.estateAdminId.phoneType == 'h'"
+                                        class="sprite default-contactPhone-home-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Cell"
+                                        ng-if="plantiff.estateAdminId.phoneType == 'c'"
+                                        class="sprite default-contactPhone-new matter-icon"></span>
+                                    <span>{{plantiff.estateAdminId.primaryPhoneNumber | emptyValDash:'-'}}</span>
+                                </div>
+                                <div ng-if="plantiff.poa">
+                                    <span tooltip-placement="bottom" tooltip="Work"
+                                        ng-if="plantiff.poa.phoneType == 'w'"
+                                        class="sprite default-contactPhone-work-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Home"
+                                        ng-if="plantiff.poa.phoneType == 'h'"
+                                        class="sprite default-contactPhone-home-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Cell"
+                                        ng-if="plantiff.poa.phoneType == 'c'"
+                                        class="sprite default-contactPhone-new matter-icon"></span>
+                                    <span>{{plantiff.poa.primaryPhoneNumber | emptyValDash:'-'}}</span>
+                                </div>
+                                <div ng-if="!plantiff.estateAdminId && !plantiff.poa">
+                                    <span tooltip-placement="bottom" tooltip="Work"
+                                        ng-if="plantiff.contact.phoneType == 'w'"
+                                        class="sprite default-contactPhone-work-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Home"
+                                        ng-if="plantiff.contact.phoneType == 'h'"
+                                        class="sprite default-contactPhone-home-new matter-icon"></span>
+                                    <span tooltip-placement="bottom" tooltip="Cell"
+                                        ng-if="plantiff.contact.phoneType == 'c'"
+                                        class="sprite default-contactPhone-new matter-icon"></span>
+                                    <span>{{plantiff.contact.primaryPhoneNumber | emptyValDash:'-'}}</span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="intake-details-content right" data-ng-if="matterOverview.isIncident == true" id="">
+                    <div>
+                        <span class="col-md-2 padding-0">
+                            <strong>Date of Incident:</strong>
+                            <ul class="margin-bottom10px">
+                                <li>{{matterOverview.matterOverviewData.accidentDate |utcDateFilter:'MM/DD/YYYY':1:'start'}}
+                                </li>
+                            </ul>
+                        </span>
+                        <span class="col-md-8">
+                            <strong>Service Responded:</strong>
+                            <ul class="margin-bottom10px">
+                                <li>{{matterOverview.matterOverviewData.otherInfo_intake | emptyValDash:'-'}}</li>
+                            </ul>
+                        </span>
+                    </div>
+                    <div>
+                        <strong>Location of Incident:</strong>
+                        <ul class="dashboard-tasks-due location-box-height">
+                            <li>{{matterOverview.matterOverviewData.accidentLocation | emptyValDash:'-'}}</li>
+    
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Description of Incident:</strong>
+                        <ul class="dashboard-tasks-due description-box-height">
+                            <li>{{matterOverview.matterOverviewData.description | emptyValDash:'-'}}</li>
+                        </ul>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        <div class="col-md-12" ng-if="matterOverview.matterOverviewData.isMigrated != 1">
+            <footer class="intake-header">
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" class="active-footer">Overview</a>
+                    </li>
+    
+                    <li>
+                        <a href="#/intake/plaintiff/{{matterOverview.intakeId}}">Details</a>
+                    </li>
+                    <li>
+                        <a href="#/intake/intake-documents/{{matterOverview.intakeId}}">Documents</a>
+                    </li>
+                    <li>
+                        <a href="#/intake/notes/{{matterOverview.intakeId}}">Notes</a>
+                    </li>
+                    <li>
+                        <a href="#/intake/events/{{matterOverview.intakeId}}">Events </a>
+                    </li>
+                    <li>
+                        <a href="#/intake/tasks/{{matterOverview.intakeId}}">Tasks</a>
+                    </li>
+    
+                    <li data-ng-show="is_workflow_active">
+                        <a href="#/intake/workflow/{{matterOverview.intakeId}}">Workflow</a>
+                    </li>
+    
+                </ul>
+            </footer>
+        </div>
+    </div>
+    <div class="compose-wrap box-index"
+        ng-if="matterOverview.firmData.API === 'PHP' && !matterOverview.reloadEmail"
+        data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :matterOverview.compose, '' : !matterOverview.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+</div>

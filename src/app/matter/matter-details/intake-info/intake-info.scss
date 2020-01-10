@@ -1,0 +1,43 @@
+#parent-content{
+
+	.dropdown-menu {
+		width: 93% !important;
+	}
+	.custom-new-drop-width {
+		.dropdown-menu {
+			width: 48% !important;
+		}
+	}
+	.top-margin-defendant {
+		margin-top: 25px !important;
+	}
+	.add-now-wrap {
+		margin: 27px 0 0 !important;
+	}
+	.main-card-start {
+		width: 72%;
+		margin: 15px auto 50px auto;
+		padding-bottom: 50px;
+	}
+	.main-card-start-btn {
+		margin: 10px auto 15px auto !important;
+		height: 25px;
+		width: 72%;
+	}
+	.sticky {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		@include set_background_color($color_white);
+		z-index: 9999;
+	}
+	.error-icon1 {
+		position: absolute;
+		right: 20px;
+		top: 10px;
+	}
+
+	.form-margin {
+		margin-bottom: 27px;
+	}
+}

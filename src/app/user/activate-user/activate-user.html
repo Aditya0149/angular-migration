@@ -1,0 +1,81 @@
+
+
+
+
+
+<style>
+.form-control {width: 100%;}
+.btn{padding: 6px 0px;height: auto;line-height:inherit;font-size: 14px;}
+</style>
+<div class="forgot-main" data-ng-show="activate.display.main">
+    <div class="header-background forgot-password-header">
+        <div class="container">
+            <div class="rsdow">
+                <div class="logo"><img src="styles/images/logo.png" height="40" class="margin-top25px"></div>
+            </div>    
+        </div>
+    </div>
+    <div class="container margin-top40px" data-ng-hide="activate.goToLogin == true">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" data-ng-form="activate.form" data-ng-if="activate.display.setPassword">
+                <div class="forgot-password-text row">
+                    <h3 class="forgot-title">Reset Your CloudLex® Password</h3><br>
+                    <b>Your new password must:</b>
+                    <ul class="password-ul">
+                        <li>Be at least 6 characters in length</li>
+                        <li>Contain at least 1 lowercase and 1 uppercase letter</li>
+                        <li>Contain at least 1 special character (!@#$%^&*)</li>
+                        <li>Contain at least 1 number (0–9)</li>
+                    </ul>
+                </div>    
+                <div class="col-md-5 col-centered">
+                    <br>
+                    <form class="form-signin">
+                        <label class="forgot-password-label">Enter Password</label>
+                        <input class="form-control text-center" name="pass" data-ng-required="true" data-ng-model="activate.new_pass" type="password" />
+                        <br>
+                        <label class="forgot-password-label">Confirm Password</label>
+                        <input type="password" name="cnfrm_pass" data-ng-required="true" data-ng-model="activate.confirm_pass" class="form-control text-center" />
+                        <br>
+                        <button class="btn btn-block forgot-password-btn" data-ng-disabled="activate.form.$invalid" data-ng-click="activate.activateUser(activate.new_pass, activate.confirm_pass)">Submit</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-md-2"></div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 margin-top10px" data-ng-if="activate.display.expired">
+                <p class="text-justify">
+                    <small> This link has expired. Please call <strong>(646)415-8307</strong> for support.
+                    If you already have the credentials please click <a href="#/login">here</a> to login.
+                </small> </p>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        
+    </div>
+
+
+<div ng-show="activate.goToLogin == true" class="container margin-top60px">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" data-ng-form="frgtPswd.form">
+                <div class="forgot-password-text row">
+                    <div><img src="styles/images/done-icon.jpg" class=""></div>
+                    <h3 class="forgot-title margin-top40px">Your password is changed successfully</h3>
+                    <p class="">You may now login using your new password.</p>
+                </div>    
+                <div class="col-md-5 col-centered">
+                    <button type="submit" ui-sref="login" class="margin-top40px btn btn-block forgot-password-btn">Continue to Login</button>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+</div>

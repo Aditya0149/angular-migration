@@ -1,0 +1,47 @@
+<style>.modal-dialog{width:400px !important;}</style>
+<div class="modal-header">
+    <h2 class="pull-left page-title" ng-show="!clientCtrl.editMode">Clients</h2>
+    <h2 class="pull-left page-title" ng-show="clientCtrl.editMode">Edit Client Status</h2>
+
+    <div class="pull-right">
+        <button class="btn btn-default pull-right" ng-click="clientCtrl.editMode=!clientCtrl.editMode" ng-hide="clientCtrl.editMode || clientCtrl.matterInfo.archivalMatterReadOnlyFlag">
+            Edit
+        </button>
+        <button class="btn btn-default pull-right" ng-click="clientCtrl.save(clientCtrl.plaintiffDataList)" ng-hide="!clientCtrl.editMode">
+            Save
+        </button>
+        <button class="btn btn-default btn-styleNone pull-right margin-right15px" data-ng-click="clientCtrl.close()">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<div class="modal-body static-new-scrollbar" style="max-height: 85vh;">
+<div ng-if="clientCtrl.plaintiffsCount!=0 && clientCtrl.editMode && clientCtrl.emailNotAdded">
+    <p class="alert alert-warning" style="top: 0;position: relative;">Please add the plaintiff's email address in order to enable Client Communicator.</p>
+</div>
+
+<div ng-if="clientCtrl.plaintiffsCount==0">
+    <p class="alert alert-warning" style="top: 0;position: relative;">No Clients Added.</p>
+</div>
+    <div class="" ng-class="">
+        <div ng-if="clientCtrl.plaintiffDataList.length!=0">
+        <div data-ng-repeat="item in clientCtrl.plaintiffDataList">
+            <div class="row">
+                <div class="col-md-8">
+                    <label>{{item.contactid.firstname}} {{item.contactid.lastname}}</label>
+                </div>
+                <div class="col-md-4 custom-switch-slide">
+                    <div class="col-md-2">
+                        <span class="form-control zero-border" ng-switcher ng-model="item.client_status" ng-show="clientCtrl.editMode && item.contactid.emailid"></span>
+                        <span class="form-control zero-border
+                                                                switch-gear-disabled" ng-switcher ng-model="item.client_status" ng-show="!clientCtrl.editMode || !item.contactid.emailid"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        
+    </div>
+</div>

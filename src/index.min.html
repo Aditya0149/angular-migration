@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Welcome to CloudLex | CloudLex</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="styles/css/main.css" />
+</head>
+
+<body on-class-change="" ng-cloak data-ng-controller="rootController as root" clx-disable-scroll>
+    <div ng-class="{' lightbox': !showWaitMessage, ' darkbox': showWaitMessage == true}"
+        data-ng-show="root.requestPending" request-pending="root.requestPending">
+    </div>
+    <div class="lexvia-loader" data-ng-show="root.requestPending" request-pending="root.requestPending">
+        <img src="styles/images/lexvia_loader.gif">
+        <h6 class="margin-top10px" ng-bind-html="waitMessage"> </h6>
+    </div>
+
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+          Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Navigation -->
+    <!-- <span us-spinner="{radius:20, width:4, length: 16}" spinner-start-active="true" spinner-key="pageSpinner"></span>-->
+    <toaster-container toaster-options="{'time-out':10000}">
+    </toaster-container>
+    <error-toast></error-toast>
+    <!-- Navigation -->
+    <clx-side-nav-drawer data-ng-if="root.display.sideNav"></clx-side-nav-drawer>
+    <!-- Content -->
+    <div data-ui-view=""></div>
+
+    <script src="scripts/constants.js"></script>
+    <script src="angular/runtime.js"></script>
+    <script src="angular/polyfills-es5.js" nomodule></script>
+    <script src="angular/polyfills.js"></script>
+	<script src="angular/styles.js"></script>
+    <script src="angular/scripts.js"></script>
+    <script src="angular/vendor.js"></script>
+    <script src="angular/main.js"></script>
+    <script src="scripts/template.min.js"></script>
+    <script src="scripts/templates-ctrl.js"></script>
+    <script src="scripts/intakeTemplate.min.js"></script>
+    <script src="scripts/intake-templates-ctrl.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").niceScroll({ horizrailenabled: false });
+
+            $(document).on('click', function () {
+                setTimeout(function () {
+                    if ($(document).height() <= $(window).height()) {
+
+                    } else {
+                        $("body").getNiceScroll().resize();
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+    <ng-include src="'app/ngTemplates.html'"></ng-include>
+</body>
+
+</html>

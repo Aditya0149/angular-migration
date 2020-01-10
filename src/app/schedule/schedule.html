@@ -1,0 +1,207 @@
+<style>
+    .events-list ul li:hover {
+        background: #ffffff !important;
+    }
+
+    .select2-results .select2-highlighted:hover {
+        background: #3875d7 !important;
+    }
+</style>
+<div class="row">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="scheduleCtrl.resetPage()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div class="content-class-popup">
+
+    <div class="page-title-border-links clearfix subnav  heading-with-button-bottom-padding padding-bottom-10px">
+        <div class="form-inline pull-left">
+            <div class=" form-group select-label-correction ">
+                <label>Show Events From</label>
+                <ui-select ng-model="scheduleCtrl.selectedShowEventFrom" theme="selectize" on-select="scheduleCtrl.getSelectCategoryDetails(scheduleCtrl.selectedShowEventFrom)">
+                    <ui-select-match placeholder="Show Event From">
+                        {{$select.selected.Name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.Name as item in scheduleCtrl.showEventFrom | filter:{ Name:$select.search }">
+                        <small>
+                            {{item.Name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+        </div>
+        <div class="pull-right">
+
+            <!--<button class="btn btn-default" ng-click="calendar.addNewEvent()">Add Event</button>-->
+
+            <button data-ng-click="scheduleCtrl.calendarView()" class="btn btn-default pull-right">Calendar View</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="margin-top10px paddingLR-10px">To assign an event to a user, select an event. Then select a user.</p>
+        </div>
+    </div>
+    <div class="row margin-top20px">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4 select-label-correction">
+                    <label>
+                        <strong>Upcoming Events:
+                            <!--{{scheduleCtrl.displayDefaultDate}}-->
+                        </strong>
+                    </label>
+                </div>
+
+                <div class="col-md-6">
+                    <span class="input-group datepicker">
+                        <input readonly="true" type="text" data-ng-model="scheduleCtrl.datePickerDate" datepicker-popup="{{scheduleCtrl.dateFormat}}"
+                            datepicker-options="scheduleCtrl.datepickerOptions" is-open="scheduleCtrl.datePickerEvent.openStartDatepicker"
+                            show-button-bar="false" class="form-control" ng-change="scheduleCtrl.getFormattedDateString(scheduleCtrl.datePickerEvent)"
+                        />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" data-ng-click="scheduleCtrl.open($event,'openStartDatepicker')">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 schedule-sidebar">
+            <div ng-if="scheduleCtrl.eventDetailsFlag" class="events-list list margin-top20px  ">
+                <ul data-ng-repeat="data in scheduleCtrl.displayEventList">
+                    <li data-ng-click="scheduleCtrl.eventDataClick(data.id)" ng-if="((data.matter_name != '') && (data.matterid != 0) && (data.matterid != null))"
+                        data-ng-class="{'selected-grid-row':scheduleCtrl.eventClickData[0].id == data.id}">
+                        <p class="paddingLR-10px">{{data.name}}</p>
+                        <p class="paddingLR-10px">{{data.fullname}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-if="scheduleCtrl.eventDataClickFlag" class="col-md-8">
+            <!--scheduleCtrl.eventClickData = {{scheduleCtrl.eventClickData[0].users}}-->
+
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="col-md-12 detail-event view-only-fields">
+
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">Matter:</div>
+                            <div class="col-md-6 value">
+                                <strong class="ng-binding">{{scheduleCtrl.eventClickData[0].matter_name}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">Start Date:</div>
+                            <div class="col-md-8 value">
+                                {{scheduleCtrl.eventClickData[0].utcstart|utcDateFilter: 'MM-DD-YYYY':scheduleCtrl.eventClickData[0].allday:'start'}}
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">End Date:</div>
+                            <!-- <div class="col-md-8 value ng-binding">
+                                {{scheduleCtrl.eventClickData[0].end}}
+                            </div>-->
+                            <div class="col-md-8 value" data-ng-show="scheduleCtrl.eventClickData[0].utcstart != scheduleCtrl.eventClickData[0].utcend">
+                                {{scheduleCtrl.eventClickData[0].utcend|utcDateFilter: 'MM-DD-YYYY':scheduleCtrl.eventClickData[0].allday:'end'}}
+                            </div>
+                            <div class="col-md-8 value" data-ng-show="scheduleCtrl.eventClickData[0].utcstart == scheduleCtrl.eventClickData[0].utcend">
+                                {{scheduleCtrl.eventClickData[0].utcstart|utcDateFilter: 'MM-DD-YYYY':scheduleCtrl.eventClickData[0].allday:'start'}}
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">Start:</div>
+                            <div class="col-md-8 value ng-binding">
+                                {{scheduleCtrl.eventClickData[0].utcstart|utcDateFilter: 'hh:mm A':scheduleCtrl.eventClickData[0].allday:'start'}}
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">End:</div>
+                            <div class="col-md-8 value" data-ng-show="scheduleCtrl.eventClickData[0].utcstart != scheduleCtrl.eventClickData[0].utcend">
+                                {{scheduleCtrl.eventClickData[0].utcend|utcDateFilter: 'hh:mm A':scheduleCtrl.eventClickData[0].allday:'end'}}
+                            </div>
+                            <div class="col-md-8 value" data-ng-show="scheduleCtrl.eventClickData[0].utcstart == scheduleCtrl.eventClickData[0].utcend">
+                                {{scheduleCtrl.eventClickData[0].utcstart|utcDateFilter: 'hh:mm A':scheduleCtrl.eventClickData[0].allday:'start'}}
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">Location:</div>
+                            <div class="col-md-8 value">
+                                <strong class="ng-binding">{{scheduleCtrl.eventClickData[0].location}}</strong>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="col-md-4 text-right">Description:</div>
+                            <div class="col-md-8 value ng-binding">
+                                {{scheduleCtrl.eventClickData[0].description}}
+                            </div>
+                        </div>
+                        <div class="row-fluid ng-hide" ng-show="events.selectedEvent.reminder_datetime != null">
+                            <div class="col-md-4 text-right">Reminder Date:</div>
+                            <div class="col-md-8 value">
+                                <strong class="ng-binding">01-01-1970</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 margin-top40px">
+                    <div class="row-fluid">
+                        <h2>Assign Event To</h2>
+                        <div class="events-list list margin-top10px">
+                            <ui-select class="width100" multiple ng-model="scheduleCtrl.assingedToUserID" on-select="scheduleCtrl.userSelected(scheduleCtrl.assingedToUserID)"
+                                on-remove="scheduleCtrl.removeAssignUser(scheduleCtrl.assingedToUserID,$item)" theme="select2">
+                                <ui-select-match placeholder="Select Assign event to">
+                                    {{$item.fname}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="user in scheduleCtrl.eventClickData[0].users  | filter:{fname:$select.search} | orderBy: 'fname' ">
+                                    <small>{{user.fname}}</small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div>
+                            <label class="margin-top10px">Create Task for event:</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" data-ng-checked="scheduleCtrl.istaskcreated == '1'" data-ng-model="scheduleCtrl.istaskcreated"
+                                data-ng-true-value="'1'" data-ng-false-value="'0'" data-ng-disabled="scheduleCtrl.createTaskDisabled"
+                            />
+                            <label></label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 margin-top20px" style="padding-bottom: 20px;">
+                    <div ng-if="scheduleCtrl.isSaveAssignUser">
+                        <div class="margin-top5px pull-left paddingLR-10px" style="width: 100%;">
+                            <div class="col-md-2 padding-0 text-right" style="margin-right: 5px;">
+                                <h2>Assigned To: </h2>
+                            </div>
+                            <div class="pull-left col-md-8 padding-0">
+                                <p style="word-break: break-all;padding: 0;margin: -2px 0 0 0;" class="margin-top5px pull-left paddingLR-10px">{{scheduleCtrl.assignedToUserName}}</p>
+                            </div>
+                        </div>
+                        <button data-ng-click="scheduleCtrl.assignedSelectedEventToUser(scheduleCtrl.assingedToUserID)" class="btn btn-default pull-right">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

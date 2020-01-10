@@ -1,0 +1,129 @@
+<style>
+.add-workflow-block > .radio+.radio, .checkbox+.checkbox{margin-top: 10px;}
+
+.add-workflow-block .checkbox label{padding-left: 30px;}
+
+.add-workflow-block .radio{float: left;margin-right:35px !important;}
+.add-workflow-block .checkbox{float: left;margin-right:35px !important;}
+</style>
+<div data-ng-if="addWorkflow.display.page=='addworkflow'" class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" 
+                data-ng-click="addWorkflow.resetAddWorkflowPage()"
+                href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div data-ng-if="addWorkflow.display.page =='addworkflow'" class="container">
+<div class="page-title-border clearfix form-group heading-with-button-bottom-padding row-fluid global-page-title">
+    <h2 class="pull-left page-title">{{addWorkflow.mode}} Workflow</h2>
+    <div class="pull-right">
+        <button  data-ng-click="addWorkflow.cancel()" class="btn btn-default">
+           Back
+       </button>
+
+         <button  data-ng-disabled="addWorkflow.form.$invalid || addWorkflow.calDates"
+         data-ng-click="addWorkflow.save(addWorkflow.workflowInfo)" class="btn btn-default">
+            Save
+        </button>
+    </div>    
+</div>
+
+<div class="filter-greybox add-workflow-block container" data-ng-form="addWorkflow.form">
+    <div class="form-group relative-container">
+        <div class="row form-group">
+            <div class="col-md-3 padding-0">
+                <label class="margin-top5px">Workflow Name:<span class="compulsary-mark">*</span></label>
+            </div>
+            <div class="col-md-7 padding-0">
+                <input type="text" maxlength="50"
+                 name ="wName"
+                 data-ng-required="true"
+                 data-ng-model="addWorkflow.workflowInfo.workflow_name" class="form-control" />
+                 <!--<span class="sprite default-caution error-icon" data-ng-show="addWorkflow.form.wName.$dirty && addWorkflow.form.wName.$invalid"></span>-->
+                 <div data-ng-if="addWorkflow.form.wName.$dirty"
+            ng-messages="addWorkflow.form.wName.$error">
+            <div style="width: 94%;" class="error "
+                ng-message="required">
+                workflow name is required
+            </div>
+        </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3 padding-0">
+                <label class="margin-top5px">Workflow Description:</label>
+            </div>
+            <div class="col-md-7 padding-0">
+                <textarea class="form-control height-110" maxlength="250" data-ng-model="addWorkflow.workflowInfo.description"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3 padding-0">
+            <label class="margin-top5px">Calculation Dates for Task/Event Workflow:<span class="compulsary-mark">*</span> </label>
+        </div>
+        <div class="col-md-7 padding-0">
+            <div class="checkbox">
+                <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)"
+                 ng-disabled="addWorkflow.isDisableDates || addWorkflow.cloneDOI" data-ng-model="addWorkflow.workflowInfo.DOI" data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                /><label>Date of Incident</label>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)" ng-disabled="addWorkflow.isDisableDates || addWorkflow.cloneDOIn " data-ng-model="addWorkflow.workflowInfo.DOIn" data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                /><label>Date of Intake</label>
+            </div>    
+            <div class="checkbox">
+                <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)" ng-disabled="addWorkflow.isDisableDates || addWorkflow.cloneSOL" data-ng-model="addWorkflow.workflowInfo.SOL" data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                /><label>SOL</label>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)" ng-disabled="addWorkflow.isDisableDates || addWorkflow.cloneMCD" data-ng-model="addWorkflow.workflowInfo.MCD" data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                /><label>Matter Created Date</label>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-3 padding-right-0">
+                    <div class="checkbox">
+                            <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)" ng-disabled="addWorkflow.isDisableDates || addWorkflow.clonecustomDate1" data-ng-model="addWorkflow.workflowInfo.customDate1 " data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                            /><label class="margin-top5px">Custom Date 1</label>
+                        </div>
+                    </div>
+            <div class="col-md-6">
+                <input type="text" maxlength="100" data-ng-model="addWorkflow.workflowInfo.customDate1Label" class="form-control margin-bottom10px"/>
+            </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-3 padding-right-0">
+                            <div class="checkbox">
+                                    <input type="checkbox" ng-change="addWorkflow.checkDates(addWorkflow.workflowInfo)" ng-disabled="addWorkflow.isDisableDates || addWorkflow.clonecustomDate2" data-ng-model="addWorkflow.workflowInfo.customDate2" data-ng-true-value="'1'" data-ng-false-value="'0'" 
+                                    /><label class="margin-top5px">Custom Date 2</label>
+                            </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <input type="text" maxlength="100" data-ng-model="addWorkflow.workflowInfo.customDate2Label" class="form-control margin-bottom10px" />
+                    </div>
+                </div>
+
+        </div>
+            
+        </div>
+                         
+
+    </div>
+
+    
+
+
+</div>
+
+<div data-ng-if="addWorkflow.display.page =='closeAddWorkflow'">
+    <div data-ng-controller="workFlowCtrl as workFlowCtrl"
+        data-ng-include="'app/settings/workflows/workflows.html'">
+    </div>
+</div>

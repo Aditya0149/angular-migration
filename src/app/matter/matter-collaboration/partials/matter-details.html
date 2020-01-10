@@ -1,0 +1,61 @@
+<style>
+    .switch .switch-button {
+        height: 20px !important;
+        width: 20px !important;
+        margin-top: -3px !important;
+    }
+
+    .switch.switch-right {
+        background: #74bb2f !important;
+        border-color: #74bb2f !important;
+    }
+
+    .switch.switch-right .switch-button {
+        border: 1px solid #74bb2f !important;
+        left: 25px !important;
+    }
+
+    .spacing-span {
+        border-right: 1px solid #cccccc;
+        padding: 5px 10px 5px 0px;
+        margin-right: 10px;
+    }
+</style>
+<p>Select the documents, notes and events that you wish to share</p>
+<div ng-class="{'cursor-pointer-events-none' :matterCollaborationCtrl.compose, '' : !matterCollaborationCtrl.compose}">
+    <div class=" form-margin">
+        <div class=" clearfix subnav">
+            <div>
+                <ul>
+                    <li><a href="javascript:void(0)" data-ng-click="matterCollaborationCtrl.showView(matterCollaborationCtrl.views.DOCUMENT_VIEW)"
+                            data-ng-class="{'activeLink' : matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.DOCUMENT_VIEW}">Documents
+                            <span>({{matterCollaborationDocumentsCount}})</span></a></li>
+                    <li><a href="javascript:void(0)" data-ng-click="matterCollaborationCtrl.showView(matterCollaborationCtrl.views.NOTE_VIEW)"
+                            data-ng-class="{'activeLink' : matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.NOTE_VIEW}">Notes
+                            <span>({{matterCollaborationNotesCount}})</span></a></li>
+                    <li><a href="javascript:void(0)" data-ng-click="matterCollaborationCtrl.showView(matterCollaborationCtrl.views.EVENT_VIEW)"
+                            data-ng-class="{'activeLink' : matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.EVENT_VIEW}">Events
+                            <span>({{matterCollaborationEventsCount}})</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="paddingRLR flexCont ng-scope"></div>
+
+        <div data-ng-show="matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.DOCUMENT_VIEW">
+            <div data-ng-controller="MatterCollaborationDocumentsCtrl as documentlist" data-ng-include="'app/matter/matter-collaboration/document/document-list.html'">
+            </div>
+        </div>
+
+        <div data-ng-show="matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.NOTE_VIEW">
+            <div data-ng-controller="MatterCollaborationNotesCtrl as notes" data-ng-include="'app/matter/matter-collaboration/notes/notes.html'">
+            </div>
+        </div>
+
+        <div data-ng-show="matterCollaborationCtrl.currentView == matterCollaborationCtrl.views.EVENT_VIEW">
+
+            <div data-ng-controller="MatterCollaborationEventsCtrl as events" data-ng-include="'app/matter/matter-collaboration/events/events.html'">
+            </div>
+
+        </div>
+    </div>
+</div>

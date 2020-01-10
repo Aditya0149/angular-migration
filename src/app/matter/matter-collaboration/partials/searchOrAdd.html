@@ -1,0 +1,147 @@
+<style>
+    .selectize-dropdown-content {
+        min-height: 166px !important;
+}
+    .radio label::after {
+    background-color: #2097c6 !important;
+    top: 5px !important;
+    width: 9px !important;
+    height: 9px !important;
+    left: 5px !important;
+}
+
+.radio label::before {
+    width: 19px !important;
+    height: 19px !important;
+    border: 2px solid #2097c6 !important;
+}
+.radio-div {
+display: inline-block;
+}
+.form-control{height: 36px}
+.input-group-addon {
+    padding: 0px 0px;background: transparent;cursor: pointer;}
+    .glyphicon {
+    top: 10px;}
+
+    textarea.form-control {
+    height: 100px;
+}
+#report-content {
+    padding-left: 65px;
+    padding-right: 95px;
+}
+span.smalltxt {
+    font-size: 11px;
+    color: #aaa;
+}
+.form-control:focus {
+    border-color: #ccc;
+    -webkit-box-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+span.top-border {
+    display: block;
+    border-top: 1px solid #cccccc;
+    padding-top: 10px;
+    margin-top: 10px;
+    text-align: right;
+    margin-bottom: 4px;
+    width: 100%;
+}
+.graytxt {
+    color: #cccccc;
+}
+
+</style>
+<div class="row">
+    <div class="static-new-scrollbar" style="height:60vh;overflow-x: hidden;">
+        <div class="col-md-12">
+            <!-- <div class="margin-top20px margin-bottom20">
+                <p class="margin-bottom-0">Your Sharing will be able to access shared material via an external portal
+                    (CLX Lite)</p>
+                <span class="smalltxt">Access Sharing manager from the launchpad to manage all shared materials</span>
+            </div> -->
+            <div class="margin-top20px margin-bottom10">
+                <p class="margin-bottom-0"> With whom would you like to share?</p>
+                <!-- <div class="radio padding-0 radio-div margin-right20px">
+                    <input style="margin-left: 0px;" type="radio"  class="ng-pristine ng-untouched ng-valid" name="contact">
+                    <label style="line-height: inherit;padding-left: 26px;" class="ng-binding">Existing contact</label>
+                </div> -->
+
+                <!-- <div class="radio padding-0 radio-div">
+                    <input style="margin-left: 0px;" type="radio"  class="ng-pristine ng-untouched ng-valid" name="contact">
+                    <label style="line-height: inherit;padding-left: 26px;" class="ng-binding">New contact</label>
+                </div> -->
+            </div>
+
+            <div class="row margin-bottom20">
+                <div style="margin-bottom: 70px;clear: both;" ng-repeat="cbl in matterCollaborationCtrl.contactBlockList;" ng-init="cblIndex=$index;cbl.contactEntity=''">
+                    <div class="col-md-4 margin-bottom20" style="padding-right: 0px;width: 30%;">
+                        <label>Name </label>
+                        <ui-select ng-model="cbl.contactEntity" theme="selectize" on-select="matterCollaborationCtrl.selectedContactEmail(cbl.contactEntity, cblIndex);cbl.contactEntityEmail='';matterCollaborationCtrl.addNewEmailForSelectedContactModel[cblIndex]='';matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]=false;">
+                            <ui-select-match placeholder="Select Name">
+                                {{$select.selected.name}}  <span ng-if="$select.selected.type"> {{"|"}} </span><span class="graytxt"> {{$select.selected.type}} </span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="item as item in matterCollaborationCtrl.contacts | filter:{ name:$select.search } | orderBy: 'name'">
+                                <small>
+                                    {{item.name}} <span ng-if="item.type"> {{"|"}} </span>  <span class="graytxt"> {{item.type}} </span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-5 margin-bottom20" style="padding-left:0px">
+                        <label>Email </label>
+                        <div ng-show="!matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]" init="matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]=false;">
+                            <ui-select ng-model="cbl.contactEntityEmail" theme="selectize" on-select="">
+                                <ui-select-match placeholder="Select Email">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item as item in matterCollaborationCtrl.contactEmails[cblIndex] track by $index">
+                                    <small>
+                                        {{item}} 
+                                    </small>
+                                    <span ng-if="$last" class="top-border">
+                                        <button data-ng-click="matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]=true;"
+                                            class="btn btn-default" style="margin-right:10px;margin-bottom: 6px;">Add New</button>
+                                    </span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div ng-show="matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]">
+                            <div class="input-group">
+                                <input type="text" maxlength="500" placeholder="Enter New Email" data-ng-model="matterCollaborationCtrl.addNewEmailForSelectedContactModel[cblIndex]"
+                                    class="form-control" style="border-right: none;">
+                                <span class="input-group-addon" tooltip="Save" tooltip-placement="top" style="border-right: none;border-left: none;padding-right: 6px;">
+                                    <i class="fa fa-floppy-o" aria-hidden="true" data-ng-click="matterCollaborationCtrl.addNewEmailForSelectedContact(matterCollaborationCtrl.addNewEmailForSelectedContactModel[cblIndex], cblIndex);matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]=false;matterCollaborationCtrl.addNewEmailForSelectedContactModel[cblIndex]='';"></i>
+                                </span>
+                                <span class="input-group-addon" tooltip="Cancel" tooltip-placement="top" style="border-left: none;" data-ng-click="matterCollaborationCtrl['addNewEmailForSelectedContactFlag' + cblIndex]=false;matterCollaborationCtrl.addNewEmailForSelectedContactModel[cblIndex]='';">
+                                    <i class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 margin-bottom20" style="padding-top: 24px;padding-left: 0px;width:4%" ng-show="cblIndex == 0;">
+                        <a data-ng-click="matterCollaborationCtrl.addContactBlock(matterCollaborationCtrl.newCBLIndexForBlock)">
+                            <span class="sprite default-plus" tooltip="Add" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                    </div>
+                    <div class="col-md-1 margin-bottom20" style="padding-top: 24px;padding-left: 0px;border-left: none;" ng-show="cblIndex != 0;">
+                        <a data-ng-click="matterCollaborationCtrl.removeContactBlock(cbl.flag)">
+                            <span class="sprite default-delete" tooltip="Remove" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-6 margin-top20px">
+                    <div class="form-group">
+                        <label>Write a message</label>
+                        <textarea class="form-control form-control-width-correct" data-ng-model="matterCollaborationCtrl.write_message"></textarea>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

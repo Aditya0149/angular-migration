@@ -1,0 +1,53 @@
+<div class="marketplace-details-main">
+	<div class="ng-scope row">
+		<div class="container col-md-12 main-top">
+			<div class="pull-left back-btn-block">
+				<a href="#/marketplace/upcoming" data-ng-click="upcompingAppsCtrl.clearStorage()" class="marketplace-back-btn"></a>
+			</div>
+			<div class="pull-left left-img">
+				<img src="styles/images/marketplace-images/icon/referral-engine.png">
+			</div>
+			<div class="col-md-7 marketplace-details-block border-right">
+				<div class="title">Referral Engine</div>
+				<div class="text col-md-10 padding-0">Refer out and take on matters from a growing community of plaintiff attorneys. Referrals are easy to setup and even easier to manage. Track changes and easily share information with partner firms over a secure and HIPAA compliant server. </div>
+			</div>
+			<div class="col-md-2 padding-right-0 marketplace-details-block margin-top30px">
+				<div class="text margin-top20px"><b style="color: #1bb8b2;">Now available for preview.</b></div>
+			</div>
+			<div class="">
+				<!--<div class="adopted-by"><span><span style="font-size: 22px;">40</span><br>Laws Firms</span><br>Adopted By</div>-->
+			</div>
+		</div>
+	</div>
+	<div id="report-content">
+		<div class="marketplace-details-vedeo-block col-md-9 col-centered">
+			<carousel interval="upcompingAppsCtrl.myInterval">
+				<slide ng-repeat="slide in upcompingAppsCtrl.slides" active="slide.active">
+					<img ng-src="{{slide.image}}">
+					<div class="carousel-caption">
+					</div>
+				</slide>
+			</carousel>
+		</div>
+	</div>
+</div>
+<!--<div data-ng-if="upcompingAppsCtrl.showapplications">
+	<div data-ng-controller='upcompingAppsCtrl as upcompingAppsCtrl'
+	    data-ng-include="'app/marketplace/applications/applications.html'">
+	</div>
+	</div>-->
+
+<footer position-center>
+	<ul>
+		<li>
+			<a href="#/marketplace">Applications</a>
+		</li>
+		<li>
+			<a href="#/marketplace/services">Services</a>
+		</li>
+		<li>
+			<a href="#/marketplace/upcoming" class="active-footer">Upcoming</a>
+		</li>
+
+	</ul>
+</footer>

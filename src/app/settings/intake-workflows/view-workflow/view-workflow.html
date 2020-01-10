@@ -1,0 +1,201 @@
+<style>
+    .top-icon-set a {
+    display: inline-block;
+    float: left;
+}
+.workflowcontainer .checkbox {
+    margin-top: 10px !important;
+}
+</style>
+<div data-ng-if="viewWorkflow.display.page=='openViewWorkflow'" class="row">
+    <div class="pull-right margin-top30px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div data-ng-if="viewWorkflow.display.page =='openViewWorkflow'" class="container workflowcontainer">
+    <div class="page-title-border clearfix  ">
+        <div class="col-md-12 padding-0">
+            <h3 class="pull-left page-title">Workflow Name: </h3><label class="workflow-label">
+                {{viewWorkflow.selctedWorkflowData.workflow_name}} </label>
+            <button data-ng-click="viewWorkflow.back()" class="btn btn-default pull-right">
+                Back
+            </button>
+        </div>
+        <div class="col-md-12 padding-0">
+            <h3 class="pull-left page-title">Workflow Description: </h3><label class="workflow-label">{{viewWorkflow.selctedWorkflowData.description}}
+            </label>
+
+        </div>
+
+        <!--<div class="col-md-12"> <label class="pull-left page-title">Calculation Date:</label> </div>-->
+    </div>
+
+
+    <div class="page-title-border-links clearfix subnav">
+        <ul>
+            <li ng-click="viewWorkflow.activateTab('task', viewWorkflow.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : viewWorkflow.activeTab.task}">Tasks</a>
+            </li>
+            <li ng-click="viewWorkflow.activateTab('event', viewWorkflow.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : viewWorkflow.activeTab.event}">Calendar
+                    Events</a>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+    <div ng-if="viewWorkflow.activeTab.task" class="workflow-task-header">
+        <!-- <div class="col-md-12"> <label class="pull-left page-title">Tasks </label> </div> -->
+        <div class="row ">
+            <div class="col-md-12 padding-0 margin-top10px">
+                <div class="col-md-4 margin-left10px top-icon-set">
+
+                    <a data-ng-click="viewWorkflow.addTask()">
+                        <span class="pull-left sprite default-plus" tooltip="Add">&nbsp;</span>
+                    </a>
+                    <a data-ng-click="viewWorkflow.addTask(viewWorkflow.userGrid.selectedTaskItems[0])" data-ng-if="viewWorkflow.userGrid.selectedTaskItems.length === 1"
+                        class="margin-left25px">
+                        <span class="sprite default-edit" tooltip="Edit">&nbsp;</span>
+                    </a>
+                    <a data-ng-click="viewWorkflow.deleteTasks(viewWorkflow.userGrid.selectedTaskItems)" data-ng-if="viewWorkflow.userGrid.selectedTaskItems.length > 0"
+                        class="margin-left25px">
+                        <span class="sprite default-delete" tooltip="Delete">&nbsp;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="container margin-top10px">
+
+            <div class="row header-task-workflow">
+                <div class="col-md-1">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="viewWorkflow.userGrid.selectAllTask" data-ng-click="viewWorkflow.selectAllTask(viewWorkflow.userGrid.selectAllTask)"
+                            data-ng-checked="viewWorkflow.allTaskSelected()" /><label> </label>
+                    </div>
+                </div>
+                <div class="col-md-4 padding-top-10px">Task Name</div>
+                <div class="col-md-4 padding-top-10px">Due Date Calculation</div>
+                <div class="col-md-3 padding-top-10px">Priority</div>
+            </div>
+
+
+            <div class="dashboard-tasks-due row" style="max-height:250px;" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">
+                <div class="col-md-12 reminder-row padding-0" data-ng-repeat="data in filtered = (viewWorkflow.userList | filter:viewWorkflow.searchText)">
+                    <div class="col-md-1  reminders-checkbox">
+                        <div class="checkbox">
+                            <input type="checkbox" checklist-model="viewWorkflow.userGrid.selectedTaskItems"
+                                data-ng-checked="viewWorkflow.isTaskSelected(data.workflow_task_id)" checklist-value="data" /><label></label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4  padding-top-10px">
+                        {{data.task_name}}
+                    </div>
+                    <div class="col-md-4 padding-top-10px">
+                        {{data.beforeAfter}} {{data.no_of_days}} {{data.daytype}} {{(data.selectedtype == "MCD" ? "ICD" : data.selectedtype)}}
+                    </div>
+
+                    <div class="col-md-3 reminder-cell padding-top-10px">
+                        {{data.priority}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+                <p>No data for applied filters</p>
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="viewWorkflow.activeTab.event" class="workflow-task-header">
+        <!-- <div class="col-md-12 margin-top10px"> <label class="pull-left page-title">Calendar Events </label> </div> -->
+
+        <div class="row ">
+            <div class="col-md-12 padding-0 margin-top10px">
+                <div class="col-md-4 margin-left10px ">
+
+                    <a data-ng-click="viewWorkflow.addEvent()">
+                        <span class="pull-left sprite default-plus" tooltip="Add">&nbsp;</span>
+                    </a>
+                    <a data-ng-click="viewWorkflow.addEvent(viewWorkflow.userGrid.selectedEventItems[0])" data-ng-if="viewWorkflow.userGrid.selectedEventItems.length === 1"
+                        class="margin-left25px">
+                        <span class="sprite default-edit" tooltip="Edit">&nbsp;</span>
+                    </a>
+                    <a data-ng-click="viewWorkflow.deleteEvent(viewWorkflow.userGrid.selectedEventItems)" data-ng-if="viewWorkflow.userGrid.selectedEventItems.length > 0"
+                        class="margin-left25px">
+                        <span class="sprite default-delete" tooltip="Delete">&nbsp;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container margin-top10px">
+            <div class="row " style="background-color: #cdcdd0 !important;">
+                <div class="col-md-1">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="viewWorkflow.userGrid.selectAll" data-ng-click="viewWorkflow.selectAllEvent(viewWorkflow.userGrid.selectAll)"
+                            data-ng-checked="viewWorkflow.allEventSelected()" /><label> </label>
+                    </div>
+                </div>
+                <div class="col-md-4 padding-top-10px">Event Name</div>
+                <div class="col-md-4 padding-top-10px">Event Date </div>
+                <div class="col-md-3 padding-top-10px">Location</div>
+            </div>
+
+
+
+            <div class="dashboard-tasks-due row" style="max-height:250px;" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">
+                <div class="col-md-12 reminder-row padding-0" data-ng-repeat="data in filtered = (viewWorkflow.evntsList | filter:viewWorkflow.searchText)">
+                    <div class="col-md-1  reminders-checkbox">
+                        <div class="checkbox">
+                            <input type="checkbox" checklist-model="viewWorkflow.userGrid.selectedEventItems"
+                                data-ng-checked="viewWorkflow.isEventSelected(data.workflow_event_id)" checklist-value="data" /><label></label>
+                        </div>
+                    </div>
+                    <div class="col-md-4  padding-top-10px">
+                        {{data.event_title}}
+                    </div>
+                    <div class="col-md-4 padding-top-10px">
+                        {{data.beforeAfter}} {{data.no_of_days}} {{data.daytype}} {{(data.selectedtype == "MCD" ? "ICD" : data.selectedtype)}}
+                    </div>
+
+                    <div class="col-md-3 reminder-cell padding-top-10px">
+                        {{data.location}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+                <p>No data for applied filters</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <div data-ng-if="viewWorkflow.display.page =='closeViewWorkflow'">
+    <div data-ng-controller="intakeworkFlowCtrl as workFlowCtrl" data-ng-include="'app/settings/intake-workflows/workflows.html'">
+    </div>
+</div> -->
+
+<div data-ng-if="viewWorkflow.display.page =='addTaskWorkflow'">
+    <div data-ng-controller="addintakeTaskController as addTask" data-ng-include="'app/settings/intake-workflows/view-workflow/add-workflowTask/add-workflowTask.html'">
+    </div>
+</div>
+
+<div data-ng-if="viewWorkflow.display.page =='addEventWorkflow'">
+    <div data-ng-controller="addintakeEventController as addEvent" data-ng-include="'app/settings/intake-workflows/view-workflow/add-workflowEvent/add-workflowEvent.html'">
+    </div>
+</div>

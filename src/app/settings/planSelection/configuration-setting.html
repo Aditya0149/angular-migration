@@ -1,0 +1,340 @@
+<div class="configuration-main row">
+    <div ng-show="planselectionctrl.applicationsInfo.IT.permission.V==1" ng-class="planselectionctrl.applicationsInfo.IT.is_active==1 ? 'col-md-12 configuration-left-block ' : 'col-md-12 configuration-left-block switch-gear-disabled'">
+        <div class="row margin-right15px margin-left15px border-bottom-light">
+            <div class="col-md-8 padding-left-0">
+                <h2>Configuration: <span class="graytxt">Manage your preferences. Enable or disable these features by
+                        switching the toggle button on or off.</span></h2>
+
+                <!-- <div class="col-md-2 text-right padding-0 indication">
+                <div class="dropdown pull-right height-user-dropdown">
+                    <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+                        <span class="sprite default-info">&nbsp;</span>
+                    </a>
+                    <ul class="dropdown-menu username-dropdown username-profile-dropdown" role="menu" aria-labelledby="dropdownMenu5" style="padding: 10px;width: 300px;margin:10px -12px 0 0; font-size: 12px;color: #999;">
+
+                        “With CloudLex you can synchronize your Legal Cloud with other popular systems and services for file storage and calendaring.
+                        You can also link your CloudLex and email accounts or opt to use a custom file-numbering system for
+                        your matters."
+                        <li class="divider"></li>
+                        "Simply use the toggle buttons to configure your CloudLex account to your needs.”
+
+                    </ul>
+                </div>
+            </div> -->
+            </div>
+
+            <div class="text-right col-md-4" style="margin-bottom:10px">
+                <button class="btn btn-default" ng-click="planselectionctrl.save(planselectionctrl.info)" ng-disabled="planselectionctrl.flag">Save</button>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="app-title">Calendar Integration</div>
+            <span class="graytxt">Sync your CloudLex account with select third-party calendar apps.
+            </span>
+            <div class="slide-block margin-top15px round-border-top">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-calendar-icon icon-block"></span>
+                    </span>
+                    <p>Google Calendar</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_googleCalender"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom ">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-outlook-icon icon-block"></span>
+                    </span>
+                    <p>MS Outlook</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_microsoftExchange"></span>
+                </div>
+            </div>
+
+
+
+            <div class="app-title margin-top15px">Email Integration</div>
+            <span class="graytxt">Send emails from CloudLex by linking your email account to your CloudLex account.
+            </span>
+            <div class="slide-block margin-top15px whole-round-border">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite cloudlex-email-icon icon-block"></span>
+                    </span>
+                    <p>eMail via CloudLex</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_emailVCloudlex"></span>
+                </div>
+            </div>
+
+            <div class="app-title margin-top15px">Fax Integration</div>
+            <span class="graytxt">Integrate CloudLex with your eFax service.
+            </span>
+            <div class="slide-block  margin-top15px whole-round-border">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite default-efax active-efax icon-block"></span>
+                    </span>
+                    <p>eFax</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_fax"></span>
+                </div>
+            </div>
+
+            <!-- <div class="app-title margin-top15px" ng-if="planselectionctrl.userRoleObj.is_admin == 1">Electronic
+                Signatures</div>
+            <span class="graytxt" ng-if="planselectionctrl.userRoleObj.is_admin == 1">Sync your CloudLex account with
+                your DocuSign account.
+            </span>
+            <div class="slide-block  margin-top15px whole-round-border"
+                ng-if="planselectionctrl.userRoleObj.is_admin == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <img src="styles/images/DocuSign.svg" alt="DocuSign">
+                    </span>
+                    <p>DocuSign</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher
+                        ng-model="planselectionctrl.info.is_docusign"></span>
+                </div>
+            </div> -->
+
+        </div>
+        <div class="block">
+            <div class="app-title">File Storage Apps</div>
+            <span class="graytxt">Sync your CloudLex account with select third-party file storage apps for two-way
+                document integration.
+            </span>
+            <div class="slide-block margin-top15px round-border-top">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite google-drive-icon icon-block"></span>
+                    </span>
+                    <p>Google Drive</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_googleDrive"></span>
+                </div>
+            </div>
+            <div class="slide-block">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite dropbox-icon icon-block"></span>
+                    </span>
+                    <p>Dropbox</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_dropBox"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom" ng-if="planselectionctrl.userRoleObj.is_subscriber == 1">
+                <div class="col-md-10 padding-0 title">
+                    <span class="icon-width">
+                        <span class="sprite onedrive-icon icon-block margin-top2px"></span>
+                    </span>
+                    <p>OneDrive</p>
+                </div>
+                <div class="col-md-2 custom-switch-slide">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_onedrive"></span>
+                </div>
+            </div>
+
+
+            <div class="app-title margin-top15px">More Features</div>
+            <span class="graytxt">Toggle these features on or off based on your preferences.
+            </span>
+            <div class="slide-block  margin-top15px round-border-top">
+                <div class="app-title pull-left">Custom File Number</div>
+                <div class="col-md-2 custom-switch-slide pull-right">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_CustomFileNumber"></span>
+                </div>
+            </div>
+            <!-- <div class="app-text clear-block padding-top-10px">Can you disable auto file system of cloudlex, use custom to match you current filing system</div> -->
+            <div class="slide-block">
+                <div class="app-title pull-left">Workflow</div>
+                <div class="col-md-2 custom-switch-slide pull-right">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_workflow"></span>
+                </div>
+            </div>
+            <div class="slide-block round-border-bottom ">
+                <div class="app-title pull-left">Create Task for Event</div>
+                <div class="col-md-2 custom-switch-slide pull-right">
+                    <span class="form-control zero-border" ng-switcher ng-model="planselectionctrl.info.is_autoTaskCreation"></span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div>
+    <!-- <div class="col-md-8">
+        <div class="configuration-right-block">
+            <h2>APPLICATIONS FROM MARKETPLACE</h2>
+            <div ng-if="planselectionctrl.applicationcount == 1" ng-repeat="app in planselectionctrl.applicationlist | orderBy: ['name']">
+                <div class="block" ng-if="((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.CCOM.is_active==1 && 
+                    planselectionctrl.applicationsInfo.CCOM.permission.V==1 && planselectionctrl.applicationsInfo.CCOM.is_visible==1) && app.app_code == 'CCOM')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/client-communicator.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Client Communicator</div>
+                            <p>Reduce frequent calls and communicate with your clients in a mutually convenient manner. Firms
+                                can share real time case updates that can be viewed by clients around-the-clock. And clients
+                                can upload important case documents right in the portal, saving your firm valuable time.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.CCOM.permission.E==1 && (planselectionctrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.CCOM)"
+                                ng-disabled="planselectionctrl.applicationsInfo.CCOM.permission.E==1" ng-switcher ng-model="planselectionctrl.applicationsInfo.CCOM.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block" ng-if="((planselectionctrl.applicationsInfo.OPLG.is_active==1 && 
+                    planselectionctrl.applicationsInfo.OPLG.permission.V==1 && planselectionctrl.applicationsInfo.OPLG.is_visible==1) && app.app_code == 'OPLG')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/office-connector.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Word Connector</div>
+                            <p>Work on CloudLex documents while offline. Create and edit documents in Word, while accessing
+                                important case information from CloudLex. Once back online, confidently save and tag documents
+                                to their respective matters in CloudLex.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.OPLG.permission.E==1 && (planselectionctrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.OPLG)"
+                                ng-disabled="planselectionctrl.applicationsInfo.OPLG.permission.E==1" ng-switcher ng-model="planselectionctrl.applicationsInfo.OPLG.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+               <div class="block" ng-if="((planselectionctrl.applicationsInfo.OTLG.is_active==1 && 
+                    planselectionctrl.applicationsInfo.OTLG.permission.V==1 && planselectionctrl.applicationsInfo.OTLG.is_visible==1) && app.app_code == 'OTLG')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/outlook-connector.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Outlook Connector</div>
+                            <p>Eliminate email chaos - save your important Outlook emails to CloudLex and help your team members
+                                stay informed.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.OTLG.permission.E==1 && (planselectionctrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.OTLG)"
+                                ng-disabled="planselectionctrl.applicationsInfo.OTLG.permission.E==1" ng-switcher ng-model="planselectionctrl.applicationsInfo.OTLG.is_active"></span>
+                        </div>
+                    </div>
+                </div> 
+                <div class="block" ng-if="((planselectionctrl.applicationsInfo.GA.is_active==1 && 
+                    planselectionctrl.applicationsInfo.GA.permission.V==1 && planselectionctrl.applicationsInfo.GA.is_visible==1) && app.app_code == 'EC')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/Connector-Email.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Email Connector</div>
+                            <p>Eliminate email chaos - save important mails to CloudLex and keep everyone informed.</p>
+                        </div>
+                        <div ng-class="(planselectionctrl.applicationsInfo.GA.permission.E==1 || planselectionctrl.applicationsInfo.OTLG.permission.E==1) && (planselectionctrl.dissableSubscribe)? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.GA)"
+                                ng-disabled="planselectionctrl.applicationsInfo.GA.permission.E==1 || planselectionctrl.applicationsInfo.OTLG.permission.E==1" ng-switcher ng-model="planselectionctrl.applicationsInfo.GA.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((planselectionctrl.applicationsInfo.DA.is_active==1 && 
+                    planselectionctrl.applicationsInfo.DA.permission.V==1 && planselectionctrl.applicationsInfo.DA.is_visible==1) && app.app_code == 'DA') ">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/digital-archival.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Digital Archiver</div>
+                            <p>Switch to digital archiver of your closed cases (in lieu of physical storage) and free up the
+                                space and resources needed to grow your practice. Digitally archive all data related to your
+                                closed matters (even digital correspondence) for a period of 7 years on a secure and easily
+                                searchable platform.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.DA.permission.E==1 && (planselectionctrl.dissableSubscribe)  ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.DA)"
+                                ng-switcher ng-model="planselectionctrl.applicationsInfo.DA.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((planselectionctrl.applicationsInfo.O365.is_active==1 && 
+                    planselectionctrl.applicationsInfo.O365.permission.V==1 && planselectionctrl.applicationsInfo.O365.is_visible==1) && app.app_code == 'O365')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/microsoft-online.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Microsoft Office Online®</div>
+                            <p>Create, edit, and co-author your Word, Excel, and PowerPoint documents without leaving the Legal
+                                Cloud. Updates made in CloudLex are automatically reflected across all team members and devices,
+                                so you can spend less time coordinating and more time collaborating.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.O365.permission.E==1 && (planselectionctrl.dissableSubscribe) ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.O365)"
+                                ng-switcher ng-model="planselectionctrl.applicationsInfo.O365.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((planselectionctrl.applicationsInfo.RE.is_active==1 && 
+                    planselectionctrl.applicationsInfo.RE.permission.V==1  && planselectionctrl.applicationsInfo.RE.is_visible==1) && app.app_code == 'RE')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/marketplace-images/icon/referral-engine.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Referral Engine</div>
+                            <p>Refer out and take on matters from a growing community of plaintiff attorneys. Referrals are
+                                easy to setup and even easier to manage. Track changes and easily share information with
+                                partner firms over a secure and HIPAA compliant server.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.RE.permission.E==1 && (planselectionctrl.dissableSubscribe) ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.RE)"
+                                ng-switcher ng-model="planselectionctrl.applicationsInfo.RE.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block" ng-if="((planselectionctrl.launchpadAccess && planselectionctrl.applicationsInfo.IM.is_active==1 && 
+                    planselectionctrl.applicationsInfo.IM.permission.V==1 && planselectionctrl.applicationsInfo.IM.is_visible==1) && app.app_code == 'IM')">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <img src="styles/images/launcher-icons/intake-manager.png">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="app-title">Intake Manager</div>
+                            <p>It provides you with an effective process to attain and manage prospective clients so you can
+                                boost your firm’s revenue and your client’s satisfaction. And because Intake Manager is part
+                                of CloudLex’s robust legal cloud platform, the transition from potential lead to current
+                                client is seamless.</p>
+                        </div>
+                        <div ng-class="planselectionctrl.applicationsInfo.IM.permission.E==1 && (planselectionctrl.dissableSubscribe)  ? 'col-md-1 custom-switch-slide border-none' : 'col-md-1 custom-switch-slide border-none switch-gear-disabled'">
+                            <span class="form-control zero-border" ng-change="planselectionctrl.unSubApplications(planselectionctrl.applicationsInfo.IM)"
+                                ng-switcher ng-model="planselectionctrl.applicationsInfo.IM.isactive"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-12 text-center margin-top10px"  ng-if="planselectionctrl.applicationcount == 0 && planselectionctrl.noData">
+                        There is no application subscribed by you
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

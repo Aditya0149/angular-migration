@@ -1,0 +1,178 @@
+<style type="text/css">
+    .table {
+        margin-bottom: 0px !important;
+    }
+</style>
+<div class="matter-age-wrapper">
+<div class=" clearfix" scrolly="contactReportCtrl.reachedBottom()" reached-top="contactReportCtrl.reachedTop()">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap  padding-topbottom-14px">Matter Contact Relationship</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+        </div>
+    </div>
+</div>
+
+<div class="flexCont"></div>
+<div class="fixed-grid-report">
+    <div class="col-md-12 custom-padding">
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons">
+                <li>
+                    <div class="search-input">
+                        <div class="default-searchico sprite"></div>
+                        <input type="text" name="Search contact" data-ng-model="contactReportCtrl.contact" data-ng-model-options="{ debounce: 200 }"
+                            typeahead-editable="false" typeahead-append-to-body="true" placeholder="Search Contacts" typeahead="row as row.name for row in contactReportCtrl.getContactForReport($viewValue)"
+                            typeahead-input-formatter="contactReportCtrl.formatTypeaheadDisplayForContactReport($model)" typeahead-on-select="contactReportCtrl.getContact()"
+                            typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                            class="form-control ">
+                    </div>
+                </li>
+                <li class="seperation-filter"></li>
+                <li>
+                    <a>
+                        <span data-ng-click="contactReportCtrl.filterReportContact()"
+                            class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="seperation-filter"></li>
+                <li>
+                    <a data-ng-click="contactReportCtrl.printContactReport()"><span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span></a>
+                </li>
+                <li class="paddingLR-10px">
+                    <a data-ng-click="contactReportCtrl.exportContactReport()"><span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span></a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+    <div class="clearfix">
+        <div class="pull-right">
+            <clx-filter-tags on-filter-cancel="contactReportCtrl.tagCancelled" tag-list="contactReportCtrl.tags"></clx-filter-tags>
+        </div>
+    </div>
+</div>
+<div data-ng-show="contactReportCtrl.contactReportList.length > 0">
+    <show-record-count-only displayed="contactReportCtrl.contactReportList.length" more="contactReportCtrl.getMore()" all="contactReportCtrl.getAll()"
+        hide-pager="{{contactReportCtrl.contactReportList.length < contactReportCtrl.total}}" total="contactReportCtrl.total"></show-record-count-only>
+</div>
+
+       <!-- Start: New scroll-table tableid  -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <div class="report-scroll-all-matter">
+
+
+        <scroll-table tag="contactReportCtrl.tags" watch="contactReportCtrl.contactReportList" tableid="contactReportlistGrid" to="#listUpper"
+            from="#moreAllLinkRecord">
+
+            <table class="table table-scroll">
+                <thead  data-ng-show="contactReportCtrl.contactReportList.length > 0" >
+                    <tr>
+                        <th class="th-width-15">
+                            <div>
+                                <b>Contact Name</b>
+                            </div>
+                        </th>
+                        <th class="th-width-20">
+                            <div>
+                                <span><b>Matter Name</b></span>
+                            </div>
+                        </th>
+                        <th class="th-width-15">
+                            <div> <span><b>Date of Incident</b></span></div>
+                        </th>
+                        <th class="th-width-15">
+                            <div> <span><b>Status</b></span></div>
+                        </th>
+                        <th class="th-width-15">
+                            <div>
+                                <span><b>Sub Status</b></span>
+                            </div>
+                        </th>
+                        <th class="th-width-20">
+                            <div> <span><b>Role</b></span></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="dashboard-tasks-due" id="contactReportlistBody" style="overflow-y:overlay">
+                    <tr data-highlight-clicked-row="{{$index}},contactReportCtrl.clickedRow"
+                        data-ng-class="{'selected-grid-row':$index == contactReportCtrl.clickedRow}"
+                        data-ng-repeat="data in contactReportCtrl.contactReportList">
+
+                        <td class="th-width-15">
+                            <div>
+                                <span class="cursor-pointer" style="color: #2a83b1;" ng-click="contactReportCtrl.openContactCard(data)" tooltip-placement="bottom" tooltip="{{data.contact_name}}">
+                                    {{data.contact_name }}</span>
+                            </div>
+                        </td>
+                        <td class="th-width-20">
+                            <div>
+                                <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                    href="#/matter-overview/{{data.matter_id}}" class="word-wrap">
+                                    {{data.matter_name}}</a><br>
+                            </div>
+                        </td>
+
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.date_of_incidence}}">
+                                    {{data.date_of_incidence}}</span>
+                            </div>
+                        </td>
+
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.status}}">
+                                    {{data.status}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_status}}">
+                                    {{data.sub_status}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-20">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.role}}">
+                                    {{data.role}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </scroll-table>
+        <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+            style="overflow: hidden !important;position: fixed;bottom: 0px;">
+        </div>
+    </div>
+    <!-- Start: New scroll-table tableid  -->
+
+<div class="text-center" data-ng-show="contactReportCtrl.contact.contactid == undefined">
+    Please first search contact.
+</div>
+<div data-ng-show="(contactReportCtrl.contactReportList.length<=0 && contactReportCtrl.dataReceived)" class="text-center">
+    There are no related matters.
+</div>
+<div class="row text-center" data-ng-show="contactReportCtrl.showPaginationButtons() && contactReportCtrl.contactReportList.length > 0">
+    <a href="javascript:void(0)" data-ng-click="contactReportCtrl.getMore()">More</a>
+
+    <span class="paddingLR-10px">|</span>
+    <a href="javascript:void(0)" class="" data-ng-click="contactReportCtrl.getAll()">All</a>
+</div>
+
+<div class="compose-wrap" ng-if="contactReportCtrl.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :contactReportCtrl.compose, '' : !contactReportCtrl.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="contactReportCtrl.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :contactReportCtrl.compose, '' : !contactReportCtrl.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>
+</div>

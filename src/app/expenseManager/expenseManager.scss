@@ -1,0 +1,89 @@
+.expense-wrapper {
+        margin: 0 20px;
+        position: relative;
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover { border: none;
+        border-bottom: 2px solid #2a83b1;
+        color: #000;
+        font-family: GothamRounded-Medium;
+    }
+    .expense-tab {
+        text-align: center;
+        li {
+            margin-bottom: 0;
+            display: inline-block;
+            float: none;
+        }
+    }
+    .nav-tabs {
+        >li {
+            >a {
+                &:hover {
+                    border-color: transparent;
+                }
+            }
+        }
+    }
+    .nav {
+        >li {
+            >a {
+                &:focus {
+                    text-decoration: none;
+                    background-color: transparent;
+                    text-decoration: none;
+                    color: #2a83b1;
+                    font-size: 1.17em;
+                    outline: 0;
+                }
+                &:hover {
+                    text-decoration: none;
+                    background-color: transparent;
+                    text-decoration: none;
+                    color: #2a83b1;
+                    font-size: 1.17em;
+                    outline: 0;
+                }
+            }
+        }
+    }
+    .form-control {
+        width: 100%;
+    }
+    tr.body-row div {
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .expense-date{
+        font-size: 11px;
+    }
+    .total-amount-main{
+        padding: 10px
+    }
+    .col-lg-1:last-child, .col-md-1:last-child {
+        border-left: 2px solid #d3d9de;
+    }
+    .scrollableContainer{
+        padding-top: 48px;
+    }
+    .scrollableContainer .headerSpacer {
+        height: 50px;
+    }
+    .scrollArea table th .box{
+        padding-top: 5px
+    }
+    .custom-padding{
+        padding: 4px 8px
+    }
+    .more-link-wrapper{
+        overflow: hidden;
+        margin-bottom: 60px;
+        position: fixed;
+        bottom: 0
+    }
+    .search-input input{
+        height: 30px;
+    }
+    .search-input .default-searchico{
+        top: 3px
+    }
+}

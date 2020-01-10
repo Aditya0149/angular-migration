@@ -1,0 +1,167 @@
+<div class="compose-mail-wrapper">
+
+<!-- Compose Mail -->
+<div ng-class="{'cursor-pointer-events-none' :mailboxCtrl.matterDocs, '' : !mailboxCtrl.matterDocs}">
+    <div class="compose-head">
+        <h2 class="pull-left">Compose</h2>
+        <a href="javascript:void(0)" class="pull-right" id="closeComposeMail" ng-click="mailboxCtrl.closeCompose();globalNotes.closeComposeMail();notes.closeComposeMail();">x</a>
+        <div class="filter-greybox container filter-box">
+            <div class="col-md-9">
+                <div class="selection-row">
+                    <div ng-if="!mailboxCtrl.showselection" ng-repeat="info in eventFor" class="padding-0">
+                        <div class="radio padding-0 margin0 pull-left margin-right20px">
+                            <input ng-disabled="isIntakeActive != 1 && info.id == 1" class="margin0" type="radio"
+                                data-ng-model="mailboxCtrl.selectedMode" ng-value="info.id" ng-click="mailboxCtrl.checkChange()" />
+                            <label class="margin0 custom-line-height">&nbsp;{{info.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding ">
+
+        <div class=" pull-right paddingLR-10px">
+            <button class="btn btn-default" data-ng-click="mailboxCtrl.sendMail()" data-ng-disabled="!mailboxCtrl.enableSave || (mailboxCtrl.isGraceOver != 1)">
+                Send</button>
+            <button class="btn btn-default" data-ng-click="mailboxCtrl.sendMail('draft')" data-ng-disabled="!mailboxCtrl.enableSave || (mailboxCtrl.isGraceOver != 1)">
+                Save as Draft</button>
+        </div>
+    </div>
+
+    <div class="compose-fields static-new-scrollbar">
+
+        <div class="compose-input-fields">
+            <div class="row">
+                <div class="pull-left">Recipient:</div>
+                <div class="col-md-9">
+                    <ui-select multiple ng-model="mailboxCtrl.composeEmail.recipientsUsers" ng-change="mailboxCtrl.checkAddress(mailboxCtrl.composeEmail.recipientsUsers);" theme="select3" ng-disabled="disabled">
+                        <ui-select-match placeholder="">
+                            {{$item.mail}}
+                        </ui-select-match>
+                        <ui-select-choices refresh="mailboxCtrl.getSendToList($select.search)" refresh-delay="300" repeat="firmU as firmU in mailboxCtrl.sendToList| filter:{firstLastname:$select.search}">
+                            <small>{{firmU.name}} {{firmU.lname}} &#60;{{firmU.mail}}&#62;</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-left">Cc:</div>
+                <div class="col-md-9">
+                    <ui-select multiple ng-model="mailboxCtrl.composeEmail.recipientsUserCc" ng-change="mailboxCtrl.checkAddress(mailboxCtrl.composeEmail.recipientsUserCc);" theme="select3" ng-disabled="disabled">
+                        <ui-select-match placeholder="">
+                            {{$item.mail}}
+                        </ui-select-match>
+                        <ui-select-choices refresh="mailboxCtrl.getSendToList($select.search)" refresh-delay="300" repeat="firmU as firmU in mailboxCtrl.sendToList| filter:{firstLastname:$select.search}">
+                            <small>{{firmU.name}} {{firmU.lname}} &#60;{{firmU.mail}}&#62;</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-left">Bcc:</div>
+                <div class="col-md-9">
+                    <ui-select multiple ng-model="mailboxCtrl.composeEmail.recipientsUserBcc" ng-change="mailboxCtrl.checkAddress(mailboxCtrl.composeEmail.recipientsUserBcc);" theme="select3" ng-disabled="disabled">
+                        <ui-select-match placeholder="">
+                            {{$item.mail}}
+                        </ui-select-match>
+                        <ui-select-choices refresh="mailboxCtrl.getSendToList($select.search)" refresh-delay="300" repeat="firmU as firmU in mailboxCtrl.sendToList| filter:{firstLastname:$select.search}">
+                            <small>{{firmU.name}} {{firmU.lname}} &#60;{{firmU.mail}}&#62;</small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-left">Tag {{mailboxCtrl.selectedMode != 2 ? 'Intake' : 'Matter'}}:</div>
+                <div class="col-md-9">
+                    <input type="text" ng-disabled="mailboxCtrl.tagggedmatter" name="matterid" class="form-control white-bg" data-ng-model-options="{ debounce: 200 }" placeholder="Start typing {{mailboxCtrl.selectedMode != 2 ? 'intake' : 'matter'}} name here..."  typeahead="row.matterid as removeunwantedhtml(row.name) + '  ' + row.createdDate + ' ' + row.fileNumber for row in mailboxCtrl.searchMatters($viewValue)" data-ng-change="mailboxCtrl.tempMatterId ? '' : mailboxCtrl.composeEmail.matter_id = ''"
+                    typeahead-wait-ms="500" typeahead-input-formatter="mailboxCtrl.formatTypeaheadDisplay($model)" data-ng-required="true" data-ng-model="mailboxCtrl.tempMatterId" typeahead-on-select="mailboxCtrl.getTagAMatter(mailboxCtrl.tempMatterId)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-left">Subject:</div>
+                <div class="col-md-9">
+                    <input type="text" placeholder="" strip-extended-ascii data-ng-model="mailboxCtrl.composeEmail.subject">
+                </div>
+            </div>
+            <div class="row" ng-if="mailboxCtrl.composeEmail.matter_id">
+                <div class="pull-left">Attach {{mailboxCtrl.selectedMode != 2 ? 'Intake' : 'Matter'}} Documents:</div>
+                <div class="col-md-9">
+                    <div class="sprite pull-left default-tag-matter-document cur-pointer" ng-click="mailboxCtrl.openTagMatterDocument(mailboxCtrl.composeEmail.matter_id);">
+                        &nbsp;
+                    </div>
+                    <clx-filter-tags class="costum-tags" on-filter-cancel="mailboxCtrl.tagCancelled" tag-list="mailboxCtrl.documentTags"></clx-filter-tags>
+                    <!-- <ui-select multiple ng-model="mailboxCtrl.composeEmail.matterdocs" on-select="mailboxCtrl.getFileSize(mailboxCtrl.composeEmail.matterdocs,'matterdoc')" on-remove="mailboxCtrl.canclematterdoc($item)" theme="select2" ng-disabled="disabled">
+                        <ui-select-match placeholder="Click here to select">
+                            {{$item.documentname}} {{$item.docSize}}
+                        </ui-select-match>
+                        <ui-select-choices style="border: 1px solid #ccc; border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); background-clip: padding-box;" group-by="mailboxCtrl.groupMatterDoc" group-filter="mailboxCtrl.categories"
+                            repeat="item in mailboxCtrl.documentsList.data | filter:{name:$select.search}  | orderBy: 'documentname'">
+                            <small>{{item.documentname}}</small>
+                        </ui-select-choices>
+                    </ui-select> -->
+                </div>
+            </div>
+            <!--Bug#6696-->
+            <div class="row" data-ng-show="mailboxCtrl.emailDocsNote">
+                <div class="pull-left">Save this email to Notes:</div>
+                <div class="col-md-9 checkbox custom-checkbox">
+                    <input type="checkbox" data-ng-disabled="mailboxCtrl.emailNoteDisabled" data-ng-checked="mailboxCtrl.composeEmail.emailNotes === '1'" data-ng-model="mailboxCtrl.composeEmail.emailNotes" data-ng-true-value="'1'" data-ng-false-value="'0'" /><label></label>
+                </div>
+            </div>
+            <div class="row border-none">
+                <div class="pull-left">Upload Files:</div>
+                <div class="col-md-10">
+                    <div class="sprite pull-left default-attachment cur-pointer" ngf-select ng-model="mailboxCtrl.files" ngf-multiple="true">
+                        &nbsp;
+                    </div>
+                    <div>
+                        <div class="margin-left20px custom-tab-java-block custom-tab">
+                            <div class=" border-none pull-left attchment-items" data-ng-show="mailboxCtrl.composeEmail.file.length>0" data-ng-repeat="file in mailboxCtrl.composeEmail.file track by $index">
+                                <span class="pull-left">{{file.docname}} {{file.docSize}}</span>
+
+                                <div class="pull-left file-buttons">
+                                    <ul class="showBy-btns ">
+                                        <!-- <li>
+                                            <a href="#" data-ng-show="(mailboxCtrl.compose!==true) && file.docuri && file.docuri!=''" data-ng-click="mailboxCtrl.downloadAttachment(file.docuri)"><span class="sprite default-sharedown"></span></a>
+                                        </li> -->
+                                        <li > <!-- data-ng-show="file.docuri && file.docuri!=''"  -->
+                                            <a href="#" class="" data-ng-show="file.docname && file.docname!=''" data-ng-click="$event.preventDefault(); mailboxCtrl.cancleAttachment($index)" aria-hidden="true">×</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="progress-attachment">
+                                    <progressbar class="progress active" animate="true" max="100" data-ng-show="file.fileProgress && file.fileProgress!=''" value="file.fileProgress" type="info"></progressbar>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid margin-top5px">
+                <div class="col-md-12">
+                    <!-- <text-angular ng-model="mailboxCtrl.composeMailMsg" value="" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough','redo', 'undo'],
+                                ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']]"></text-angular> -->
+                                <wysiwyg textarea-id="Compose_mail" textarea-class="new-editor-height globle-note-color form-control" textarea-name="Composemail"
+            textarea-required ng-model="mailboxCtrl.composeMailMsg" enable-bootstrap-title="true"></wysiwyg>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+    <div>{{mailboxCtrl.callUpdate()}} </div>
+</div>
+
+
+<!-- matter documents  -->
+<div class="compose-wrap document-box" ng-init="mailboxCtrl.matterDocs = false" ng-class="{'composeShow cursor-pointer-events-all' :mailboxCtrl.matterDocs, '' : !mailboxCtrl.matterDocs}">
+    <ng-include src="'app/mailbox/matter-documents.html'"></ng-include>
+</div>
+</div>

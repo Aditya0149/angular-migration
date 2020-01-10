@@ -1,0 +1,159 @@
+<style type="text/css">
+    .table {
+        margin-bottom: 0px !important;
+    }
+</style>
+<div class=" clearfix" scrolly="IntakeVenueReportCtrl.scrollReachedBottom()" reached-top="IntakeVenueReportCtrl.scrollReachedTop()">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap">State and Venue</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+            <ul class="pull-right">
+                <li>
+                    <a href="javascript:void(0);"
+                        data-ng-class="{' active': IntakeVenueReportCtrl.filter.type === 'mymatter'}"
+                        data-ng-click="IntakeVenueReportCtrl.filterByUser('mymatter');IntakeVenueReportCtrl.selectedTab=1;">
+                        <h2>My Intakes</h2>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        data-ng-class="{' active': IntakeVenueReportCtrl.filter.type === 'allmatter'}"
+                        data-ng-click="IntakeVenueReportCtrl.filterByUser('allmatter');IntakeVenueReportCtrl.selectedTab=0;">
+                        <h2>All Intakes</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="fixed-grid-report">
+    <div class="col-md-12 custom-padding">
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons">
+                <li class="seperation-filter"></li>
+                <li>
+                    <a data-ng-click="IntakeVenueReportCtrl.print()">
+                        <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="paddingLR-10px">
+                    <a data-ng-click="IntakeVenueReportCtrl.exportReport()">
+                        <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dropdown head-padding-10px pull-right">
+            Sort By :
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{IntakeVenueReportCtrl.selectedSort}}
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+            <ul class="dropdown-menu divider-alt mnw-180px" role="menu" aria-labelledby="dLabel">
+                <li>
+                    <a data-ng-click="IntakeVenueReportCtrl.applySortByFilter(1)">State ASC
+                    </a>
+                </li>
+                <li>
+                    <a data-ng-click="IntakeVenueReportCtrl.applySortByFilter(2)">State DESC
+                    </a>
+                </li>
+                <li>
+                    <a data-ng-click="IntakeVenueReportCtrl.applySortByFilter(3)">Venue ASC
+                    </a>
+                </li>
+                <li>
+                    <a data-ng-click="IntakeVenueReportCtrl.applySortByFilter(4)">Venue DESC
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="pull-left" style="margin-left:-43px;">
+            <div class="checkbox">
+                <input type="checkbox" data-ng-click="IntakeVenueReportCtrl.getVenueList()" data-ng-model="IntakeVenueReportCtrl.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                />
+                <label>Include Archived Matters</label>
+            </div>
+        </div> -->
+    </div>
+</div>
+<div data-ng-show="IntakeVenueReportCtrl.venueList.length > 0">
+    <show-record-count-only
+        more="IntakeVenueReportCtrl.getMore()"
+        all="IntakeVenueReportCtrl.getAll()"
+        displayed="IntakeVenueReportCtrl.venueList.length"
+        hide-pager="{{IntakeVenueReportCtrl.showPaginationButtons() && IntakeVenueReportCtrl.venueList.length > 0}}"
+        total="IntakeVenueReportCtrl.total"></show-record-count-only>
+</div>
+
+<!-- Start: New scroll-table tableid  -->
+<div class="clearfix"></div>
+<div id="listUpper"></div>
+<div class="report-scroll-all-matter">
+
+
+    <scroll-table tabselected="IntakeVenueReportCtrl.selectedTab" sort="IntakeVenueReportCtrl.selectedSort" watch="IntakeVenueReportCtrl.venueList" tableid="venueReportlistGrid" to="#listUpper" from="#moreAllLinkRecord">
+        <table class="table table-scroll">
+            <thead>
+                <tr>
+                    <th class="th-width-33">
+                        <div>
+                            <b>State</b>
+                        </div>
+                    </th>
+                    <th class="th-width-33">
+                        <div> <span><b>Venue </b></span></div>
+                    </th>
+                    <th class="th-width-33">
+                        <div> <span><b>Intake Count</b></span></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="dashboard-tasks-due" id="venueReportlistBody"
+                style="overflow-y:overlay;height: 45vh;max-height: 45vh;">
+                <tr data-highlight-clicked-row="{{$index}},IntakeVenueReportCtrl.clickedRow"
+                    data-ng-class="{'selected-grid-row' : $index == IntakeVenueReportCtrl.clickedRow}"
+                    data-ng-repeat="data in IntakeVenueReportCtrl.venueList">
+
+                    <td class="th-width-33">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.jurisdictionName}}">
+                                {{data.jurisdictionName }}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-33">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.venueName}}">
+                                {{data.venueName }}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-33">
+                        <div>
+                            <span class="big-num-val-grid" tooltip-placement="bottom" tooltip="{{data.count}}">
+                                {{data.count }}</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+</div>
+<!-- Start: New scroll-table tableid  -->
+
+<div data-ng-show="IntakeVenueReportCtrl.dataLoaderFlag && IntakeVenueReportCtrl.venueList.length == 0" class="text-center">
+    State and Venue data not present.
+</div>
+
+<div class="row text-center" data-ng-show="IntakeVenueReportCtrl.showPaginationButtons() && IntakeVenueReportCtrl.venueList.length > 0">
+    <a href="javascript:void(0)" data-ng-click="IntakeVenueReportCtrl.getMore()">More</a>
+
+    <span class="paddingLR-10px">|</span>
+    <a href="javascript:void(0)" class="" data-ng-click="IntakeVenueReportCtrl.getAll()">All</a>
+
+</div>

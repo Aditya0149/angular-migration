@@ -1,0 +1,209 @@
+﻿    <script type="text/ng-template" id="smsAsNote">
+
+        <div class="message-panel" data-ng-repeat="sms in selectedSMSThread">
+            <div class="message-line-text">
+    
+            </div>
+            <div>
+                <div class="row">
+                    <span class="col-md-3">From :</span>
+                    <span class="col-md-9 small-text">
+                        <b>{{sms.sentBy}}</b>
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="col-md-3">Date & Time :</span>
+                    <span class="col-md-9 small-text">
+                        <b>{{sms.createdOn|utcDateFilter: 'MM-DD-YYYY hh:mm A':1:'start'}}</b>
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="col-md-3">Message :</span>
+                    <div class="col-md-9">
+                        <div class="message-panel left-doc-block" ng-if="sms.documentName">
+                            <!--        Image tag for images-->
+                            <img data-ng-if="sms.isImage" class="img border-radius-4px"
+                                data-ng-src="{{trustSrc(sms.mediaURL)}}" height="100" width="150" />
+    
+                            <!--           IFrame tag for PDFs and TXTs-->
+                            <iframe data-ng-if="sms.ext == 'pdf' || sms.ext == 'txt'"
+                                    class="img border-radius-4px" data-ng-src="{{trustSrc(sms.mediaURL)}}"
+                                    height="100" width="150"></iframe>
+    
+                            <!--        Other files     -->
+                            <img data-ng-if="!sms.isImage && !(sms.ext == 'pdf' || sms.ext == 'txt')"
+                                class="img border-radius-4px" data-ng-src="styles/images/documents.svg"
+                                height="100" width="150" />
+    
+                        </div>
+                        <p ng-if="!sms.documentName">
+                            {{sms.messageText}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="timepicker.tpl.html">
+        <div class="timepicker">
+            <input type="time" class="form-control" ng-model="theTime" the-real-time="theRealTime" render-on-blur-or-enter>
+        </div>
+    </script>
+    <script type="text/ng-template" id="toast.tpl.html">
+        <div ng-click="gotoNotifications(directiveData, $event)">
+            <!-- <div class="modal-header clearfix">
+                <h1 class="modal-title">{{directiveData.type}}</h1>
+            </div> -->
+            <div class="modal-body padding-left-0 small-notification-wrapper">
+                    <div data-ng-class="{'cursor-pointer' : directiveData.is_intake == 0 || directiveData.is_intake == 1 || directiveData.is_intake == 2}">
+                        <div ng-if='directiveData.notification_type == "Event_Reminder" || directiveData.notification_type == "Task_Reminder" ||
+                                directiveData.notification_type == "Event" || directiveData.notification_type == "Task"'>
+                            <p ng-bind-html="directiveData.text"></p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 zero-padd-LT" data-ng-if="directiveData.type== 'event'">
+                                        <strong>Start:</strong>
+                                        <span ng-if="directiveData.all_day == 1">{{directiveData.start_date | utcDateFilter:
+                                                        'MM-DD-YYYY':directiveData.all_day:'start'}}</span>
+                                        <span ng-if="directiveData.all_day == 0">{{directiveData.start_date | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                                        A':directiveData.all_day:'start'}}</span>
+                                    </div>
+                                    <div class="col-md-6 zero-padd-LT" data-ng-if="directiveData.type== 'event'">
+                                        <strong>End:</strong>
+                                        <span ng-if="directiveData.all_day == 1">{{directiveData.end_date | utcDateFilter:
+                                                        'MM-DD-YYYY':directiveData.all_day:'end'}}</span>
+                                        <span ng-if="directiveData.all_day == 0">{{directiveData.end_date | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                                        A':directiveData.all_day:'end'}}</span>
+                                    </div>
+                                    <div data-ng-if="directiveData.type== 'task'">
+                                        <strong>Due Date:</strong>
+                                        <span>
+                                            {{directiveData.start_date |utcImpDateFilter: 'MM-DD-YYYY'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if='directiveData.notification_type == "Sidebar_Comment"'>
+                            <p ng-bind-html="directiveData.text">
+                            </p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Post:</strong>
+                                    <span>{{directiveData.post|characters:50}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Comment:</strong>
+                                    <span>{{directiveData.comment |characters:50}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Firm Post creation notification -->
+                        <div ng-if='directiveData.notification_type == "Sidebar_Post"'>
+                            <p ng-bind-html="directiveData.text">
+                            </p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Post:</strong>
+                                    <span>{{directiveData.post|characters:50}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if='directiveData.notification_type == "Email"'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>From:</strong>
+                                    <span>{{directiveData.senders_name}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Subject:</strong>
+                                    <span ng-bind-html="directiveData.subject"></span>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>E-mail:</strong>
+                                        <span
+                                            ng-bind-html="directiveData.mail_body"></span>
+                                    </div>
+                                </div> -->
+                        </div>
+                        <div ng-if='directiveData.notification_type == "Client_Messenger"'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>From:</strong>
+                                    <span>{{directiveData.sender_name}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong ng-if="directiveData.is_sms == 1">Message:</strong>
+                                    <span ng-bind-html="directiveData.text"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if='directiveData.notification_type == "Matter"'>
+                            <p ng-bind-html="directiveData.text">
+                            </p>
+                        </div>
+                        <div ng-if='directiveData.notification_type == "Intake"'>
+                            <p ng-bind-html="directiveData.text">
+                            </p>
+                        </div>
+                        <div class="row" ng-if="directiveData.is_intake == 0 && directiveData.matter_id > 0">
+                            <div class="col-md-12">
+                                <strong>Matter:</strong>
+                                <span>
+                                    {{directiveData.matter_name}}</span>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="directiveData.is_intake == 1 && directiveData.matter_id > 0">
+                            <div class="col-md-12">
+                                <strong>Intake:</strong>
+                                <span>
+                                    {{directiveData.matter_name}}</span>
+                            </div>
+                        </div>                
+                    </div>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="notificationshtml">
+        <ul id="notification-bell-menu"
+            class="launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown notification-dropdown-set"
+            role="menu" aria-labelledby="dropdownMenuNotification">
+            <div class="sroll">
+    
+                <div class="col-sm-12 left-outer">
+                    <div class="row top-row">
+                        <div class="col-sm-6">
+                            <h2 class="page-title">Notifications</h2>
+                        </div>
+                        <div class="col-sm-6 top-links text-right">
+                                    <!-- <a href="javascript:void(0)" data-ng-click="dismissAllNotification()">Dismiss All</a> -->
+                                    <a href="javascript:void(0)" data-ui-sref="settings.notifications">Settings</a>
+                        </div>
+                    </div>
+                    <notification-list-html dataset="dataset" selected-notifications="selectedNotifications"
+                        show-select="false">
+    
+                    </notification-list-html>
+    
+                    <div class="row">
+                        <div class="view-all">
+                            <a href="javascript:void(0)" data-ui-sref="allnotifications">View All</a>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </ul>
+    </script>

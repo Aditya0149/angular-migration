@@ -1,0 +1,63 @@
+<style>
+    .tags-input input {max-width: 100% !important;}
+    .tags li{word-break: break-all;}
+</style>
+<div id="content">
+    <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+        <h2 class="col-md-5 page-title ng-binding">Upload Document</h2>
+        <div class=" pull-right ">
+            <button data-ng-click="" class="btn btn-default btn-styleNone">Cancel</button>
+            <button data-ng-click="" class="btn btn-default">Save</button>
+        </div>
+    </div>
+    <div class="row multiupload-row">
+        <div class="col-md-2 relative-container"> <strong class="margin-top10px">Text.txt </strong><span>(123 K)</span>
+            <div class="progress-close relative-container">
+                <progressbar class="progress active " animate="false" max="100" value="50" type="success"></progressbar><a href="#" class="absolute-container right0" ng-click="document.removeUploadingDocument();" ><span aria-hidden="true">×</span></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="compulsary-mark absolute-container left0">*</div>
+            <select class="form-control col-md-11">
+                <option>Select Category</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control">
+                <option>Mark</option>
+            </select>
+        </div>
+        <div class="col-md-2 col-md-padding-reset">
+            <input type="text" class="form-control form-control-width-reset " placeholder="Enter Tags">
+        </div>
+
+    </div>
+
+    <div class="row multiupload-row">
+        <div class="col-md-2 relative-container"> <strong class="margin-top10px">Text.txt </strong><span>(123 K)</span>
+            <div class="progress-close relative-container">
+                <progressbar class="progress active " animate="false" max="100" value="50" type="success"></progressbar><a href="#" class="absolute-container right0"><span aria-hidden="true">×</span></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="compulsary-mark absolute-container left0">*</div>
+            <select class="form-control col-md-11">
+                <option>Select Category</option>
+            </select>
+        </div>
+        <div class="col-md-4 ">
+            <select class="form-control">
+                <option>Mark</option>
+            </select>
+        </div>
+        <div class="col-md-2 col-md-padding-reset">
+            <input type="text" class="form-control form-control-width-reset " placeholder="Enter Tags">
+        </div>
+        <ul class="tags pull-right">
+            <li><strong>Tag1</strong>  <a href="#"><span aria-hidden="true">×</span></a>
+            </li>
+            <li><strong>Tagging1</strong>  <a href="#"><span aria-hidden="true">×</span></a>
+            </li>
+        </ul>
+    </div>
+</div>

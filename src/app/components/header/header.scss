@@ -1,0 +1,55 @@
+.page-header-wrapper {
+        .dropdown-menu-launchpadaccessdenied { margin-right: -4px;
+        min-height: 219px;
+    }
+    .isPortalAccessDenied {
+        min-height: 219px;
+    }
+    .cust-launcher-dropdown {
+        &:before,&:after {
+            left: initial;
+            right: 12px;
+        }
+    }
+    .w-75 {
+        width: 75%;
+    }
+    .mt-20-negative {
+        margin-top: -20px;
+    }
+    .subcrib-expire {
+        margin-bottom: 4px;
+        color: #f30e3f;
+    }
+    .small-text {
+        font-size: 12px;
+    }
+    
+    .top-row {
+        padding-bottom: 4px;
+    }
+    
+    .dashboard-tasks-due {
+        width: auto;
+        max-height: 60vh;
+    }
+}
+
+.quick-access-menu-wrapper{
+    .app-icon{
+        cursor: pointer;
+        display: block;
+        margin: 0 auto
+    }
+    .add-ons{
+        padding-top:6px;
+        font-weight:bold;
+        color: #000;
+        border-bottom: $divider_border;
+    }
+}
+
+.keep-inside-clicks-open strong{
+    font-weight: normal;
+    color: #303030;
+}

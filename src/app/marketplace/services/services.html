@@ -1,0 +1,46 @@
+<div class="marketplace-main">
+    <div class="col-md-11 col-centered">
+        <div class="marketplace-row">
+            <div class="col-md-2 left-img"><img class="marketplace-list-icon" src="styles/images/marketplace-images/icon/lexvia.png"></div>
+            <div class="col-md-8 marketplace-right-block margin-top10px">
+                <div class="title">Lexvia Services</div>
+                <div class="text">Increase your firm’s productivity by outsourcing your legal pleadings and processing of legal documents. Take on seamless paralegal support for financing cases, handling paperwork, dealing with overworked or under-utilized staff and even following up with</div>
+                <div><a ng-click="servicesCtrl.showDetails('LS')" class="see-details">SEE DETAILS</a></div>
+            <!--<div class="col-md-1"></div>-->
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-default margin-top30px"
+                 ng-disabled="servicesCtrl.dissableSubscribe" 
+                 ng-if="servicesCtrl.isLexviaServices==0" ng-click="servicesCtrl.save(true)">SUBSCRIBE</button>
+                <button ng-disabled="servicesCtrl.dissableSubscribe"  class="btn btn-default margin-top30px" ng-if="servicesCtrl.isLexviaServices==1" ng-click="servicesCtrl.save(false)">UNSUBSCRIBE</button>
+            </div>
+    </div>
+</div>
+
+
+<!--<div class="marketplace-details-main">
+    <div class="col-md-12 padding-0 back-btn-block"></div>
+    <div class="col-md-2 left-img padding-0">
+        <img src="style/images/foo.jpg">
+    </div>
+    <div class="col-md-5 marketplace-details-block">
+        <div class="title">Lexvia Services</div>
+        <div class="text"><b>Description: </b>Lorem Ipsum is simply text of the printing and typesetting industry.</div>
+        <div class="text"><b>Last update: </b>11 jan 2017</div>
+        <div class="text"><b>Whats New Version 1.5: </b>one sentence descriptions, lore opossum ed sid ertesd</div>
+    </div>
+    <div class="col-md-2 margin-top30px">
+        <div class="adopted-by"><span><span style="font-size: 22px;"></span><br></span><br></div>
+        <div class=" custom-switch-slide">
+            <button class="btn btn-default margin-top30px" ng-if="servicesCtrl.isLexviaServices.is_active==0" ng-click="servicesCtrl.save(servicesCtrl.isLexviaServices)">SUBSCRIBE</button>
+            <button class="btn btn-default margin-top30px" ng-if="servicesCtrl.isLexviaServices.is_active==1" disabled="disabled">SUBSCRIBED</button>
+            <span ng-change="servicesCtrl.save(servicesCtrl.isLexviaServices)" class="form-control zero-border" ng-switcher ng-model="servicesCtrl.isLexviaServices"></span>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-md-4"></div>
+    <div class="marketplace-details-vedeo-block col-md-9"></div>
+</div>-->

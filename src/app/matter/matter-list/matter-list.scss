@@ -1,0 +1,109 @@
+.matter-list-wrapper {
+		@media screen and (-webkit-min-device-pixel-ratio: 0) { .ongoing-matter { height: 52px;
+	}
+	} 
+		#report-content {
+			.card {
+				.numb {
+					font-size: 14px;
+				}
+			}
+		}
+	#report-content {
+		.card {
+			.textA {
+				font-size: 14px;
+			}
+			.numb {
+				margin-top: 6px;
+			}
+		}
+		.gridSec {
+			padding: 5px 10px;
+			height: 38px;
+		}
+	}
+	.card {
+		&:last-child {
+			&:before {
+				height: 44px;
+			}
+		}
+	}
+	.showBy-btns {
+		li.seperation-filter {
+			height: 24px;
+		}
+	}
+	.tags {
+		li {
+			margin: 0px 5px 5px 0;
+			padding: 0px 10px;
+		}
+	}
+	strong {
+		font-size: 12px;
+	}
+	.search-input {
+		input {
+			height: 26px;
+		}
+		.default-searchico {
+			top: 1px;
+		}
+	}
+	.box-align {
+		vertical-align: middle;
+	}
+	.table-scroll {
+		tr {
+			div {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		thead {
+			width: 99%;
+		}
+		// .dashboard-tasks-due {
+		//     max-height: 80vh !important;
+		//     height: 40vh !important;
+		// }
+	}
+	.width-54per{
+		overflow: hidden !important;
+		position: fixed;
+		bottom: 60px;
+		width: 100%;
+		left: 0;
+		right: 0;
+		text-align: center;
+		background: #fff
+	}
+	.table .tooltip{
+		left: auto !important;
+	}
+	.sub-icon-box {
+		display: inline-block;
+		vertical-align: top;
+
+		.list {
+			vertical-align: top;
+		}
+
+		.seprator-line {
+			display: inline-block;
+			border: 1px solid #ccc;
+			height: 24px;
+			margin: 0 8px;
+		}
+		
+		.search-input{
+			margin-left: 8px;
+		}
+	}
+	
+	.top-left-side-icon a{
+		margin: 0 8px;
+	}
+}

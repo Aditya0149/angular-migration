@@ -1,0 +1,101 @@
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">{{dayDetail.header}}</h1>
+    <button class="close fl-right" data-ng-click="cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body task-event-reminders" style="padding: 0px !important;">
+
+    <div class="container-fluid">
+
+        <!-- <div class="row reminder-headers">
+            <div class="col-md-3" style="padding-top:8px">Matter/Intake</div>
+            <div class="col-md-3" style="padding-top:8px">Name</div>
+            <div class="col-md-3 " style="padding-top:8px">Start</div>
+            <div class="col-md-3" style="padding-top:8px">End</div>
+        </div>
+
+        <div class="reminder-row" style="border-bottom: 2px solid #ccc;"></div> -->
+        <div class="dashboard-tasks-due calendar-events" id="remindersDiv"
+            style="max-height: 200px !important;overflow-x: hidden !important;">
+            <!-- <div class="row reminder-row" data-ng-repeat="reminder in dayDetail.dayClickedInfo.events">
+                <div class="col-md-3  padding-top-10px cursor-pointer" data-ng-click="goToEventMatter(reminder)">
+                    <div class="pull-left" tooltip="{{!reminder.ismatter ? 'Intake Event' : 'Matter Event'}}"
+                        tooltip-append-to-body="true" tooltip-placement="top"
+                        ng-class="{'search-intake-icon' :!reminder.ismatter, 'search-matter-icon' : reminder.ismatter}">
+                    </div>
+                    <div class="col-md-10 padding-0" style="word-break: break-word;color: #2a83b1;">
+                        {{reminder.matter_name}}
+                    </div>
+                </div>
+                <div class="col-md-3 padding-top-10px cursor-pointer" data-ng-click="goToEvent(reminder)"
+                    style="word-break: break-word;color: #2a83b1;">
+                    {{reminder.originalTitle}}
+                </div>
+
+                <div class="col-md-3 padding-top-10px">
+                    <div data-ng-show="reminder.allday == 1">
+                        {{reminder.utcstart|utcDateFilter:'MM/DD/YYYY':reminder.allday:'start'}}
+                    </div>
+                    <div data-ng-show="reminder.allday == 0">
+                        {{reminder.utcstart|utcDateFilter:'MM/DD/YYYY hh:mm a':reminder.allday:'start'}}
+                    </div>
+                </div>
+
+                <div class="col-md-3 padding-top-10px">
+                    <div data-ng-show="reminder.allday == 1">
+                        {{reminder.utcend|utcDateFilter:'MM/DD/YYYY':reminder.allday:'end'}}
+                    </div>
+                    <div data-ng-show="reminder.allday == 0">
+                        {{reminder.utcend|utcDateFilter:'MM/DD/YYYY hh:mm a':reminder.allday:'end'}}
+                    </div>
+                </div>
+
+            </div> -->
+
+            <!-- chinmay -->
+            <div class="row cursor-pointer" data-ng-repeat="task in dayDetail.dayClickedInfo.events" data-ng-click="goToEvent(task)">
+                <div>
+                    <div class="col-md-12 padding-left-0">
+                        <div class="col-md-12">
+                            <strong>Event Title:</strong>
+                            <span class="cursor-pointer"
+                                >{{task.originalTitle}}</span>
+                        </div>
+                        <div class="col-md-12">
+                            <strong ng-show="task.ismatter">Matter Name:</strong>
+                            <strong ng-show="!task.ismatter">Intake Name:</strong>
+                            <span class="cursor-pointer"
+                                >{{task.matter_name}}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Start Date:</strong>
+                            <span ng-if="task.allday == 1">{{task.utcstart | utcDateFilter:
+                                    'MM-DD-YYYY':task.allday:'start'}}</span>
+                            <span ng-if="task.allday == 0">{{task.utcstart | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                    A':task.allday:'start'}}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>End Date:</strong>
+                            <span ng-if="task.allday == 1">{{task.utcend | utcDateFilter:
+                                    'MM-DD-YYYY':task.allday:'end'}}</span>
+                            <span ng-if="task.allday == 0">{{task.utcend | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                    A':task.allday:'end'}}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Location:</strong>
+                            <span>{{task.location}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- chinmay -->
+    </div>
+
+</div>
+</div>
+<div class="modal-footer">
+    <button ng-click="closeDayDetails()" type="button" class="btn btn-default">Ok</button>
+</div>

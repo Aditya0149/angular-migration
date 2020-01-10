@@ -1,0 +1,90 @@
+<div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel">Filters</h4>
+		</div>
+		<div class="modal-body dashboard-tasks-due" style="max-height: 70vh !important; overflow-x: hidden">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="col-md-4">
+						<!-- Category -->
+						<h3>Category</h3>
+						<form>
+							<div ng-repeat="category in categories | orderBy:'category_name'"
+								class="checkbox checkbox-primary">
+								<input type="checkbox" checklist-model="currentFilter.catFilter"
+									checklist-value="category.notecategory_id">
+								<label> {{category.category_name | SentenseCase}}</label>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-3">
+						<!--Added By -->
+						<h3>Added By</h3>
+						<form>
+							<div ng-repeat="user in users" class="checkbox checkbox-primary">
+								<input type="checkbox" checklist-model="currentFilter.uidFilter"
+									checklist-value="user.user_id">
+								<label>{{user.first_name}} {{user.last_name}}</label>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-5">
+						<h3>Importance</h3>
+						<form>
+							<div class="checkbox checkbox-primary">
+								<input type="checkbox" ng-model="currentFilter.impFilter">
+								<label>Important Notes</label>
+							</div>
+							<div>
+								<h3 class="margin-top20px">Added On</h3>
+								<div class="btn-group btn-group-md margin-top10px"
+									style="padding-bottom: 45px !important;" role="group"
+									aria-label="Default button group">
+									<button type="button" class="btn btn-default" ng-click="setDateFilter('TODAY')"
+										ng-class="{' active': currentDateFilter == 'TODAY'}">Today</button>
+									<button type="button" class="btn btn-default" ng-click="setDateFilter('LAST_WEEK')"
+										ng-class="{' active': currentDateFilter == 'LAST_WEEK'}">Last Week</button>
+									<button type="button" class="btn btn-default" ng-click="setDateFilter('MONTH_AGO')"
+										ng-class="{' active': currentDateFilter == 'MONTH_AGO'}">A Month Ago</button>
+								</div>
+							</div>
+							<div>
+								<h3 class="margin-top20px">Linked contact</h3>
+								<ui-select style="width: 350px;margin-top: 10px;" multiple
+									ng-model="currentFilter.linked_contact" theme="select2" class="select2"
+									class="width100" data-ng-init="addGlobalNotes.contact =[]">
+									<ui-select-match placeholder="Enter Contact">
+										{{$item.firstname + " " + $item.lastname}}
+									</ui-select-match>
+									<ui-select-choices refresh-delay="1000"
+										refresh="getLinkContactFilter($select.search)"
+										repeat="contact in filteredContact  | orderBy: 'name'">
+										<small>
+											{{contact.firstname + " " + contact.lastname}}
+											<br> {{contact.street}} {{contact.city}}
+											<span
+												ng-if="((contact.street && contact.street.length > 0)||(contact.city && contact.city.length > 0)) && (contact.state && contact.state.length > 0)">,</span>
+											{{contact.state}}
+										</small>
+										<hr class="custom-hr">
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">Reset</button>
+			<button class="btn btn-default pull-right" ng-click="applyFilters()"
+				ng-disabled="enableApply">Apply</button>
+		</div>
+	</div>
+</div>

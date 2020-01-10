@@ -1,0 +1,12 @@
+<footer>
+    <ul>
+        <li *ngFor="let link of links">
+            <a 
+                [href]="this.type == link.title ? 'javascript:void(0)' : link.url + '' + navId" 
+                [ngClass]="{ 'active-footer' : this.type == link.title }"
+                *ngIf="!link.hidden" >
+                {{link.title}}
+            </a>
+        </li>
+    </ul>
+</footer>

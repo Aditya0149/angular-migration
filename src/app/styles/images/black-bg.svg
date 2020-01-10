@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="470" viewBox="0 0 1280 470">
+    <defs>
+        <path id="a" d="M1280 449.312v20.312c-147.992-11.57-323.176-18.258-525.551-20.062H524.575C322.288 451.366 147.43 458.054 0 469.624V0c175.333 13.708 388.833 20.562 640.5 20.562 251.667 0 464.833-6.854 639.5-20.562v449.312z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#1C2D35" d="M1280 448.715V469c-147.992-11.555-323.176-18.234-525.551-20.035H524.575C322.288 450.766 147.43 457.445 0 469V0c175.333 13.69 388.833 20.535 640.5 20.535 251.667 0 464.833-6.845 639.5-20.535V448.715z"/>
+        <g opacity=".472">
+            <mask id="b" fill="#fff">
+                <use xlink:href="#a"/>
+            </mask>
+            <use fill="#172329" xlink:href="#a"/>
+            <g mask="url(#b)">
+                <g transform="translate(-690 -738.5)">
+                    <ellipse cx="825" cy="835" fill="#17272F" rx="420.892" ry="426"/>
+                    <ellipse cx="825" cy="835" fill="#0E181D" rx="825" ry="835"/>
+                    <ellipse cx="825" cy="835" fill="#17272F" rx="420.892" ry="426"/>
+                    <g transform="translate(619 626.5)">
+                        <ellipse cx="206" cy="208.5" fill="#121D22" rx="206" ry="208.5"/>
+                        <circle cx="208" cy="208" r="126" fill="#0E181D"/>
+                        <circle cx="208" cy="208" r="54" fill="#0A1216"/>
+                        <circle cx="208" cy="208" r="37" fill="#000"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

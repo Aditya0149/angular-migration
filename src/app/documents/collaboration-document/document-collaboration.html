@@ -1,0 +1,57 @@
+<div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+    <h2 class="col-md-5 page-title ng-binding">{{collaborationDocument.doc_name}}</h2>
+
+    <div class="pull-right">
+        <button data-ng-click="document.removeUploadingDocument(1)" class="btn btn-default" data-ng-disabled="!document.enableButtonCancel">
+            Cancel</button>
+
+        <button data-ng-click="document.processDocuments()" data-ng-disabled="(document.viewDocumentForm.$invalid || document.enableButtonSave==false) || document.isDatesValid() || document.docModel.doc_name == '' || document.docModel.documentname == '' "
+            class="btn btn-default">
+            Save</button>
+    </div>
+</div>
+
+<div>
+    <a data-ui-sref="document-upload({'matterId': {{collaborationDocument.matterId}} })" ng-hide="collaborationDocument.matterInfo.archivalMatterReadOnlyFlag">
+        <span has-access="{{collaborationDocument.docPermissions[0].A}}" class="sprite default-plus" tooltip="Add" tooltip-placement="right">&nbsp;</span>
+    </a>
+</div>
+
+<div>
+    <span>{{collaborationDocument.collab2.length}} Users have access to this document</span>
+</div>
+
+<div data-ng-controller="CollaborationDocumentsCtrl as collaborationDocument" data-ng-if="collaborationDocument.collab2.length > 0 ">
+    <table style="table-layout: fixed;" class="table">
+        <thead>
+            <tr>
+                <th style="width:30%">Name</th>
+                <th style="width:30%">Role</th>
+                <th style="width:30%">Email</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr class=" body-row " data-ng-repeat="data in collaborationDocument.collab2">
+                <td>
+                    <div style="margin-top:5px">
+                        <span class="cursor-pointer" data-toggle="name-tooltip" tooltip="{{collaborationDocument.collab2[$index].contactName}}" style="padding: 7px 10px;vertical-align: top">{{collaborationDocument.collab2[$index].contactName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="cursor-pointer" data-toggle="name-tooltip" tooltip="{{collaborationDocument.collab2[$index].contactRole}}">{{collaborationDocument.collab2[$index].contactRole}}</span>
+                </td>
+                <td>
+                    <div style="display: inline-block;vertical-align: top;padding-left: 6px;width: 86%;margin-top: 5px;">
+                        <div class="cursor-pointer" data-toggle="name-tooltip" tooltip="{{collaborationDocument.collab2[$index].contactEmail}}">
+                            {{collaborationDocument.collab2[$index].contactEmail}}</div>
+                    </div>
+                </td>
+                <td>
+                    <span class="cursor-pointer" data-toggle="name-tooltip" tooltip="Remove">x</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

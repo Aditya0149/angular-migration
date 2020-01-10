@@ -1,0 +1,234 @@
+<style type="text/css">
+    /* .scrollArea table .th-inner {
+        top: 12px;
+        vertical-align: middle;
+        height: 60px;
+    } */
+
+    #report-content {
+        padding: 0 20px 2px !important;
+    }
+    .table {
+        margin-bottom: 0px !important;
+    }
+</style>
+<!-- CONTENT SECTION-->
+<div scrolly="matterEventsCtrl.scrollReachedBottom()" reached-top="matterEventsCtrl.scrollReachedTop()">
+    <div>
+        <div class=" clearfix">
+            <div class="row">
+                <!--<h1 class="col-md-5 ">{{matterEventsCtrl.selectionModel.statusName}} Matters  </h1>-->
+                <h1 class="col-md-5 ellipsis-nowrap"> Events Report</h1>
+                <div class="col-md-7 pull-right page-sublinks subnav">
+                    <ul class="pull-right">
+                        <li><a href="javascript:void(0);"
+                                ng-class="{' active': matterEventsCtrl.selectionModel.allMatter == 0}"
+                                ng-click="matterEventsCtrl.filterByUser(0);matterEventsCtrl.selectedTab=0">
+                                <h2>My Matters</h2>
+                            </a></li>
+                        <li><a href="javascript:void(0);"
+                                ng-class="{' active': matterEventsCtrl.selectionModel.allMatter == 1}"
+                                ng-click="matterEventsCtrl.filterByUser(1);matterEventsCtrl.selectedTab=1">
+                                <h2>All Matters</h2>
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flexCont"></div>
+        <div class="fixed-grid-report">
+            <div class="col-md-12 paddingRLR allmatter-heading-filter-removed">
+                <div class="pull-right head-padding-10px ">
+                    <ul class="showBy-btns pull-right heading-right-buttons">
+                        <li class="seperation-filter"></li>
+                        <li>
+                            <a>
+                                <span data-ng-click="matterEventsCtrl.filterMatterEventsReport()"
+                                    class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="seperation-filter"></li>
+                        <li>
+                            <a data-ng-click="matterEventsCtrl.print()">
+                                <span class="sprite default-file sortby-icons" tooltip="Print"
+                                    tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                        <li class="paddingLR-10px">
+                            <a data-ng-click="matterEventsCtrl.downloadMatters()">
+                                <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                    tooltip-placement="right"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group btn-group pull-right  paddingLR-10px">
+                    <label data-ng-click="matterEventsCtrl.upcomingEvents15Days(0)"
+                        ng-class="{' active': matterEventsCtrl.selectionModel.dateFieldValue == 0}"
+                        class="btn btn-default btn-styleNone ">
+                        Next 15 Days</label>
+                    <label data-ng-click="matterEventsCtrl.upcomingEvents30Days(1)"
+                        ng-class="{' active': matterEventsCtrl.selectionModel.dateFieldValue == 1}"
+                        class="btn btn-default btn-styleNone">
+                        Next 30 Days</label>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-right">
+                    <clx-filter-tags on-filter-cancel="matterEventsCtrl.tagCancelled" tag-list="matterEventsCtrl.tags">
+                    </clx-filter-tags>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="matterEventsCtrl.viewModel.matters.length > 0 ">
+            <show-record-count-only more="matterEventsCtrl.applyFilterLazyLoading()"
+                all="matterEventsCtrl.getAllMatterList()"
+                hide-pager="{{ matterEventsCtrl.viewModel.matters.length < matterEventsCtrl.total }}"
+                displayed="matterEventsCtrl.viewModel.matters.length" total="matterEventsCtrl.total">
+            </show-record-count-only>
+        </div>
+
+        <!-- Start: New scroll-table tableid  -->
+        <div class="clearfix"></div>
+        <div id="listUpper"></div>
+        <div class="report-scroll-all-matter">
+
+
+            <scroll-table tabselected="matterEventsCtrl.selectedTab" tag="matterEventsCtrl.tags" watch="matterEventsCtrl.viewModel.matters" tableid="listGrid" to="#listUpper"
+                from="#moreAllLinkRecord">
+
+                <table class="table table-scroll">
+                    <thead>
+                        <tr>
+                            <th class="th-width-10">
+                                <div>
+                                    <b>Event date & <br> Date of Incident</b>
+                                </div>
+                            </th>
+                            <th class="th-width-8">
+                                <div>
+                                    <span><b>Event Time</b></span>
+                                </div>
+                            </th>
+                            <th class="th-width-20">
+                                <div> <span><b>Matter Name, File number,<br> Index/Docket#</b></span></div>
+                            </th>
+                            <th class="th-width-16">
+                                <div> <span><b>Event Type/Title</b></span></div>
+                            </th>
+                            <th class="th-width-10">
+                                <div>
+                                    <span><b>Event Location</b></span>
+                                </div>
+                            </th>
+                            <th class="th-width-10">
+                                <div> <span><b>Assigned to</b></span></div>
+                            </th>
+                            <th class="th-width-18">
+                                <div> <span><b>Court & Venue</b></span></div>
+                            </th>
+                            <th class="th-width-8">
+                                <div> <span><b>Complied</b></span></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="dashboard-tasks-due" id="mattereventreportlistbody" style="overflow-y:overlay">
+                        <tr data-ng-if="matterEventsCtrl.display.filtered"
+                            data-ng-init="matterEventsCtrl.clickedRow = -1"
+                            data-highlight-clicked-row="{{$index}},matterEventsCtrl.clickedRow"
+                            data-ng-class="{'selected-grid-row':$index == matterEventsCtrl.clickedRow}"
+                            data-ng-repeat="data in matterEventsCtrl.filteredMatters = (matterEventsCtrl.viewModel.matters)">
+
+                            <td class="th-width-10">
+                                <div>
+                                    <span class="big-num-val-grid" tooltip-placement="bottom"
+                                        tooltip="{{data.nocdateutc1}}">
+                                        {{data.nocdateutc1 }}</span><br>
+                                    <span tooltip-placement="bottom" tooltip="{{data.nocdateutc2}}">
+                                        {{data.nocdateutc2 }}</span><br>
+                                    <span tooltip-placement=" bottom" tooltip="{{data.dateofincidenceutc}}">
+                                        {{data.dateofincidenceutc }} </span>
+                                </div>
+                            </td>
+                            <td class="th-width-8">
+                                <div>
+                                    <span tooltip-placement="bottom" tooltip="{{data.time | replaceByDash}}">
+                                        {{data.time | replaceByDash}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="th-width-20">
+                                <div>
+                                    <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                        href="#/matter-overview/{{data.matter.matter_id}}" class="word-wrap">
+                                        {{data.matter_name}}</a><br>
+                                    <span tooltip-placement="bottom" tooltip="{{data.file_number}}">
+                                        File#{{data.file_number}}</span><br>
+                                    <span tooltip-placement="bottom" tooltip="{{data.index_number}}"> Index/Docket#{{data.index_number}} </span>
+                                </div>
+                            </td>
+
+                            <td class="th-width-16">
+                                <div>
+                                    <span  tooltip-placement="bottom" tooltip="{{data.eventtype}}">
+                                        {{data.eventtype}}</span><br>
+                                    <span ng-if="data.label_id == 19 || data.label_id == 100 || data.label_id == 32" tooltip-placement="bottom" tooltip="{{data.eventtitle}}">
+                                        {{data.eventtitle}} </span>
+                                </div>
+                            </td>
+
+                            <td class="th-width-10">
+                                <div>
+                                    <span tooltip-placement="bottom" tooltip="{{data.location}}">
+                                        {{data.location}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="th-width-10">
+                                <div>
+                                    <span tooltip-placement="bottom" tooltip="{{data.assigned_to}}">
+                                        {{data.assigned_to}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="th-width-18">
+                                <div>
+                                    <span data-ng-show="data.mattercourt" tooltip-placement="bottom" tooltip="{{data.mattercourt}}">
+                                        {{data.mattercourt}}<br></span>
+                                    <span tooltip-placement="bottom" tooltip="{{data.venue_name}}"> {{data.venue_name}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="th-width-8">
+                                <div>
+                                    <span tooltip-placement="bottom" tooltip="{{data.complied}}">
+                                        {{data.complied}}
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </scroll-table>
+            <div data-ng-show="matterEventsCtrl.viewModel.matters.length > 0 ">
+                <show-record-more-and-all more="matterEventsCtrl.applyFilterLazyLoading()"
+                    all="matterEventsCtrl.getAllMatterList()"
+                    hide-pager="{{ matterEventsCtrl.viewModel.matters.length < matterEventsCtrl.total }}"
+                    displayed="matterEventsCtrl.viewModel.matters.length" total="matterEventsCtrl.total">
+                </show-record-more-and-all>
+            </div>
+            <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+                style="overflow: hidden !important;position: fixed;bottom: 0px;">
+            </div>
+        </div>
+        <!-- Start: New scroll-table tableid  -->
+
+    </div>
+
+    <p class="text-center margin-top10px"
+        data-ng-if="matterEventsCtrl.viewModel.matters.length == null && matterEventsCtrl.display.matterListReceived">
+        No data for the applied filters
+    </p>
+</div>

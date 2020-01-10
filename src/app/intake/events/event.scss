@@ -1,0 +1,52 @@
+.intake-event-wrapper {
+    .custom-name {
+        padding-top: 10px;
+        p {
+            margin-bottom: 0;
+        }
+        span {
+            color: #008000;
+            font-weight: normal;
+            font-size: 12px;
+            font-family: 'GothamRounded-Book';
+        }
+    }
+    .radio {
+        margin-top: 0;
+        input{
+            width: 20px;
+            height: 20px;
+        }
+        label {
+            padding-left: 25px;
+            &::after {
+                background-color: $color_strong_blue;
+                top: 5px;
+                width: 9px;
+                height: 9px;
+                left: 5px;
+            }
+            &::before {
+                width: 19px;
+                height: 19px;
+                border: 2px solid $color_strong_blue;
+            }
+        }
+    }
+    .reason-list-order {
+        li {
+            float: left;
+            margin-left: 20px;
+            width: 95px;
+        }
+    }
+    .description-text {
+        font-family: 'GothamRounded-Book';
+        color: $dark_black;
+        background-color: $color_white;
+        border: 0;
+        padding: 0;
+        max-height: 150px;
+        width: 100%
+    }
+}

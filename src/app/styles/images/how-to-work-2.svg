@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="85px" height="85px" viewBox="0 0 85 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>How it works_2@1.5x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Referral-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="CRP_Landing-Page_Day-Zero-Copy" transform="translate(-607.000000, -1234.000000)">
+            <g id="How-it-works_2" transform="translate(607.000000, 1234.000000)">
+                <g id="Group-4">
+                    <rect id="Rectangle" fill="#CCF1FF" opacity="0.3" x="0" y="0" width="85" height="85" rx="42.5"></rect>
+                    <rect id="Rectangle" fill="#CCF1FF" x="10" y="10" width="65" height="65" rx="32.5"></rect>
+                    <g id="Group-7" transform="translate(9.000000, 26.000000)">
+                        <g id="Group-6" transform="translate(9.000000, 0.000000)" fill="#FFFFFF">
+                            <rect id="Rectangle" x="0" y="0" width="49" height="36" rx="3"></rect>
+                        </g>
+                        <rect id="Rectangle" fill="#004E75" x="0" y="34" width="67" height="3" rx="1.5"></rect>
+                    </g>
+                    <circle id="Oval" fill="#EE574F" opacity="0.3" cx="66" cy="26" r="13"></circle>
+                    <circle id="Oval" fill="#EE574F" cx="66" cy="26" r="9"></circle>
+                    <circle id="Oval" fill="#3A93FF" cx="42" cy="43" r="13"></circle>
+                    <g id="Group-14" transform="translate(34.000000, 38.000000)">
+                        <g id="Group-27">
+                            <g id="Group-20" transform="translate(0.636364, 0.000000)" fill="#FFFFFF">
+                                <rect id="Rectangle" x="0" y="0" width="15" height="11" rx="1"></rect>
+                            </g>
+                            <polygon id="Path-7" fill="#D7E2E6" points="1.63636364 0 8.06469171 6 14.6363636 0"></polygon>
+                        </g>
+                        <path d="M8.06469171,6 L13.3576419,11 L14.6363636,11 C15.1886484,11 15.6363636,10.5522847 15.6363636,10 L15.6363636,1 C15.6363636,0.44771525 15.1886484,-1.01453063e-16 14.6363636,0 L14.6363636,0 L8.06469171,6 Z" id="Path-16" fill-opacity="0.5" fill="#DEE8EC"></path>
+                    </g>
+                    <image id="bell" x="62.1904762" y="22" width="7.61904762" height="8" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGN5fIAKQAAAONJREFUSA1jYBhJwBvo2SdA/BiIPWnhcZDB/6H4EbEWMBOhUBKopgKIfZDU8gPZrEB8HYi/IImTzIwA6vgExDCXo9MfgXLhJJsK1QDS+A+I0Q1F54PUkGyJFFATyHXohuHifwCqlQBiDMCEIQIRyAFSfDjksAmD4iQbmwQusYtACVyuxSV+AZdh2MS/kWHBV2wGMWIThBqOQwqvMIZ5uOIArymkSI5aQDC0BiSIGgg6C7eCDtxSEJkGIIUrIxErjmIJeroFGUINgG4uNcyk3AyyajRSrAXVwyBLHgGxBykaaaoWAL5qXqax0/KoAAAAAElFTkSuQmCC"></image>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,305 @@
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right" data-ng-click="filter.cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body" class="dashboard-tasks-due" style="max-height: 70vh !important; overflow-x: hidden">
+
+    <div class="clearfix">
+        <div class="pull-left">
+            <clx-btn-group btn-click="filter.changeFilterType" btn-list="filter.viewModel.timeButtons" value="filter.viewModel.filter">
+            </clx-btn-group>
+        </div>
+        <div class="pull-right date_dropdown">
+            <ui-select class="min-width-select" ng-model="filter.viewModel.name" data-ng-change="filter.setDateRange(filter.viewModel.name)"
+                theme="selectize">
+                <ui-select-match placeholder="Date Filter">
+                    {{$select.selected}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in filter.viewModel.dateFilters|filter: $select.search | orderBy:'name'">
+                    <small>
+                        {{item}}
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="pull-left margin-top10px">
+            <div class="row-fluid ">
+                <div class="col-md-3 text-left padding-0" style="width: 28.5%;">
+                    <h2 class="margin-top10px">Date Range</h2>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="filter.viewModel.filter.s" is-open="openedEndDate"
+                            data-ng-disabled="filter.viewModel.filter.tag !== 'custom dates'" name="doi" id="reportFiltstartDatediv" show-button-bar="false"
+                            validate-date error-div="#reportFiltstartDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close"
+                        />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                data-ng-disabled="filter.viewModel.filter.tag !== 'custom dates'"
+                                ng-click="filter.openCalender($event);openedEndDate = true;openedStartDate=false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="reportFiltstartDateErr">Invalid date format!</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="filter.viewModel.filter.e" is-open="openedStartDate"
+                            data-ng-disabled="filter.viewModel.filter.tag !== 'custom dates'" name="doi" id="reportFiltendtDatediv" show-button-bar="false"
+                            validate-date error-div="#reportFiltendtDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close"
+                        />
+                        <span class="input-group-btn">
+                            <button type="button"
+                                data-ng-disabled="filter.viewModel.filter.tag !== 'custom dates'"
+                                class="btn btn-default"
+                                ng-click="filter.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div><span></span></div>
+                    <div class="error" id="reportFiltendDateErr">Invalid date format!</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="flexCont margin-top20px"></div>
+
+    <div class="row margin-top20px">
+        <div class="col-lg-3 col-md-3">
+            <div>
+                <h2 class="subtitle">Status</h2>
+                <!--<ul>
+                    <li class="checkbox" data-ng-repeat="status in filter.viewModel.statuses">
+                        <input checklist-value="status"
+                            checklist-model="filter.selectionModel.multiFilters.statuses"
+                            type="checkbox" />
+                        <label>{{status.name |replaceByBlank}}</label>
+                    </li>
+                </ul>-->
+                <ui-select class="width100" multiple ng-model="filter.selectionModel.multiFilters.statuses" on-select="filter.getSubstatus(filter.selectionModel.multiFilters.statuses)"
+                   on-remove="filter.getSubstatus(filter.selectionModel.multiFilters.statuses)" theme="select2">
+                    <ui-select-match placeholder="Status Filter...">
+                        {{$item.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="status in filter.viewModel.statuses|filter:{name: $select.search} ">
+                        <small>
+                        {{status.name | replaceByBlank}}
+                    </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div class="checklist" data-ng-show="filter.substatuses.length > 0">
+                <h2 class="subtitle margin-top10px">Substatus</h2>
+                <ul class="dashboard-tasks-due" style="max-height: 100vh;position: relative;">
+                        <li ng-repeat-start="item in filter.substatuses |filter:{name: $select.search}" ng-show="$first">
+                            <label>{{item.statusname|replaceByBlank}}</label>
+                        </li>
+                        <li class="checkbox" 
+                            ng-repeat-end="item in filter.substatuses |filter:{name: $select.search}">
+                            <input checklist-value="item" checklist-model="filter.selectionModel.multiFilters.substatus" type="checkbox">
+                            <label>{{item.name|replaceByBlank}}</label>
+                        </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!--<div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Type</h2>
+                <ul>
+                    <li class="checkbox" ng-repeat="item in filter.viewModel.type">
+                        <input checklist-value="item"
+                            checklist-model="filter.selectionModel.multiFilters.types"
+                            type="checkbox">
+                        <label>{{item.name|replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+        <!--US#6563 start-->
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Type</h2>
+                <ui-select ng-model="filter.selectionModel.multiFilters.types[0]" on-select="filter.getSubtypes(filter.selectionModel.multiFilters.types[0])"
+                    theme="selectize">
+                    <ui-select-match placeholder="Select Type...">
+                        {{$select.selected.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="type in filter.viewModel.type| filter:{name:$select.search} | orderBy: 'name'">
+                        <small>
+                            {{type.name |replaceByBlank}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div data-ng-show="filter.subtypes.length > 0" class="margin-top10px">
+                <h2 class="subtitle">Subtype</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="type in filter.subtypes">
+                        <input checklist-value="type" checklist-model="filter.selectionModel.multiFilters.subtypes" type="checkbox" />
+                        <label>{{type.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--End-->
+
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h3 class="subtitle">Category</h3>
+                <ul>
+                    <li class="checkbox" ng-repeat="item in filter.viewModel.categories">
+                        <input checklist-value="item" checklist-model="filter.selectionModel.multiFilters.categories" type="checkbox">
+                        <label>{{item.name|replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+
+            <h2 class="subtitle">Law Type</h2>
+            <ul>
+                <li class="checkbox" ng-repeat="item in filter.viewModel.lawtypes">
+                    <input checklist-value="item" checklist-model="filter.selectionModel.multiFilters.lawtypes" type="checkbox">
+                    <label>{{item.name|replaceByBlank}}</label>
+                </li>
+            </ul>
+
+            <label>Jurisdiction</label>
+            <ui-select on-select="filter.setVenues(filter.selectionModel.multiFilters.jurisdictions)" ng-model="filter.selectionModel.multiFilters.jurisdictions"
+                theme="selectize">
+                <ui-select-match placeholder="Select jurisdiction...">
+                    {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in filter.viewModel.jurisdictions| filter:{name:$select.search} | orderBy: 'name'">
+                    <small>
+                        {{item.name}}
+                    </small>
+                </ui-select-choices>
+            </ui-select><br>
+
+            <label>Venue</label>
+            <ui-select on-select="filter.checkVenues(filter.selectionModel.multiFilters.venues)" ng-model="filter.selectionModel.multiFilters.venues"
+                theme="selectize">
+                <ui-select-match placeholder="Select Venue...">
+                    {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in filter.venues| filter:{name:$select.search} | orderBy: 'name'">
+                    <small>
+                        {{item.name}}
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+            <span ng-if="filter.selectionModel.multiFilters.jurisdictions == undefined"><small>Please select jurisdiction</small></span>
+            <span ng-if="filter.selectionModel.multiFilters.jurisdictions != undefined && filter.selectionModel.multiFilters.venues == null"><small>Please select venue</small></span>
+            <span ng-if="filter.venues.length == 0 && filter.selectionModel.multiFilters.jurisdictions != undefined"><small>No venues found</small></span><br>
+
+            <div class="margin-top20px">
+                <label>Lead Attorney</label>
+                <ui-select ng-model="filter.viewModel.userFilter.leadAttorney" theme="selectize">
+                    <ui-select-match placeholder="Select attorney...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in filter.viewModel.leadAttorney| filter:{name:$select.search}| orderBy:'name'">
+                        <small>
+                        {{item.name}}
+                    </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div> 
+            <div class="margin-top20px">
+                <label>Attorney</label>
+                <ui-select ng-model="filter.viewModel.userFilter.attorney" theme="selectize">
+                    <ui-select-match placeholder="Select attorney...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in filter.viewModel.attorney| filter:{name:$select.search}| orderBy:'name'">
+                        <small>
+                        {{item.name}}
+                    </small>
+                    </ui-select-choices>s
+                </ui-select>
+            </div>
+            <div class="margin-top20px">
+                <label>Staff</label>
+                <ui-select ng-model="filter.viewModel.userFilter.staff" theme="selectize">
+                    <ui-select-match placeholder="Select staff...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in filter.viewModel.staff| filter:{name:$select.search}| orderBy:'name'">
+                        <small>
+                        {{item.name}}
+                    </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="margin-top20px">
+                <label>Paralegal</label>
+                <ui-select ng-model="filter.viewModel.userFilter.paralegal" theme="selectize">
+                    <ui-select-match placeholder="Select paralegal...">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in filter.viewModel.paralegal| filter:{name:$select.search} | orderBy:'name'">
+                        <small>
+                        {{item.name}}
+                    </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="margin-top20px">
+                <label>Referred To</label>
+                <input type="text" data-ng-model="filter.viewModel.userFilter.referToFilterId" data-ng-model-options="{ debounce: 500 }" placeholder="enter name"
+                    typeahead="row as row.name for row in filter.getContacts($viewValue)" typeahead-input-formatter="filter.formatTypeaheadDisplay($model)"
+                    typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html" class="form-control" />
+            </div>
+            <div class="margin-top20px">
+                <label>Referred By</label>
+                <input type="text" data-ng-model="filter.viewModel.userFilter.referByFilterId" data-ng-model-options="{ debounce: 500 }" placeholder="enter name"
+                    typeahead="row as row.name for row in filter.getContacts($viewValue)" typeahead-input-formatter="filter.formatTypeaheadDisplay($model)"
+                    typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html" class="form-control" />
+            </div>
+            <div class="margin-top20px">
+                <div class="checklist">
+                    <div class="checkbox" style="margin-top: 20px;">
+                        <input type="checkbox" data-ng-disabled="filter.enableArchivedCheck" data-ng-model="filter.viewModel.includeArchived" data-ng-click="filter.isStatuArchived($event)" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                        />
+                        <label style="font-size: 14px;">
+                            Include Archived Matters 
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="margin-top20px">
+                <div class="checklist">
+                    <div class="checkbox" style="margin-top: 20px;">
+                        <input type="checkbox" data-ng-disabled="filter.enableActiveMatterCheck" data-ng-model="filter.viewModel.activeMatter" data-ng-click="filter.isStatuActiveMatter($event)" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                        />
+                        <label style="font-size: 14px;">
+                            Show Active Matters Only
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-lg-offset-9 col-md-offset-8">
+            <button ng-click="filter.resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+            <button ng-click="filter.ok(filter.selectionModel.multiFilters)" type="button" class="btn btn-default" ng-disabled="filter.isDatesValid() || filter.checkVenue == true || filter.enableApply">Apply</button>
+        </div>
+    </div>
+</div>

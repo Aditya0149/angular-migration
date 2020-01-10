@@ -1,0 +1,54 @@
+<div>
+    <div class="clearfix"></div>
+    <div class="row-fluid container date-slider">
+        <div class="col-md-12 ">
+            <div class="col-md-1 arrows-timeline left">
+                <span class="sprite default-blue-arrow-left "
+                    data-ng-click="
+                    dateSlider.getPrevWeek(dateSlider.calender);
+                    dateSlider.getCount();
+                    dateSlider.slideWeek()"></span>
+            </div>
+
+            <div class="col-md-1 date-less-pd"
+                data-ng-class="{'right':day.isNewMonth,'active-date':dateSlider.isDateSelected(day)}"
+                data-ng-repeat="day in dateSlider.calender">
+
+                <div class="month-block">
+                    <label data-ng-show="day.monthChanged">{{day.displayMonth}}</label>
+                </div>
+                <div data-ng-click="dateSlider.getDataForSelectedDay(day)">
+                    <a href="javascript:void(0)">{{day.displayDate}}</a>
+                </div>
+            </div>
+
+
+            <div class="col-md-1 arrows-timeline right">
+                <span class="sprite default-blue-arrow-right "
+                    data-ng-click="
+                    dateSlider.getNextWeek(dateSlider.calender);
+                    dateSlider.getCount();
+                    dateSlider.slideWeek()"></span>
+            </div>
+
+            <div class="col-md-3 text-right today">
+                <a href="javascript:void(0)" data-ng-click="
+                    dateSlider.goToToday(dateSlider.calender);
+                    dateSlider.getCount();
+                    dateSlider.slideWeek()">Go to Today</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 day-range ">
+        <div class="col-md-1 arrows-timeline"></div>
+        <div class="col-md-1" data-ng-repeat="day in dateSlider.calender">
+            <div>
+                <h2 class="big-numbers">{{day.taskCount}}</h2>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+

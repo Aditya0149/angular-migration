@@ -1,0 +1,93 @@
+<!--<div data-ng-repeat="reminder in rp.reminders">
+    <pre>{{reminder}}</pre>
+</div>-->
+<style>
+.whats-new-popup-body .dashboard-tasks-due{
+    overflow-x: hidden;
+}
+.whats-new-popup-body .dashboard-tasks-due td{
+    vertical-align: top;
+}
+.whats-new-popup-body .dashboard-tasks-due td.whats-dot{
+    color: #17b226;
+    font-size: 40px;
+    position: relative;
+    top: -3px;
+    vertical-align: top !important;
+    line-height: 0;
+    padding-right: 10px;
+}
+.whats-new-popup-body .dashboard-tasks-due tr{
+    border-bottom: 1px solid #2983b8;
+    padding: 10px 0px;
+    display: inline-block;
+    width: 100%;
+}    
+.whats-new-popup .modal-dialog .modal-content{width: 700px !important;height: 455px;}
+.whats-new-popup .whats-new-popup-body ul{max-height: 338px !important;}
+.sub-bulets ul li{border-bottom: 0px !important;padding: 0 !important;clear: both;width: 100%;}
+.sub-bulets ul li:before{top: -2px;height: 20px;}
+h4.happy-text{color: #2983b8;padding-top: 30px;margin-top: 10px;font-size: 16px !important;}
+.whats-new-popup-height h3{color:#2983b8; text-align:center; font-size:14px; line-heigh:18px;}
+.whats-new-popup-height {height: 80px!important;}
+.sub-bulets span{display:block; margin-left:15px;}
+</style>    
+<div class="modal-header whats-new-popup-height">
+    <h2 class="modal-title fl-left">What's New! <span class="horn-bg"></span></h2>
+    <h3>Happy New Year! We look forward to helping you continue to BUILD, MANAGE and GROW your practice in 2018…
+</h3>    
+</div>
+<div class="modal-body whats-new-popup-body">
+    <ul class="dashboard-tasks-due">
+        <table>
+            <tr>
+                <td class="title" width="90px"><b>Tasks: </b></td>
+                <td class="sub-bulets">
+                   You can now filter in Global Tasks by ‘Assigned To’ and ‘Assigned By’.
+                </td>
+            </tr>
+            <tr>
+                <td class="title" width="90px"><b>Reports: </b></td>
+                <td class="sub-bulets">
+                    In the Settlement Report, we have added the ability to filter by multiple statuses.
+                </td>
+            </tr>
+            <tr>
+                <td class="title" width="90px"><b>Matter List: </b></td>
+                <td class="sub-bulets">
+                    Matters can be sorted by Ascending/Descending File Number. 
+                </td>
+            </tr>
+            <tr>
+                <td class="title" width="90px"><b>eFax: </b></td>
+                <td class="sub-bulets">
+                    <ul>
+                        <li>If you subscribe to a third-party eFax service you can now send faxes from CloudLex.</li>
+                        <li>The Subscribing Managing Partner needs to turn on eFax in Settings under the Configuration Tab.</li>
+                    </ul>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="title" width="90px"><b>Medical Information: </b></td>
+                <td class="sub-bulets">
+                    We have added the ability to sort by Medical Provider and Physicians in the Medical Information tab in Details.
+                </td>
+            </tr>
+            <tr>
+                <td class="title" width="90px"><b>Contacts: </b></td>
+                <td class="sub-bulets">
+                    <ul>
+                        <li>In Global Contacts, there is now a Role View in addition to the Directory View.</li>
+                        <li>In ‘Role View’ you can select to view certain Roles and Contact types.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        
+    </ul>
+</div>
+<div class="modal-footer col-centered">
+    <button class="btn btn-default" data-ng-click="wp.close('true')">Remind Me Again</button>
+    <button class="btn btn-default" data-ng-click="wp.close()">Got it!</button>
+</div>

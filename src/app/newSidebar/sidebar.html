@@ -1,0 +1,1273 @@
+<style>
+    #CategoryDropdownId>.select2-choices {
+        height: 70px !important;
+        overflow-y: auto;
+        display: block;
+    }
+
+    .custom-input-list ul.dropdown-menu {
+        max-height: 39vh;
+        width: 86% !important;
+    }
+
+    .select2-results {
+        max-height: 176px
+    }
+
+    .dropdown-menu {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 320px;
+        width: 100%;
+        min-width: 136px;
+    }
+
+    .search-input.customsearch.ng-scope .dropdown-menu {
+        width: 90% !important;
+    }
+
+    .message-sidebar {
+        overflow: hidden;
+        z-index: 99;
+        max-height: calc(100vh - 120px) !important;
+    }
+
+    .message-sidebar .search-box {
+        border-bottom: none
+    }
+
+    .selected-post {
+        background: #ccc
+    }
+
+    .message-scroll-panel-ext-msg {
+        max-height: calc(100vh - 300px) !important;
+        padding: 10px !important;
+        -webkit-border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .profile-pic-ext-msg {
+        width: 30px;
+        height: 30px;
+        background: #CCC;
+        padding: 0;
+        border: 5px solid #CCC;
+        border-radius: 50%;
+    }
+
+    .profile-pic-ext-msg img {
+        border-radius: 10000px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .liteUsersNameIcon {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        height: 29px;
+        width: 28px;
+    }
+
+    .profile-pic-sms-1 img {
+        border-radius: 10000px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-pic img {
+        border-radius: 10000px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .sidebar-post-photo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .SMSUserNameIcon {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        height: 50px;
+        width: 50px;
+        background: gray;
+        padding: 15px;
+        border-radius: 50%;
+        margin: 0px 14px;
+    }
+
+    .SMSUserNameIcon-2 {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        height: 50px;
+        width: 50px;
+        background: gray;
+        padding: 15px;
+        border-radius: 50%;
+        border: 1px solid #3c3c3c;
+    }
+
+    .SMSUserNameIcon-3 {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        height: 35px;
+        width: 35px;
+        background: #ccc;
+        padding: 9px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin-left: 10px;
+    }
+
+    .sms-time-icon {
+        font-size: 12px;
+        padding: 1px 10px;
+        border-radius: 3px;
+        color: #677885;
+        float: right;
+    }
+
+    .sms-unseen-icon {
+        background: #578622;
+        color: #fff;
+        font-size: 9px;
+        padding: 5px;
+        border-radius: 3px;
+    }
+
+    .btn:focus {
+        outline: none !important;
+    }
+
+    .handIcon {
+        cursor: pointer;
+    }
+
+    .radio label::after {
+        width: 9px;
+        height: 9px;
+        left: 4px;
+        top: 4px;
+        background-color: #2097c6;
+    }
+
+    .radio label::before {
+        border: 2px solid #2097c6;
+    }
+
+    .custom-btn {
+        margin-top: 24px;
+    }
+
+    .custom-btn .btn-danger {
+        padding: 0px 10px;
+        font-size: 14px;
+    }
+
+    .customui .dropdown-menu {
+        height: 29vh;
+    }
+
+    .customui-dropdown ul.dropdown-menu {
+        max-height: 20vh !important;
+        width: 89% !important;
+    }
+
+    .search-word-ellipsis {
+        width: 100%;
+        /* width: 260px; */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        line-height: 17px;
+    }
+
+    .pre-default {
+        color: #333
+    }
+
+    .profile-pic {
+        width: 35px;
+        height: 35px;
+        background-size: contain;
+        margin-left: 10px;
+    }
+
+    .col-lg-1:last-child,
+    .col-md-1:last-child {
+        border-left: none;
+    }
+
+    .select2-container-multi .select2-choices {
+        height: 110px;
+        min-height: 110px;
+        max-height: 110px;
+        overflow-y: auto;
+    }
+
+    .navbar,
+    hr {
+        margin-bottom: 3px;
+        margin-top: 3px;
+    }
+</style>
+
+<div class="row">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="sidebarCtrl.resetPage()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+
+
+
+<!-- Start: Main Area  -->
+<div class="row">
+    <!-- Start: Left Area  -->
+    <div ng-show="sidebarCtrl.leftSidePanelFlag" class="col-md-4 message-sidebar padding-0"
+        style="min-height:79vh !important;border-right: 1px solid #ccc;">
+        <div class="col-md-12 padding-0">
+            <!-- Start: Add/List Bar -->
+            <div class="plaintiff-messages-list">
+
+                <div class="col-md-12 padding-0">
+                    <ul>
+                        <li class="col-md-12 post-border" style="padding: 10px 0 15px 0;">
+                            <div class="col-md-1" style="border: none !important;">
+                                <div class="dropdown">
+                                    <button id="dLabel" type="button"
+                                        class="btn sortby-dropdown dropdown-toggle ng-binding" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="true">
+                                        <!-- <span style="display: inline-block; min-width: 107px;">{{sidebarCtrl.listSelectedDropdown}}</span> -->
+                                        <span class="sprite sprite default-plus"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li>
+                                            <a
+                                                ng-click="sidebarCtrl.allPosts(1);sidebarCtrl.blockHideAndShow(false, false, true, false, false, false, false);">Post</a>
+                                        </li>
+                                        <li ng-if="!onIntake && false"
+                                            data-ng-click="sidebarCtrl.listSelectedDropdown = 'External'">
+                                            <a
+                                                ng-click="sidebarCtrl.resetExtMessagePage();sidebarCtrl.ext_msg_grouplistFn();sidebarCtrl.blockHideAndShow(false, false, false, true, false, false, false);">External</a>
+                                        </li>
+                                        <li ng-if="isSmsActiveUI && !hideSMS">
+                                            <a ng-click="sidebarCtrl.smsCountCheck();">Text Message</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-7" style="width: 66%;"></div>
+                            <div>
+                                <div class="pull-right">
+                                    <div class="dropdown">
+                                        <button id="dLabel" type="button"
+                                            class="btn sortby-dropdown dropdown-toggle ng-binding"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <span
+                                                style="display: inline-block; min-width: 107px;">{{sidebarCtrl.listSelectedDropdown}}</span>
+                                            <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                        </button>
+                                        <ul class="dropdown-menu"
+                                            style="min-height:100% !important;margin:2px 0px 0px -28px;" role="menu"
+                                            aria-labelledby="dLabel">
+                                            <li
+                                                data-ng-click="sidebarCtrl.listSelectedDropdown = 'Post';sidebarCtrl.listSelectedDropdownFirmPost = true;">
+                                                <a
+                                                    ng-click="sidebarCtrl.allPosts(1);sidebarCtrl.blockHideAndShow(true, false, false, false, false, false, false);">Post</a>
+                                            </li>
+                                            <li
+                                                data-ng-click="sidebarCtrl.listSelectedDropdown = 'Following Post';sidebarCtrl.listSelectedDropdownFirmPost = false">
+                                                <a
+                                                    ng-click="sidebarCtrl.following(0);sidebarCtrl.blockHideAndShow(true, false, false, false, false, false, false);">Following
+                                                    Post</a>
+                                            </li>
+                                            <li ng-if="!onIntake && false"
+                                                data-ng-click="sidebarCtrl.listSelectedDropdown = 'External'">
+                                                <a
+                                                    ng-click="sidebarCtrl.resetExtMessagePage();sidebarCtrl.ext_msg_grouplistFn();sidebarCtrl.blockHideAndShow(false, false, false, true, false, false, false);">External</a>
+                                            </li>
+                                            <li ng-if="isSmsActiveUI && !hideSMS"
+                                                data-ng-click="sidebarCtrl.listSelectedDropdown = 'Text Message';sidebarCtrl.listSelectedDropdownFirmPost = false;">
+                                                <a ng-click="sidebarCtrl.twoWayMsgClick();">Text Message</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="unreadCount" ng-if="sidebarCtrl.unseenMsgCount > 0">
+                                        <b>Unread ({{sidebarCtrl.unseenMsgCount}})</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End: Add/List Bar -->
+
+            <!-- Start: Serach Bar -->
+            <div class="col-md-12" style="border-bottom: 1px solid #ccc;">
+                <div class="search-box new-custom-search-box" style="border-right:none;"
+                    ng-show="(sidebarCtrl.clientCumEnable) || sidebarCtrl.externalMsg || sidebarCtrl.sms">
+                    <div class="search-input" ng-if="sidebarCtrl.clientCumEnable ">
+                        <div class="default-searchico sprite" style="top:0px;"></div>
+                        <input type="text" name="matterid" class="form-control"
+                            data-ng-model-options="{ debounce: 300 }"
+                            placeholder="{{sidebarCtrl.placeholderForFirmPost}}"
+                            typeahead="row.matterid as removeunwantedhtml(row.name) + ' ' + row.created_date for row in sidebarCtrl.searchShowPostFrom($viewValue)"
+                            typeahead-input-formatter="sidebarCtrl.typeAHeadShowPostFrom($model)"
+                            data-ng-model="sidebarCtrl.showPostFromMatterid" />
+                    </div>
+
+                    <div class="search-input" ng-if="sidebarCtrl.externalMsg">
+                        <div class="default-searchico sprite" style="top:0px;"></div>
+                        <input type="text" style="padding: 6px 0px;" placeholder="Search contact"
+                            data-ng-model="sidebarCtrl.externalMsgSearchFilter" />
+                    </div>
+
+                    <div class="search-input customsearch" ng-if="sidebarCtrl.sms">
+                        <div class="default-searchico sprite" style="top:0px;"></div>
+                        <input type="text" data-ng-model="sidebarCtrl.contactNameForSMS"
+                            data-ng-model-options="{ debounce: 500 }" placeholder="Search Contact"
+                            typeahead="row as removeunwantedhtml(row.name) for row in sidebarCtrl.getContactsForSMS($viewValue)"
+                            typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForContactSearchSMS($model)"
+                            typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+                            class="form-control">
+                    </div>
+
+                </div>
+            </div>
+            <!-- End: Serach Bar -->
+        </div>
+        <div id="main-event" class="col-md-12 padding-0 dashboard-tasks-due"
+            style="overflow-x: hidden;max-height:64vh !important;">
+
+            <!-- Start: Post/Following List -->
+            <div ng-if="sidebarCtrl.displayDataFlag" class="col-md-12 padding-0" style="border-top: 1px solid #ccc;">
+                <ul ng-if="sidebarCtrl.clientCumEnable" ng-init="sidebarCtrl.selectedPost(sidebarCtrl.displayData[0])">
+                    <li class="col-md-12 post-border" data-ng-repeat="data in sidebarCtrl.displayData" id="{{data.nid}}"
+                        data-ng-click="sidebarCtrl.selectedPost(data)" class="panel-heading"
+                        ng-class="{'selected-post' : data.nid == sidebarCtrl.displayDataSelected[0].nid }">
+                        <div class="col-md-1 profile-pic" style="margin:8px 0px 0px 20px;">
+                            <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="50px"
+                                height="50px" />
+                        </div>
+                        <div class="col-md-10">
+                            <div><strong>{{data.created_name}}</strong></div>
+                            <div class="margin-top5px search-word-ellipsis">
+                                <strong>
+                                    <label ng-show="data.is_intake == '0'" style="font-weight:500">Matter: </label>
+                                    <label ng-show="data.is_intake == '1'" style="font-weight:500">Intake: </label>
+                                </strong> {{data.matter_name}}
+                            </div>
+                            <div style="margin-top: -3px;">{{data.created|utcDateFilter: 'MMM DD, YYYY'}},
+                                {{data.created|utcDateFilter: 'hh:mm A'}}</div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row margin-topbottom10px text-center "
+                    ng-if="sidebarCtrl.moreFlag && (sidebarCtrl.clientCumEnable)">
+                    <a href="javascript:void(0)" class="" data-ng-click="sidebarCtrl.displayMorePosts()">More</a>
+                </div>
+            </div>
+            <div class="col-md-12 padding-0"
+                data-ng-if="((sidebarCtrl.listSelectedDropdown == 'Post' || sidebarCtrl.listSelectedDropdown == 'Following Post')) && ((sidebarCtrl.showPostFromDataFlag) || (!sidebarCtrl.displayNoDataFound && !sidebarCtrl.displayDataFlag))"
+                style="border-top: 1px solid #ccc;">
+                <p class="text-center margin-top10px"
+                    data-ng-if="sidebarCtrl.loaderFlag && sidebarCtrl.showPostFromDataFlag">
+                    <!-- No data for the applied filters -->
+                    {{sidebarCtrl.searchFilterMessageForFirmPostList}}
+                </p>
+                <!-- <p class="text-center margin-top10px" data-ng-if="!sidebarCtrl.displayNoDataFound && !sidebarCtrl.displayDataFlag">
+                    {{sidebarCtrl.searchFilterMessageForFirmPostList}}
+                </p> -->
+            </div>
+            <div class="col-md-12 padding-0"
+                ng-if="(sidebarCtrl.listSelectedDropdown == 'Post' || sidebarCtrl.listSelectedDropdown == 'Following Post')">
+                <p class="text-center margin-top10px"
+                    ng-if="sidebarCtrl.loaderFlag  && (sidebarCtrl.displayData.length == 0 && (sidebarCtrl.listSelectedDropdown == 'Post')) && !sidebarCtrl.showPostFromDataFlag">
+                    {{ sidebarCtrl.lengthMessageForFirmPostList}} </p>
+                <p class="text-center margin-top10px"
+                    ng-if="sidebarCtrl.loaderFlag  && (sidebarCtrl.displayData.length == 0 && (sidebarCtrl.listSelectedDropdown == 'Following Post')) && !(!sidebarCtrl.displayNoDataFound && !sidebarCtrl.displayDataFlag)">
+                    {{ sidebarCtrl.lengthMessageForFollowingPostList}} </p>
+            </div>
+
+            <div data-ng-if="sidebarCtrl.loaderFlag && !sidebarCtrl.singleSelectedThread && sidebarCtrl.sms">
+                <p class="text-center margin-top10px"> No data for selected contact</p>
+            </div>
+
+            <!-- End: Post/Following List -->
+
+            <!-- Start: External Group List -->
+            <div class="col-md-12 padding-0" ng-if="sidebarCtrl.externalMsg"
+                style="border-top: 1px solid #ccc;margin-top: -2px;">
+
+                <ul>
+                    <li class="col-md-12 post-border handIcon"
+                        data-ng-repeat="data in sidebarCtrl.ext_msg_grouplist | filter: sidebarCtrl.externalMsgSearchFilter"
+                        data-ng-click="sidebarCtrl.ext_msg_group_selectedFn(data)" class="panel-heading"
+                        ng-class="{'selected-post' : data.threadId == sidebarCtrl.ext_msg_group_selected_obj.threadId }">
+                        <div class="col-md-3 padding-0" style="margin:8px 0px 0px 7px;">
+                            <span class="profile-pic-ext-msg liteUsersNameIcon" ng-if="data.liteUsersNameIcon[0]"
+                                style="margin: 0px 0px;">{{data.liteUsersNameIcon[0].charAt(0)}}</span>
+                            <span class="profile-pic-ext-msg liteUsersNameIcon" ng-if="data.liteUsersNameIcon[1]"
+                                style="margin: 0px 35px;">{{data.liteUsersNameIcon[1].charAt(0)}}</span>
+                            <span class="profile-pic-ext-msg liteUsersNameIcon" style="margin: 35px 0px;"
+                                ng-if="data.liteUsersNameIcon[2]">{{data.liteUsersNameIcon[2].charAt(0)}}</span>
+                            <span class="profile-pic-ext-msg liteUsersNameIcon" style="margin: 35px 35px;"
+                                ng-if="data.liteUsersNameIcon[3]">+{{data.liteUsersNameIcon.length
+                                - 3}}</span>
+                        </div>
+                        <div class="col-md-8 padding-0" style="min-height:75px;">
+                            <div><strong> {{data.liteUsersName | cut:false:35 }} </strong></div>
+                            <div>Matter: {{data.matterName}}</div>
+                            <div>{{data.userMessageDetail.message | cut:false:35 }}</div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- End: External Group List  -->
+
+            <!-- Start: SMS List -->
+            <div class="col-md-12 padding-0" ng-if="sidebarCtrl.sms"
+                style="border-top: 1px solid #ccc;margin-top: -2px;">
+
+                <ul>
+                    <li class="col-md-12 post-border handIcon"
+                        data-ng-repeat="data in sidebarCtrl.all_thread_grouplist | filter: sidebarCtrl.smsThreadSearchFilter"
+                        data-ng-click="sidebarCtrl.getSelectedSMSThread(data, true);data.unseenSms = false;"
+                        class="panel-heading"
+                        ng-class="{'selected-post' : data.threadId == sidebarCtrl.selectedSMSThread.threadId }"
+                        id="{{data.threadId}}">
+                        <span class="sms-unseen-icon" ng-show="data.unseenSms"> New </span>
+                        <span class="sms-time-icon">{{data.timeIcon}}, {{data.threadMessages[0].createdOn |
+                            utcDateFilter: 'hh:mm a'}}</span>
+
+                        <div class="col-md-3 padding-0" style="margin:8px 0px 0px 7px;">
+                            <!-- Start: For One Image only -->
+                            <span class="profile-pic-sms-1 " style="margin: 8px 0px 0px 11px;"
+                                ng-show="data.imgIcon.length == 1">
+                                <span ng-if="data.imgIcon[0] !== 'NULL'">
+                                    <img data-ng-src="{{trustSrc(data.imgIcon[0])}}" class="sidebar-post-photo" width="20px"
+                                        height="20px">
+                                </span>
+                                <span ng-if="data.imgIcon[0] === 'NULL'" class="col-md-1 profile-pic"
+                                    style="margin:8px 0px 0px 11px;border: none;">
+                                    <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                        height="20px" />
+                                </span>
+                            </span>
+                            <!-- End: For One Image Only-->
+
+                            <!-- Start: For Two Image only -->
+                            <span class="" style="margin: 0px 0px;" ng-show="data.imgIcon.length == 2">
+                                <span>
+                                    <span ng-if="data.imgIcon[0] !== 'NULL'"
+                                        style="top: 12px;left: 11px;margin-left:10px">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[0])}}" class="sidebar-post-photo" width="20px"
+                                            height="20px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[0] === 'NULL'" class="col-md-1 profile-pic">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="data.imgIcon[1] !== 'NULL'"
+                                        style="display: inline-block;top: 12px;left: 11px;position: absolute;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[1])}}" class="sidebar-post-photo" width="50px"
+                                            height="50px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[1] === 'NULL'" class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 12px;left: 11px;position: absolute;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+
+                            </span>
+                            <!-- End: For Two Image Only-->
+
+                            <!-- Start: For Three Image only -->
+                            <span class="" style="margin: 0px 0px;" ng-show="data.imgIcon.length == 3">
+                                <span>
+                                    <span class="margin-left10px" ng-if="data.imgIcon[0] !== 'NULL'">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[0])}}" class="sidebar-post-photo" width="50px"
+                                            height="50px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[0] === 'NULL'" class="col-md-1 profile-pic">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="data.imgIcon[1] !== 'NULL'"
+                                        style="display: inline-block;top: 12px;left: 11px;position: absolute;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[1])}}" class="sidebar-post-photo" width="50px"
+                                            height="50px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[1] === 'NULL'" class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 12px;left: 11px;position: absolute;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="data.imgIcon[2] !== 'NULL'"
+                                        style="display: inline-block;top: 25px;left: 25px;position: absolute;z-index: 9;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[2])}}" class="sidebar-post-photo" width="50px"
+                                            height="50px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[2] === 'NULL'" class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 25px;left: 25px;position: absolute;z-index: 9;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+
+                            </span>
+                            <!-- End: For Three Image Only-->
+
+                            <!-- Start: For Four and nore Image only -->
+                            <span class="" style="margin: 0px 0px;" ng-show="data.imgIcon.length >= 4">
+                                <span>
+                                    <span ng-if="data.imgIcon[0] !== 'NULL'">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[0])}}"
+                                            class="sidebar-post-photo margin-left10px" width="35px" height="35px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[0] === 'NULL'" class="col-md-1 profile-pic">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="data.imgIcon[1] !== 'NULL'"
+                                        style="display: inline-block;top: 0px;left: 40px;;position: absolute;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[1])}}" class="sidebar-post-photo" width="35px"
+                                            height="35px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[1] === 'NULL'" class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 0px;left: 40px;;position: absolute;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="data.imgIcon[2] !== 'NULL'"
+                                        style="display: inline-block;top: 40px;left: 0px;position: absolute;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[2])}}"
+                                            class="sidebar-post-photo margin-left10px" width="35px" height="35px">
+                                    </span>
+                                    <span ng-if="data.imgIcon[2] === 'NULL'" class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 40px;left: 0px;position: absolute;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                </span>
+                                <span>
+                                    <span ng-if="(data.imgIcon[3] !== 'NULL' && data.imgIcon.length == 4)"
+                                        style="display: inline-block;top: 40px;left: 40px;;position: absolute;">
+                                        <img data-ng-src="{{trustSrc(data.imgIcon[3])}}" class="sidebar-post-photo" width="35px"
+                                            height="35px">
+                                    </span>
+                                    <span ng-if="((data.imgIcon[3] === 'NULL') && data.imgIcon.length == 4)"
+                                        class="col-md-1 profile-pic"
+                                        style="display: inline-block;top: 40px;left: 40px;position: absolute;">
+                                        <img data-ng-src="{{data.user_photo}}" class="sidebar-post-photo" width="20px"
+                                            height="20px" />
+                                    </span>
+                                    <span class="SMSUserNameIcon-3" ng-if="data.imgIcon.length > 4"
+                                        style="top: 40px;left: 40px;">
+                                        +{{data.imgIcon.length - 3 }}
+                                    </span>
+                                </span>
+
+                            </span>
+                            <!-- End: For Four and more Image only -->
+
+                        </div>
+
+                        <div class="col-md-8 padding-0" style="min-height:55px;margin-top: 6px;font-size:12px">
+                            <div><strong> {{data.contactName | cut:false:35 }} </strong></div>
+                            <div data-ng-show="!(data.matterId == null)">
+                                <span style="color: #677885;" ng-show="data.isIntake == 0">Matter:</span>
+                                <span style="color: #677885;" ng-show="data.isIntake == 1">Intake:</span>
+                                {{data.matterName}}
+                            </div>
+                            <!-- <div data-ng-show="(data.matterId == null)">
+                                <span style="color: #677885;"></span>
+                            </div> -->
+                            <div class="search-word-ellipsis">{{data.threadMessages[0].messageText | cut:false:35 }}
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+                <div class="row margin-topbottom10px text-center " ng-if="sidebarCtrl.sms_more_flag && sidebarCtrl.sms">
+                    <a href="javascript:void(0)" class="" data-ng-click="sidebarCtrl.displayMoreSMS()">More</a>
+                </div>
+
+            </div>
+            <!-- End: SMS List  -->
+
+        </div>
+    </div>
+    <!-- End: Left Area  -->
+    <!-- Start: Right Area  -->
+    <div class="col-md-8 message-sidebar">
+        <div class="row dashboard-tasks-due" style="overflow-x: hidden;min-height:80vh !important;margin-right:0px;">
+            <!-- Start: Create Post -->
+            <div ng-if="sidebarCtrl.firmPost">
+                <div style="padding-left: 25px;">
+                    <div class="row form-group margin-top20px" ng-if="onLauncher && isIntakeActive">
+                        <div class="col-md-9">
+                            <div>
+                                <div ng-repeat="info in sidebarCtrl.eventFor" class="padding-0">
+                                    <div class="radio padding-0 margin0 pull-left margin-right20px"
+                                        ng-init="sidebarCtrl.selectedModeForSidebar = '0'">
+                                        <input class="margin0" type="radio"
+                                            data-ng-model="sidebarCtrl.selectedModeForSidebar"
+                                            data-ng-click="sidebarCtrl.getTagIntakeId ='';sidebarCtrl.getTagMatterId='';"
+                                            ng-value="info.id" />
+                                        <label class="margin0" style="line-height: inherit;">&nbsp;{{info.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title">
+                        <h1 class="page-title ng-binding">Post</h1>
+                        <!-- <span>Communicates with plaintiffs,insurances agents, external attroneys etc.</span> -->
+                    </div>
+
+                    <div class="row form-group margin-top20px">
+                        <div class="col-md-8">
+                            <label>Enter Message</label>
+                            <textarea data-ng-model="sidebarCtrl.postMessageText"
+                                class="form-control ng-pristine ng-valid ng-touched height32" style="height: 150px;"
+                                rows="1"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebar == '1'">
+                        <div class="col-md-8 custom-input-list customui-dropdown">
+                            <label>Tag an Intake</label>
+                            <input type="text" name="intakeId" class="form-control "
+                                data-ng-model-options="{ debounce: 300 }" placeholder="Search Intake"
+                                typeahead="row as removeunwantedhtml(row.intakeName) + row.dateIntake for row in sidebarCtrl.getIntakeList($viewValue,0)"
+                                typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForIntake($model)"
+                                data-ng-model="sidebarCtrl.getTagIntakeId" />
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebar == '0'">
+                        <div class="col-md-8 custom-input-list customui-dropdown">
+                            <label>Tag a Matter</label>
+                            <input type="text" name="matterid" class="form-control"
+                                data-ng-model-options="{ debounce: 300 }" placeholder="Search Matter"
+                                typeahead="row.matterid as removeunwantedhtml(row.name)+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMatters($viewValue)"
+                                typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplay($model)"
+                                typeahead-on-select="sidebarCtrl.getTagAMatter()"
+                                data-ng-model="sidebarCtrl.getTagMatterId" />
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top20px">
+                        <div class="col-md-8">
+                            <button data-ng-click="sidebarCtrl.postMessage()"
+                                data-ng-disabled="(sidebarCtrl.isGraceOver != 1)" class="btn  btn-default"
+                                style="margin-left:10px;">
+                                Post</button>
+
+                            <button data-ng-click="sidebarCtrl.cancelFirmPost()" class="btn  btn-default">
+                                Cancel</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- End: Create Post -->
+
+            <!-- Start: List Post -->
+            <div class="col-md-12" ng-if="sidebarCtrl.clientCumEnable">
+
+                <div ng-if="sidebarCtrl.displayDataFlag" class="col-md-12">
+
+                    <ul>
+                        <li class="col-md-12 post-border" data-ng-repeat="data in sidebarCtrl.displayDataSelected">
+
+                            <div class="col-md-9">
+                                <strong>
+                                    <label ng-show="data.is_intake == '0'" style="font-weight:500">Matter: </label>
+                                    <label ng-show="data.is_intake == '1'" style="font-weight:500">Intake: </label>
+                                </strong>
+                                <a ng-show="data.is_intake == '0'" href="#/matter-overview/{{data.matter_id}}"
+                                    tooltip="{{data.matter_name}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-center" style="font-size:12px">
+                                    {{data.matter_name}}</a>
+                                <a ng-show="data.is_intake == '1'" href="#/intake/intake-overview/{{data.matter_id}}"
+                                    tooltip="{{data.matter_name}}" tooltip-append-to-body="true"
+                                    tooltip-placement="top-center" style="font-size:12px">
+                                    {{data.matter_name}}</a>
+
+                                <pre class="pre-default"
+                                    data-ng-hide="sidebarCtrl.loaderFlag && data.nid == sidebarCtrl.postToEdit.nid"
+                                    style="word-break: keep-all;">{{data.body_value}}</pre>
+                                <div data-ng-show="sidebarCtrl.loaderFlag && data.nid == sidebarCtrl.postToEdit.nid">
+                                    <textarea type="text" focus-me="data.nid == sidebarCtrl.postToEdit.nid"
+                                        class="form-control" data-ng-model="sidebarCtrl.postToEdit.body_value"
+                                        style="height: 200px;"></textarea>
+                                    <button data-ng-click="sidebarCtrl.saveEditedPost(sidebarCtrl.postToEdit, $event)"
+                                        data-ng-disabled="(sidebarCtrl.isGraceOver != 1)"
+                                        class="btn btn-default  margin-top10px ">
+                                        Save</button>
+                                    <button data-ng-click="sidebarCtrl.cancelEdit($event)"
+                                        class="btn btn-default btn-styleNone margin-top10px ">
+                                        Cancel</button>
+                                </div>
+                                <ul class="showBy-btns sidebar-btns "
+                                    data-ng-hide="data.nid == sidebarCtrl.postToEdit.nid">
+                                    <li>
+                                        <a ng-if="(data.user_following == 'unfollowing')"
+                                            data-ng-click="sidebarCtrl.followPost(data.nid, $index)"
+                                            class=" margin-top10px ">
+                                            <span class="sprite default-follow"></span>Follow Post</a>
+                                    </li>
+                                    <li>
+                                        <a ng-if="(data.user_following == 'following')"
+                                            data-ng-click="sidebarCtrl.unFollowPost(data.nid, $index)"
+                                            class=" margin-top10px ">
+                                            <span class="sprite small-cancel-icon"></span>UnFollow</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"
+                                            data-ng-click="sidebarCtrl.commentButtonClick(data.nid)">
+                                            <span class="sprite default-comment"></span>Comment</a>
+                                    </li>
+                                </ul>
+                                <div class="margin-top20px"></div>
+                                <div ng-if="(sidebarCtrl.addCommentFlag && sidebarCtrl.addCommentPostId == data.nid)">
+                                    <label>Please enter your comment</label>
+                                    <textarea data-ng-model="sidebarCtrl.newCommentText"
+                                        focus-me="(sidebarCtrl.addCommentFlag && sidebarCtrl.addCommentPostId == data.nid)"
+                                        class="form-control ng-pristine ng-valid ng-touched" rows="2"></textarea>
+                                    <button data-ng-disabled="(sidebarCtrl.isGraceOver != 1)"
+                                        data-ng-click="sidebarCtrl.saveComment(data.nid, $index)"
+                                        class="btn btn-default  margin-top10px ">Save</button>
+                                    <button data-ng-click="sidebarCtrl.cancelComment(data.nid, $index)"
+                                        class="btn btn-default btn-styleNone margin-top10px ">Cancel</button>
+                                </div>
+
+                                <div ng-if="sidebarCtrl.followingFlag && !(data.nid == sidebarCtrl.postToEdit.nid)" ng-repeat="comment in data.comments">
+                                        <div class="col-md-1 profile-pic-small">
+                                            <img data-ng-src="{{comment.user_photo}}" class="sidebar-comment-photo" />
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div><strong>{{comment.name}}</strong></div>
+                                            <div>
+                                                <small>{{comment.created|utcDateFilter: 'hh:mm A'}}</small>
+                                                <span class="paddingLR-10px"></span>
+                                                <small>{{comment.created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                            </div>
+                                            <div class="margin-top10px pre-default">{{comment.comment_body_value}}</div>
+                                            <button 
+                                                ng-if="(comment.can_delete ==1)" ng-disabled="sidebarCtrl.isGraceOver != 1"
+                                                data-ng-click="sidebarCtrl.deleteComment(data.nid, comment.cid, $index)"
+                                                class="btn btn-default margin-top10px sidebar-btn">Delete</button>
+                                        </div>
+                                </div>
+
+
+
+                                <div data-ng-show="(!sidebarCtrl.followingFlag)" class="margin-top20px"
+                                    ng-repeat="comment in data.comments">
+                                        <div class="col-md-1 profile-pic-small">
+                                            <img data-ng-src="{{comment.user_photo}}" class="sidebar-comment-photo" />
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div><strong>{{comment.name}}</strong></div>
+                                            <div>
+                                                <small>{{comment.created|utcDateFilter: 'hh:mm A'}}</small>
+                                                <span class="paddingLR-10px"></span>
+                                                <small>{{comment.created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                            </div>
+                                            <div>{{comment.comment_body_value}}</div>
+                                            <button ng-if="(comment.can_delete ==1)"
+                                                data-ng-click="sidebarCtrl.deleteComment(data.nid, comment.cid, $index)"
+                                                class="btn btn-default margin-top10px sidebar-btn">Delete</button>
+                                        </div>
+                                </div>
+
+                                <!-- <div ng-if="!sidebarCtrl.followingFlag" class="margin-top10px">
+                                    <div data-ng-show="($index != sidebarCtrl.indexVal && data.comments.length>1)">
+                                        <a href="javascript:void(0);" ng-click="sidebarCtrl.displayAllComments(data.nid, $index)">Show
+                                            all comments</a>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-md-3">
+                                <a class="margin-left25px" href="javascript:void(0)"
+                                    data-ng-show="sidebarCtrl.showEditDelete(data) && (sidebarCtrl.isGraceOver != 0)"
+                                    data-ng-click="sidebarCtrl.editPost(data, $event);">
+                                    <span class="sprite default-edit" tooltip="Edit Post"
+                                        tooltip-placement="bottom">&nbsp;</span>
+                                </a>
+                                <a class="margin-left25px" href="javascript:void(0)"
+                                    data-ng-show="sidebarCtrl.showEditDelete(data) && (sidebarCtrl.isGraceOver != 0)"
+                                    data-ng-click="sidebarCtrl.deletePost(data, $event);">
+                                    <span class="sprite default-delete" tooltip="Delete Post"
+                                        tooltip-placement="bottom">&nbsp;</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+            <!-- End: List Post -->
+
+            <!-- Start: List External Message -->
+            <div class="col-md-12" ng-if="sidebarCtrl.externalMsg">
+                <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title"
+                    style="min-height:45px;">
+                    <div><strong> {{sidebarCtrl.ext_msg_group_selected_obj.liteUsersName | cut:false:95 }} </strong>
+                    </div>
+                    <div>Matter:
+                        <a href="#/matter-overview/{{sidebarCtrl.ext_msg_group_selected_obj.caseId}}"
+                            tooltip="{{data.matterName}}" tooltip-append-to-body="true" tooltip-placement="top-center">
+                            {{sidebarCtrl.ext_msg_group_selected_obj.matterName}}</a>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-0">
+                    <div class="message-scroll-panel-ext-msg dashboard-tasks-due" id="messageList"
+                        callback-fn="sidebarCtrl.scrollUp()" scroll-new-to-bottom="sidebarCtrl.messageDetails">
+                        <div class="message-panel"
+                            ng-repeat="item in sidebarCtrl.messageDetails | orderBy: 'messageDateTime' "
+                            id="anchor{{item.id}}">
+                            <div class="message-line-text" ng-if="item.titleDate != ''">
+                                <span>{{item.titleDate}}</span>
+                            </div>
+                            <div class="" ng-if="item.message_side"
+                                style="display: block;clear: both;float:left;margin-top: 20px;"
+                                id={{item.messageDateTime}}>
+                                <span style="color:#51a7f9 !important;font-size:12px !important;margin-left: 5px;"
+                                    class="ng-binding">
+                                    <b>{{item.authorName}}</b>
+                                </span>
+                                <div class="left-block">
+                                    <p style="white-space: pre-wrap;" class="ng-binding">{{item.message}}</p>
+                                    <!-- <p class="ng-binding">{{item.message}}</p> -->
+                                </div>
+                                <div
+                                    style="clear: both;color:#677885 !important;font-size:12px !important;margin-left: 5px !important;">{{item.messageDateTime
+                                    | utcDateFilter: 'hh:mm A'}}</div>
+                            </div>
+                            <div class="" ng-if="!item.message_side"
+                                style="display: block;clear: both;float:right;margin-top: 20px;"
+                                id={{item.messageDateTime}}>
+                                <span
+                                    style="color:#f38f18 !important;font-size:12px !important;margin-right: 10px;float: right;"
+                                    class="ng-binding">
+                                    <b>You</b>
+                                </span>
+                                <div class="right-block">
+                                    <p style="white-space: pre-wrap;" class="ng-binding">{{item.message}}</p>
+                                    <!-- <p class="ng-binding">{{item.message}}</p> -->
+                                </div>
+                                <div style="clear:both;padding: 0 10px !important;">
+                                    <div class="pull-left send-sms-txt" style="margin-right: 15px;margin-top: 2px;"
+                                        ng-if="item.sms_status != '' && item.sms_status != undefined">Send
+                                        via SMS to: {{item.sms_status}}</div>
+                                    <div class="pull-right" style="color:#677885 !important;font-size:12px !important;">{{item.messageDateTime
+                                        | utcDateFilter: 'hh:mm A'}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="write-message-block">
+                        <div class="col-md-10 padding-0 write-message-line">
+                            <div class="message-textarea">
+                                <textarea rows="2" cols="70" ng-model="sidebarCtrl.sendExtMessage"
+                                    ng-keyup="sidebarCtrl.checkChange($event)" placeholder="Write your comment..."
+                                    data-ng-maxlength="1024" maxlength="1024"
+                                    class="ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2 margin-top60px">
+                            <button class="btn btn-danger pull-right" ng-click="sidebarCtrl.onlySendNewExtMessages()"
+                                data-ng-disabled="sidebarCtrl.sendExtMessage == '' || sidebarCtrl.sendExtMessage == undefined">Send</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End: List External Message -->
+
+            <!-- Start: List SMS -->
+            <div class="col-md-12" ng-if="sidebarCtrl.sms">
+                <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title"
+                    ng-if="sidebarCtrl.singleSelectedThread" style="min-height:45px;">
+                    <div class="limited-txt"><strong tooltip="{{sidebarCtrl.selectedSMSThread.contactName}}"
+                            tooltip-append-to-body="true" tooltip-placement="bottom-left"> {{sidebarCtrl.selectedSMSThread.contactName | cut:false:95
+                            }} </strong></div>
+                    <div
+                        ng-show="sidebarCtrl.selectedSMSThread.isIntake == 0 && !(sidebarCtrl.selectedSMSThread.matterId == null)">
+                        Matter:
+                        <a href="#/matter-overview/{{sidebarCtrl.selectedSMSThread.matterId}}"
+                            tooltip="{{sidebarCtrl.selectedSMSThread.matterName}}" tooltip-append-to-body="true"
+                            tooltip-placement="top-center" style="font-size:12px">
+                            {{sidebarCtrl.selectedSMSThread.matterName}}</a>
+                    </div>
+                    <div
+                        ng-show="sidebarCtrl.selectedSMSThread.isIntake == 1 && !(sidebarCtrl.selectedSMSThread.matterId == null)">
+                        Intake:
+                        <a href="#/intake/intake-overview/{{sidebarCtrl.selectedSMSThread.matterId}}"
+                            tooltip="{{sidebarCtrl.selectedSMSThread.matterName}}" tooltip-append-to-body="true"
+                            tooltip-placement="top-center" style="font-size:12px">
+                            {{sidebarCtrl.selectedSMSThread.matterName}}</a>
+                    </div>
+                    <div ng-show="sidebarCtrl.selectedSMSThread.matterId == null">
+                        <label>
+                            <span ng-show="onLauncher" style="color:#2a83b1;cursor: pointer;"
+                                data-ng-click="sidebarCtrl.openSMSAttachmentForm()">Tag
+                                a Matter/Intake</span>
+                            <span ng-show="onMatter" style="color:#2a83b1;cursor: pointer;"
+                                data-ng-click="sidebarCtrl.openSMSAttachmentForm()">Tag
+                                a Matter</span>
+                            <span ng-show="onIntake" style="color:#2a83b1;cursor: pointer;"
+                                data-ng-click="sidebarCtrl.openSMSAttachmentForm()">Tag
+                                a Intake</span></label>
+                    </div>
+                    <div ng-show="!root.requestPending">
+                        <!-- US#14854 : Note Sync  -->
+                        <div class="checkbox toggle-btns" style="margin:0 0 15px 15px">
+                            <input type="checkbox"
+                                data-ng-click="sidebarCtrl.changeNotesSync(sidebarCtrl.selectedSMSThread.is_NoteSync)"
+                                data-ng-model="sidebarCtrl.selectedSMSThread.is_NoteSync" data-ng-true-value="1"
+                                data-ng-false-value="0" data-ng-disabled="sidebarCtrl.somethingDisabled">
+                            <label>Sync with notes</label>
+                        </div>
+                        <span class="sprite default-file sortby-icons"
+                            style="position: absolute;right: 0px;margin-top: -38px;margin-right: 45px;cursor: pointer;"
+                            tooltip="Print" tooltip-placement="bottom"
+                            data-ng-click="sidebarCtrl.printSMS()">&nbsp;</span>
+                        <span class="sprite default-sharedown sortby-icons"
+                            style="position: absolute;right: 0px;margin-top: -38px;margin-right: 10px;cursor: pointer;"
+                            tooltip="Export" tooltip-placement="bottom"
+                            data-ng-click="sidebarCtrl.exportSMS()">&nbsp;</span>
+                    </div>
+
+                </div>
+                <div class="col-md-12 padding-0" ng-if="sidebarCtrl.singleSelectedThread">
+                    <div class="message-scroll-panel-ext-msg dashboard-tasks-due" id="messageList"
+                        scroll-new-to-bottom="sidebarCtrl.selectedSMSThread.threadMessages">
+                        <div class="message-panel"
+                            ng-repeat="item in sidebarCtrl.selectedSMSThread.threadMessages | orderBy: 'createdOn' ">
+                            <div class="message-line-text" ng-if="item.titleDate != ''">
+                                <span>{{item.titleDate}}</span>
+                            </div>
+                            <div class="" ng-if="item.isIncoming != 0"
+                                style="display: block;clear: both;float:left;margin-top: 20px;" id={{item.createdOn}}>
+                                <span style="color:#51a7f9 !important;font-size:12px !important;margin-left: 5px;"
+                                    class="ng-binding">
+                                    <b>{{item.sentBy}}</b>
+                                </span>
+                                <div class="left-block" ng-if="!item.documentName">
+                                    <p style="white-space: pre-wrap;" class="ng-binding">{{item.messageText}}</p>
+                                </div>
+                                <div class="left-doc-block" ng-if="item.documentName"
+                                    data-ng-click="sidebarCtrl.openDoc(item)">
+                                    <a class="matter-photo-popup-open"></a>
+                                    <!--        Image tag for images-->
+                                    <img data-ng-if="item.isImage" class="img border-radius-4px"
+                                        data-ng-src="{{trustSrc(item.mediaURL)}}" height="100" width="150" />
+
+                                    <!--           IFrame tag for PDFs and TXTs-->
+                                    <iframe data-ng-if="item.ext == 'pdf' || item.ext == 'txt'"
+                                        class="img border-radius-4px" data-ng-src="{{trustSrc(item.mediaURL)}}"
+                                        height="100" width="150">
+                                    </iframe>
+
+                                    <!--        Other files     -->
+                                    <img data-ng-if="!item.isImage && !(item.ext == 'pdf' || item.ext == 'txt')"
+                                        class="img border-radius-4px" data-ng-src="styles/images/documents.svg"
+                                        height="100" width="150" />
+
+                                </div>
+                                <div id="anchor{{$index}}"
+                                    style="clear: both;color:#677885 !important;font-size:12px !important;margin-left: 5px !important;">{{item.createdOn
+                                    | utcDateFilter: 'hh:mm A'}}</div>
+                            </div>
+                            <div class="" ng-if="item.isIncoming == 0"
+                                style="display: block;clear: both;float:right;margin-top: 20px;" id={{item.createdOn}}>
+                                <span
+                                    style="color:#f38f18 !important;font-size:12px !important;margin-right: 10px;float: right;"
+                                    class="ng-binding">
+                                    <b>{{item.sentBy}}</b>
+                                </span>
+                                <div class="right-block" ng-if="!item.documentName">
+                                    <p style="white-space: pre-wrap;" class="ng-binding">{{item.messageText}}</p>
+                                </div>
+                                <div class="right-doc-block" ng-if="item.documentName"
+                                    data-ng-click="sidebarCtrl.openDoc(item)">
+                                    <a class="matter-photo-popup-open"></a>
+                                    <!--        Image tag for images-->
+                                    <img data-ng-if="item.isImage" class="img border-radius-4px"
+                                        data-ng-src="{{trustSrc(item.mediaURL)}}" height="100" width="150" />
+
+                                    <!--           IFrame tag for PDFs and TXTs-->
+                                    <iframe data-ng-if="item.ext == 'pdf' || item.ext == 'txt'"
+                                        class="img border-radius-4px" data-ng-src="{{trustSrc(item.mediaURL)}}"
+                                        height="100" width="150">
+                                    </iframe>
+
+                                    <!--        Other files     -->
+                                    <img data-ng-if="!item.isImage && !(item.ext == 'pdf' || item.ext == 'txt')"
+                                        class="img border-radius-4px" data-ng-src="styles/images/documents.svg"
+                                        height="100" width="150" />
+                                </div>
+                                <div style="clear:both;padding: 0 10px !important;" id="anchor{{$index}}">
+                                    <div class="pull-left send-sms-txt" style="margin-right: 15px;margin-top: 2px;"
+                                        ng-if="item.sms_status != '' && item.sms_status != undefined">Send
+                                        via SMS to: {{item.sms_status}}</div>
+                                    <div class="pull-right" style="color:#677885 !important;font-size:12px !important;">{{item.createdOn
+                                        | utcDateFilter: 'hh:mm A'}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="write-message-block custom-write-message-block">
+                        <div class="col-md-12 dashboard-tasks-due" style="max-height: 70px !important;">
+                            <clx-filter-tags class="costum-tags" on-filter-cancel="sidebarCtrl.tagCancelled"
+                                tag-list="sidebarCtrl.documentTags"></clx-filter-tags>
+                        </div>
+                        <div class="col-md-9 padding-0 write-message-line">
+                            <div class="message-textarea">
+                                <textarea rows="2" cols="70" ng-model="sidebarCtrl.sendOnlySMS"
+                                    ng-keyup="sidebarCtrl.checkChange($event)" placeholder="Write a message..."
+                                    data-ng-maxlength="500" maxlength="500"
+                                    class="ng-pristine ng-valid ng-valid-maxlength ng-touched"
+                                    style="overflow-x: hidden;"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3 margin-top20px">
+                            <div class="dropup">
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle ng-binding"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <!-- <span style="display: inline-block; min-width: 107px;">{{sidebarCtrl.listSelectedDropdown}}</span> -->
+                                    <span class="sprite pull-left default-attachment cur-pointer"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li ngf-select ngf-multiple="true" data-ng-model="sidebarCtrl.documents">
+                                        <a>Upload Files</a>
+                                    </li>
+                                    <li data-ng-click="sidebarCtrl.openDocList()">
+                                        <a>CLX Documents</a>
+                                    </li>
+                                </ul>
+                                <button class="btn btn-danger" ng-click="sidebarCtrl.onlySendSMSFn()"
+                                    data-ng-disabled="(sidebarCtrl.sendOnlySMS == '' || sidebarCtrl.sendOnlySMS == undefined) && sidebarCtrl.attachmentFile.file.length == 0 && sidebarCtrl.attachmentFile.clx_file.length == 0">Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End: List SMS -->
+
+            <!-- Start: External Message Add Form -->
+            <div class="col-md-12" ng-if="sidebarCtrl.externalMsgAddForm">
+                <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title">
+                    <h1 class="page-title ng-binding">New External Massage</h1>
+                    <span>Communicate with plaintiffs, insurances agents, external attorneys etc.</span>
+                </div>
+
+                <div class="row form-group margin-top10px">
+                    <div class="col-md-9">
+                        <label>Matter</label>
+                        <input type="text" name="matterid" class="form-control"
+                            data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+                            typeahead="row.matterId as removeunwantedhtml(row.matterName) for row in sidebarCtrl.ext_msg_searchMatters($viewValue)"
+                            typeahead-input-formatter="sidebarCtrl.ext_msg_formatTypeaheadDisplay($model)"
+                            data-ng-model="sidebarCtrl.ext_msg_matter_id" />
+                    </div>
+                </div>
+
+                <div class="row form-group margin-top10px">
+                    <div class="col-md-9">
+                        <label>Name </label>
+                        <ui-select multiple ng-model="sidebarCtrl.ext_msg_contact_id" style="width: 94%" theme="select2"
+                            on-select="">
+                            <ui-select-match placeholder="Select Name">
+                                {{$item.contactName}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="item in sidebarCtrl.ext_msg_contact | filter:{ contactName:$select.search } | orderBy: 'contactName'">
+                                <small>
+                                    {{item.contactName}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="row form-group margin-top10px">
+                    <div class="col-md-8 padding-0">
+                        <div class="write-message-block">
+                            <div class="col-md-10 padding-0 write-message-line">
+                                <div class="message-textarea">
+                                    <textarea rows="2" cols="70" ng-model="sidebarCtrl.sendExtMessage"
+                                        ng-keyup="sidebarCtrl.checkChange($event)" placeholder="Write your comment..."
+                                        data-ng-maxlength="1024" maxlength="1024"
+                                        class="ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2 margin-top60px">
+                                <button class="btn btn-danger pull-right"
+                                    ng-click="sidebarCtrl.sendNewExternalMessages()"
+                                    data-ng-disabled="sidebarCtrl.sendExtMessage == '' || sidebarCtrl.sendExtMessage == undefined ">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End: External Message Add Form-->
+
+            <!-- Start: SMS Add Form -->
+            <div class="col-md-12" ng-if="sidebarCtrl.smsAddForm">
+                <div>
+                    <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title">
+                        <h1 class="page-title ng-binding">Text Message</h1>
+                        <!-- <span>Communicate with plaintiffs, insurances agents, external attorneys etc.</span> -->
+                    </div>
+
+                    <div class="row form-group margin-top20px">
+                        <div class="col-md-9">
+                            <label>Contact(s)</label>
+                            <div class="clearfix"></div>
+                            <ui-select autofocus="true" multiple ng-model="sidebarCtrl.sms_contact_id_compare"
+                                theme="select2" class="small-field">
+                                <ui-select-match placeholder="Search contact(s) for messaging.">
+                                    {{$item.firstname + " " + $item.lastname}}
+                                </ui-select-match>
+                                <ui-select-choices refresh-delay="1000"
+                                    refresh="sidebarCtrl.getContactListForSMS($select.search)"
+                                    repeat="contact as contact in sidebarCtrl.sms_contact_list_compare  | orderBy: 'name'"
+                                    data-ng-click='sidebarCtrl.smsConsentCheck($select.selected)'>
+                                    <small>
+                                        {{contact.firstname + " " + contact.lastname}}
+                                        <br> {{contact.street}} {{contact.city}}
+                                        <span ng-if="((contact.street)||(contact.city)) && (contact.state)">,</span>
+                                        {{contact.state}}
+                                    </small>
+                                    <hr>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row form-group margin-top20px" ng-if="onLauncher && isIntakeActive">
+                        <div class="col-md-9">
+                            <div>
+                                <div ng-repeat="info in sidebarCtrl.eventFor" class="padding-0">
+                                    <div class="radio padding-0 margin0 pull-left margin-right20px" ng-init="sidebarCtrl.selectedModeForSidebarForSMS = '0'">
+                                        <input class="margin0" type="radio" data-ng-model="sidebarCtrl.selectedModeForSidebarForSMS"
+                                            data-ng-click="sidebarCtrl.sms_contact_id = [];sidebarCtrl.getMatterIdForSMS = '';sidebarCtrl.sendMessageForSMS = ''; sidebarCtrl.sms_contact_list = [];"
+                                            ng-value="info.id" />
+                                        <label class="margin0" style="line-height: inherit;">&nbsp;{{info.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebarForSMS == '1'">
+                        <div class="col-md-9 custom-input-list">
+                            <label>Intake</label>
+                            <input type="text" name="intakeId" class="form-control" data-ng-model-options="{ debounce: 300 }"
+                                placeholder="Search Intake" typeahead="row.intakeId as removeunwantedhtml(row.intakeName) + row.dateIntake for row in sidebarCtrl.getIntakeListForSMS($viewValue,0)"
+                                typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForIntakeForSMS($model)"
+                                data-ng-model="sidebarCtrl.getMatterIdForSMS" />
+
+
+                        </div>
+                    </div>
+
+                    <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebarForSMS == '0'">
+                        <div class="col-md-9 custom-input-list">
+                            <label>Matter</label>
+                            <input type="text" name="matterid" class="form-control" data-ng-model-options="{ debounce: 300 }"
+                                placeholder="Search Matter" typeahead="row.matterid as removeunwantedhtml(row.name)+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMattersForSMS($viewValue)"
+                                typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForSMS($model)"
+                                data-ng-model="sidebarCtrl.getMatterIdForSMS" />
+
+                        </div>
+                    </div> -->
+
+
+
+                    <div class="col-md-8 padding-0">
+                        <div class="write-message-block custom-write-message-block">
+                            <div class="col-md-12 dashboard-tasks-due" style="max-height: 70px !important;">
+                                <clx-filter-tags class="costum-tags" on-filter-cancel="sidebarCtrl.tagCancelled"
+                                    tag-list="sidebarCtrl.documentTags"></clx-filter-tags>
+                            </div>
+                            <div class="col-md-8 padding-0 write-message-line">
+                                <div class="message-textarea">
+                                    <textarea rows="5" cols="70" ng-model="sidebarCtrl.sendMessageForSMS"
+                                        ng-keyup="sidebarCtrl.checkChange($event)" placeholder="Write a message..."
+                                        data-ng-maxlength="500" maxlength="500"
+                                        class="ng-pristine ng-valid ng-valid-maxlength ng-touched"
+                                        style="overflow-x: hidden;"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-4 custom-btn">
+                                <span class="dropup">
+                                    <button id="dLabel" type="button"
+                                        class="btn sortby-dropdown dropdown-toggle ng-binding padding-right-0 "
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="sprite pull-left default-attachment cur-pointer"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li ngf-select ngf-multiple="true" data-ng-model="sidebarCtrl.documents">
+                                            <a>Upload Files</a>
+                                        </li>
+                                        <li data-ng-click="sidebarCtrl.openDocList()">
+                                            <a>CLX Documents</a>
+                                        </li>
+                                    </ul>
+                                </span>
+                                <button class="btn btn-danger" ng-click="sidebarCtrl.sendMessageForSMSFn()"
+                                    data-ng-disabled="((sidebarCtrl.sendMessageForSMS == '' && sidebarCtrl.attachmentFile.file.length == 0 && sidebarCtrl.attachmentFile.clx_file.length == 0) || !(sidebarCtrl.sms_contact_id_compare.length > 0))">Send</button>
+                                <button class="btn btn-danger"
+                                    data-ng-click="sidebarCtrl.cancelFirmPost()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End: SMS Add Form -->
+
+        </div>
+
+    </div>
+    <!-- End: Right Area  -->
+</div>
+<!-- End: Main Area  -->

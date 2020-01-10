@@ -1,0 +1,102 @@
+<style>
+    .custom-filter-assigned-to ul.select2-choices{max-height: 200px;overflow-y: auto;}
+</style>
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left"> Filters</h1>
+    <button class="close fl-right" data-ng-click="cancel()">
+        <span aria-hidden="true">×</span></button>
+</div>
+<div class="filter-greybox container modal-body dashboard-tasks-due" style="max-height: 70vh !important;overflow-x: hidden;">
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Status</h2>
+                <ui-select multiple class="width100" ng-model="matterFilters.statusFilter" on-select="statusSelected(matterFilters.statusFilter)"
+                    on-remove="statusSelected(matterFilters.statusFilter)" theme="select2">
+                    <ui-select-match placeholder="Select Status...">
+                        {{$item.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="status in viewModel.status| filter:{name:$select.search}">
+                        <small>
+                            {{status.name |replaceByBlank}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div data-ng-if="substatus.length > 0" class="margin-top10px">
+                <h2 class="subtitle">Substatus</h2>
+                <ul class="dashboard-tasks-due" style="max-height: 100vh;position: relative;">
+                    <li ng-repeat-start="status in substatus| filter:{name:$select.search} " ng-show="status.id == 0 ">
+                        <label>{{status.statusname |replaceByBlank}}</label>
+                    </li>
+                    <li ng-show="status.id != 0" class="checkbox" ng-repeat-end="status in substatus| filter:{name:$select.search} ">
+                        <input checklist-value="status" checklist-model="selectionModel.multiFilters.substatus" type="checkbox" />
+                        <label>{{status.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--US#6563 start-->
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h2 class="subtitle">Type</h2>
+                <ui-select ng-model="matterFilters.type" on-select="typeSelected(matterFilters.type)" theme="selectize">
+                    <ui-select-match placeholder="Select Type...">
+                        {{$select.selected.name | replaceByBlank}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="type in viewModel.type| filter:{name:$select.search} | orderBy: 'name'">
+                        <small>
+                            {{type.name |replaceByBlank}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div data-ng-show="subtype.length > 0" class="margin-top10px">
+                <h2 class="subtitle">Subtype</h2>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="type in subtype">
+                        <input checklist-value="type" checklist-model="selectionModel.multiFilters.subtype" type="checkbox" />
+                        <label>{{type.name |replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--End-->
+
+
+
+        <div class="col-lg-3 col-md-3">
+            <div class="checklist">
+                <h3 class="subtitle">Category</h3>
+                <ul>
+                    <li class="checkbox" ng-repeat="item in viewModel.category">
+                        <input checklist-value="item" checklist-model="selectionModel.multiFilters.category" type="checkbox">
+                        <label>{{item.name|replaceByBlank}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <label>Assigned To</label><br>
+            <!--placeholder="Select assign user.."-->
+            <ui-select class="width100 custom-filter-assigned-to" multiple ng-model="selectionModel.multiFilters.user_id"
+                name="userid" theme="select2">
+                <ui-select-match placeholder="Select assigned user..">
+                    {{$item.fullName}}
+                </ui-select-match>
+                <ui-select-choices repeat="user.userId as user in users | filter:{fullName:$select.search} | orderBy: 'fullName' ">
+                    <small>{{user.fullName}}</small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-lg-offset-9 col-md-offset-8">
+            <button ng-click="resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+            <button ng-click="ok(selectionModel.multiFilters)" type="button" class="btn btn-default" ng-disabled="isDatesValid() || checkVenue == true ">Apply</button>
+        </div>
+    </div>
+</div>

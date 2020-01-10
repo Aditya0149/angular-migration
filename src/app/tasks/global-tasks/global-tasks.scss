@@ -1,0 +1,90 @@
+.global-task-container {
+        .checkbox { padding-top: 0 ;
+        margin-top: 0 ;
+    }
+    .radio {
+        margin-top: 0 ;
+        padding-left: 0 ;
+        input {
+            outline: none ;
+            box-sizing: initial ;
+            
+            &[type="radio"] {
+            margin-left: 0 ;
+            width: 20px;
+            height: 20px;
+            top: -3px;
+            }
+            }
+        label {
+            padding-left: 25px ;
+            &::after {
+                background-color: $color_strong_blue ;
+                top: 5px ;
+                width: 9px ;
+                height: 9px ;
+                left: 5px ;
+            }
+            &::before {
+                width: 19px ;
+                height: 19px ;
+                border: 2px solid $color_strong_blue ;
+            }
+        }
+    }
+    .reason-list-order {
+        li {
+            float: left;
+            margin-left: 20px;
+            width: 95px;
+        }
+    }
+    .global-tasks-list {
+        height: 295px;
+        &-new-height {
+            max-height: 61vh ;
+            overflow-y: auto;
+        }
+    }
+    .over-height {
+        height: 61vh ;
+    }
+    .current-height {
+        height: 38vh ;
+    }
+    .co-height {
+        height: 61vh ;
+    }
+    .list-custum-width {
+        display: block;
+        width: 100%;
+        padding: 0 ;
+        margin: 0 ;
+    }
+    .list-item-height span {
+            word-break: break-word;
+    }
+    ul li .list-item-wrapper 
+        .circle-position {
+            width: 16%;
+    }
+    .global-selected-task {
+        font-family: 'GothamRounded-Book';
+        color: black;
+        background-color: rgba(109, 70, 70, 0);
+        border: 0;
+        padding: 0;
+        white-space: pre-wrap;
+        word-break: keep-all;
+    }
+    .remind-box {
+        width: 64%;
+        margin-bottom: 20px;
+    }
+    .grey-bg {
+        background-color: $color_gray80;
+    }
+    .word-wrap {
+        word-wrap: break-word;
+    }
+}

@@ -1,0 +1,28 @@
+<div class="row">
+    <form class="ng-pristine ng-valid">
+        <div class="col-md-6 margin-top10px">
+<div class="row">
+            <div class="form-group col-md-6">
+
+                <label>Search Existing Contacts</label>
+                <input type="text" data-ng-model="addPlaintiff.plaintiffInfo.contact"
+                       data-ng-model-options="{ debounce: 500 }"
+                       placeholder="enter name"
+                       ng-keydown="addPlaintiff.checkIfEnterKeyWasPressed($event)"
+                       typeahead="row as row.name for row in addPlaintiff.getContacts($viewValue,'PLAINTIFF')"
+                       typeahead-input-formatter="addPlaintiff.formatTypeaheadDisplay($model)"
+                       typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                       class="form-control full-width">
+            </div>
+
+            <div class="add-now-wrap">
+                <span class="or-connector">OR</span>
+                <button class="btn btn-default"
+                    data-ng-click="addPlaintiff.addNewContact('PLAINTIFF')">
+                    Add New</button>
+            </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-md-6 "></div>
+</div>

@@ -1,0 +1,29 @@
+<!-- Popup for Export to expense manager from Expense Manager -->
+<div class="cal-popup-wrapper">
+    <div class="modal-header export-header">
+        <div class="row">
+            <h2 class="modal-title col-md-9 big-title">Export to Expense Manager?</h2>
+            <div class="col-md-2">
+                <button class="close fl-right" data-ng-click="exportExpenses.cancel()">
+                    <span aria-hidden="true">×</span>
+                </button></div>
+        </div>
+
+    </div>
+    <div class="filter-greybox container modal-body export-body ">
+
+        <div class="row">
+            <div class="col-md-12">
+                <span> Are you sure you want to export the expense(s) to Expense Manager?</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer export-footer">
+        <div class="">
+            <button type="button" class="btn btn-default" data-ng-click="exportExpenses.cancel()">Cancel</button>
+            <button type="button" class="btn btn-default"
+                data-ng-click="exportExpenses.proceedToExpense()">Proceed</button>
+        </div>
+    </div>
+</div>

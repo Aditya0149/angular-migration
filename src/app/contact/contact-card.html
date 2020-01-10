@@ -1,0 +1,118 @@
+<div class="modal-header">
+    <h1 class="modal-title fl-left">Contact Card</h1>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-ng-click="close()">
+        <span aria-hidden="true">×</span>
+    </button>
+    <span data-ng-if="contact.deleted==1" class="contact-deleted">This contact is deleted.</span>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact-card-dp">
+                <!-- <iframe ng-src="{{trustSrc(contact.contact_picture_uri)}}" alt="No image" height="150" width="100%"></iframe> -->
+                <img data-ng-src="{{trustSrc(contact.contact_picture_uri)}}" width="100px" height="100px">
+                <!-- <img ng-src="{{trustSrc(contact.contact_picture_uri)}}" height="500" width="100%"></img> -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>{{contact.name}}</h5>
+            <p class="margin-bottom-0 " data-ng-if="(contact.specialty && contact.specialty.length > 0)">
+                ({{contact.specialty}})</p>
+            <p class="margin-bottom-0 " data-ng-show="contact.company">{{contact.company}}</p>
+
+            <span data-ng-show="gridObj.address_type == 'Home'" class="sprite default-contactPhone-home-new"></span>
+            <span data-ng-show="gridObj.address_type == 'Work'" class="sprite default-contactPhone-work-new"></span>
+            <span data-ng-show="gridObj.address_type == 'Other'" class="sprite default-location-new"></span>
+
+            <div class="addres-box">
+
+                <span data-ng-show="gridObj.street">{{gridObj.street}}</span>
+                <span data-ng-show="gridObj.city">{{gridObj.city}},</span>
+                <span data-ng-show="gridObj.state">{{gridObj.state}}</span>
+                <span data-ng-show="gridObj.zip_code">
+                    {{gridObj.zip_code}}</span><br>
+                <span data-ng-show="gridObj.country">
+                    {{gridObj.country}}
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 text-right" data-ng-if="contact.deleted==0 && (isGraceOver != 0)">
+            <div class="pull-right" ng-show="gracePeriodDetails.email_subscription">
+                <a data-ng-click="composeMail()">
+                    <span ng-hide="hideEditButton" class="sprite default-mailbox" tooltip="E-mail"></span>
+                </a>
+            </div>
+            <div class="pull-right pull-right margin-right15px">
+                <a data-ng-click="editContact()">
+                    <span ng-hide="hideEditButton" class="sprite default-edit " tooltip="Edit"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 settlement-pagination mt-0">
+        <a href="javascript:void(0)" ng-click="viewCalculation()" class="sprite all-first"></a>&nbsp;&nbsp;
+        <a href="javascript:void(0)" ng-click="viewPrevCalculation()" class="sprite first"></a>&nbsp;&nbsp;
+        <span>{{idx + 1}} of {{contact.address.length}}</span>&nbsp;&nbsp;
+        <a href="javascript:void(0)" ng-click="viewNextCalculation()" class="sprite last"></a>&nbsp;&nbsp;
+        <a href="javascript:void(0)" ng-click="viewCalculation('last')" class="sprite all-last"></a>
+    </div>
+    <div class="clear-both">
+        <ul class="contact-card">
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactEmail fixed-icon"></span>
+                <span class="inline-list">
+                    <span class="ellipsis-nowrap" data-ng-repeat="email in contact.email"
+                        tooltip='{{email}}'>{{email}}</span>
+                </span>
+            </li>
+            <li class="flexCont"></li>
+               <span class="checkbox inline-checkbox">
+                    <input type="checkbox" ng-model="contact.is_sms_consent" ng-disabled="(contact.is_sms_consent == 0 || contact.is_sms_consent == 1)" 
+                        data-ng-true-value="1" data-ng-false-value="0" class="ng-scope ng-valid ng-dirty ng-valid-parse ng-touched">
+                    <label></label>
+               </span>
+                <span>Opt-out of messages</span>
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactPhone fixed-icon"></span>
+                <span class="inline-list">
+                    <span class="ellipsis-nowrap" ng-show="contact.phone_cell"
+                        ng-repeat="contactcell in contact.phone_cell" tooltip="{{contactcell}}">{{contactcell}}</span>
+                </span>
+            </li>
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactPhone-home fixed-icon"></span>
+                <span class="inline-list">
+                    <span class="ellipsis-nowrap" ng-show="contact.phone_home"
+                        ng-repeat="contacthome in contact.phone_home" tooltip="{{contacthome}}">{{contacthome}}</span>
+                </span>
+            </li>
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactPhone-work fixed-icon"></span>
+                <span class="inline-list">
+                    <span class="ellipsis-nowrap" ng-show="contact.phone_work"
+                        ng-repeat="contactwork in contact.phone_work" tooltip="{{contactwork}}">{{contactwork}}</span>
+                </span>
+            </li>
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactFax fixed-icon"></span>
+                <span class="inline-list">
+                    <span class="ellipsis-nowrap" data-ng-repeat="fax in contact.faxnumber"
+                        tooltip='{{fax}}'>{{fax}}</span>
+                </span>
+            </li>
+            <li class="flexCont"></li>
+            <li>
+                <span class="sprite default-contactNote fixed-icon"></span>
+                <span class="contact-card-popup-note">
+                    <pre class="pre-default">{{contact.contact_note}}</pre>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

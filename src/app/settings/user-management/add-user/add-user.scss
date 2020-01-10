@@ -1,0 +1,19 @@
+.add-user-wrapper {
+        .modal-header{ height: 100px;
+    }
+    .btn-box {
+        margin: 10px 0 0 30px;
+    }
+    .circle-info {
+        top: -40px;
+        font-size: 12px;
+        text-align: center;
+        position: relative;
+    }
+    .user-capacity {
+        color: $color_gray80;
+        font-size: 10px;
+        position: relative;
+        top: -17px;
+    }
+}

@@ -1,0 +1,270 @@
+<style>
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    a {
+        word-break: keep-all;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<div class=" clearfix" scrolly="motionReport.reachedBottom()" reached-top="motionReport.reachedTop()">
+    <div class="row">
+        <h1 class="col-md-4 ellipsis-nowrap pull-left margin-top3px">Motion Report</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+            <ul class="pull-right">
+                <li>
+                    <a href="javascript:void(0);" ng-class="{' active': motionReport.filter.motion_on_by == 'on'}"
+                        ng-click="motionReport.filterByMotion('on');motionReport.selectedTab=1;">
+                        <h2>Motion on us</h2>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" ng-class="{' active': motionReport.filter.motion_on_by == 'by'}"
+                        ng-click="motionReport.filterByMotion('by');motionReport.selectedTab=0;">
+                        <h2>Motion by us</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="fixed-grid-report">
+    <div class="col-md-12 paddingRLR heading-filter-removed ">
+        <div class="pull-right head-padding-10px">
+            <div class="pull-right heading-right-buttons">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="motionReport.filtermotionReport()" class="sprite default-filter"
+                                tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="motionReport.print()"><span class="sprite default-file sortby-icons"
+                                tooltip="Print" tooltip-placement="right"></span></a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="motionReport.exportReport()"><span
+                                class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                tooltip-placement="right"></span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown heading-right-buttons pull-right">
+                Sort By :
+                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{motionReport.selectedSort}}
+                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+
+
+                <ul class="dropdown-menu divider-alt sortby-dropdown-height" role="menu" aria-labelledby="dLabel">
+                    <div class="">
+                        <li data-ng-repeat="sort in motionReport.sorts">
+                            <a data-ng-click="motionReport.applySortByFilter(sort)">{{sort.name}}
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="clearfix">
+        <div class="pull-right">
+            <clx-filter-tags on-filter-cancel="motionReport.tagCancelled" tag-list="motionReport.tags">
+            </clx-filter-tags>
+        </div>
+    </div>
+</div>
+<div data-ng-show="motionReport.motionReportList.length > 0">
+    <show-record-count-only displayed="motionReport.motionReportList.length" more="motionReport.getMore()"
+        all="motionReport.getAll()"
+        hide-pager="{{motionReport.showPaginationButtons() && motionReport.motionReportList.length > 0}}"
+        total="motionReport.total"></show-record-count-only>
+</div>
+
+<!-- Start: New scroll-table tableid -->
+<div class="clearfix"></div>
+<div id="listUpper"></div>
+<div class="report-scroll-all-matter">
+
+    <scroll-table tabselected="motionReport.selectedTab" tag="motionReport.tags" sort="motionReport.selectedSort" watch="motionReport.motionReportList"
+        tableid="motionReportlistbodyGrid" to="#listUpper" from="#moreAllLinkRecord">
+
+        <table class="table table-scroll text_ellipsis">
+            <thead data-ng-show="motionReport.motionReportList.length !=0">
+                <tr>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Matter Name</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Date of Incident</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Title</b>
+                        </div>
+                    </th>
+                    <th class="th-width-9">
+                        <div>
+                            <b>Returnable Date</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Date of Service</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Type</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Status</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Document Name</b>
+                        </div>
+                    </th>
+                    <th class="th-width-5">
+                        <div>
+                            <b>Judge</b>
+                        </div>
+                    </th>
+                    <th class="th-width-6">
+                        <div>
+                            <b>Days overdue</b>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <b>Date Created</b>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="dashboard-tasks-due" id="motionReportlistbody" style="overflow-y:overlay">
+                <tr data-ng-class="{'selected-grid-row':$index == motionReport.clickedRow}"
+                    data-ng-repeat="data in motionReport.motionReportList">
+
+                    <td class="th-width-10">
+                        <div>
+                            <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                href="#/matter-overview/{{data.matter.matter_id}}" class="word-wrap">
+                                {{data.matter_name}}</a>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.dateofincidence}}">
+                                {{data.dateofincidence}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.motion_title}}">
+                                {{data.motion_title}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-9">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.returnable_formated}}">
+                                {{data.returnable_formated}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.service_date_formated}}">
+                                {{data.service_date_formated}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.motion_type_name}}">
+                                {{data.motion_type_name}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.motion_status_name}}">
+                                {{data.motion_status_name}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.document_name}}">
+                                {{data.document_name}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-5">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.judge_name}}">
+                                {{data.judge_name}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-6">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.motion_daysoverdue}}">
+                                {{data.motion_daysoverdue}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="th-width-10">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.motion_datecreated}}">
+                                {{data.motion_datecreated}}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+</div>
+
+<!-- Start: New scroll-table tableid -->
+
+<div class="text-center" data-ng-show="motionReport.motionReportList.length <= 0 && motionReport.dataReceived">
+    No data for applied filter
+</div>
+
+<div data-ng-show="motionReport.motionReportList.length > 0">
+    <show-record-more-and-all displayed="motionReport.motionReportList.length" more="motionReport.getMore()"
+        all="motionReport.getAll()"
+        hide-pager="{{motionReport.showPaginationButtons() && motionReport.motionReportList.length > 0}}"
+        total="motionReport.total">
+        </show-record-count-only>
+</div>

@@ -1,0 +1,768 @@
+<style>
+    .spacing-span {
+        border-right: 1px solid #cccccc;
+        padding: 5px 10px 5px 0px;
+        margin-right: 10px;
+    }
+
+    .switch.switch-right {
+        background: #74bb2f !important;
+        border-color: #74bb2f !important;
+    }
+
+    .switch.switch-right .switch-button {
+        border: 1px solid #74bb2f !important;
+        left: 25px !important;
+    }
+
+    .switch .switch-button {
+        height: 20px !important;
+        width: 20px !important;
+        margin-top: -3px !important;
+    }
+
+    span.boldtxt {
+        font-weight: 900;
+    }
+
+    p.boldblue {
+        color: #2a98c7;
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
+
+    span.smaltxt {
+        display: block;
+        font-size: 12px;
+    }
+
+    .table td.no-top-border {
+        border-top: none;
+    }
+
+    .table th.no-bottom-border {
+        border-bottom: none;
+    }
+
+    p.graytxt {
+        color: #cccccc;
+    }
+
+    span.imptxt {
+        display: inline-block;
+        vertical-align: top;
+        width: 70%;
+    }
+
+    span.left-div {
+        cursor: pointer;
+    }
+</style>
+
+<div class="row medical-info-gridSec">
+    <div class="col-md-12  paddingRLR clearfix ">
+        <div class="col-md-5 pull-left paddingRLR dropdown create">
+            <a data-ng-click="otherPartiesViewCtrl.addOtherParty()" data-ng-if="otherPartiesViewCtrl.isGraceOver != 0"
+                ng-hide="otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                <span class="sprite default-plus" tooltip="Add" style="margin-left:12px"></span>
+            </a>
+            <a class="margin-left25px"
+                data-ng-click="otherPartiesViewCtrl.editOtherParty(otherPartiesViewCtrl.otherPartyGrid.selectedOtherParties[0])"
+                data-ng-show="otherPartiesViewCtrl.otherPartyGrid.selectedOtherParties.length == 1 && !otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag"
+                ng-if="(otherPartiesViewCtrl.isGraceOver != 0)">
+                <span class="sprite default-edit " tooltip="Edit"></span>
+            </a>
+            <a class="margin-left25px"
+                data-ng-click="otherPartiesViewCtrl.deleteSelectedOtherParty(otherPartiesViewCtrl.otherPartyGrid.selectedOtherParties)"
+                data-ng-show="otherPartiesViewCtrl.otherPartyGrid.selectedOtherParties.length > 0 && !otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag "
+                ng-if="(otherPartiesViewCtrl.isGraceOver != 0)">
+                <span class="sprite default-delete " tooltip="Delete"></span>
+            </a>
+        </div>
+        <div class="col-md-7 pull-left paddingRLR">
+            <ul class=" showBy-btns pull-right">
+                <li>
+                    <!--data-ng-change="matterCtrl.filterMatterList(matterCtrl.viewModel.filters.filterText)"-->
+                    <div class="search-input form-control-margin-null" data-ng-show="otherPartiesViewCtrl.showSearch">
+                        <div class="default-searchico sprite"></div>
+                        <input type="text" focus-me="otherPartiesViewCtrl.showSearch"
+                            data-ng-model-options="{ debounce: 0 }"
+                            data-ng-model="otherPartiesViewCtrl.otherDatafilter_Text"
+                            data-ng-change="otherPartiesViewCtrl.filterRetain();" class="form-control">
+                    </div>
+                </li>
+            </ul>
+            <ul class="showBy-btns pull-right">
+                <li class="seperation-filter"></li>
+                <li>
+                    <a><span data-ng-click="otherPartiesViewCtrl.openFiltersApi();" class="sprite default-filter"
+                            tooltip="Filter" tooltip-placement="right"></span></a>
+                </li>
+                <li class="seperation-filter" ng-hide="otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag"></li>
+                <li ng-hide="otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                    <ul>
+                        <li> <a class="sprite default-file pull-right" tooltip="Print"
+                                data-ng-click="otherPartiesViewCtrl.printAll(otherPartiesViewCtrl.filterdOtherParty)"
+                                href="javascript:void(0);">
+                                <span class="sprite default-file "></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="seperation-filter"></li>
+                <li class="search-overlap">
+                    <ul data-ng-hide="otherPartiesViewCtrl.showSearch">
+                        <li><a class="list" data-ng-click="otherPartiesViewCtrl.showSearch = true"><span
+                                    class="sprite default-searchico-menu " tooltip="Search" tooltip-placement="right"
+                                    style="margin-top: 2px;"></span></a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <div class="pull-right">
+                <div class="dropdown">
+                    Sort By :
+                    <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{otherPartiesViewCtrl.getSortOpbyApi(otherPartiesViewCtrl.sortbyapi)}}
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li data-ng-repeat="sortapi in otherPartiesViewCtrl.uisorts">
+                            <a data-ng-click="otherPartiesViewCtrl.sortOtherPartiesApi(sortapi.key);"
+                                data-ng-class="{'active': otherPartiesViewCtrl.sortby == sortapi.key}">{{sortapi.name}}</a>
+                            <ul data-ng-if="sortapi.divider===1">
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="pull-right margin-top10px" id="matterNoteFilter">
+    <clx-filter-tags on-filter-cancel="otherPartiesViewCtrl.otherRelatedTagCancelled"
+        tag-list="otherPartiesViewCtrl.catTags"></clx-filter-tags>
+</div>
+<div class="clearfix"></div>
+<div id="myDiv1"></div>
+
+<div class="report-responsive"
+    data-ng-if="otherPartiesViewCtrl.otherParties.length > 0 && otherPartiesViewCtrl.showGrid == true">
+    <div id="gridHeaderOtherParties">
+        <div class="row header-row cust-header-otherparty"
+            data-ng-if="otherPartiesViewCtrl.filterdOtherParty.length > 0 && otherPartiesViewCtrl.otherParties.length > 0">
+            <div class="cell" data-width="4">
+                <div class="checkbox">
+                    <input type="checkbox" data-ng-model="otherPartiesViewCtrl.otherPartyGrid.selectAll"
+                        data-ng-checked="otherPartiesViewCtrl.allOtherPartyselected()"
+                        data-ng-click="otherPartiesViewCtrl.selectAllOtherParty(otherPartiesViewCtrl.otherPartyGrid.selectAll)" /><label></label>
+                </div>
+            </div>
+            <div class="cell" data-width="30">Other Party/Type</div>
+            <div class="cell" data-width="30">Role & Specialty</div>
+            <div class="cell" data-width="36" ng-if="!otherPartiesViewCtrl.isCollaborationActive">Associated Party /
+                Parties</div>
+            <div class="cell" data-width="25" ng-if="otherPartiesViewCtrl.isCollaborationActive">Associated Party /
+                Parties</div>
+            <div class="cell" data-width="11" ng-if="otherPartiesViewCtrl.isCollaborationActive">Sharing</div>
+        </div>
+    </div>
+    <div class="dashboard-tasks-due" style="overflow-x: hidden;" id="myGrid">
+        <div class="row body-row"
+            data-ng-class="{'selected-grid-row':(otherPartiesViewCtrl.isOtherPartySelected(otherParties.uid))}"
+            ng-repeat="otherParties in otherPartiesViewCtrl.filterdOtherParty = (otherPartiesViewCtrl.otherParties | orderBy:'firstname':otherPartiesViewCtrl.uiasc | filter:otherPartiesViewCtrl.otherPartyFilter | filter:otherPartiesViewCtrl.otherDatafilter_Text)"
+            ng-show="otherPartiesViewCtrl.otherParties.length > 0" grid-size no-padding-for-report-responsive="true">
+            <div class="row body-row">
+                <div class="cell checkbox" cal-width data-width="4">
+                    <input type="checkbox" ng-disabled="otherParties.isOtherRelatedPArty"
+                        data-ng-checked="otherPartiesViewCtrl.isOtherPartySelected(otherParties.uid)"
+                        checklist-model="otherPartiesViewCtrl.otherPartyGrid.selectedOtherParties"
+                        checklist-value="otherParties" /><label></label>
+                </div>
+                <div class="cell cursor-pointer" cal-width data-width="30"
+                    data-ng-click="allParties.openContactCard(otherParties)">
+                    <span style="color: #2a83b1;" tooltip="{{otherParties.firstname}} {{otherParties.lastname}}"
+                        tooltip-append-to-body="true" tooltip-placement="bottom">
+                        {{otherParties.firstname}} {{otherParties.lastname}}</span><br>
+                    <span ng-if="otherParties.isOtherRelatedPArty" ng-repeat="subItem in otherParties.added_bys"
+                        tooltip="{{subItem}}" tooltip-append-to-body="true" tooltip-placement="bottom"> {{subItem}}<span
+                            ng-if="!$last">,</span> </span>
+                </div>
+                <div ng-if="!otherParties.isOtherRelatedPArty">
+                    <div class="cell" cal-width data-width="30"><span
+                            tooltip="{{otherParties.contactrolename}} {{otherParties.specialty ? '& ' + otherParties.specialty : '' }}"
+                            tooltip-append-to-body="true" tooltip-placement="bottom">{{otherParties.contactrolename}}
+                            <br />
+                            {{otherParties.specialty|emptyValDashReplace }}</span></div>
+                    <div class="cell cursor-pointer" cal-width data-width="36"
+                        ng-if="!otherPartiesViewCtrl.isCollaborationActive">
+                        <span style="color: #2a83b1;" data-ng-click="allParties.openContactCard(item)"
+                            ng-repeat="item in otherParties.party_contact_id | unique:'associated_party_id' "
+                            tooltip="{{item.name}}" tooltip-append-to-body="true" tooltip-placement="bottom">
+                            {{item.name}}<span ng-if="!$last">,</span> </span>
+
+                    </div>
+                    <div class="cell cursor-pointer" cal-width data-width="25"
+                        ng-if="otherPartiesViewCtrl.isCollaborationActive">
+                        <span style="color: #2a83b1;" data-ng-click="allParties.openContactCard(item)"
+                            ng-repeat="item in otherParties.party_contact_id | unique:'associated_party_id' "
+                            tooltip="{{item.name}}" tooltip-append-to-body="true" tooltip-placement="bottom">
+                            {{item.name}}<span ng-if="!$last">,</span> </span>
+                    </div>
+                </div>
+
+                <!-- other realted parties -->
+                <div ng-if="otherParties.isOtherRelatedPArty">
+                    <div class="cell" cal-width data-width="30"><span
+                            tooltip="{{otherParties.role}} {{otherParties.specialty ? '& ' + otherParties.specialty : '' }}"
+                            tooltip-append-to-body="true" tooltip-placement="bottom">{{otherParties.role}} <br />
+                            {{otherParties.specialty|emptyValDashReplace }}</span></div>
+                    <div class="cell cursor-pointer" cal-width data-width="36"
+                        ng-if="!otherPartiesViewCtrl.isCollaborationActive">
+                        <span style="color: #2a83b1;" data-ng-click="allParties.openContactCard(subItem)"
+                            ng-repeat="subItem in otherParties.assoParty" tooltip="{{subItem.fname}} {{subItem.lname}}"
+                            tooltip-append-to-body="true" tooltip-placement="bottom">
+                            {{subItem.fname}} {{subItem.lname}}<span ng-if="!$last">,</span> </span>
+                    </div>
+                    <div class="cell cursor-pointer" cal-width data-width="25"
+                        ng-if="otherPartiesViewCtrl.isCollaborationActive">
+                        <span style="color: #2a83b1;" data-ng-click="allParties.openContactCard(subItem)"
+                            ng-repeat="subItem in otherParties.assoParty" tooltip="{{subItem.fname}} {{subItem.lname}}"
+                            tooltip-append-to-body="true" tooltip-placement="bottom">
+                            {{subItem.fname}} {{subItem.lname}}<span ng-if="!$last">,</span> </span>
+                    </div>
+                </div>
+
+                <div class="cell" cal-width data-width="11" ng-if="otherPartiesViewCtrl.isCollaborationActive">
+                    <div class="search-overlap">
+                        <span ng-show="!plaintiff.open"
+                            style="display:inline-block;padding:5px 0px;">{{otherParties.collaboratedEntityFileCount}}
+                            files</span>
+                        <ul class="showBy-btns pull-right">
+                            <li style="margin-top: 12px;">
+                                <a>
+                                    <i class="pull-right glyphicon "
+                                        data-ng-click="otherPartiesViewCtrl.toggleAccordionGroup($index, 'otherParties')"
+                                        ng-class="{'default-upward-arrow sprite': otherPartiesViewCtrl.otherParties['open' + $index], 'default-downward-arrow sprite': !otherPartiesViewCtrl.otherParties['open' + $index]}"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- -->
+            <div class="row col-md-12" ng-show="otherPartiesViewCtrl.otherParties['open' + $index]" ng-repeat-end="">
+
+                <div class="new-table" style="border: 1px solid #E9EEF0;padding: 4px;">
+                    <div class="text-right margin-bottom10px" style="padding-top:10px">
+                        <button class="btn btn-default"
+                            ng-click="otherPartiesViewCtrl.endUserCollaboration(otherParties.collaboratedEntity)"
+                            ng-disabled="otherParties.disableCollaborationFlag">Stop Sharing</button>
+                    </div>
+                    <div class="row bot-bor">
+                        <div class="col-md-3">
+                            <h3>Documents ({{otherParties.collaboratedEntity.documentEntity.documents.length}}) </h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-right padding-0"
+                            ng-show="otherParties.collaboratedEntity.documentEntity != null">
+                            <span>Allow user to add documents</span>
+                            <span class="zero-border" ng-switcher=""
+                                ng-model="otherParties.collaboratedEntity.documentEntity.docPermission"
+                                ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('document', otherParties.collaboratedEntity, otherParties.collaboratedEntity.documentEntity.docPermission)"
+                                style="display:inline-block;vertical-align: middle">
+                                <div class="switch switch-right"
+                                    ng-class="{'switch-left': !model, 'switch-right': model}">
+                                    <div class="switch-button">&nbsp;</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row bot-bor margin-top10px margin-bottom10px">
+                        <div class="col-md-3 margin-top10px"
+                            ng-repeat="doc in otherParties.collaboratedEntity.documentEntity.documents">
+                            <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                <span class="left-div"
+                                    ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('document', otherParties.collaboratedEntity, doc, 'otherRelated-view')">{{doc.doc_name}}</span>
+                                <span class="right-div"></span>
+                                <p><span>Category : </span><span>{{doc.doc_category.doc_category_name}}</span></p>
+                                <!-- <p><span>Associated party :</span><span>{{doc.associated_party.associated_party_name}}</span></p> -->
+                            </div>
+                        </div>
+                        <div class="col-md-12"
+                            ng-show="otherParties.collaboratedEntity.documentEntity.documents == null">
+                            <p class="graytxt"> No shared documents, on sharing a document you can view the
+                                details here. </p>
+                        </div>
+                    </div>
+                    <div class="row bot-bor">
+                        <div class="col-md-3">
+                            <h3>Notes ({{otherParties.collaboratedEntity.noteEntity.notes.length}}) </h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-right padding-0"
+                            ng-show="otherParties.collaboratedEntity.noteEntity != null">
+                            <span>Allow user to add notes</span>
+                            <span class="zero-border" ng-switcher=""
+                                ng-model="otherParties.collaboratedEntity.noteEntity.notePermission"
+                                style="display:inline-block;vertical-align: middle"
+                                ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('note', otherParties.collaboratedEntity, otherParties.collaboratedEntity.noteEntity.notePermission)">
+                                <div class="switch switch-right"
+                                    ng-class="{'switch-left': !model, 'switch-right': model}">
+                                    <div class="switch-button">&nbsp;</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row bot-bor margin-top10px margin-bottom10px notes-list">
+                        <div class="col-md-3 margin-top10px cursor-pointer"
+                            ng-repeat="note in otherParties.collaboratedEntity.noteEntity.notes">
+                            <div class="noteSmall"
+                                ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('note', otherParties.collaboratedEntity, note, 'otherRelated-view')">
+                                <div>
+                                    <strong>{{note.noteCategory.category_name | capitalize}}</strong>
+                                    <strong ng-if="!note.noteCategory.category_name"> Note </strong>
+                                    <p class="word-wrap pre-wrap">{{note.displayText| characters:100: false}}</p>
+                                    <p class="word-wrap pre-wrap" data-ng-show="note.type =='email'">{{note.text|
+                                        characters:100:
+                                        false}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="otherParties.collaboratedEntity.noteEntity.notes == null">
+                            <p class="graytxt">No shared notes, on sharing a note you can view the details here.</p>
+                        </div>
+                    </div>
+                    <div class="row bot-bor">
+                        <div class="col-md-3">
+                            <h3>Events ({{otherParties.collaboratedEntity.eventEntity.events.length}})</h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-right padding-0"
+                            ng-show="otherParties.collaboratedEntity.eventEntity != null">
+                            <span>Allow user to add events</span>
+                            <span class="zero-border" ng-switcher=""
+                                ng-model="otherParties.collaboratedEntity.eventEntity.eventPermission"
+                                ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('event', otherParties.collaboratedEntity, otherParties.collaboratedEntity.eventEntity.eventPermission)"
+                                style="display:inline-block;vertical-align: middle">
+                                <div class="switch switch-right"
+                                    ng-class="{'switch-left': !model, 'switch-right': model}">
+                                    <div class="switch-button">&nbsp;</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row margin-top10px">
+                        <div class="col-md-3 margin-top10px"
+                            ng-repeat="event in otherParties.collaboratedEntity.eventEntity.events">
+                            <div>
+                                <span class="left-div"
+                                    ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('event', otherParties.collaboratedEntity, event, 'otherRelated-view')">{{event.title}}</span>
+                                <span class="right-div"></span>
+                                <p style="margin-bottom:0" ng-if="event.all_day == 1"><span
+                                        style="min-width: 50px;display: inline-block;">Start :
+                                    </span><span>{{event.start | utcDateFilter: 'MM-DD-YYYY' :event.all_day:'start'}}</span>
+                                </p>
+                                <p style="margin-bottom:0" ng-if="event.all_day == 0"><span
+                                        style="min-width: 50px;display: inline-block;">Start :
+                                    </span><span>{{event.start | utcDateFilter: 'MM-DD-YYYY hh:mm A' :event.all_day:'start'}}</span>
+                                </p>
+                                <p ng-if="event.all_day == 1"><span style="min-width: 50px;display: inline-block;">End :
+                                    </span><span>{{event.end
+                                        | utcDateFilter: 'MM-DD-YYYY' :event.all_day:'end'}}</span></p>
+                                <p ng-if="event.all_day == 0"><span style="min-width: 50px;display: inline-block;">End :
+                                    </span><span>{{event.end
+                                        | utcDateFilter: 'MM-DD-YYYY hh:mm A' :event.all_day:'end'}}</span></p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-show="otherParties.collaboratedEntity.eventEntity.events == null">
+                            <p class="graytxt"> No shared events, on sharing a event you can view the details
+                                here.</p>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- -->
+        </div>
+
+    </div>
+
+
+
+</div>
+<div class="text-center margin-top20px"
+    data-ng-show="otherPartiesViewCtrl.loaderFlagStatus && otherPartiesViewCtrl.otherParties.length==0">
+    No other parties have been added.
+</div>
+<!--US#7867 Add new grid on Other parties-->
+<!-- <div class="crow margin-top25px container">
+    <h2 class="pull-left page-title" style="margin-left: 15px;" data-ng-hide="otherPartiesViewCtrl.otherPartyDetails.length == 0">Other
+        related parties</h2>
+    <ul class="showBy-btns pull-right">
+        <li class="seperation-filter"></li>
+        <li>
+            <a><span data-ng-click="otherPartiesViewCtrl.openFiltersUi();" class="sprite default-filter" tooltip="Filter"
+                    tooltip-placement="right"></span></a>
+        </li>
+        <li class="seperation-filter" ng-hide="otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag"></li>
+        <li class="search-overlap" ng-hide="otherPartiesViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+            <ul>
+                <a class="sprite default-file pull-right" style="margin-right: 10px;" tooltip="Print" data-ng-hide="otherPartiesViewCtrl.otherPartyDetails.length == 0"
+                    data-ng-click="otherPartiesViewCtrl.printNewGrid(otherPartiesViewCtrl.filteredotherPartyDetails)"
+                    href="javascript:void(0);">
+                    <span class="sprite default-file "></span>
+                </a>
+            </ul>
+        </li>
+    </ul>
+    <div class="pull-right">
+        <div class="dropdown">
+            Sort By :
+            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{otherPartiesViewCtrl.getSortOpbyUi(otherPartiesViewCtrl.sortbyui)}}
+                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li data-ng-repeat="svalue in otherPartiesViewCtrl.uisorts">
+                    <a data-ng-click="otherPartiesViewCtrl.sortOtherPartiesUi(svalue.key);" data-ng-class="{'active': otherPartiesViewCtrl.sortbyui == svalue.key}">{{svalue.name}}
+                    </a>
+                    <ul data-ng-if="svalue.divider===1">
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> -->
+<!--<div class="paddingRLR flexCont"></div>-->
+<!-- <div class="pull-right margin-top10px">
+    <clx-filter-tags on-filter-cancel="otherPartiesViewCtrl.otherRelatedTagCancelled" tag-list="otherPartiesViewCtrl.otherRelatedtags"></clx-filter-tags>
+</div> -->
+<!-- <div class="report-responsive" data-ng-hide="otherPartiesViewCtrl.otherPartyDetails.length == 0" style="padding: 5px 20px 92px 5px;margin-right:75px"> -->
+<!-- <div>
+        <div class="row header-row cust-header-otherparty">
+            <div class="cell" data-width="25">Other Party</div>
+            <div class="cell" data-width="25">Role & Specialty</div>
+            <div class="cell" data-width="25">Associated Party / Parties</div>
+            <div class="cell" data-width="25" ng-if="!otherPartiesViewCtrl.isCollaborationActive">Type</div>
+            <div class="cell" data-width="15" ng-if="otherPartiesViewCtrl.isCollaborationActive">Type</div>
+            <div class="cell" data-width="10" ng-if="otherPartiesViewCtrl.isCollaborationActive">Sharing</div>
+        </div>
+    </div> -->
+<!-- <div class="dashboard-tasks-due1" style="max-height:180px;overflow-x: hidden;"> -->
+
+<!--| filter:otherPartiesViewCtrl.myFilter -->
+<!-- <div class="row body-row" ng-repeat="item in otherPartiesViewCtrl.filteredotherPartyDetails = (otherPartiesViewCtrl.otherPartyDetails  | orderBy:'fname':otherPartiesViewCtrl.uiasc | filter:otherPartiesViewCtrl.otherPartyFilter)" -->
+<!-- grid-size> -->
+
+<!-- <div class="row body-row">
+
+                <div class="cell cursor-pointer" cal-width data-width="25" data-ng-click="allParties.openContactCard(item)">
+                    <span style="color: #2a83b1;" tooltip="{{item.fname}}  {{item.lname}}" tooltip-append-to-body="true"
+                        tooltip-placement="bottom">{{item.fname}} {{item.lname}} </span></div>
+                <div class="cell" cal-width data-width="25"><span tooltip="{{item.role}} & {{item.specialty|emptyValDashReplace}}"
+                        tooltip-append-to-body="true" tooltip-placement="bottom">{{item.role}} <br />
+                        {{item.specialty|emptyValDashReplace }}</span></div>
+                <div class="cell cursor-pointer" cal-width data-width="25">
+                    <span style="color: #2a83b1;" data-ng-click="allParties.openContactCard(subItem)" ng-repeat="subItem in item.assoParty"
+                        tooltip="{{subItem.fname}} {{subItem.lname}}" tooltip-append-to-body="true" tooltip-placement="bottom">
+                        {{subItem.fname}} {{subItem.lname}}<span ng-if="!$last">,</span> </span>
+                </div>
+                <div class="cell" cal-width data-width="25" ng-if="!otherPartiesViewCtrl.isCollaborationActive">
+                    <span ng-repeat="subItem in item.added_bys" tooltip="{{subItem}}" tooltip-append-to-body="true"
+                        tooltip-placement="bottom"> {{subItem}}<span ng-if="!$last">,</span> </span>
+                </div>
+                <div class="cell" cal-width data-width="15" ng-if="otherPartiesViewCtrl.isCollaborationActive">
+                    <span ng-repeat="subItem in item.added_bys" tooltip="{{subItem}}" tooltip-append-to-body="true"
+                        tooltip-placement="bottom"> {{subItem}}<span ng-if="!$last">,</span> </span>
+                </div>
+                <div>{{otherPartiesViewCtrl.displayOthrPartyCount(otherPartiesViewCtrl.filteredotherPartyDetails.length)}}</div>
+                <div class="cell" cal-width data-width="10" ng-if="otherPartiesViewCtrl.isCollaborationActive">
+                    <div class="search-overlap">
+                        <span ng-show="!plaintiff.open" style="display:inline-block;padding:5px 0px;">{{item.collaboratedEntityFileCount}}
+                            files</span>
+                        <ul class="showBy-btns pull-right">
+                            <li style="margin-top: 12px;">
+                                <a>
+                                    <i class="pull-right glyphicon " data-ng-click="otherPartiesViewCtrl.toggleAccordionGroup($index, 'otherPartyDetails')"
+                                        ng-class="{'default-upward-arrow sprite': otherPartiesViewCtrl.otherPartyDetails['open' + $index], 'default-downward-arrow sprite': !otherPartiesViewCtrl.otherPartyDetails['open' + $index]}"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
+<!-- -->
+<!-- <div class="row col-md-12" ng-show="otherPartiesViewCtrl.otherPartyDetails['open' + $index]" ng-repeat-end=""> -->
+
+<!-- <div class="new-table"> -->
+<!-- <div class="text-right margin-bottom10px" style="padding-top:10px">
+                        <button class="btn btn-default" ng-click="otherPartiesViewCtrl.endUserCollaboration(item.collaboratedEntity)"
+                            ng-disabled="item.disableCollaborationFlag">Stop Sharing</button>
+                    </div> -->
+<!-- <div class="row bot-bor">
+                        <div class="col-md-3">
+                            <h3>Documents ({{item.collaboratedEntity.documentEntity.documents.length}}) </h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-right padding-0" ng-show="item.collaboratedEntity.documentEntity != null">
+                            <span>Allow user to add documents</span>
+                            <span class="zero-border" ng-switcher="" ng-model="item.collaboratedEntity.documentEntity.docPermission"
+                                ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('document', item.collaboratedEntity, item.collaboratedEntity.documentEntity.docPermission)"
+                                style="display:inline-block;vertical-align: middle">
+                                <div class="switch switch-right" ng-class="{'switch-left': !model, 'switch-right': model}">
+                                    <div class="switch-button">&nbsp;</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div> -->
+<!-- <div class="row bot-bor margin-top10px margin-bottom10px"> -->
+<!-- <div class="col-md-3 margin-top10px" ng-repeat="doc in item.collaboratedEntity.documentEntity.documents"> -->
+<!-- <div>
+                                <span class="left-div" ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('document', item.collaboratedEntity, doc, 'otherRelated-view')">{{doc.doc_name}}</span>
+                                <span class="right-div"></span>
+                                <p><span>Category : </span><span>{{doc.doc_category.doc_category_name}}</span></p> -->
+<!-- <p><span>Associated party :</span><span>{{doc.associated_party.associated_party_name}}</span></p> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="col-md-12" ng-show="item.collaboratedEntity.documentEntity == null">
+                            <p class="graytxt"> No collaborated documents, on sharing a document you can view the
+                                details here. </p>
+                        </div> -->
+<!-- </div> -->
+<!-- <div class="row bot-bor">
+                        <div class="col-md-3">
+                            <h3>Notes ({{item.collaboratedEntity.noteEntity.notes.length}}) </h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3 text-right padding-0" ng-show="item.collaboratedEntity.noteEntity != null">
+                            <span>Allow user to add notes</span>
+                            <span class="zero-border" ng-switcher="" ng-model="item.collaboratedEntity.noteEntity.notePermission"
+                                style="display:inline-block;vertical-align: middle" ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('note', item.collaboratedEntity, item.collaboratedEntity.noteEntity.notePermission)">
+                                <div class="switch switch-right" ng-class="{'switch-left': !model, 'switch-right': model}">
+                                    <div class="switch-button">&nbsp;</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div> -->
+<!-- <div class="row bot-bor margin-top10px margin-bottom10px">
+                        <div class="col-md-3 margin-top10px" ng-repeat="note in item.collaboratedEntity.noteEntity.notes">
+                            <div>
+                                <span class="left-div" ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('note', item.collaboratedEntity, note, 'otherRelated-view')"><span
+                                        data-ng-bind-html="note.text | showSafeHtml" class="word-wrap"></span></span>
+                                <span class="right-div"></span>
+                                <p><span>Category : </span><span>{{note.noteCategory.category_name | capitalize}}</span><span
+                                        ng-if="!note.noteCategory.category_name"> Note </span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="item.collaboratedEntity.noteEntity == null">
+                            <p class="graytxt">No collaborated notes, on sharing a note you can view the details here.</p>
+                        </div>
+                    </div> -->
+<!-- <div class="row bot-bor"> -->
+<!-- <div class="col-md-3">
+                            <h3>Events ({{item.collaboratedEntity.eventEntity.events.length}})</h3>
+                        </div> -->
+<!-- <div class="col-md-3"></div> -->
+<!-- <div class="col-md-3"></div> -->
+<!-- <div class="col-md-3 text-right padding-0" ng-show="item.collaboratedEntity.eventEntity != null"> -->
+<!-- <span>Allow user to add events</span> -->
+<!-- <span class="zero-border" ng-switcher="" ng-model="item.collaboratedEntity.eventEntity.eventPermission" -->
+<!-- ng-click="otherPartiesViewCtrl.entityPermissionToggleForMattercollaboration('event', item.collaboratedEntity, item.collaboratedEntity.eventEntity.eventPermission)" -->
+<!-- style="display:inline-block;vertical-align: middle"> -->
+<!-- <div class="switch switch-right" ng-class="{'switch-left': !model, 'switch-right': model}"> -->
+<!-- <div class="switch-button">&nbsp;</div> -->
+<!-- </div> -->
+<!-- </span> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="row bot-bor margin-top10px margin-bottom10px">
+                        <div class="col-md-3 margin-top10px" ng-repeat="event in item.collaboratedEntity.eventEntity.events">
+                            <div>
+                                <span class="left-div" ng-click="otherPartiesViewCtrl.disableSingleEntityForMattercollaboration('event', item.collaboratedEntity, event, 'otherRelated-view')">{{event.event_name}}</span>
+                                <span class="right-div"></span>
+                                <p><span>Start : </span><span>{{event.start | utcDateFilter: 'MM/DD/YYYY'}}</span></p>
+                                <p><span>End :</span><span>{{event.end | utcDateFilter: 'MM/DD/YYYY' }}</span></p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-show="item.collaboratedEntity.eventEntity == null">
+                            <p class="graytxt"> No collaborated events, on sharing a event you can view the details
+                                here.</p>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- -->
+
+<!-- </div> -->
+<!-- <div class="text-center margin-top20px" data-ng-show="otherPartiesViewCtrl.filteredotherPartyDetails.length==0">
+            No other parties have been added.
+            <div>{{otherPartiesViewCtrl.displayOthrPartyCount(otherPartiesViewCtrl.filteredotherPartyDetails.length)}}</div>
+        </div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+</div>
+<!--End of new grid-->
+
+
+
+<!--</div>-->
+
+
+<!-- <div class="row body-row" ng-repeat-start="plaintiff in plaintiffsViewCtrl.plaintiffs" grid-size>
+    <div class="cell" data-width="04">
+        <div ng-if="!plaintiff.open" class="checkbox">
+            <input type="checkbox" data-ng-checked="plaintiff.checked" data-ng-click="plaintiffsViewCtrl.setSelectedPlaintiff(plaintiff)"
+                data-ng-disabled="plaintiff.plaintiff_otherparty_id.length" />
+            <label></label>
+        </div>
+    </div>
+    <div class="cell" data-width="25">
+        <div ng-if="plaintiff.isalive == 0 && plaintiff.estateadminid" class="cursor-pointer" data-ng-click="allParties.openContactCard(plaintiff.estateadminid)">
+            <strong style="color: #2a83b1;">{{plaintiff.estateadminid.firstname}}
+                {{plaintiff.estateadminid.middelname}} {{plaintiff.estateadminid.lastname}}
+                (Administrator)
+            </strong>
+        </div>
+        <div ng-if="plaintiff.isalive != 0 && plaintiff.estateadminid" class="cursor-pointer" data-ng-click="allParties.openContactCard(plaintiff.estateadminid)">
+            <strong style="color: #2a83b1;">{{plaintiff.estateadminid.firstname}}
+                {{plaintiff.estateadminid.middelname}} {{plaintiff.estateadminid.lastname}}
+                (Power Of Attorney)
+            </strong>
+        </div>
+        <div data-ng-click="allParties.openContactCard(plaintiff.contactid)" style="color: #2a83b1;" class="cursor-pointer">{{plaintiff.contactid.firstname}}
+            {{plaintiff.contactid.middelname}} {{plaintiff.contactid.lastname}}</div>
+    </div>
+    <div class="cell" data-width="11">
+        {{plaintiffsViewCtrl.getPlaintiffStatus(plaintiff)}}
+    </div>
+    <div class="cell" data-width="15">
+        <div ng-if="!plaintiff.open">
+            <div ng-if="plaintiff.estateadminid">
+                {{plaintiff.estateadminid.emailid}}
+
+            </div>
+            <div ng-if="!plaintiff.estateadminid">
+                {{plaintiff.contactid.emailid}}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cell" data-width="23">
+        <div ng-if="!plaintiff.open">
+            <div ng-if="plaintiff.estateadminid">
+                <div ng-if="plaintiff.estateadminid.phoneType1 == 1">
+                    <span tooltip-placement="bottom" tooltip="Cell" class="sprite default-contactPhone-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.estateadminid.phoneType1 == 2">
+                    <span tooltip-placement="bottom" tooltip="Home" class="sprite default-contactPhone-home-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.estateadminid.phoneType1 == 3">
+                    <span tooltip-placement="bottom" tooltip="Work" class="sprite default-contactPhone-work-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.estateadminid.phoneType2 == 3">
+                    <span tooltip-placement="bottom" tooltip="Work" class="sprite default-contactPhone-work-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone2}}</span>
+                </div>
+                <div ng-if="plaintiff.estateadminid.phoneType2 == 1">
+                    <span tooltip-placement="bottom" tooltip="Cell" class="sprite default-contactPhone-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone2}}</span>
+                </div>
+                <div ng-if="plaintiff.estateadminid.phoneType2 == 2">
+                    <span tooltip-placement="bottom" tooltip="Home" class="sprite default-contactPhone-home-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.estateadminid.phone2}}</span>
+                </div>
+            </div>
+            <div ng-if="!plaintiff.estateadminid">
+                <div ng-if="plaintiff.contactid.phoneType1 == 1">
+                    <span tooltip-placement="bottom" tooltip="Cell" class="sprite default-contactPhone-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.contactid.phoneType1 == 2">
+                    <span tooltip-placement="bottom" tooltip="Home" class="sprite default-contactPhone-home-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.contactid.phoneType1 == 3">
+                    <span tooltip-placement="bottom" tooltip="Work" class="sprite default-contactPhone-work-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone1}}</span>
+                </div>
+                <div ng-if="plaintiff.contactid.phoneType2 == 3">
+                    <span tooltip-placement="bottom" tooltip="Work" class="sprite default-contactPhone-work-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone2}}</span>
+                </div>
+                <div ng-if="plaintiff.contactid.phoneType2 == 1">
+                    <span tooltip-placement="bottom" tooltip="Cell" class="sprite default-contactPhone-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone2}}</span>
+                </div>
+                <div ng-if="plaintiff.contactid.phoneType2 == 2">
+                    <span tooltip-placement="bottom" tooltip="Home" class="sprite default-contactPhone-home-new pull-left"></span>
+                    <span class="cell contactphonemerge">{{plaintiff.contactid.phone2}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell" data-width="22">
+        <div ng-if="!plaintiff.open" style="width: 80%;float: left;">
+            <span data-ng-show="plaintiff.hasMedicalSummary">
+                <i class=""></i>Available
+            </span>
+            <span data-ng-show="!plaintiff.hasMedicalSummary">
+                <div class="pull-left">
+                    <span class="sprite default-caution"></span>
+                </div>
+                <div class="pull-left caution-text" ng-if="!plaintiff.hasMedicalSummary">
+                    Add medical details
+                </div>
+            </span>
+        </div>
+        <div class="search-overlap">
+            <ul class="showBy-btns pull-right" >
+                <li ng-if="plaintiff.open" ng-hide="plaintiffsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                    <a tooltip-placement="left" tooltip="Print" data-ng-click="plaintiffsViewCtrl.allPartiesPrint(plaintiff)"
+                        href="javascript:void(0);">
+                        <span class="sprite default-file "></span>
+                    </a>
+                </li>
+                <li ng-if="plaintiff.open" ng-hide="plaintiffsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                    <a data-ng-click="plaintiffsViewCtrl.editPlaintiff(plaintiff, $event)" ng-if="plaintiffsViewCtrl.isGraceOver != 0 ">
+                        <span class="sprite default-edit " tooltip-placement="left" tooltip="Edit"></span>
+                    </a>
+                </li>
+                <li ng-if="plaintiff.open" ng-hide="plaintiffsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                    <a data-ng-click="plaintiffsViewCtrl.deleteSelectedPlaintiff(plaintiff, $event)" ng-if="plaintiffsViewCtrl.isGraceOver != 0">
+                        <span class="sprite default-delete" tooltip-placement="left" tooltip="Delete"></span>
+                    </a>
+                </li>
+                <li style="margin-top: 12px;" data-ng-click="plaintiffsViewCtrl.toggleAccordionGroup(plaintiff)">
+                    <a>
+                        <i class="pull-right glyphicon " ng-class="{'default-upward-arrow sprite': plaintiff.open, 'default-downward-arrow sprite': !plaintiff.open}"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div> -->

@@ -1,0 +1,82 @@
+<div class="modal-header clearfix ng-scope">
+    <h1 class="modal-title fl-left">Link Document</h1>    
+    <button class="btn btn-default pull-right"
+     data-ng-click="linkUpDocCtrl.processDocuments(linkUpDocCtrl.linkDocInfo.type ,linkUpDocCtrl.linkDocInfo.isLinkDoc )">
+       Save
+    </button>
+    <button class="btn btn-default btn-styleNone pull-right margin-right10px" data-ng-click="linkUpDocCtrl.close()">Cancel</button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">  
+                <div class="form-group">
+                    <clx-btn-group btn-list="linkUpDocCtrl.selectionLists.isLinkDoc"
+                                ng-click="linkUpDocCtrl.resetDropzone(linkUpDocCtrl.linkDocInfo.isLinkDoc)"
+                                value="linkUpDocCtrl.linkDocInfo.isLinkDoc"></clx-btn-group>
+                    <div class="clearfix"></div>
+                </div>
+        </div>        
+        <div class="col-md-12 margin-top20px" ng-show="linkUpDocCtrl.linkDocInfo.isLinkDoc">
+                <div class="pull-left form-group select-label-correction">
+                        <label style="margin-left: 0;">Select Document :</label>
+                </div> 
+                <div class="col-md-7">
+                        <ui-select ng-model="linkUpDocCtrl.linkDocInfo.selectedDoc"  theme="selectize"
+                        on-select="linkUpDocCtrl.filterExpenses(linkUpDocCtrl.plaintiffid.id,linkUpDocCtrl.plaintiffDefendants, $item.selectedPartyType)">
+                           <ui-select-match placeholder="Select document">
+                               {{$select.selected.doc_name}}
+                           </ui-select-match>
+                           <ui-select-choices 
+                           repeat="item in linkUpDocCtrl.documentsList | filter:{ doc_name:$select.search } | orderBy: 'doc_name'">
+                            <small>
+                              {{item.doc_name}}
+                            </small>
+                         </ui-select-choices>
+                     </ui-select>
+                     <span ng-if="linkUpDocCtrl.documentsList.length == 0" style="color:#ff0000;">
+                            Document list not available                      
+                     </span>                     
+                </div> 
+                    
+        </div>
+       
+        
+        
+        <div class="row-fluid">
+                <div class="col-md-12" ng-show="!linkUpDocCtrl.linkDocInfo.isLinkDoc">
+                        <div id="singlefileuploader" ng-show="!linkUpDocCtrl.linkDocInfo.isLinkDoc">
+                            <div class="file-upload-wrapper word-wrap" ng-click="linkUpDocCtrl.uploadFile('singlefileuploader','batchfileuploader');">
+                                <form  class="dropzone dz-clickable" name="dropzonesingle " id="singledropzone">
+                                    <div class="dz-default">
+                                        <span class="sprite default-document-single-upload"></span>
+                                        <h2 class="margin-top10px" ng-if="linkUpDocCtrl.singlefileUpload==false">Single File Upload</h2>
+                                        <div class="margin-top10px" ng-if="linkUpDocCtrl.singlefileUpload==false" >
+                                            <span>Drop Files here/ </span> Click to upload
+                                        </div>
+                                        <h4 class="margin-top10px" ng-show="linkUpDocCtrl.singleFileName!=''">{{linkUpDocCtrl.singleFileName}} ({{linkUpDocCtrl.singleFileSize}})</h4>
+                                        <div class="progress-with-close">
+                                            <progressbar class="progress active margin-top20px" animate="false" max="100" ng-show="linkUpDocCtrl.singleFileName!=''" value="linkUpDocCtrl.singleFileProgress" type="info"></progressbar>
+                                            <a href="javascript:void(0)" ng-show="linkUpDocCtrl.singleFileName!='' && !linkUpDocCtrl.documentProcessing" ng-click="linkUpDocCtrl.removeUploadingDocument();">
+                                            <span aria-hidden="true" class="sprite default-cross"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-md-12 pull-left" align="left">
+                                    <span id="docError" class="error" ng-show="linkUpDocCtrl.singleuploadError!=''">{{linkUpDocCtrl.singleuploadError}}</span>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div> 
+            
+
+
+           
+
+        
+                  
+            
+        
+    </div>
+</div>

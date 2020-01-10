@@ -1,0 +1,28 @@
+.referred-matters-outer {
+	#report-content
+	{	width: 100%;
+		padding-bottom: 0;
+		.card { height: 65px;
+		padding: 3px 19px 13px;
+		}
+	} 
+.card-seperator-8 {
+	.card {
+		&:last-child {
+			&:before {
+				width: 0;
+			}
+		}
+		&:nth-child(5) {
+			&:before {
+				content: "";
+				width: 1px;
+				height: 60px;
+				background-color: #d1d7dc;
+				position: absolute;
+				left: 0;
+			}
+		}
+	}
+}
+}

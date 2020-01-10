@@ -1,0 +1,32 @@
+<div class=" notes-list margin-top10px ">
+    <div data-ng-show="matterOverview.matterOverviewData.recentNotes.length > 0">
+        <div class="row">
+            <div class="col-md-6" data-ng-repeat="data in matterOverview.matterOverviewData.recentNotes|limitTo:4">
+                <div class="note  " data-ng-class="matterOverview.getNoteClass(data.catid)">
+                    <div class="col-md-12 note-overflow">
+                        <ul class="notes-status">
+                            <li>
+                                <a href="javascript:void(0)" data-ng-show="data.is_important == 1" class="sprite default-alert"></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="sprite" data-ng-class="matterOverview.getNoteIcon(data.catid)"></a>
+                            </li>
+                        </ul>
+                        <strong>{{data.catdes | SentenseCase}}</strong>
+                        <span>{{data.datereceived |utcDateFilter:'MM/DD/YYYY hh:mm A' }}</span>
+                        <p class="ellipsis word-wrap pre-wrap">{{data.plaintext | characters:100: false}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right" data-ng-show="matterOverview.matterOverviewData.recentNotes.length > 0">
+            <a href="#/notes/{{matterOverview.matterId}}">View All</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div
+    class="text-center "
+    data-ng-show="matterOverview.matterOverviewData.recentNotes.length ===0">
+    <p>There are no notes associated with this matter.</p>
+</div>

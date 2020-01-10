@@ -1,0 +1,147 @@
+<style>
+ .dashboard-task li .list-item-height span {
+    word-break: keep-all;
+}
+.list-progress ul li .list-item-wrapper .list-item-height {
+    word-break: keep-all;
+}
+</style>
+
+<div >
+    <div class="remove-border">
+        <div class="relative-container pull-left">
+            <h2>Task Comparison</h2>
+        </div>
+        <div class="child-ul-right  ">
+            <clx-filter-options fiter-opts="dashboardTasks.dailyUsageFilters" on-filter-select="dashboardTasks.filterTasksComparison"
+                selected-filter="dashboardTasks.taskCmpFilter"></clx-filter-options>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="flexCont"></div>
+    <div id="task-cmp" class="task-graph-height"></div>
+</div>
+<div>
+    <div class="pull-right head-padding-10px">
+        <clx-btn-group btn-list="dashboardTasks.tasksFilters" btn-click="dashboardTasks.getOverDueTasks" value="dashboardTasks.selectedTaskFilter"></clx-btn-group>
+    </div>
+    <div class="clearfix"></div>
+    <div class="flexCont"></div>
+</div>
+
+<div class="row margin-top20px">
+    <div class="col-md-6">
+        <h2 class="head-padding-14px">Tasks Due <span>(Next 30 Days)</span></h2>
+        <div class="flexCont"></div>
+
+        <div data-ng-show="dashboardTasks.showNoDataForWeekMsg" class="margin-top10px text-center">
+            No tasks over next month for the applied filter.
+        </div>
+
+        <div class="timeline-padding-row dashboard-tasks-due">
+            <div data-ng-repeat="date in dashboardTasks.dates" class="row-fluid ">
+                <div class="col-md-2 padding-0 text-right">
+
+                    <strong data-ng-show="dashboardTasks.isDateToday(date)">Today</strong>
+                    <br data-ng-if="dashboardTasks.isDateToday(date)" /> {{dashboardTasks.getDisplayDate(date)}}
+                </div>
+                <div class="col-md-10 timeline-heading-padding">
+                    <strong class="timeline-head ">{{dashboardTasks.weeksTasks[date].length}} Tasks</strong>
+                    <div class="flexCont timeline-heading-border"></div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-3" data-ng-class="{'timeline-green-ball':dashboardTasks.isDateToday(date), 'timeline-gray-ball':!dashboardTasks.isDateToday(date)}">
+                    </div>
+                    <div class="col-md-9 timeline-dotted-border timeline-padding">
+
+                        <div class="list-progress list border-none">
+                            <ul>
+                                <li class="row"  data-ng-repeat="data in dashboardTasks.weeksTasks[date]">
+                                    <div class="checkbox pull-left margin-right10px" style="position: relative !important;top: 22px;">
+                                        <input type="checkbox" data-ng-change="dashboardTasks.isTaskSelected(data);" checklist-model="dashboardTasks.taskIds"
+                                            checklist-value="data" />
+                                        <label></label>
+                                    </div>
+                                    <div class="list-item-wrapper">
+                                        <div class="col-md-2 circle-position" data-ng-click="dashboardTasks.goToTask(data)">
+                                            <div class="circle-small text-center">
+                                                <span>{{data.priority|priorityFilter}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 list-item-height" data-ng-click="dashboardTasks.goToTask(data)">
+                                            <span><strong>{{data.intakeName}}</strong><br/>{{data.task_name}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <progress class="progress-bar-divider" data-ng-click="dashboardTasks.goToTask(data)">
+                                            <bar ng-repeat="progress in data.completed track by $index" value="progress.value" type="{{progress.type}}">
+                                            </bar>
+                                        </progress>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12 padding-0">
+            <h2 class="head-padding-14px text-warning pull-left">Overdue Tasks</h2>
+            <div class="pull-right" style="width: 50%;" ng-if="dashboardTasks.taskIds.length > 0">
+                <label class="pull-left margin-top10px">Update Status</label>
+                <ui-select style="width: 65%;float: left;margin-left: 10px;" ng-model="dashboardTasks.status" theme="selectize">
+                    <ui-select-match placeholder="Select status">
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in dashboardTasks.statusList">
+                        <small>{{item}}</small>
+                    </ui-select-choices>
+                </ui-select>
+                <div class="col-md-12 padding-0 margin-top10px pull-right margin-bottom10px text-right" style="margin-right:40px;">
+                    <button type="button" class="small-btn btn btn-default btn-styleNone" ng-click="dashboardTasks.cancelStatus()">Cancel</button>
+                    <button type="button" class="small-btn btn btn-default" ng-click="dashboardTasks.updateStatus()">Confirm</button>
+                </div>
+            </div>
+        </div>
+        <div class="flexCont col-md-12"></div>
+
+        <div data-ng-show="dashboardTasks.noOverdueTask" class="margin-top10px text-center">
+            No overdue tasks for the applied filters.
+        </div>
+
+        <div class="col-md-12 event-sidebar dashboard-tasks-due">
+            <div class="list-progress list border-none">
+                <ul class="dashboard-task">
+                    <li class="row" data-ng-repeat="data in dashboardTasks.overdueTasks">
+                        <div class="checkbox pull-left margin-right10px" style="position: relative !important;padding-top: 10px;">
+                            <input type="checkbox" data-ng-change="dashboardTasks.isTaskSelected(data);" checklist-model="dashboardTasks.taskIds"
+                                checklist-value="data" />
+                            <label></label>
+                        </div>
+                        <div class="list-item-wrapper">
+                            <div class="col-md-2 circle-position" data-ng-click="dashboardTasks.goToTask(data)">
+                                <div class="circle-small text-center">
+                                    <span>{{data.priority|priorityFilter}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-9 list-item-height" data-ng-click="dashboardTasks.goToTask(data)">
+
+                                <span><strong>{{data.intakeName}}</strong><br/>{{data.task_name}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <progress class="progress-bar-divider" data-ng-click="dashboardTasks.goToTask(data)">
+                                <bar ng-repeat="progress in data.completed track by $index" value="progress.value" type="{{progress.type}}">
+                                </bar>
+                            </progress>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

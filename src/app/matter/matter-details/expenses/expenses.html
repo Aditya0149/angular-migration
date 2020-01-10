@@ -1,0 +1,179 @@
+<div class="expenses-wrapper">
+    
+<div class="row medical-info-gridSec margin0">
+    <div class=" pull-left">
+        <div class="paddingRLR clearfix search-overlap">
+            <ul class="showBy-btns pull-right heading-right-buttons "
+                ng-hide="expenses.matterInfo.archivalMatterReadOnlyFlag">
+                <li tooltip="Add">
+                    <a href="javascript:void(0)"
+                        data-ng-click="expenses.addExpensesInfo('add',matterDetail.plaintiffDefendants)"
+                        ng-if="(expenses.isGraceOver != 0)">
+                        <span class="sprite default-plus">&nbsp;</span>
+                    </a>
+                </li>
+                <li class="seperation"
+                    data-ng-show="expenses.expensesGrid.selectedItems.length > 0 && expenses.isGraceOver != 0"></li>
+                <li>
+                    <ul class="">
+                        <li>
+                            <a href="javascript:void(0)"
+                                data-ng-show="expenses.expensesGrid.selectedItems.length > 0  && expenses.isGraceOver != 0 "
+                                data-ng-click="expenses.deleteExpense(expenses.expensesGrid.selectedItems)">
+                                <span tooltip="Delete" class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)" data-ng-show="expenses.expensesGrid.selectedItems.length > 0"
+                                data-ng-click="expenses.unlinkDocument(expenses.expensesGrid.selectedItems)">
+                                <span tooltip="unlink" class="sprite default-unlink col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"
+                                data-ng-show="expenses.expensesGrid.selectedItems.length === 1  && expenses.isGraceOver != 0"
+                                data-ng-click="expenses.addExpensesInfo('edit',matterDetail.plaintiffDefendants,expenses.expensesGrid.selectedItems)">
+                                <span tooltip="Edit" class="sprite default-edit "></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"
+                                data-ng-show="matterDetail.showViewDoc(expenses.expensesGrid.selectedItems,'expense_document_id')">
+                                <open-doc
+                                    doc-id="{{[{doc_id:expenses.expensesGrid.selectedItems[0]['expense_document_id']}]}}">
+                                </open-doc>
+                            </a>
+                        </li>
+                        <!-- US16929: Expense Manager (Quickbooks integration) -->
+                        <!-- Icon displayed when user subscribe Expense Manager from Markeplace -->
+                        <li data-ng-if="isExpenseActive">
+                            <a href="javascript:void(0)"
+                                data-ng-click="expenses.exportToExpenseManager(expenses.expensesGrid.selectedItems)"
+                                data-ng-show="expenses.expensesGrid.selectedItems.length > 0  && expenses.isGraceOver != 0">
+                                <span tooltip="Export to Expense Manager" tooltip-append-to-body="true"
+                                    class="export-to-expense-mgr col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class=" pull-right">
+        <ul class="showBy-btns heading-right-buttons pull-right">
+            <li class="seperation-filter" ng-hide="expenses.matterInfo.archivalMatterReadOnlyFlag"></li>
+            <li tooltip="Print" ng-hide="expenses.matterInfo.archivalMatterReadOnlyFlag">
+                <a data-ng-click="expenses.printExpense(matterDetail.plaintiffDefendants, expenses.plaintiffid)">
+                    <span class="sprite default-file "></span>
+                </a>
+            </li>
+            <li class="paddingLR-10px" ng-hide="expenses.matterInfo.archivalMatterReadOnlyFlag">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="export-menu" data-toggle="dropdown" aria-expanded="true">
+                        <span tooltip="Export" class="sprite default-sharedown sortby-icons"></span>
+                    </a>
+                    <ul class="dropdown-menu divider-alt username-dropdown"
+                        role="menu" aria-labelledby="export-menu">
+                        <li class="full-width" data-ng-click="expenses.downloadExpense(expenses.plaintiffid)">
+                            <a href="javascript:void(0)">All expenses</a>
+                        </li>
+                        <li class="full-width" data-ng-click="expenses.downloadAPExpense(expenses.plaintiffid)">
+                            <a href="javascript:void(0)">Plaintiff(s) expenses/liens</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <form class="form-inline pull-right">
+
+            <div class="form-group select-label-correction">
+                <label>Show records of</label>
+
+                <ui-select ng-model="expenses.plaintiffid" theme="selectize"
+                    on-select="expenses.filterExpenses(expenses.plaintiffid.id,matterDetail.plaintiffDefendants, $item.selectedPartyType)">
+                    <ui-select-match placeholder="Enter Name">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="matterDetail.groupPlaintiffDefendants"
+                        group-filter="['All','Plaintiffs','Defendants','Other Parties']"
+                        repeat="item in matterDetail.plaintiffDefendants | filter:{ name:$select.search } | orderBy: 'name'">
+                        <small>
+                            {{item.name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+
+        </form>
+        <div class="total-amount-main" data-ng-if="expenses.expensesList.expenses.length > 0">
+            <div>
+                <b>Total</b>
+                <span class="total-amount-sepretor"></span>
+            </div>
+            <div class="lable">Expense:
+                <span>{{expenses.expenseTotal.expenseamount || expenses.expenseTotal.expenseamount == 0 ? "$" : ""}}{{expenses.expenseTotal.expenseamount| sumOfValue:'expenseamount' |number:2}}</span>
+            </div>
+            <div class="lable">Paid:
+                <span>{{expenses.expenseTotal.paidamount || expenses.expenseTotal.paidamount == 0 ? "$" : ""}}{{expenses.expenseTotal.paidamount| sumOfValue:'paidamount' |number:2}}</span>
+            </div>
+            <div class="lable">Outstanding:
+                <span>{{expenses.expenseTotal.outstandingamount || expenses.expenseTotal.outstandingamount == 0 ? "$" : ""}}{{expenses.expenseTotal.outstandingamount| sumOfValue:'outstandingamount'|number:2}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div
+        class="gridStyle" data-ng-grid="expenses.gridOptions">
+    </div>-->
+
+<div class="report-responsive pb-65" data-ng-if="expenses.expensesList.expenses.length > 0">
+    <div class="row header-row">
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-model="expenses.expensesGrid.selectAll"
+                data-ng-checked="expenses.allUsersSelected()"
+                data-ng-click="expenses.selectAllUsers(expenses.expensesGrid.selectAll)" />
+            <label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in ::expenses.expensesGrid.headers" data-width={{header.dataWidth}}
+            data-ng-class="{'text-right':((header.field[0].prop == 'expense_amount')|| (header.field[0].prop == 'paid_amount') || (header.field[0].prop == 'outstandingamount'))}">
+            <span ng-if="header.displayName != 'Memo'"> {{header.displayName}} </span>
+        </div>
+    </div>
+    <div class="row body-row " data-ng-class="{'selected-grid-row':expenses.isUserSelected(data.expense_id) }"
+        data-ng-repeat="data in expenses.expensesList.expenses" grid-size>
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-checked="expenses.isUserSelected(data.expense_id)"
+                checklist-model="expenses.expensesGrid.selectedItems" checklist-value="data" />
+            <label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in expenses.expensesGrid.headers" data-width={{header.dataWidth}}>
+            <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in header.field"
+                data-ng-class="{'display-table-cell':field.inline,'cursor-pointer':field.cursor,'text-right':((field.prop == 'expense_amount')|| (field.prop == 'paid_amount') || (field.prop == 'outstandingamount'))}"
+                cell-data="{{data}}" field="{{field}}" render-cell>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="text-center" data-ng-if="expenses.expensesList.expenses.length==0">
+    No data available.
+</p>
+
+<div class="compose-wrap" ng-if="expenses.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :expenses.compose, '' : !expenses.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="expenses.firmData.API === 'JAVA'"
+    data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :expenses.compose, '' : !expenses.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>
+</div>

@@ -1,0 +1,262 @@
+<style>
+.custom-input-list ul.dropdown-menu
+{
+max-height: 49vh
+}
+.dropdown-menu{overflow-y: auto;overflow-x: hidden;max-height: 320px;width: 90%;}
+</style>
+
+<div class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px"
+                 data-ng-click="sidebarCtrl.resetPage()"
+                href="javascript:void(0)">Reset
+            </a>      
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div class="content-class-popup">
+    <div class="row-fluid sidebar-header">
+        <div class="page-title-border-links clearfix subnav  heading-with-button-bottom-padding">
+            <ul>
+                <li>
+                    <a href="javascript:void(0);"
+                        ng-class="{' activeLink': sidebarCtrl.eventClick == 1}"
+                        ng-click="sidebarCtrl.allPosts(1);sidebarCtrl.clientCumEnable = true; sidebarCtrl.clientCumDisable = false">All Posts</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        ng-class="{' activeLink': sidebarCtrl.eventClick == 0}"
+                        ng-click="sidebarCtrl.following(0);sidebarCtrl.clientCumEnable = true; sidebarCtrl.clientCumDisable = false">Following</a>
+                </li>
+                <li ng-show="sidebarCtrl.launchpadAccess && isPortalEnabled">
+                    <a href="javascript:void(0);"
+                        ng-class="{' activeLink': sidebarCtrl.eventClick == 2}"
+                        ng-click="sidebarCtrl.clientCommunication(2); sidebarCtrl.clientCumEnable = false; sidebarCtrl.clientCumDisable = true">Plaintiff Messages<span ng-show="sidebarCtrl.messageCount > 0">({{sidebarCtrl.messageCount | numberFixedLen:2}})</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-if="sidebarCtrl.clientCumEnable">
+    <div class="row margin-top10px paddingLR-10px">
+        <div class="col-md-4 ">
+            <label>Enter Message</label>
+            <textarea data-ng-model="sidebarCtrl.postMessageText"
+                class="form-control ng-pristine ng-valid ng-touched height32"
+                rows="1"></textarea>
+        </div>
+
+        <div class="col-md-4 custom-input-list">
+            <label>Tag a Matter</label>
+            <div class="search-input">
+                <div class="default-searchico sprite"></div>
+                <input type="text"
+                    name="matterid"
+                    class="form-control"
+                    data-ng-model-options="{ debounce: 300 }"
+                    placeholder="Search Matter"
+                    typeahead="row.matterid as row.name+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMatters($viewValue)"
+                    typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplay($model)"
+                    typeahead-on-select="sidebarCtrl.getTagAMatter()"
+                    data-ng-model="sidebarCtrl.getTagMatterId" />
+            </div>
+        </div>
+
+        <div class=" col-md-4 margin-top20px">
+            <button data-ng-click="sidebarCtrl.postMessage()" 
+                data-ng-disabled="(sidebarCtrl.isGraceOver != 1)"
+                class="btn  btn-default">
+                Post</button>
+        </div>
+    </div>
+    <div class="flexCont margin-top10px"></div>
+    <div class="row margin-top10px  custom-input-list"
+        ng-if="sidebarCtrl.followingFlag">
+        <div class="col-md-8">
+            <p class="text-right  margin-top10px">Show Posts From</p>
+        </div>
+        <div class=" col-md-4 pull-right">
+            <div class="search-input">
+                <div class="default-searchico sprite"></div>
+                <input type="text"
+                    name="matterid"
+                    class="form-control"
+                    data-ng-model-options="{ debounce: 300 }"
+                    placeholder="All Matters"
+                    typeahead="row.matterid as row.name for row in sidebarCtrl.searchShowPostFrom($viewValue)"
+                    typeahead-input-formatter="sidebarCtrl.typeAHeadShowPostFrom($model)"
+                    typeahead-on-select="sidebarCtrl.getSHowPostFrom()"
+                    data-ng-model="sidebarCtrl.showPostFromMatterid" />
+            </div>
+        </div>
+    </div>
+    <div class="flexCont margin-top5px" ng-if="sidebarCtrl.followingFlag"></div>
+    <div id="main-event" ng-if="sidebarCtrl.displayDataFlag" class="col-md-12 margin-top20px">
+        <ul>
+            <li class="col-md-12 post-border" data-ng-repeat="data in sidebarCtrl.displayData">
+                <div class="col-md-1 profile-pic">
+                    <img data-ng-src="{{data.user_photo}}"
+                        class="sidebar-post-photo"
+                        width="50px" height="50px" />
+                </div>
+                <div class="col-md-2">
+                    <div><strong>{{data.created_name}}</strong></div>
+                    <div class="margin-top5px">{{data.created|utcDateFilter: 'hh:mm A'}}</div>
+                    <div>{{data.created|utcDateFilter: 'MMM DD, YYYY'}}</div>
+                </div>
+                <div class="col-md-7">
+                    <strong>
+                        <label>Matter: </label>
+                    </strong>    
+                        <a href="javascript:void(0);" 
+                                tooltip="{{data.matter_name}}"
+                                tooltip-append-to-body="true"  
+                                tooltip-placement="top-center"
+                                data-ng-click="sidebarCtrl.goToMatter(data.matter_id)">
+                                {{data.matter_name}}</a>
+                    
+                    <pre class="pre-default" data-ng-hide="data.nid == sidebarCtrl.postToEdit.nid">{{data.body_value}}</pre>
+                    <div data-ng-show="data.nid == sidebarCtrl.postToEdit.nid">
+                        <textarea type="text"
+                            focus-me="data.nid == sidebarCtrl.postToEdit.nid"
+                            class="form-control" data-ng-model="sidebarCtrl.postToEdit.body_value" ></textarea>
+                        <button data-ng-click="sidebarCtrl.saveEditedPost(sidebarCtrl.postToEdit, $event)"
+                            data-ng-disabled="(sidebarCtrl.isGraceOver != 1)"
+                            class="btn btn-default  margin-top10px ">
+                            Save</button>
+                        <button data-ng-click="sidebarCtrl.cancelEdit($event)"
+                            class="btn btn-default btn-styleNone margin-top10px ">
+                            Cancel</button>
+                    </div>
+                    <ul class="showBy-btns sidebar-btns ">
+                        <li>
+                            <a ng-if="(data.user_following == 'unfollowing')" data-ng-click="sidebarCtrl.followPost(data.nid, $index)" class=" margin-top10px ">
+                                <span class="sprite default-follow"></span>Follow  Post</a>
+                        </li>
+                        <li>
+                            <a ng-if="(data.user_following == 'following')" data-ng-click="sidebarCtrl.unFollowPost(data.nid, $index)" class=" margin-top10px ">
+                                <span class="sprite small-cancel-icon"></span>UnFollow</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-ng-click="sidebarCtrl.commentButtonClick(data.nid)">
+                                <span class="sprite default-comment"></span>Comment</a>
+                        </li>
+                    </ul>
+                    <div class="margin-top20px"></div>
+                    <div ng-if="(sidebarCtrl.addCommentFlag && sidebarCtrl.addCommentPostId == data.nid)">
+                        <label>Please enter your comment</label>
+                        <textarea data-ng-model="sidebarCtrl.newCommentText"
+                            focus-me="(sidebarCtrl.addCommentFlag && sidebarCtrl.addCommentPostId == data.nid)"
+                            class="form-control ng-pristine ng-valid ng-touched" rows="2"></textarea>
+                        <button  data-ng-disabled="(sidebarCtrl.isGraceOver != 1)" data-ng-click="sidebarCtrl.saveComment(data.nid, $index)" class="btn btn-default  margin-top10px ">Save</button>
+                        <button data-ng-click="sidebarCtrl.cancelComment(data.nid, $index)" class="btn btn-default btn-styleNone margin-top10px ">Cancel</button>
+                    </div>
+
+                    <div ng-if="sidebarCtrl.followingFlag" class="margin-top20px" ng-repeat="comment in data.comments">
+                        <!--<button ng-if ="(comment.can_delete ==1)">111</button>
+                        <button ng-if ="(comment.can_delete ==0)">000</button>-->
+                        <div class="col-md-12 padding-0">
+                            <div class="col-md-1 profile-pic-small">
+                                <img data-ng-src="{{comment.user_photo}}" class="sidebar-comment-photo" />
+                            </div>
+                            <div class="col-md-9">
+                                <div><strong>{{comment.name}}</strong></div>
+                                <!--<div>{{comment.created | utcDateFilter: 'hh:mm A MMM DD,YYYY'}}</div>-->
+                                <div>
+                                    <small>{{comment.created|utcDateFilter: 'hh:mm A'}}</small>
+                                    <span class="paddingLR-10px"></span>
+                                    <small>{{comment.created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                </div>
+                                <div class="margin-top10px pre-default">{{comment.comment_body_value}}</div>
+                            </div>
+                        </div>
+                        <button style="margin-left: 40px;" ng-if="(comment.can_delete ==1)" ng-disabled="sidebarCtrl.isGraceOver != 1" data-ng-click="sidebarCtrl.deleteComment(data.nid, comment.cid, $index)" class="btn btn-default margin-top10px ">Delete</button>
+                    </div>
+
+                    <div data-ng-show="(!sidebarCtrl.followingFlag && data.comments.length>=1 && sidebarCtrl.displayAllCommentsPostId!=data.nid )" class="margin-top20px">
+                        <div class="row">
+                            <div class="col-md-1 profile-pic-small">
+                                <img data-ng-src="{{data.comments[0].user_photo}}" class="sidebar-comment-photo" />
+                            </div>
+                            <div class="col-md-9">
+                                <div><strong>{{data.comments[0].name}}</strong></div>
+                                <!--<div>{{data.comments[0].created | utcDateFilter: 'hh:mm A MMM DD,YYYY'}}</div>-->
+                                <div>
+                                    <small>{{data.comments[0].created|utcDateFilter: 'hh:mm A'}}</small>
+                                    <span class="paddingLR-10px"></span>
+                                    <small>{{data.comments[0].created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                </div>
+                                <div class="margin-top10px">{{data.comments[0].comment_body_value}}</div>
+                            </div>
+                        </div>
+                        <button ng-if="(data.comments[0].can_delete ==1)" data-ng-click="sidebarCtrl.deleteComment(data.nid, data.comments[0].cid, $index)" class="btn btn-default margin-top10px ">Delete</button>
+                    </div>
+
+                    <div data-ng-show="(!sidebarCtrl.followingFlag && data.comments.length!='' && sidebarCtrl.displayAllCommentsFollowingTabFlag &&
+                                    sidebarCtrl.displayAllCommentsPostId==data.nid)"
+                        class="margin-top20px" ng-repeat="comment in data.comments">
+                        <div class="row">
+                            <div class="col-md-1 profile-pic-small">
+                                <img data-ng-src="{{comment.user_photo}}" class="sidebar-comment-photo" />
+                            </div>
+                            <div class="col-md-9">
+                                <div><strong>{{comment.name}}</strong></div>
+                                <!--<div>{{comment.created | utcDateFilter: 'hh:mm A MMM DD,YYYY'}}</div>-->
+                                <div>
+                                    <small>{{comment.created|utcDateFilter: 'hh:mm A'}}</small>
+                                    <span class="paddingLR-10px"></span>
+                                    <small>{{comment.created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                </div>
+                                <div class="margin-top10px">{{comment.comment_body_value}}</div>
+                            </div>
+                        </div>
+                        <button ng-if="(comment.can_delete ==1)" data-ng-click="sidebarCtrl.deleteComment(data.nid, comment.cid, $index)" class="btn btn-default margin-top10px ">Delete</button>
+                    </div>
+
+                    <div ng-if="!sidebarCtrl.followingFlag">
+                        <div data-ng-show="($index != sidebarCtrl.indexVal && data.comments.length>1)">
+                            <a href="javascript:void(0);" ng-click="sidebarCtrl.displayAllComments(data.nid, $index)">Show all comments</a>
+                        </div>
+                    </div>
+
+                    <!-- <div ng-if="!sidebarCtrl.followingFlag">
+                        <div data-ng-show="($index != sidebarCtrl.indexVal && data.comments.length>1)">
+                            <a href="#" ng-click="sidebarCtrl.displayAllComments(data.nid, $index)">Show all comments</a>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="col-md-2">
+                    <a class="margin-left25px" href="javascript:void(0)"
+                        data-ng-show="sidebarCtrl.showEditDelete(data) && (sidebarCtrl.isGraceOver != 0)"                     
+                        data-ng-click="sidebarCtrl.editPost(data, $event);">
+                        <span class="sprite default-edit" tooltip="Edit Post">&nbsp;</span>
+                    </a>
+                    <a class="margin-left25px" href="javascript:void(0)"
+                        data-ng-show="sidebarCtrl.showEditDelete(data) && (sidebarCtrl.isGraceOver != 0)"
+                        data-ng-click="sidebarCtrl.deletePost(data, $event);">
+                        <span class="sprite default-delete" tooltip="Delete Post">&nbsp;</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row margin-topbottom10px text-center " ng-if="sidebarCtrl.moreFlag">
+        <a href="javascript:void(0)" class="" data-ng-click="sidebarCtrl.displayMorePosts()">More</a>
+    </div>
+
+    <p class="text-center margin-top10px" data-ng-if="sidebarCtrl.showPostFromDataFlag">
+        No data for the applied filters
+    </p>
+    <p class="text-center margin-top10px" data-ng-if="!sidebarCtrl.displayNoDataFound && !sidebarCtrl.displayDataFlag">
+        No data for the applied filters
+    </p>
+    
+    </div>
+    <div ng-if="sidebarCtrl.clientCumDisable">
+        <div ng-include="'app/message/message.html'" ng-controller="MessageController as message"></div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="mms-doc-wrapper">
+
+    <div class="modal-header clearfix ng-scope" style="height: 70px;">
+        <h2 class="pull-left page-title col-md-4 padding-0">Document</h2>
+
+        <div class="pull-right">
+            <button data-ng-click="sidebarCtrl.closeDocModal()" class="close fl-right"><span
+                    aria-hidden="true">×</span></button>
+        </div>
+        <div class="pull-right margin-right10px margin-top4px">
+            <a data-ng-click="sidebarCtrl.generateDocLink();" tooltip-placement="right" tooltip="Download"
+                class="download-btn sprite pull-right"></a>
+        </div>
+        <div class="pull-right margin-right10px margin-top4px">
+            <button ng-if="sidebarCtrl.singleDoc.isIncoming == 1 && !sidebarCtrl.singleDoc.docMatterId"
+                data-ng-click="sidebarCtrl.closeDocModal()" class="btn btn-default btn-style">Cancel</button>
+
+            <button ng-if="sidebarCtrl.singleDoc.isIncoming == 1 && !sidebarCtrl.singleDoc.docMatterId"
+                data-ng-click="sidebarCtrl.saveDocModal()" class="btn btn-default btn-default">
+                Save</button>
+        </div>
+    </div>
+    <div class="modal-body" style="max-height: 480px;min-height: 480px;overflow-y: hidden;padding-top:5px">
+        <div class="text-center" ng-if="sidebarCtrl.singleDoc.isIncoming == 0">
+            <label>Document Name</label>
+            <div>{{sidebarCtrl.singleDoc.documentName}}</div>
+        </div>
+        <div class="row-fluid">
+            <!--Single file upload-->
+            <div ng-class="{'col-md-12' :sidebarCtrl.singleDoc.isIncoming == 0, 'col-md-8' : sidebarCtrl.singleDoc.isIncoming == 1}">
+                <div ng-if="(sidebarCtrl.singleDoc.ext == 'pdf'|| sidebarCtrl.singleDoc.ext =='txt')"
+                    class="margin-top10px">
+                    <iframe ng-show="sidebarCtrl.viewable"
+                        ng-src="{{sidebarCtrl.docModel.mediaURL}}" height="300" width="100%"></iframe>
+                </div>
+                <div class="image-div"
+                    ng-if="(sidebarCtrl.singleDoc.ext =='png' || sidebarCtrl.singleDoc.ext =='jpg' || sidebarCtrl.singleDoc.ext =='jpeg')">
+                    <img data-ng-src="{{sidebarCtrl.docModel.mediaURL}}" width="100%;" />
+                </div>
+                <div class="clearfix"></div>
+                <p class="text-center margin-top30px" data-ng-show="!sidebarCtrl.viewable">
+                    This document is not viewable.
+                </p>
+            </div>
+            <div class="col-md-4" ng-if="sidebarCtrl.singleDoc.isIncoming == 1">
+                <div ng-if="!sidebarCtrl.singleDoc.docMatterId">
+                    <div class="margin-top20px clear-block row" ng-if="onLauncher && isIntakeActive">
+                        <div class="col-md-12">
+                            <div ng-repeat="info in sidebarCtrl.eventFor" class="padding-0">
+                                <div class="radio padding-0 margin0 pull-left margin-right20px"
+                                    ng-init="sidebarCtrl.selectedModeForSidebarMMS = '0'">
+                                    <input class="margin0" type="radio"
+                                        data-ng-model="sidebarCtrl.selectedModeForSidebarMMS"
+                                        data-ng-click="sidebarCtrl.docModel.matterid ='';" ng-value="info.id" />
+                                    <label class="margin0" style="line-height: inherit;">&nbsp;{{info.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row">
+                        <label>Document Name</label><span class="compulsary-mark">*</span>
+                        <input tabindex="1" type="text" ng-model="sidebarCtrl.docModel.documentName"
+                            placeholder="Enter document name" class="form-control">
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row typeahead-dd"
+                        ng-if="sidebarCtrl.selectedModeForSidebarMMS == '0'">
+                        <label>Matter Name</label><span class="compulsary-mark">*</span>
+                        <input type="text" name="matterid" class="form-control"
+                            data-ng-model-options="{ debounce: 300 }" placeholder="Search Matter"
+                            typeahead="row.matterid as removeunwantedhtml(row.name)+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMattersForDoc($viewValue)"
+                            typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForDoc($model)"
+                            data-ng-model="sidebarCtrl.docModel.matterid" />
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row typeahead-dd"
+                        ng-if="sidebarCtrl.selectedModeForSidebarMMS == '1'">
+                        <label>Intake Name</label><span class="compulsary-mark">*</span>
+                        <input data-ng-model="sidebarCtrl.docModel.matterid" type="text" name="intakeId"
+                            class="form-control " data-ng-model-options="{ debounce: 300 }" placeholder="Search Intake"
+                            typeahead="row.intakeId as removeunwantedhtml(row.intakeName) + row.dateIntake for row in sidebarCtrl.searchIntakesForDoc($viewValue,0)"
+                            typeahead-input-formatter="sidebarCtrl.formatIntakeTypeaheadDisplayForDoc($model)" />
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row">
+                        <label>Document Category</label><span class="compulsary-mark">*</span>
+                        <ui-select tabindex="4" ng-model="sidebarCtrl.docModel.category" data-ng-required="true"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select Category...">
+                                {{$select.selected.doc_category_name}} </ui-select-match>
+                            <ui-select-choices
+                                repeat="category.doc_category_id as category in sidebarCtrl.documentCategories| filter:{doc_category_name:$select.search}| orderBy: 'doc_category_name'">
+                                <small> {{category.doc_category_name}} </small> </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div ng-if="sidebarCtrl.singleDoc.docMatterId">
+                    <div class="margin-top20px clear-block col-md-12 row">
+                        <label>Document Name:</label><span class="compulsary-mark"></span>
+                        <span>{{sidebarCtrl.docModel.documentName}}</span>
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row"
+                        ng-if="sidebarCtrl.singleDoc.docIsIntake == 0">
+                        <label>Matter Name:</label><span class="compulsary-mark"></span>
+                        <span>{{sidebarCtrl.docModel.matterid}}</span>
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row"
+                        ng-if="sidebarCtrl.singleDoc.docIsIntake == 1">
+                        <label>Intake Name:</label><span class="compulsary-mark"></span>
+                        <span>{{sidebarCtrl.docModel.matterid}}</span>
+                    </div>
+                    <div class="margin-top20px clear-block col-md-12 row">
+                        <label>Document Category:</label><span class="compulsary-mark"></span>
+                        <span>{{sidebarCtrl.docModel.category}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer" style="height: 10px"></div> -->
+</div>

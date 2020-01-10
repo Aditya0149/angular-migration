@@ -1,0 +1,93 @@
+<div class="row alert-danger retrieve-main" ng-show="matter.matterInfo.archivalMatterReadOnlyFlag && matter.matterInfo.matter_archive_status==2 && !matter.retrievePending && matter.matterOverview.isGraceOver == 1">
+    <div><p>To perform any action you need to retrieve this matter</p> <span class="retrieve-alert-icon sprite"></span> <a href="javascript:void(0)" data-ng-click="matter.retrieveMatter(matter.matterInfo.matter_id)">Retrieve Now</a></div> 
+</div>
+<div class="row alert-danger retrieve-main" ng-show="(matter.matterInfo.archivalMatterReadOnlyFlag && matter.matterInfo.matter_archive_status==3) || matter.retrievePending">
+    <div><p>This matter is retrieving back to your matter manager </p></div> 
+</div>
+<div class="col-md-12 paddingRLR">
+    <div class="col-md-12 pull-left paddingRLR dropdown create" ng-class="{'custom-matter-name-width' :matter.isMatterOverview}" ng-if="matter.matterInfo.matter_name">
+        <h1 tooltip-placement="bottom-left" append-to-body="true" tooltip="{{matter.matterInfo.matter_name}}" class="ellipsis-nowrap">
+            {{matter.matterInfo.matter_name}}
+        </h1>
+
+        <span class="heading-left-title media-object">File #:
+            <strong append-to-body="true" tooltip="{{matter.matterInfo.file_number}}">{{matter.matterInfo.file_number |
+                characters:15:
+                true}}
+            </strong> | Index/Docket#:
+            <strong append-to-body="true" tooltip="{{matter.matterInfo.index_number}}">{{matter.matterInfo.index_number
+                |
+                characters:15: true}}
+            </strong> | DOI:
+            <strong append-to-body="true" tooltip="{{matter.matterInfo.intake_date}}">{{matter.matterInfo.intake_date}}</strong>
+            | Primary Plaintiff:
+            <strong class="cur-pointer saved-search-link" append-to-body="true" tooltip="{{matter.matterInfo.primary_plaintiff}}"
+                data-ng-click="matter.openContactCard({contactid : matter.matterInfo.plaintiff_contactid})">{{matter.matterInfo.primary_plaintiff
+                | characters:10: true}}</strong> | DOB:
+            <strong append-to-body="true" tooltip="{{matter.matterInfo.date_birth}}">{{matter.matterInfo.date_birth}}</strong>
+        </span>
+
+    </div>
+    <div class="pull-right paddingRLR clearfix search-overlap" ng-if="matter.isMatterOverview" ng-class="{'search-overlap-width' :matter.isMatterOverview}">
+        <ul class="showBy-btns pull-right heading-right-buttons" ng-hide="matter.matterInfo.archivalMatterReadOnlyFlag">
+            <li>
+                <a data-ng-click="matter.matterOverview.openEditmatterview({matterId:matter.matterOverview.matterId})"
+                    ng-if="matter.matterOverview.isGraceOver != 0">
+                    <span has-access="{{matter.matterOverview.matterPermissions[0].E}}" class="sprite default-edit-new"
+                        tooltip="Edit Matter"></span>
+                </a>
+            </li>
+
+            <li>
+                <a data-ng-click="matter.matterOverview.printMatterOverview()" href="javascript:void(0);">
+                    <span class="sprite default-file-new " tooltip="Print"></span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" data-ng-click="matter.matterOverview.deleteMatter(matter.matterOverview.matterId)"
+                    data-ng-show="matter.matterOverview.isGraceOver != 0">
+                    <span has-access="{{matter.matterOverview.matterPermissions[0].D}}" class="sprite default-delete-new col-md-offset-1"
+                        tooltip="Delete Matter">&nbsp;</span>
+                </a>
+            </li>
+            
+            <li data-ng-show="matter.matterOverview.isMD && false" class="seperation"></li>
+
+
+            <li ng-if="matter.matterOverview.isReferralExchange==1 && matter.matterOverview.isReferredlactive == 1 && matter.matterOverview.matter_status !='Closed'">
+                <a href="#/refer-out/{{matter.matterOverview.matterId}}">
+                    <span class="sprite default-refer-new" tooltip="Refer Out" tooltip-placement="top"></span>
+                </a>
+            </li>
+
+            <li ng-if="matter.matterOverview.isCollaborationActive" data-ng-click="matter.goToMatterCollaboration()">
+                <a   href="javascript:void(0)">
+                    <span  class="sprite default-userprofile-new cur-pointer" tooltip="Share" tooltip-placement="top">&nbsp;</span>
+                </a>
+            </li>
+            
+			<li>
+                <a data-ng-show="(matter.matterOverview.matterOverviewData.matterInfo.status_name=='Closed' && matter.isAdmin && matter.matterOverview.isDigiArchivalSub && matter.matterOverview.isGraceOver == 1)">
+                    <span class="sprite default-archive-matter col-md-offset-1" data-ng-click="matter.matterOverview.showArchivePopup(matter.matterOverview.matterOverviewData.matterInfo)"
+                        tooltip="Archive" tooltip-placement="right">&nbsp;</span>
+                </a>
+            </li>
+
+            <!--end-->
+            <!-- if user subscription expired-->
+            <span class="dropdown  height-user-dropdown" 
+            data-ng-show="(matter.matterOverview.matterOverviewData.matterInfo.status_name=='Closed' && !matter.isAdmin && matter.matterOverview.isDigiArchivalSub && matter.matterOverview.isGraceOver == 1)">
+            
+                <!--Bug#6675 -->
+                <a class="dropdown-toggle col-md-offset-1" id="dropdownMenu5" tooltip = "Archive" tooltip-placement = "right" data-toggle="dropdown" aria-expanded="true">
+                    <span class="sprite default-archive-matter">&nbsp;</span>
+                </a>
+                <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown matter-info-dropdown" role="menu" aria-labelledby="dropdownMenu5">
+                    <li class="li-small"><span class="default-alert sprite"></span>&nbsp;&nbsp;<small>Please contact the subscribing managing partner to archive matters.</small></li>
+                </ul>
+            </span>
+            <!-- end-->       
+        </ul>
+    </div>
+</div>
+<div class="paddingRLR flexCont col-md-12 margin-top10px"></div>

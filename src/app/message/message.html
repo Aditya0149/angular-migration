@@ -1,0 +1,330 @@
+<style>
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio+.radio,
+    .checkbox+.checkbox {
+        margin-top: 10px !important;
+    }
+
+    .document-edit-list-view li {
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .notification-popup-content {
+        padding: 0 15px !important;
+        min-height: inherit !important;
+        max-height: inherit !important;
+    }
+
+    ul.document-popup-list li.select {
+        background: #f3e2ac;
+    }
+
+    .dropdownSetting {
+        top: -182px !important;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.175) !important;
+    }
+
+    .new-custom-search-box .dropdown-menu {
+        width: 85% !important;
+    }
+
+    .selectedGroup {
+        background: #cccccc;
+    }
+</style>
+<div>
+    <div class="col-md-4 message-sidebar padding-0">
+        <!-- <div class="col-md-12 margin-bottom10 plaintiff-post-by">
+            <label>Show Posts by Matter</label>
+            <ui-select ng-model="message.allMatter" theme="selectize">
+                <ui-select-match placeholder="Select matter...">
+                    <span>{{$select.selected.matter_name}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="item.matter_id as item in message.plaintiffMatterList | filter:{matter_name:$select.search}" ng-trim='false'>
+                    <span>{{item.matter_name}}</span>
+                </ui-select-choices>
+            </ui-select>
+        </div> -->
+        <div class="search-box new-custom-search-box">
+            <span class="sprite default-searchico-menu"></span> 
+            <input type="search" placeholder="Search Matter" class="form-control ng-pristine ng-valid ng-touched"
+                data-ng-model-options="{ debounce: 500 }" typeahead="row as row.matter_name for row in message.searchMatters($viewValue)"
+                typeahead-input-formatter="message.formatTypeaheadDisplay($model)" data-ng-required="true" data-ng-model="message.mid"
+            />
+        </div>
+        <div class="dashboard-tasks-due plaintiff-messages-main" style="overflow-x: hidden;">
+            <div class="plaintiff-messages-list">
+                <div class="">
+                    <!-- Start: Incoming Message Group List -->
+                    <div class="col-md-12" ng-show="message.IGLSideFlag">
+                        <div class="row">
+                            <ul>
+                                <li class="col-md-12 post-border" data-ng-repeat="group in message.IMGList | orderBy: 'lastModifiedTime'" ng-class="{selectedGroup: $index == message.selectedGroup}"  >
+                                    <div ng-click="message.goToMessageListFromIMGL(group);message.selectedGroup = $index;group.notificationCount = 0" style="cursor: pointer">
+                                        <div class="col-md-10">
+                                            <div style="margin: 0px 0px 0px 0px;">
+                                                <strong>Chat Title: </strong> {{group.groupTitle}}
+                                                <br>
+                                                <strong>Matter: </strong> {{group.matterName}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <ul class="showBy-btns">
+                                                <li style="height:35px;">
+                                                    <a href="javascript:void(0)">
+                                                        <span class="sprite default-comment" style="margin-top: 4px;"></span>
+                                                        <span style="top:-43px;left: 11px;margin-left:initial;" class="ng-binding notification-messages-number" ng-show="group.notificationCount > 0">{{group.notificationCount}}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- <div ng-show="message.IMGList.length == 0" class="col-md-12 text-center margin-top20px"> No Group found.</div> -->
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- End: Incoming Message Group List  -->
+
+                    <div class="row margin-top10px">
+                        <ul ng-show="(message.GCFlag || message.GCCFlag || message.addGCFlag) && !message.IGLSideFlag">
+                            <li class="col-md-12 post-border" style="padding: 10px 0 15px 0;">
+                                <div class="col-md-1" data-ng-click="message.messageWindowFlag(false, false, false, false, true);message.mid = '';message.selectedGroup = 1000;" style="border: none !important;margin-left:5px;">
+                                    <a class="" href="javascript:void(0)">
+                                        <span class="sprite marketplace-back-btn">&nbsp;</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-7" style="width: 66%;"></div>
+                                <div class="col-md-1" data-ng-click="message.addGroupChat();message.selectedGroup = 1000" style="border: none !important;margin-left:25px;">
+                                    <a class="" href="javascript:void(0)">
+                                        <span class="sprite default-plus">&nbsp;</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul ng-show="!message.IGLSideFlag">
+                            <li class="col-md-12 post-border" data-ng-repeat="group in message.groupList" ng-class="{selectedGroup: $index == message.selectedGroup}"  >
+                                <div ng-click="message.goToMessageList(group);message.selectedGroup = $index;group.notificationCount = 0" style="cursor: pointer" >
+                                    <div class="col-md-10">
+                                        <div style="margin: 0px 0px 0px 0px;">
+                                            <strong>Chat Title: </strong> {{group.groupTitle}}
+                                            <br>
+                                            <strong>Matter: </strong> {{group.matterName}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <ul class="showBy-btns">
+                                            <li style="height:35px;">
+                                                <a href="javascript:void(0)">
+                                                    <span class="sprite default-comment" style="margin-top: 4px;"></span>
+                                                    <span style="top:-43px;left: 11px;margin-left:initial;" class="ng-binding notification-messages-number" ng-show="group.notificationCount > 0">{{group.notificationCount}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <div ng-show="message.groupList.length == 0" class="col-md-12 text-center margin-top20px"> No Chat found.</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Start: Chat -->
+    <div class="col-md-8 padding-0" ng-show="message.GCCFlag">
+        <div class="message-scroll-panel dashboard-tasks-due" id="messageList" callback-fn="message.scrollUp()" scroll-new-to-bottom="message.messageDetails">
+            <div class="message-panel" ng-repeat="item in message.messageDetails | orderBy: 'messageDateTime' " id="anchor{{item.id}}">
+                <div class="message-line-text" ng-if="item.titleDate != ''">
+                    <span>{{item.titleDate}}</span>
+                </div>
+                <div class="" ng-if="item.fromType == 'CP' || (item.fromType == 'CL' && item.authorId != message.userDetails.uid)" style="display: block;clear: both;float:left;margin-top: 20px;" id={{item.messageDateTime}}>
+                    <span style="color:#51a7f9 !important;font-size:12px !important;margin-left: 5px;" class="ng-binding">
+                        <b>{{item.authorName}}</b>
+                    </span>
+                    <div class="left-block">
+                        <p style="white-space: pre-wrap;" class="ng-binding">{{item.message}}</p>
+                        <!-- <p class="ng-binding">{{item.message}}</p> -->
+                    </div>
+                    <div style="clear: both;color:#677885 !important;font-size:12px !important;margin-left: 5px !important;">{{item.messageDateTime | utcDateFilter: 'hh:mm A'}}</div>
+                </div>
+                <div class="" ng-if="item.fromType == 'CL' && item.authorId == message.userDetails.uid" style="display: block;clear: both;float:right;margin-top: 20px;" id={{item.messageDateTime}}>
+                    <span style="color:#f38f18 !important;font-size:12px !important;margin-right: 10px;float: right;" class="ng-binding">
+                        <b>You</b>
+                    </span>
+                    <div class="right-block">
+                        <p style="white-space: pre-wrap;" class="ng-binding">{{item.message}}</p>
+                        <!-- <p class="ng-binding">{{item.message}}</p> -->
+                    </div>
+                    <div style="clear:both;padding: 0 10px !important;">
+                        <div class="pull-left send-sms-txt" style="margin-right: 15px;margin-top: 2px;" ng-if="item.sms_status != '' && item.sms_status != undefined">Send via SMS to: {{item.sms_status}}</div>
+                        <div class="pull-right" style="color:#677885 !important;font-size:12px !important;">{{item.messageDateTime | utcDateFilter: 'hh:mm A'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="write-message-block">
+            <div class="col-md-10 padding-0 write-message-line">
+                <div class="message-textarea">
+                    <textarea rows="2" cols="70" ng-model="message.sendMessage" ng-keyup="message.checkChange($event)" placeholder="Write your comment..."
+                        data-ng-maxlength="1024" maxlength="1024" class="ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+                </div>
+            </div>
+            <div class="col-md-2 margin-top60px">
+                <button class="btn btn-danger pull-right" ng-click="message.sendNewMessages(message.messageDetails,message.mid)" data-ng-disabled="message.sendMessage == '' || message.sendMessage == undefined ">Send</button>
+            </div>
+        </div>
+    </div>
+    <!-- End: Chat -->
+    <!-- Start: Group Chat List  -->
+    <div class="col-md-8" ng-show="(message.GCFlag && !message.addGCFlag)">
+        <div class="row margin-top20px">
+            <!-- <ul>
+                <li class="col-md-12 post-border" style="padding: 10px 0 15px 0;">
+                    <div class="col-md-11"></div>
+                    <div class="col-md-1" data-ng-click="message.addGroupChat();">
+                        <a class="" href="javascript:void(0)">
+                            <span class="sprite default-plus" data-placement="left" tooltip="Add Group Chat">&nbsp;</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li class="col-md-12 post-border" data-ng-repeat="group in message.groupList">
+                    <div class="col-md-12" ng-click="message.goToMessageList(group)" style="cursor: pointer">
+                        <div class="col-md-10">
+                            <div style="margin: 8px 0px 0px 0px;">
+                                <strong>Group Name: </strong> {{group.groupTitle}}
+                            </div>
+                        </div>
+                        <div class="pull-right" style="width: 5.5%;">
+                            <ul class="showBy-btns">
+                                <li style="margin-right: -27px;">
+                                    <a href="javascript:void(0)">
+                                        <span class="sprite default-comment" style="margin-top: 4px;"></span>
+                                        <span style="top:-25px;left: -16px;margin-left:initial;" class="ng-binding notification-messages-number" ng-show="group.notificationCount > 0">{{group.notificationCount}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <div ng-show="message.groupList.length == 0" class="col-md-12 text-center margin-top20px"> No Group found.</div>
+            </ul> -->
+        </div>
+    </div>
+    <!-- Start: Group Chat List  -->
+    <!-- Start: Add Group Chat Form -->
+    <div class="col-md-8" ng-show="message.addGCFlag" data-ng-form="message.addGCForm">
+        <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title">
+            <h1 class="pull-left page-title ng-binding">Add Chat Title</h1>
+        </div>
+        <div class="row form-group margin-top20px">
+            <div class="col-md-3">
+                <label>
+                    Chat Title:
+                    <span class="compulsary-mark">*</span>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <textarea type="text" style="width: 100%;" class="form-control" data-ng-model="message.createGroup.groupTitle" name="groupChatName"
+                    required></textarea>
+                <!-- <div data-ng-if="message.addGCForm.groupChatName.$dirty" ng-messages="message.addGCForm.groupChatName.$error">
+                    <div class="error" ng-message="required">
+                        Chat title is required
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3 margin-top5px">
+                <label>
+                    Assign Plaintiff:
+                    <span class="compulsary-mark">*</span>
+                </label>
+            </div>
+            <div class="col-md-9 custom-form-control for-94per">
+                <ui-select class="width100" multiple ng-model="message.createGroup.cpUsers" on-select="message.addAssignedUser(message.assignedUsers)"
+                    on-remove="message.removeAssignedUser(calendarEventCtrl.assignedUsers,$item)" theme="select2" ng-required="true">
+                    <ui-select-match placeholder="Select Plaintiff">
+                        {{$item.user_name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="plaintiff.user_id as plaintiff in message.uniqMatterPlaintiff  | filter:{user_name:$select.search} | orderBy: 'first_name' ">
+                        <small>{{plaintiff.user_name}} </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="row form-group form-margin pull-right">
+            <div class="col-md-12 margin-top10px">
+                <div>
+                    <button data-ng-click="message.saveGroupChat(message.createGroup)" data-ng-disabled="message.addGCForm.$invalid" class="btn btn-default  margin-top10px ">
+                        Save</button>
+                    <button data-ng-click="message.cancelGroupChat();" class="btn btn-default btn-styleNone margin-top10px ">
+                        Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Add Group Chat Form -->
+    <!-- Start: Incoming Message Group List -->
+    <div class="col-md-8" ng-show="message.IGLFlag">
+        <div class="row margin-top20px">
+            <!-- <ul>
+                <li class="col-md-12 post-border" data-ng-repeat="group in message.IMGList | orderBy: 'lastModifiedTime'">
+                    <div class="col-md-12" ng-click="message.goToMessageListFromIMGL(group)" style="cursor: pointer">
+                        <div class="col-md-10">
+                            <div style="margin: 8px 0px 0px 0px;">
+                                <strong>Group Name: </strong> {{group.groupTitle}}
+                            </div>
+                        </div>
+                        <div class="pull-right" style="width: 5.5%;">
+                            <ul class="showBy-btns">
+                                <li style="margin-right: -27px;">
+                                    <a href="javascript:void(0)">
+                                        <span class="sprite default-comment" style="margin-top: 4px;"></span>
+                                        <span style="top:-25px;left: -16px;margin-left:initial;" class="ng-binding notification-messages-number" ng-show="group.notificationCount > 0">{{group.notificationCount}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <div ng-show="message.groupList.length == 0" class="col-md-12 text-center margin-top20px"> No Group found.</div>
+            </ul> -->
+        </div>
+    </div>
+    <!-- End: Incoming Message Group List  -->
+
+
+</div>

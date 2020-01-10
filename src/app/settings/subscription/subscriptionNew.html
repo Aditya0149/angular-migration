@@ -1,0 +1,37 @@
+<div id="report-content" >
+    <!--<div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li ng-click="subscriptionctrl.activateTab('pra', subscriptionctrl.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : subscriptionctrl.activeTab.pra}">Billing</a>
+            </li>
+            <li ng-click="subscriptionctrl.activateTab('planselection', subscriptionctrl.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : subscriptionctrl.activeTab.planselection}">Subscription</a>
+           </li>                            
+        </ul>
+    </div>-->
+
+    
+
+
+    <div>
+        <div data-ng-controller='PlanSelectionCtrl as planselectionctrl'
+             data-ng-include="'app/settings/planSelection/plan-selection.html'">
+        </div>
+    </div>
+    
+    <div>
+        <div data-ng-controller='PracticeAndBillingCtrl as practiceAndBillingCtrl'
+            data-ng-include="'app/settings/practiceAndBilling/practice&Billing.html'">
+        </div>
+    </div>
+   
+</div>
+
+
+
+
+
+
+
+
+    

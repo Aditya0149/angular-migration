@@ -1,0 +1,848 @@
+<div>
+    <div id="profileView" ng-show="profileCtrl.viewProfileFlag">
+
+        <div class="row  margin0  margin-top10px">
+            <div class="col-md-12 paddingRLR">
+                <div class="col-md-8 pull-left paddingRLR dropdown create">
+                    <h2 class="pull-left page-title ng-binding">My Profile</h2>
+                </div>
+
+                <div class="col-md-4 pull-right paddingRLR clearfix search-overlap">
+                    <div class=" pull-right ">
+                        <ul class="showBy-btns pull-right heading-right-buttons">
+                            <li>
+                                <a>
+                                    <span class="sprite default-edit" ng-click="profileCtrl.editProfile()"
+                                        tooltip="Edit"></span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="paddingRLR flexCont"></div>
+
+        <div class="row">
+            <div class="margin-top20px col-md-3">
+                <img alt="No image uploaded" data-ng-src="{{profileCtrl.uploadImageUrl}}" width="200" />
+            </div>
+
+            <div class="col-md-5 profile-view">
+
+                <div class="row margin-top20px">
+                    <div class="col-md-5">Name:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.fullName}}</strong>
+                    </div>
+
+                </div>
+
+                <div class="row margin-top20px ">
+                    <div class="col-md-5">Office Number:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.office_number | usphoneNumberFormat}}</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="row margin-top20px ">
+                    <div class="col-md-5">Mobile Number:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.phone | usphoneNumberFormat}}</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="row margin-top20px "
+                    ng-if="isSmsActiveUI && !hideSMS && profileCtrl.viewProfileData.sms_contact_number!=false">
+                    <div class="col-md-5">Client Messenger Number:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.sms_contact_number | usphoneNumberFormat}}</strong>
+
+                    </div>
+
+                </div>
+
+                <div class="row margin-top20px">
+                    <div class="col-md-5">Role:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.userRoleObj.role}}</strong>
+                    </div>
+                </div>
+
+                <div class="row margin-top20px">
+                    <div class="col-md-5">Firm Name:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.firm_name}}</strong>
+                    </div>
+                </div>
+
+                <div class="row margin-top20px">
+                    <div class="col-md-5">Firm Size:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.firm_size}}</strong>
+                    </div>
+                </div>
+
+                <div class="row margin-top20px">
+                    <div class="col-md-5 ">Email:</div>
+                    <div class="col-md-7 value ">
+                        <strong>{{profileCtrl.viewProfileData.email}}</strong>
+                    </div>
+                </div>
+                <div class="row margin-top20px">
+                    <div class="col-md-5">Email Signature:</div>
+                    <div class="col-md-7 value dashboard-tasks-due disk-bullet signature-box">
+                        <p data-ng-bind-html="profileCtrl.viewProfileData.email_sig | showSafeHtml" class="word-wrap">
+                        </p>
+                    </div>
+                </div>
+                <div class="row margin-top20px">
+                    <div class="col-md-5 ">Email Reminders:</div>
+                    <div class="col-md-2 checkbox">
+                        <input type="checkbox" ng-model="profileCtrl.reminderType.task" ng-true-value="1"
+                            ng-false-value="0" disabled>
+                        <label><strong>Tasks </strong></label>
+                    </div>
+                    <div class="col-md-2 checkbox">
+                        <input type="checkbox" ng-model="profileCtrl.reminderType.event" ng-true-value="1"
+                            ng-false-value="0" disabled>
+                        <label><strong>Events</strong> </label>
+                    </div>
+                </div>
+                <div class="row margin-top20px" ng-if="isSmsActiveUI">
+                    <div class="col-md-5 ">Text Reminders:</div>
+                    <div class="col-md-2 checkbox">
+                        <input type="checkbox" ng-model="profileCtrl.textReminderType.task" ng-true-value="1"
+                            ng-false-value="0" disabled>
+                        <label><strong>Tasks </strong></label>
+                    </div>
+                    <div class="col-md-2 checkbox">
+                        <input type="checkbox" ng-model="profileCtrl.textReminderType.event" ng-true-value="1"
+                            ng-false-value="0" disabled>
+                        <label><strong>Events</strong> </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View page for my profile -->
+            <div class="col-md-4 margin-top20px">
+                <div
+                    data-ng-if="profileCtrl.viewProfileData.google_drive || profileCtrl.viewProfileData.dropbox ||profileCtrl.viewProfileData.onedrive">
+                    <div class="row">
+                        <b>Document Synchronization </b><br>
+                        <div data-ng-if="profileCtrl.viewProfileData.google_drive">
+                            <div class="row margin-top10px margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">Google Drive</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_googleDrive"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-ng-if="profileCtrl.viewProfileData.dropbox">
+                            <div class="row margin-top10px margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">Dropbox</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_dropBox"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-ng-if="profileCtrl.viewProfileData.onedrive">
+                            <div class="row margin-top10px margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">OneDrive</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_onedrive"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- <div data-ng-if="profileCtrl.viewProfileData.docusign && profileCtrl.userRoleObj.is_admin == 1">
+                    <div class="row">
+                        <b>Electronic Signatures</b><br>
+                        <div data-ng-if="profileCtrl.viewProfileData.docusign">
+                            <div class="row margin-top10px margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">DocuSign</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_eSignature"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+
+
+                <div
+                    data-ng-if=" profileCtrl.viewProfileData.google_calendar==1 || profileCtrl.viewProfileData.is_Ical==1 ||profileCtrl.viewProfileData.ms_exchange==1 ">
+                    <div class="row margin-top20px">
+                        <b>Calendar Integration</b><br>
+                        <div data-ng-if="profileCtrl.viewProfileData.google_calendar==1">
+                            <div class="row margin-top10px margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">Google Calendar</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_googleCalender"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--<div data-ng-if="profileCtrl.configuredinfo.is_Ical==1">  
+                    <div class="row margin-left5px">
+                        <div class="col-md-6 custom-document-field padding-left-5">iCal</div>
+                        <div class="col-md-2 custom-switch-slide">
+                            <span class="form-control zero-border switch-gear-disabled" ng-switcher ng-model="profileCtrl.configuredinfo.is_Ical"></span>
+                        </div>
+                    </div>
+                   </div>-->
+                        <div data-ng-if="profileCtrl.viewProfileData.ms_exchange==1">
+                            <div class="row margin-left5px">
+                                <div class="col-md-6 custom-document-field padding-left-5">MS Outlook</div>
+                                <div class="col-md-2 custom-switch-slide">
+                                    <span class="form-control zero-border switch-gear-disabled" ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_microsoftExchange"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- US16929: Expense Manager (Quickbooks integration) -->
+                <div data-ng-if="profileCtrl.viewProfileData.expense_manager==1">
+                    <div class="row margin-top20px ">
+                        <b>Expense Manager</b><br>
+                        <div>
+                            <div class="row margin-left5px ">
+                                <div class="col-md-6 custom-document-field padding-left-5 ">Quickbooks</div>
+                                <div class="col-md-2 custom-switch-slide ">
+                                    <span class="form-control zero-border switch-gear-disabled " ng-switcher
+                                        ng-model="profileCtrl.configuredinfo.is_quickBooks"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-ng-if=" profileCtrl.viewProfileData.is_allevent==1 ">
+                    <div class="row margin-top20px ">
+                        <b>Events Synchronization</b><br>
+
+                        <div class="row margin-left5px ">
+                            <div class="col-md-6 custom-document-field padding-left-5 ">All Events</div>
+                            <div class="col-md-2 custom-switch-slide ">
+                                <span class="form-control zero-border switch-gear-disabled " ng-switcher
+                                    ng-model="profileCtrl.viewProfileData.is_allevent "></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-top20px ">
+                    <div data-ng-if="profileCtrl.isSetEmail ">
+                        <div class="row margin-left5px ">
+
+                            <div class="col-md-6 padding-left-10px paddingTB-5px ">
+                                <b>eMail via CloudLex</b>
+                            </div>
+                            <div class="col-md-2 custom-switch-slide ">
+                                <span class="form-control zero-border switch-gear-disabled " ng-switcher
+                                    ng-model="profileCtrl.configuredinfo.is_emailVCloudlex "></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--<div class="row margin-top20px ">
+                  <div class="row margin-left5px ">
+                    <div class="col-md-6 padding-left-10px paddingTB-5px ">
+                        <b>Custom File Number</b>
+                    </div>
+                    <div class="col-md-2 custom-switch-slide ">
+                        <span class="form-control zero-border switch-gear-disabled " ng-switcher ng-model="profileCtrl.info.is_CustomFileNumber "></span>
+                    </div>
+                  </div>
+                </div>-->
+            </div>
+
+        </div>
+
+    </div>
+
+    <div ng-show="!profileCtrl.viewProfileFlag ">
+        <ng-form name="profileCtrl.profileForm ">
+            <div class=" clearfix margin0 page-title-border row heading-with-button-bottom-padding ">
+                <h2 class="pull-left page-title ng-binding ">Edit Profile</h2>
+                <div class=" pull-right ">
+                    <button ng-click="profileCtrl.cancelEdit() " class="btn btn-default btn-styleNone ">
+                        Cancel</button>
+
+                    <button class="btn btn-default " data-ng-click="profileCtrl.saveProfile() "
+                        data-ng-disabled="profileCtrl.profileForm.$invalid || (!profileCtrl.confirmPasswordFlag && profileCtrl.confirmPassword.length>0)">
+                        Save
+                    </button>
+                </div>
+            </div>
+
+            <div class="row profile">
+                <div class="col-md-5">
+                    <div class="margin-top10px">
+                        <strong>My Profile</strong>
+                    </div>
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            First Name<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true" name="fname_name"
+                            data-ng-model="profileCtrl.editProfileData.fname">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.fname_name.$dirty && profileCtrl.profileForm.fname_name.$invalid"></span>
+                        <div data-ng-if="profileCtrl.profileForm.fname_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.fname_name.$error">
+                            <div class="error" ng-message="required">
+                                First name is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Last Name<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true" name="lname_name"
+                            data-ng-model="profileCtrl.editProfileData.lname">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.lname_name.$dirty && profileCtrl.profileForm.lname_name.$invalid"></span>
+                        <div data-ng-if="profileCtrl.profileForm.lname_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.lname_name.$error">
+                            <div class="error" ng-message="required">
+                                Last name is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Firm Name<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true" name="firmName_name"
+                            ng-disabled="true" data-ng-model="profileCtrl.editProfileData.firm_name">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.firmName_name.$dirty && profileCtrl.profileForm.firmName_name.$invalid"></span>
+                        <div data-ng-if="profileCtrl.profileForm.firmName_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.firmName_name.$error">
+                            <div class="error" ng-message="required">
+                                Firm name is required
+                            </div>
+                            <div class="error" ng-message="pattern"
+                                ng-show="profileCtrl.profileForm.firmName_name.$error">
+                                Invalid firm name
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Firm Size<span class="compulsary-mark">*</span>
+                        </label>
+
+                        <input type="text" class="form-control" data-ng-required="true"
+                            ng-disabled="(profileCtrl.disableFirmSize)" name="firmSize_name" ng-pattern="/^[0-9]*$/"
+                            maxlength="10" data-ng-model="profileCtrl.editProfileData.firm_size">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.firmSize_name.$dirty && profileCtrl.profileForm.firmSize_name.$invalid"></span>
+                        <div data-ng-if="profileCtrl.profileForm.firmSize_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.firmSize_name.$error">
+                            <div class="error" ng-message="required">
+                                Firm size is required
+                            </div>
+                            <div class="error" ng-message="pattern"
+                                ng-show="profileCtrl.profileForm.firmSize_name.$error">
+                                Invalid firm size
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Office Number<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true"
+                            data-ng-disabled="profileCtrl.disableOfficeNumber"
+                            ng-pattern="/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/"
+                            placeholder="Enter office number" maxlength="16" usphone-number-format name="phone_office"
+                            data-ng-model="profileCtrl.editProfileData.office_number">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.phone_office.$dirty && profileCtrl.profileForm.phone_office.$invalid"></span>
+                        <div data-ng-show="profileCtrl.profileForm.phone_office.$dirty"
+                            ng-messages="profileCtrl.profileForm.phone_office.$error">
+                            <div class="error" ng-message="required">
+                                Office number is required
+                            </div>
+                            <div class="error" ng-message="pattern"
+                                ng-show="profileCtrl.profileForm.phone_office.$error">
+                                Invalid office number
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Mobile Number<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true"
+                            ng-pattern="/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/"
+                            placeholder="Enter mobile number" maxlength="16" usphone-number-format name="phone_name"
+                            data-ng-model="profileCtrl.editProfileData.phone">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.phone_name.$dirty && profileCtrl.profileForm.phone_name.$invalid"></span>
+                        <div data-ng-show="profileCtrl.profileForm.phone_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.phone_name.$error">
+                            <div class="error" ng-message="required">
+                                Mobile number is required
+                            </div>
+                            <div class="error" ng-message="pattern" ng-show="profileCtrl.profileForm.phone_name.$error">
+                                Invalid mobile number
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group relative-container margin-top10px"
+                        ng-if="isSmsActiveUI && !hideSMS && profileCtrl.viewProfileData.sms_contact_number!=false">
+                        <label>
+                            Client Messenger Number:
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="false"
+                            ng-pattern="/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/"
+                            placeholder="Enter client messenger number" maxlength="16" usphone-number-format
+                            name="phone_txtname" data-ng-model="profileCtrl.editProfileData.sms_contact_number"
+                            disabled="disabled">
+
+
+                    </div>
+
+
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Role
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true" ng-disabled="true"
+                            name="role_name" data-ng-model="profileCtrl.userRoleObj.role">
+                    </div>
+
+
+
+
+
+                    <div class="form-group relative-container margin-top10px">
+                        <label>
+                            Email<span class="compulsary-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control" data-ng-required="true" ng-disabled="true"
+                            name="email_name" data-ng-model="profileCtrl.editProfileData.email">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="profileCtrl.profileForm.email_name.$dirty && profileCtrl.profileForm.email_name.$invalid"></span>
+                        <div data-ng-if="profileCtrl.profileForm.email_name.$dirty"
+                            ng-messages="profileCtrl.profileForm.email_name.$error">
+                            <div class="error" ng-message="required">
+                                Email is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group relative-container margin-top10px editor">
+                        <label>Email Signature</label>
+                        <!-- <wysiwyg textarea-id="emailSig" textarea-class="new-editor-height globle-note-color form-control"
+                            textarea-name="text" textarea-required ng-model="profileCtrl.editProfileData.email_sig"
+                            enable-bootstrap-title="true"></wysiwyg> -->
+                        <text-angular detect-change-editor-text-angular
+                            class="margin-top10px textarea-100-per full-textarea" ta-toolbar="[['bold','italics','strikeThrough','underline'],['justifyLeft','justifyCenter','justifyRight'],
+            ['ul', 'ol']]" name="emailSig" ta-maxlength="2048" ng-model="profileCtrl.editProfileData.email_sig">
+                        </text-angular>
+
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="margin-top10px">
+                                <strong>Modify Your Password</strong>
+                            </div>
+
+                            <div class="form-group relative-container margin-top10px">
+                                <label>
+                                    Current Password
+                                </label>
+                                <input type="password" class="form-control" ng-model="profileCtrl.currentPassword"
+                                    ng-required="profileCtrl.checkAllPasswordEntered(profileCtrl.currentPassword, profileCtrl.password, profileCtrl.confirmPassword)">
+                            </div>
+                            <div class="form-group relative-container margin-top10px">
+                                <label>New Password </label>
+                                <input type="password" class="form-control" minlength="6" maxlength="25"
+                                    ng-required="profileCtrl.checkAllPasswordEntered(profileCtrl.currentPassword, profileCtrl.password, profileCtrl.confirmPassword)"
+                                    name="password" ng-model="profileCtrl.password"
+                                    ng-change="profileCtrl.passwordEntered()">
+
+                                <div class="error" ng-show="profileCtrl.profileForm.password.$error.minlength">Password
+                                    minimum must be 6</div>
+                                <div class="error" ng-show="profileCtrl.profileForm.password.$error.maxlength">Password
+                                    maximum must be 25</div>
+                                <div class="error"
+                                    ng-if="(!profileCtrl.passwordStrength.satisfyCondition && profileCtrl.passwordStrength.passwordLength>5)">
+                                    Password condition not satisfied</div>
+                            </div>
+                            <div class="form-group ">
+
+                                <div class="form-group relative-container margin-top10px">
+                                    <label>
+                                        Confirm New Password
+                                    </label>
+                                    <input type="password" class="form-control" name="confirmPassword"
+                                        ui-validate=" '$value==profileCtrl.profileForm.password' "
+                                        ui-validate-watch=" 'profileCtrl.profileForm.password' "
+                                        data-ng-disabled="(!profileCtrl.password || !profileCtrl.passwordStrength.satisfyCondition)"
+                                        ng-required="profileCtrl.checkAllPasswordEntered(profileCtrl.currentPassword, profileCtrl.password, profileCtrl.confirmPassword)"
+                                        ng-model="profileCtrl.confirmPassword"
+                                        ng-change="profileCtrl.checkPasswordSimilarity(profileCtrl.password, profileCtrl.confirmPassword)">
+                                    <div class="error"
+                                        ng-if="(!profileCtrl.confirmPasswordFlag && profileCtrl.confirmPassword.length>0)">
+                                        Confirm password didn't match with new password</div>
+                                </div>
+                            </div>
+
+                            <div class="margin-top10px" ng-if="!profileCtrl.croppedImageFlag">
+                                <img ng-src="{{profileCtrl.uploadImageUrl}}" />
+                            </div>
+
+                            <div>
+                                <label>Select an image file: </label>
+                                <input type="file" id="fileInput" />
+                            </div>
+                            <div ng-if="profileCtrl.croppedImageFlag">
+                                <div class="cropArea margin-top10px">
+                                    <img-crop image="profileCtrl.myImage" area-type="square"
+                                        result-image="profileCtrl.myCroppedImage"></img-crop>
+                                </div>
+                                <div class="margin-top10px">Cropped Image:</div>
+                                <div class="margin-top10px">
+                                    <img ng-src="{{profileCtrl.myCroppedImage}}" />
+                                </div>
+
+                                <button class="margin-top10px btn btn-default" ng-model="cropFiles"
+                                    ng-click="profileCtrl.saveCroppedImage(profileCtrl.myCroppedImage)">
+                                    Save Crop Image</button>
+
+                            </div>
+
+
+
+                            <div col-md-7>
+                                <div
+                                    data-ng-if="profileCtrl.configuredinfo.is_googleDrive==1 || profileCtrl.configuredinfo.is_dropBox==1 ||profileCtrl.configuredinfo.is_onedrive == 1">
+                                    <div class="margin-top20px">
+                                        <strong>Document Synchronization</strong>
+                                    </div>
+                                    <div data-ng-if="profileCtrl.configuredinfo.is_googleDrive==1">
+                                        <div class="form-group relative-container margin-top10px margin-left10px">
+                                            <label>Google Drive </label>
+                                            <div data-ng-if="profileCtrl.viewProfileData.google_drive==0">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getConfigGoogleDrive()"
+                                                    class="profile-label">Configure</a>
+                                            </div>
+                                            <div data-ng-if="profileCtrl.viewProfileData.google_drive==1">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getRevokeGoogleDrive()"
+                                                    class="profile-label">Revoke</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        data-ng-if="profileCtrl.configuredinfo.is_onedrive==1 && profileCtrl.userRoleObj.is_subscriber == 1">
+                                        <div class="form-group relative-container margin-top10px margin-left10px">
+                                            <label>OneDrive </label>
+                                            <div data-ng-if="profileCtrl.viewProfileData.onedrive==0">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getConfigOneDrive()"
+                                                    class="profile-label">Configure</a>
+                                            </div>
+                                            <div data-ng-if="profileCtrl.viewProfileData.onedrive==1">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getRevokeOneDrive()"
+                                                    class="profile-label">Revoke</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-ng-if="profileCtrl.configuredinfo.is_dropBox==1">
+                                        <div class="form-group relative-container margin-top10px margin-left10px">
+                                            <label>Dropbox</label>
+                                            <div data-ng-if="profileCtrl.viewProfileData.dropbox==0">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getConfigDrpbox()"
+                                                    class="profile-label">Configure</a>
+                                            </div>
+                                            <div data-ng-if="profileCtrl.viewProfileData.dropbox==1">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getConfigDrpbox()"
+                                                    class="profile-label">Update</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+                                <!-- <div  data-ng-if="profileCtrl.configuredinfo.is_eSignature == 1 && profileCtrl.userRoleObj.is_admin == 1">
+                                    <div class="margin-top20px">
+                                        <strong>Electronic Signatures</strong>
+                                    </div>
+
+                                    <div
+                                        data-ng-if="profileCtrl.configuredinfo.is_eSignature == 1 && profileCtrl.userRoleObj.is_admin == 1">
+                                        <div class="form-group relative-container margin-top10px margin-left10px">
+                                            <label>DocuSign </label>
+                                            <div data-ng-if="profileCtrl.viewProfileData.docusign == 0">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getConfigDocuSign()"
+                                                    class="profile-label">Configure</a>
+                                            </div>
+                                            <div data-ng-if="profileCtrl.viewProfileData.docusign == 1">
+                                                <a href="javascript:void(0)"
+                                                    data-ng-click="profileCtrl.getRevokeDocuSign()"
+                                                    class="profile-label">Revoke</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+
+                            </div>
+                            <div
+                                data-ng-if="profileCtrl.configuredinfo.is_googleCalender==1 || profileCtrl.configuredinfo.is_microsoftExchange==1">
+                                <div class="margin-top20px">
+                                    <strong>Calendar Integration</strong>
+                                </div>
+                                <div data-ng-if="profileCtrl.configuredinfo.is_googleCalender == 1">
+                                    <div class="form-group relative-container margin-top10px margin-left10px">
+                                        <label>Google Calendar</label>
+                                        <div data-ng-if="profileCtrl.viewProfileData.google_calendar==0">
+                                            <a href="javascript:void(0)"
+                                                data-ng-click="profileCtrl.getConfigGoogleCal()"
+                                                class="profile-label">Configure</a>
+                                        </div>
+                                        <div data-ng-if="profileCtrl.viewProfileData.google_calendar==1">
+                                            <a href="javascript:void(0)"
+                                                data-ng-click="profileCtrl.getRevokeGoogleCal()"
+                                                class="profile-label">Revoke</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div data-ng-if="profileCtrl.configuredinfo.is_Ical==1">   
+                            <div class="form-group relative-container margin-top10px margin-left10px">
+                               <label>iCal</label>
+                               <div>
+                                  <a href="javascript:void(0)" data-ng-click="profileCtrl.getIcalLink()" class="profile-label">Click here</a> <span>to get the URL to sync Lexvia events with ical.</span>
+                                      <div  style="display: inline-block;word-break: break-all;word-spacing: 2px;">
+                                            
+                                            <span style="color: #999;"><label > {{profileCtrl.userMessage}}</label> {{profileCtrl.iCalLink}} </span>                                            
+                                      </div>
+                               </div>    
+                            </div>
+                        </div>-->
+                                <div data-ng-if="profileCtrl.configuredinfo.is_microsoftExchange==1">
+                                    <div class="form-group relative-container margin-top10px margin-left10px">
+                                        <label>MS Outlook</label>
+                                        <div data-ng-if="profileCtrl.viewProfileData.ms_exchange==0">
+                                            <a href="javascript:void(0)"
+                                                data-ng-click="profileCtrl.getConfigMsExchange()"
+                                                class="profile-label">Configure</a>
+                                        </div>
+                                        <div data-ng-if="profileCtrl.viewProfileData.ms_exchange==1">
+                                            <a href="javascript:void(0)"
+                                                data-ng-click="profileCtrl.getRevokeMsExchange()"
+                                                class="profile-label">Revoke</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div data-ng-if="profileCtrl.configuredinfo.is_microsoftExchange==1">
+                        <div class="form-group relative-container margin-top20px margin-left10px">
+                            
+                                <label>MS Outlook</label>
+                                <div class="margin-10-0 row relative-container">
+                                    <div class="pull-left margin-top5px">Username: </div>
+                                    <input type="text" class="pull-right microsoft-exchange-inpunt-box form-control ng-pristine ng-valid-pattern ng-valid-maxlength ng-valid ng-valid-required ng-touched"
+                                        name="msusername" ng-required="profileCtrl.info.mspassword && profileCtrl.info.msversion"
+                                           data-ng-change="profileCtrl.setmsUserName()" data-ng-model="profileCtrl.info.msusername">
+                                    <span class="sprite default-caution error-icon" style="margin-top: -20px;" data-ng-show="profileCtrl.profileForm.msusername.$dirty && profileCtrl.microsoftExchangeForm.msusername.$invalid"></span>
+                                    <div data-ng-if="profileCtrl.profileForm.msusername.$dirty" ng-messages="profileCtrl.profileForm.msusername.$error">
+                                        <div class="error" ng-message="required">
+                                            Username is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="margin-10-0 row relative-container">
+                                    <div class="pull-left margin-top5px">Password: </div>
+                                    <input type="password" ng-required="(profileCtrl.info.mspassword !='') " name="mspassword" class="pull-right microsoft-exchange-inpunt-box form-control ng-pristine ng-valid-pattern ng-valid-maxlength ng-valid ng-valid-required ng-touched"
+                                        data-ng-model="profileCtrl.info.mspassword" >
+                                </div>
+
+                                <div class="margin-10-0 row">
+                                    <div class="pull-left margin-top10px">Version Number: </div>
+                                    <div class="pull-right margin-top5px microsoft-exchange-inpunt-box version-number-dropdown">
+                                        <ui-select name="month_name"  ng-required="profileCtrl.info.msusername &&  profileCtrl.info.mspassword" ng-model="profileCtrl.info.msversion" theme="selectize">
+                                            <ui-select-match placeholder="Select Version">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="msversions.id as msversions in profileCtrl.msversions | filter:{ name:$select.search }">
+                                                <small>
+                                            {{msversions.name}}
+                                            </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="margin-10-0 row">
+                                    <button class="btn btn-default pull-right"  data-ng-click="profileCtrl.resetMicroExchangeData(profileCtrl.configMicrosoftExchangeData)">Reset</button>
+                                </div>
+                        
+    
+                        </div>
+                    </div>-->
+
+                            <div
+                                ng-if="profileCtrl.configuredinfo.is_quickBooks == 1  && profileCtrl.userRoleObj.is_admin == 1">
+                                <div class=" margin-top20px ">
+                                    <strong>Expense Manager</strong>
+                                </div>
+                                <div>
+                                    <div class="form-group relative-container margin-top10px margin-left10px ">
+                                        <label>Quickbooks</label>
+                                        <div data-ng-if="profileCtrl.viewProfileData.expense_manager == 0">
+                                            <a href="javascript:void(0) "
+                                                data-ng-click="profileCtrl.getConfigQuickBooks() "
+                                                class="profile-label ">Configure</a>
+                                        </div>
+                                        <div data-ng-if="profileCtrl.viewProfileData.expense_manager == 1">
+                                            <a href="javascript:void(0) "
+                                                data-ng-click="profileCtrl.getRevokeQuickBooks() "
+                                                class="profile-label ">Revoke</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div
+                                ng-if=" profileCtrl.viewProfileData.ms_exchange==1 || profileCtrl.viewProfileData.google_calendar==1 ">
+                                <strong>Event Synchronization</strong>
+                                <!--<div class="row margin-left5px margin-top20px ">
+                        <div class="col-md-4 custom-document-field padding-left-5 ">My Events </div>
+                        <div class="col-md-2 custom-switch-slide ">
+                            <span class="form-control zero-border " ng-switcher ng-model="planselectionctrl.info.is_microsoftExchange "></span>
+                        </div>
+                    </div>-->
+
+                                <div class="row margin-left5px ">
+                                    <div class="col-md-3 custom-document-field padding-left-5 ">All Events </div>
+                                    <div class="col-md-2 custom-switch-slide ">
+                                        <span class="form-control zero-border " ng-switcher
+                                            ng-model="profileCtrl.info.is_allevent "></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-ng-if="profileCtrl.configuredinfo.is_emailVCloudlex==1 ">
+                                <div class="form-group relative-container ">
+                                    <div class="margin-top20px ">
+                                        <strong>eMail Via Cloudlex </strong>
+                                    </div>
+                                    <div class=" ">
+                                        <input type="email "
+                                            class="pull-right form-control ng-pristine ng-valid-pattern ng-valid-maxlength ng-valid ng-valid-required ng-touched "
+                                            name="mail " ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/ "
+                                            ng-model="profileCtrl.info.emailViaCloudlex ">
+                                        <span class="ng-hide "></span>
+                                        <div data-ng-if="profileCtrl.profileForm.mail.$dirty "
+                                            ng-messages="profileCtrl.profileForm.mail.$error ">
+                                            <div class="error " ng-message="pattern ">
+                                                Invalid email id
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative-container row col-md-12 margin-top20px">
+                                <div class="col-md-4 padding-0">
+                                    <strong>Email Reminders: </strong>
+                                </div>
+                                <div class="col-md-3 checkbox mt-0">
+                                    <input type="checkbox" ng-model="profileCtrl.reminderType.task" ng-true-value="1"
+                                        ng-false-value="0">
+                                    <label>Tasks </label>
+                                </div>
+                                <div class="col-md-3 checkbox mt-0">
+                                    <input type="checkbox" ng-model="profileCtrl.reminderType.event" ng-true-value="1"
+                                        ng-false-value="0">
+                                    <label>Events </label>
+                                </div>
+                            </div>
+                            <div class="relative-container row col-md-12 margin-top20px" ng-if="isSmsActiveUI">
+                                <div class="col-md-4 padding-0">
+                                    <strong>Text Reminders: </strong>
+                                </div>
+                                <div class="col-md-3 checkbox mt-0">
+                                    <input type="checkbox" ng-model="profileCtrl.textReminderType.task"
+                                        ng-true-value="1" ng-false-value="0">
+                                    <label>Tasks </label>
+                                </div>
+                                <div class="col-md-3 checkbox mt-0">
+                                    <input type="checkbox" ng-model="profileCtrl.textReminderType.event"
+                                        ng-true-value="1" ng-false-value="0">
+                                    <label>Events </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 margin-top47px border-left password-hint">
+                            <label>
+                                Password Strength: <span class="text-success"
+                                    ng-if="(profileCtrl.password.length>0)">{{profileCtrl.passwordStrength.durable}}</span>
+                            </label>
+                            <div class="progress margin-top10px">
+                                <div class="progress-bar" ng-class="{'progress-bar-success': profileCtrl.isPasswordStrong(), 'progress-bar-warning': profileCtrl.isPasswordOk(),
+                                                        'progress-bar-danger': profileCtrl.isPasswordWeak()}"
+                                    aria-valuenow="{{profileCtrl.passwordStrength.score}}" aria-valuemin="0"
+                                    aria-valuemax="100" ng-style="{width: (profileCtrl.passwordStrength.score + '%')}">
+                                </div>
+                            </div>
+
+                            <strong>To make your password stronger:</strong>
+                            <ul class="list-styled">
+                                <li>Make it at least 6 characters</li>
+                                <li>Add lowercase letters</li>
+                                <li>Add uppercase letters</li>
+                                <li>Add numbers</li>
+                                <li>Add punctuation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-form>
+    </div>
+</div>

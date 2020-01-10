@@ -1,0 +1,37 @@
+
+    <div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li 
+             ng-click="userManagementTabCtrl.activateTab('pra', userManagementTabCtrl.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : userManagementTabCtrl.activeTab.pra}">User Management</a>
+            </li>
+            <li 
+             ng-click="userManagementTabCtrl.activateTab('planselection', userManagementTabCtrl.activeTab)">
+                <a href="javascript:void(0)" data-ng-class="{'activeLink' : userManagementTabCtrl.activeTab.planselection}">Access Management</a>
+           </li>                            
+        </ul>
+    </div>
+
+    
+
+    <div data-ng-if="userManagementTabCtrl.activeTab.pra">
+        <div data-ng-controller='UserManagementCtrl as userMgmt'
+            data-ng-include="'app/settings/user-management/user-management.html'">
+        </div>
+    </div>
+ 
+
+    <div data-ng-if="userManagementTabCtrl.activeTab.planselection">
+        <div data-ng-controller='roleManagementCtrl as roleMgmt'
+             data-ng-include="'app/settings/role-management/role-mgmt.html'">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    

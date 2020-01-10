@@ -1,0 +1,1048 @@
+<!--<div class="col-md-8 detail-event view-only-fields" data-ng-show="events.showEventDetails(calendarEventCtrl.eventClickDetails)">-->
+<style type="text/css">
+    .checkbox {
+        padding-top: 0px !important;
+        margin-top: 0px !important;
+    }
+
+    .radio {
+        margin-top: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio input {
+        outline: none !important;
+        box-sizing: initial !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .reason-list-order li {
+        float: left;
+        margin-left: 20px;
+        width: 95px;
+    }
+
+    .for-94per .ui-select-dropdown {
+        width: 94% !important;
+    }
+
+    .custom-form-control .select2-choices {
+        width: 94% !important;
+        border: 1px solid #d0d0d0;
+        border-radius: 3px;
+    }
+
+    .select2-container-multi .select2-choices {
+        min-height: 70px;
+        max-height: 70px;
+        overflow-y: auto;
+    }
+
+    .datepicker .btn-default {
+        height: 34px !important;
+    }
+
+    .cal-wrapper .sprite.default-calendar-small {
+        background-position: -36px -321px;
+        height: 24px !important;
+    }
+
+    .select2-result-with-children .ui-select-choices-group-label {
+        color: #303030;
+        cursor: default;
+        background: #fff;
+        padding-top: 7px;
+        font-size: .85em;
+        font-weight: 700;
+    }
+</style>
+<div class="row" data-ng-if="calendarEventCtrl.pageMode == 'edit'">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="calendarEventCtrl.resetEdit()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div class="row" data-ng-if="calendarEventCtrl.editCalendarEvent">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div data-ng-if="calendarEventCtrl.editCalendarEvent" class=" detail-event view-only-fields">
+    <div class="page-title-border ">
+        <h2 class="page-title pull-left">Event Details </h2>
+
+        <div class=" pull-right ">
+            <ul class="showBy-btns pull-right absolute-container right0">
+                <li class="margin-right20px">
+                    <a data-ng-show="(calendarEventCtrl.isGraceOver != 0)" href="javascript:void(0);"
+                        data-ng-click="calendarEventCtrl.editEvent('edit',calendarEventCtrl.eventClickDetails)">
+                        <span ng-if="calendar.eventsPermissions[0].E==1 || calendar.criticalDatesPermission[0].E==1"
+                            class="sprite default-edit " tooltip="Edit"></span>
+                    </a>
+                </li>
+
+                <li>
+
+                    <a data-ng-hide="calendarEventCtrl.isGraceOver ==0" href="javascript:void(0);"
+                        data-ng-click="calendarEventCtrl.delete(calendarEventCtrl.eventClickDetails)">
+                        <span ng-if="calendar.eventsPermissions[0].D ==1 || calendar.criticalDatesPermission[0].D ==1"
+                            class="sprite default-delete " tooltip="Delete"></span>
+                    </a>
+                </li>
+
+                <button data-ng-click="calendarEventCtrl.cancel()" class="btn btn-default btn-styleNone pull-right">
+                    Cancel</button>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row-fluid">
+
+                <div class="col-md-2">Matter Name:</div>
+                <div class="col-md-8 value">
+
+                    <a href="javascript:void(0);" tooltip="{{note.matter.matter_name}}" tooltip-append-to-body="true"
+                        tooltip-placement="top-center"
+                        data-ng-click="calendarEventCtrl.goToMatter(calendarEventCtrl.eventClickDetails.matter.matter_id)">
+                        {{calendarEventCtrl.eventClickDetails.matter.matter_name}}</a>
+
+                </div>
+
+            </div>
+
+            <div class="row-fluid">
+
+                <div class="col-md-2">Event Type:</div>
+                <div class="col-md-8 value">
+                    <strong>{{calendarEventCtrl.eventClickDetails.event_name}}</strong>
+                </div>
+
+            </div>
+            <div class="row-fluid"
+                data-ng-show="calendarEventCtrl.eventClickDetails.user_defined==1 || calendarEventCtrl.eventClickDetails.label_id==19 || calendarEventCtrl.eventClickDetails.label_id==100 || calendarEventCtrl.eventClickDetails.label_id==32">
+                <div class="col-md-2">Event Title:</div>
+                <div class="col-md-8 value">
+                    <strong>{{calendarEventCtrl.eventClickDetails.title}}</strong>
+                </div>
+
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-2">Assigned To:</div>
+                <div class="col-md-8 value">
+                    <strong>{{calendarEventCtrl.assigned_to_name}}</strong>
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-2">Start Date:</div>
+                <div class="col-md-8 value" ng-if="calendarEventCtrl.dateFlag">
+                    <strong>{{calendarEventCtrl.eventClickDetails.utcstart|utcDateFilter: 'MM-DD-YYYY'}}</strong>
+                    <strong>
+                        <span data-ng-show="calendarEventCtrl.eventClickDetails.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{calendarEventCtrl.eventClickDetails.utcstart|utcDateFilter: 'hh:mm A'}}
+                        </span>
+                    </strong>
+                </div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-2">End Date:</div>
+                <div class="col-md-8 value" ng-if="calendarEventCtrl.dateFlag">
+                    <strong>{{calendarEventCtrl.eventClickDetails.utcend|utcDateFilter: 'MM-DD-YYYY'}}
+                    </strong>
+                    <strong>
+                        <span data-ng-show="calendarEventCtrl.eventClickDetails.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{calendarEventCtrl.eventClickDetails.utcend|utcDateFilter: 'hh:mm A'}}
+                        </span>
+                    </strong>
+                </div>
+            </div>
+            <!--US#5554 Event share with plaintiff-->
+            <div class="row-fluid" data-ng-show="isShareWithPlaintiffCalender && calendarEventCtrl.isClientPortal == 1">
+                <div class="col-md-2">
+                    Share with plaintiff:
+                </div>
+                <div class="col-md-8 padding-0" style="width: 63%;"
+                    data-ng-show="calendarEventCtrl.eventClickDetails.share_with.length > 0">
+                    <ui-select multiple ng-model="calendarEventCtrl.eventClickDetails.share_with" theme="select2"
+                        class="width100" data-ng-disabled="true">
+                        <ui-select-match placeholder="Enter User">
+                            {{$item.contactid.firstname}} {{$item.contactid.lastname}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="plaintiff.plaintiffid as plaintiff in calendarEventCtrl.plaintiffDataList | filter:{firstname:$select.search} | orderBy: 'firstname'"
+                            data-ng-disabled="true">
+                            <small>
+                                {{plaintiff.contactid.firstname}} {{plaintiff.contactid.lastname}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-8 padding-0" style="width: 63%;"
+                    data-ng-show="calendarEventCtrl.eventClickDetails.share_with.length == 0"></div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-2">Location:</div>
+                <div class="col-md-8 value">
+                    <strong>{{calendarEventCtrl.eventClickDetails.location}}</strong>
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-2">Description:</div>
+                <div class="col-md-8 value">
+                    <pre
+                        style="font-family:'GothamRounded-Book';color:
+                         black;font-size: 100%;background-color: rgba(109, 70, 70, 0);border: 0;padding: 0;max-height: 150px;white-space: pre-line;word-break: keep-all;"><strong> {{calendarEventCtrl.eventClickDetails.description}} </strong></pre>
+                </div>
+            </div>
+            <!--US#3119- Added checkboxes for Reminder ...Start-->
+            <hr class="custom-color">
+            <div class="row-fluid">
+                <div class="margin-bottom10px clearfix">
+                    <h6 class="col-md-4">For Firm Users</h6>
+                </div>
+                <div class="col-md-2">Reminder Days Prior to Due Date:</div>
+                <div class="col-md-9 add-event-popup padding-0">
+                    <div class="col-md-1 checkbox padding-0" style="margin:0px;"
+                        data-ng-repeat="reminderdays in calendarEventCtrl.reminderDaysList">
+                        <input type="checkbox" data-ng-disabled="true" checklist-value="reminderdays"
+                            checklist-model="calendarEventCtrl.eventClickDetails.reminder_days" />
+                        <label>{{reminderdays | replaceText}}</label>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" ng-if="calendarEventCtrl.eventClickDetails.custom_reminder">
+                <div class="col-md-2">And/Or Custom Date Reminder:</div>
+                <div class="col-md-8 add-event-popup padding-0">
+                    <strong>{{calendarEventCtrl.eventClickDetails.custom_reminder }}</strong>
+                </div>
+            </div>
+            <div>
+                <div class="row-fluid form-group">
+                    <div class="col-md-2">
+                        Remind Users:
+                    </div>
+                    <div class="col-md-9 padding-0">
+                        <div ng-repeat="user in calendarEventCtrl.userSelectedType"
+                            class="pull-left padding-0 margin-right20px" style="margin-top: 0;">
+                            <div class="radio padding-0 margin0">
+                                <input class="margin0" type="radio"
+                                    data-ng-model="calendarEventCtrl.eventClickDetails.reminder_users_id"
+                                    ng-click="calendarEventCtrl.setUserMode(user)" ng-value="user.id"
+                                    ng-disabled="true" />
+                                <label class="margin0" style="line-height: inherit;">{{user.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row-fluid form-group"
+                    ng-show="calendarEventCtrl.eventClickDetails.reminder_users_id == '3'">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 padding-0">
+                        <ui-select multiple ng-model="calendarEventCtrl.eventClickDetails.reminder_users"
+                            theme="select2" class="width100" ng-disabled="true">
+                            <ui-select-match placeholder="Enter User">
+                                {{$item.full_name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="user.user_id as user in calendarEventCtrl.users | filter:{full_name:$select.search} | orderBy: 'full_name'">
+                                <small>
+                                    {{user.full_name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <hr class="custom-color">
+            <div class="row-fluid">
+                <div class="margin-bottom10px clearfix">
+                    <h6 class="col-md-4">For Associated Parties</h6>
+                </div>
+                <div class="col-md-2">Reminder Days Prior to Due Date:</div>
+                <div class="col-md-9 add-event-popup padding-0">
+                    <div class="col-md-1 checkbox padding-0" style="margin:0px;"
+                        data-ng-repeat="reminderdays in calendarEventCtrl.reminderDaysList">
+                        <input type="checkbox" data-ng-disabled="true" checklist-value="reminderdays"
+                            checklist-model="calendarEventCtrl.eventClickDetails.sms_reminder_days" />
+                        <label>{{reminderdays | replaceText}}</label>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" ng-if="calendarEventCtrl.eventClickDetails.sms_custom_reminder">
+                <div class="col-md-2">And/Or Custom Date Reminder:</div>
+                <div class="col-md-9 add-event-popup padding-0">
+                    <strong>{{calendarEventCtrl.eventClickDetails.sms_custom_reminder }}</strong>
+                </div>
+            </div>
+            <div>
+                <div class="row-fluid form-group"
+                    data-ng-if="calendarEventCtrl.eventClickDetails.sms_contact_ids.length > 0">
+                    <div class="col-md-2">
+                        Remind Associated Parties:
+                    </div>
+
+                    <div class="col-md-8 padding-0 reminder-select">
+                        <ui-select multiple ng-model="calendarEventCtrl.eventClickDetails.sms_contact_ids"
+                            theme="select2" class="width100" data-ng-disabled="true">
+                            <ui-select-match placeholder="Select Associated Party">
+                                {{$item.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="user.contactid as user in calendarEventCtrl.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                <small>
+                                    {{user.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--...End-->
+
+    <!--         US#5678- Event history grid start    -->
+
+    <div class="row-fluid">
+        <div class="margin-left15px pull-left">Event History:</div>
+
+        <div class="task-event-reminders">
+            <div class="fl-right" ng-if="calendarEventCtrl.eventHistoryData.length > 0">
+                <a data-ng-click="calendarEventCtrl.exportEventHistory()">
+                    <span class="sprite default-sharedown sortby-icons" tooltip="Export History"
+                        tooltip-placement="left"></span>
+                </a>
+            </div>
+            <div class="margin-top20px clear-both">&nbsp;</div>
+
+
+            <div class="event-table-scrollable-grid full-width">
+                <table class="event-table-grid" data-ng-show="calendarEventCtrl.eventHistoryData.length > 0">
+                    <thead style="background-color: gainsboro;">
+                        <tr>
+                            <th style="width:17%;">Last Updated</th>
+                            <th style="width:14.5%;">Start Date</th>
+                            <th style="width:14.5%;">End Date</th>
+                            <th style="width:16%;">Reason</th>
+                            <th style="width:22%;">Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody class="dashboard-tasks-due table">
+                        <tr data-ng-repeat="evthist in calendarEventCtrl.eventHistoryData">
+                            <td style="width:17%;">
+                                {{evthist.update | utcDateFilter: 'MM/DD/YYYY'}}
+                                <br> {{evthist.update | utcDateFilter: 'hh:mm A'}}
+                            </td>
+                            <td style="width:14.5%;" ng-show="evthist.all_day=='1'">
+                                {{evthist.start | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'start'}}
+                            </td>
+                            <td style="width:14.5%;" ng-show="evthist.all_day=='0'">
+                                {{evthist.start | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'start'}}
+                                <br> {{evthist.start | utcDateFilter: 'hh:mm A':evthist.all_day:'start'}}
+                            </td>
+                            <td style="width:14.5%;" ng-show="evthist.all_day=='1'">
+                                {{evthist.end | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'end'}}
+                            </td>
+                            <td style="width:14.5%;" ng-show="evthist.all_day=='0'">
+                                {{evthist.end | utcDateFilter: 'MM/DD/YYYY' :evthist.all_day:'end'}}
+                                <br> {{evthist.end | utcDateFilter: 'hh:mm A' :evthist.all_day:'end'}}
+                            </td>
+                            <td style="width:16%;">{{evthist.reason}}</td>
+                            <td style="width:22%;word-wrap: break-word;word-break: break-all;" class="cell word-wrap">
+                                {{evthist.comments}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <div class="text-center margin-top10px" data-ng-show="calendarEventCtrl.eventHistoryData.length === 0">
+                <p>No event history found...</p>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <!--         US#5678- Event history grid end -->
+
+
+</div>
+</div>
+</div>
+<!-- ---------------------------------------------------------------------- -->
+<div class="row" data-ng-if="calendarEventCtrl.pageMode == 'add'">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="calendarEventCtrl.resetAdd()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div data-ng-if="calendarEventCtrl.pageMode == 'edit' || calendarEventCtrl.pageMode == 'add'">
+    <div class="page-title-border clearfix form-group heading-with-button-bottom-padding row-fluid global-page-title">
+        <h2 class="page-title pull-left" ng-show="calendarEventCtrl.pageMode != 'edit'">Add Event</h2>
+        <h2 class="page-title pull-left" ng-show="calendarEventCtrl.pageMode == 'edit'">Edit Event</h2>
+
+        <div class="pull-right">
+            <button data-ng-click="calendarEventCtrl.saveCalendarEvent(calendarEventCtrl.calendarEvent)"
+                class="btn btn-default pull-right margin-left10px"
+                data-ng-disabled="calendarEventCtrl.validateEvent(calendarEventCtrl.taskInfo.matterid,calendarEventCtrl.calendarEvent.label_id) || calendarEventCtrl.isDatesValid() || (calendarEventCtrl.isGraceOver != 1)">
+                Save</button>
+
+            <button data-ng-click="calendarEventCtrl.cancel()"
+                class="btn btn-default btn-styleNone pull-right">Cancel</button>
+        </div>
+    </div>
+
+    <div>
+        <form>
+            <div class="">
+                <div class="row">
+                    <div class="col-md-10 ">
+
+                        <div class="row form-group" data-ng-show="calendarEventCtrl.pageMode != 'edit' || true">
+                            <div class="col-md-2 margin-top10px">
+                                <label>
+                                    Matter:
+                                    <span class="compulsary-mark"
+                                        ng-hide="calendarEventCtrl.calendarEvent.label_id==19 || calendarEventCtrl.calendarEvent.label_id==100">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" autocomplete="off" name="matterid" class="form-control"
+                                    data-ng-model-options="{ debounce: 500 }" typeahead-editable="false"
+                                    placeholder="Enter Matter Name"
+                                    typeahead="row.matterid as removeunwantedhtml(row.name)+' - '+row.filenumber for row in calendarEventCtrl.searchMatters($viewValue)"
+                                    typeahead-input-formatter="calendarEventCtrl.formatTypeaheadDisplay($model)"
+                                    data-ng-required="true" data-ng-model="calendarEventCtrl.taskInfo.matterid"
+                                    ng-change="calendarEventCtrl.setUserRadioButton();"
+                                    on-select="calendarEventCtrl.getSharePlaintiffList(calendarEventCtrl.taskInfo.matterid)" />
+
+                                <div data-ng-if="calendarEventCtrl.form.matterid.$dirty"
+                                    ng-messages="calendarEventCtrl.form.matterid.$error">
+                                    <div class="error" ng-message="required">
+                                        Matter name is required
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row form-group form-margin">
+
+                            <div class="col-md-2 margin-top10px">
+                                <label>Event Type:
+                                    <span class="compulsary-mark">*</span>
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                <ui-select ng-model="calendarEventCtrl.calendarEvent.label_id" theme="selectize"
+                                    ng-disabled="calendarEventCtrl.eventNameCheck == 'Personal Event'? true : false "
+                                    on-select="calendarEventCtrl.resetPrivate();calendarEventCtrl.showhideDates(calendarEventCtrl.calendarEvent,calendarEventCtrl.pageMode, true);calendarEventCtrl.getcourtAddress(calendarEventCtrl.taskInfo.matterid,calendarEventCtrl.calendarEvent.label_id);">
+                                    <ui-select-match placeholder="Enter Event Type">
+                                        {{$select.selected.Name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="item.LabelId as item in calendarEventCtrl.category | filter:{ Name:$select.search }">
+                                        <small>
+                                            {{item.Name}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row form-group"
+                            data-ng-show="calendarEventCtrl.calendarEvent.label_id==100 || calendarEventCtrl.calendarEvent.label_id==19 || calendarEventCtrl.calendarEvent.label_id==32">
+                            <div class="col-md-2 ">
+                                <label>Event Title:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" maxlength="250" data-ng-model="calendarEventCtrl.calendarEvent.title"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 margin-top5px">
+                                <label>Assign Event To:</label>
+                            </div>
+                            <div class="col-md-8 custom-form-control for-94per">
+                                <ui-select class="width100" multiple ng-model="calendarEventCtrl.assignedUsers"
+                                    on-select="calendarEventCtrl.addAssignedUser(calendarEventCtrl.assignedUsers)"
+                                    on-remove="calendarEventCtrl.removeAssignedUser(calendarEventCtrl.assignedUsers,$item)"
+                                    theme="select2">
+                                    <ui-select-match placeholder="Select Users">
+                                        {{$item.full_name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="user in calendarEventCtrl.assignedToUserList  | filter:{full_name :$select.search} | orderBy: 'full_name' ">
+                                        <small>{{user.full_name}}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row form-group"
+                            data-ng-hide="calendarEventCtrl.createTaskDisabled || calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0">
+                            <div class="col-md-2 ">
+                                <label>Create Task for event:</label>
+                            </div>
+                            <div class="col-md-8 checkbox">
+                                <input type="checkbox"
+                                    data-ng-checked="calendarEventCtrl.calendarEvent.is_task_created == 1"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.is_task_created"
+                                    data-ng-true-value="1" data-ng-false-value="0"
+                                    data-ng-disabled="calendarEventCtrl.createTaskDisabled || (calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0)" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 ">
+                                <label>Full Day:</label>
+                            </div>
+                            <div class="col-md-8 checkbox">
+                                <input type="checkbox" data-ng-checked="calendarEventCtrl.calendarEvent.all_day == 1"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.all_day" data-ng-true-value="1"
+                                    data-ng-false-value="0"
+                                    data-ng-change="calendarEventCtrl.setEndDateForFullDay(calendarEventCtrl.calendarEvent.all_day,calendarEventCtrl.calendarEvent)"
+                                    data-ng-disabled="calendarEventCtrl.calendarEvent.criticalDatesClicked || calendarEventCtrl.calendarEvent.disableFullDay" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="row form-group" data-ng-show="calendarEventCtrl.calendarEvent.label_id==19">
+                            <div class="col-md-2">
+                                <label>Private:</label>
+                            </div>
+                            <div class="col-md-8 checkbox">
+                                <input type="checkbox" data-ng-checked="calendarEventCtrl.calendarEvent.private === 1"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.private" data-ng-true-value="1"
+                                    data-ng-false-value="0" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <!--  data-ng-show="calendarEventCtrl.pageMode == 'edit'" -->
+                            <div class="col-md-2 ">
+                                <label>Complied / Held: </label>
+                            </div>
+                            <div class="col-md-8 checkbox">
+                                <input type="checkbox" data-ng-checked="calendarEventCtrl.calendarEvent.is_comply == 1"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.is_comply" data-ng-true-value="1"
+                                    data-ng-false-value="0">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row form-group">
+                            <div class="col-md-2 margin-top10px">
+                                <label>Start Date:</label>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="input-group datepicker">
+                                    <input type="text" data-ng-model="calendarEventCtrl.calendarEvent.utcstart"
+                                        datepicker-popup="{{calendarEventCtrl.dateFormat}}"
+                                        datepicker-options="calendarEventCtrl.datepickerOptions"
+                                        is-open="calendarEventCtrl.calendarEvent.openStartDatepicker"
+                                        show-button-bar="false" data-ng-disabled="false" id="glbevestartDatediv"
+                                        validate-date error-div="#glbevestartDatediv" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" class="form-control"
+                                        ng-change="calendarEventCtrl.getFormattedDateString(calendarEventCtrl.calendarEvent);calendarEventCtrl.calendarEvent.is_comply='0';calendarEventCtrl.calDays(calendarEventCtrl.calendarEvent)" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                            data-ng-click="calendarEventCtrl.open($event,'openStartDatepicker'); calendarEventCtrl.calendarEvent.openStartDatepicker=true; calendarEventCtrl.calendarEvent.openEndDatepicker=false;">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div style="float: none;" class="error" id="glbevestartDateErr">Invalid date format!
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-control-margin-null"
+                                data-ng-show="calendarEventCtrl.calendarEvent.all_day == 0">
+                                <div class="col-md-2 margin-top10px">
+                                    <label>Start:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <clx-timepicker class="form-field" ng-model="theStartTime"
+                                        the-real-time="calendarEventCtrl.calendarEvent.start"
+                                        on-select="calendarEventCtrl.setEndTime(calendarEventCtrl.calendarEvent.start)">
+                                    </clx-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 margin-top10px">
+                                <label>End Date:</label>
+                            </div>
+                            <div class="col-md-3 ">
+                                <p class="input-group datepicker">
+                                    <input type="text" data-ng-model="calendarEventCtrl.calendarEvent.utcend"
+                                        min-date="calendarEventCtrl.calendarEvent.utcstart"
+                                        ng-disabled="calendarEventCtrl.calendarEvent.label_id == 1"
+                                        ng-change="calendarEventCtrl.getFormattedEndDateString(calendarEventCtrl.calendarEvent);calendarEventCtrl.calendarEvent.is_comply='0';calendarEventCtrl.calDays(calendarEventCtrl.calendarEvent)"
+                                        datepicker-popup="{{calendarEventCtrl.dateFormat}}"
+                                        datepicker-options="calendarEventCtrl.datepickerOptions"
+                                        is-open="calendarEventCtrl.calendarEvent.openEndDatepicker"
+                                        show-button-bar="false" id="glbeveendDatediv" validate-date
+                                        error-div="#glbeveendDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                                        class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button"
+                                            ng-disabled="calendarEventCtrl.calendarEvent.label_id == 1"
+                                            class="btn btn-default"
+                                            data-ng-click="calendarEventCtrl.open($event,'openEndDatepicker'); calendarEventCtrl.calendarEvent.openEndDatepicker=true;calendarEventCtrl.calendarEvent.openStartDatepicker=false;calendarEventCtrl.calendarEvent.openCustomDatepicker= false;calendarEventCtrl.calendarEvent.openCustomDatepickerForSMS=false;">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </p>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div style="float: none;" class="error" id="glbeveendDateErr">Invalid date format!</div>
+                            </div>
+                            <div class="col-md-6 form-control-margin-null"
+                                data-ng-show="calendarEventCtrl.calendarEvent.all_day == 0">
+                                <div class="col-md-2 margin-top10px">
+                                    <label>End: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <clx-timepicker class="form-field" ng-model="theEndTime"
+                                        the-real-time="calendarEventCtrl.calendarEvent.end">
+                                    </clx-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <!--US#5554 Event share with plaintiff-->
+                        <div class="row form-group"
+                            data-ng-show="isShareWithPlaintiffCalender && calendarEventCtrl.isClientPortal == 1">
+                            <div class="col-md-2">
+                                <label> Share with plaintiff: </label>
+                            </div>
+                            <div class="col-md-8" style="width: 63%;">
+                                <ui-select multiple ng-model="calendarEventCtrl.calendarEvent.share_with"
+                                    theme="select2" class="width100">
+                                    <ui-select-match placeholder="Enter User">
+                                        {{$item.contactid.firstname}} {{$item.contactid.lastname}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="plaintiff.plaintiffid as plaintiff in calendarEventCtrl.plaintiffDataList | filter:{firstname:$select.search} | orderBy: 'firstname'"
+                                        data-ng-disabled="true">
+                                        <small>
+                                            {{plaintiff.contactid.firstname}} {{plaintiff.contactid.lastname}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 margin-top7px">
+                                <label>Location:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" maxlength="500"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.location" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 margin-top7px">
+                                <label>Description:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <textarea class="form-control height-110" ng-trim='false' maxlength="2400"
+                                    data-ng-model="calendarEventCtrl.calendarEvent.description"></textarea>
+                            </div>
+                        </div>
+                        <!-- ngRepeat: item in viewModel.statusWiseCounts -->
+                    </div>
+                    <!--...End-->
+                </div>
+
+                <!--US#3119- Added checkboxes for Reminder ...Start-->
+                <div class="bottom-box row">
+                    <div class="col-md-6">
+                        <label style="padding-top: 10px;">For Firm Users</label>
+                        <div class="row form-group form-margin add-event-popup">
+                            <div class="col-md-3">
+                                <label>Reminder Days Prior to Due Date:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-1 checkbox padding-left-0"
+                                    data-ng-repeat="remiderdays in calendarEventCtrl.reminderDaysList">
+                                    <input type="checkbox" checklist-value="remiderdays"
+                                        checklist-model="calendarEventCtrl.calendarEvent.reminder_days" />
+                                    <label>{{remiderdays | replaceText}}</label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>And/Or Custom Date Reminder:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group datepicker reminder-date">
+                                    <input type="text" data-ng-model="calendarEventCtrl.calendarEvent.custom_reminder"
+                                        datepicker-popup="{{calendarEventCtrl.dateFormat}}"
+                                        datepicker-options="calendarEventCtrl.datepickerOptions"
+                                        is-open="calendarEventCtrl.calendarEvent.openCustomDatepicker" validate-date
+                                        error-div="#glbevecustomDateDatediv" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" show-button-bar="false" id="glbevecustomDateDatediv"
+                                        class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                            data-ng-click="calendarEventCtrl.open($event,'openCustomDatepicker')">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div style="float: none;" class="error" id="glbevecustomDateDatedivErr">Invalid date
+                                    format!</div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom30px">
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label>Remind Users:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <div ng-repeat="user in calendarEventCtrl.userSelectedType"
+                                        class="pull-left padding-0 margin-right20px">
+                                        <div class="radio padding-0 margin0">
+                                            <input class="margin0" type="radio"
+                                                ng-disabled="((calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0) && user.id == 1)"
+                                                data-ng-model="calendarEventCtrl.calendarEvent.reminder_users_id"
+                                                ng-click="calendarEventCtrl.setUserMode(user)" ng-value="user.id" />
+                                            <label style="line-height: inherit;">{{user.name}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group"
+                                ng-show="calendarEventCtrl.calendarEvent.reminder_users_id == 3">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9" style="width: 64%;">
+
+                                    <ui-select multiple ng-model="calendarEventCtrl.calendarEvent.reminder_users"
+                                        theme="select2" class="width100 userPicker">
+                                        <ui-select-match placeholder="Enter User">
+                                            {{$item.full_name}}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                            repeat="user.user_id as user in calendarEventCtrl.users | filter:{full_name:$select.search} | orderBy: 'full_name'">
+                                            <small>
+                                                {{user.full_name}}
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-if="isSmsActiveUI">
+                        <label style="padding-top: 10px;">For Associated Parties</label>
+                        <div class="row form-group form-margin add-event-popup">
+                            <div class="col-md-3">
+                                <label>Reminder Days Prior to Due Date:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-1 checkbox padding-left-0"
+                                    data-ng-repeat="remiderdays in calendarEventCtrl.reminderDaysList">
+                                    <input type="checkbox" checklist-value="remiderdays"
+                                        ng-disabled="((calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0 || !isSmsActiveUI))"
+                                        checklist-model="calendarEventCtrl.calendarEvent.sms_reminder_days" />
+                                    <label>{{remiderdays | replaceText}}</label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>And/Or Custom Date Reminder:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group datepicker reminder-date">
+                                    <input type="text"
+                                        ng-disabled="((calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0 || !isSmsActiveUI))"
+                                        data-ng-model="calendarEventCtrl.calendarEvent.sms_custom_reminder"
+                                        datepicker-popup="{{calendarEventCtrl.dateFormat}}"
+                                        datepicker-options="calendarEventCtrl.datepickerOptions"
+                                        is-open="calendarEventCtrl.calendarEvent.openCustomDatepickerForSMS"
+                                        validate-date error-div="#glbevecustomDateDatedivForSMS" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" show-button-bar="false"
+                                        id="glbevecustomDateDatedivForSMS" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                            ng-disabled="((calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0 || !isSmsActiveUI))"
+                                            data-ng-click="calendarEventCtrl.open($event,'openCustomDatepickerForSMS')">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div style="float: none;" class="error" id="glbevecustomDateDatedivErrForSMS">
+                                    Invalid date
+                                    format!</div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom30px">
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label>Remind Associated Parties:</label>
+                                </div>
+                                <div class="col-md-8 reminder-select divider-label">
+                                    <ui-select
+                                        ng-disabled="((calendarEventCtrl.taskInfo.matterid == undefined || calendarEventCtrl.taskInfo.matterid == 0 || !isSmsActiveUI))"
+                                        multiple ng-model="calendarEventCtrl.calendarEvent.sms_contact_ids"
+                                        theme="select2" class="width100">
+                                        <ui-select-match placeholder="Select Associated Party">
+                                            {{$item.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices group-by="calendarEventCtrl.groupContacts"
+                                            group-filter="['Plaintiff(s)','Defendant(s)','Other Party(s)','Insurance Provider(s)','Insured Party(s)','Medical Service Provider(s)','Insurance Adjuster(s)','Lien Insurance Provider(s)','Lien Adjuster(s)','Lien Holder(s)','Physician(s)','Service Provider(s)']"
+                                            repeat="user.contactid as user in calendarEventCtrl.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                            <small>
+                                                {{user.name}}
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-if="!isSmsActiveUI" data-ng-class="{'grey-out' : !isSmsActiveUI}"
+                        data-ng-click="calendarEventCtrl.cMessengerCheck()">
+                        <label style="padding-top: 10px;">For Associated Parties</label>
+                        <div class="row form-group form-margin add-event-popup">
+                            <div class="col-md-3">
+                                <label>Reminder Days Prior to Due Date:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-1 checkbox padding-left-0"
+                                    data-ng-repeat="remiderdays in calendarEventCtrl.reminderDaysList">
+                                    <input type="checkbox" checklist-value="remiderdays" ng-disabled="!isSmsActiveUI"
+                                        checklist-model="calendarEventCtrl.calendarEvent.sms_reminder_days" />
+                                    <label>{{remiderdays | replaceText}}</label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>And/Or Custom Date Reminder:</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-group datepicker reminder-date">
+                                    <input type="text" ng-disabled="!isSmsActiveUI"
+                                        data-ng-model="calendarEventCtrl.calendarEvent.sms_custom_reminder"
+                                        datepicker-popup="{{calendarEventCtrl.dateFormat}}"
+                                        datepicker-options="calendarEventCtrl.datepickerOptions"
+                                        is-open="calendarEventCtrl.calendarEvent.openCustomDatepickerForSMS"
+                                        validate-date error-div="#glbevecustomDateDatedivForSMS1" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" show-button-bar="false"
+                                        id="glbevecustomDateDatedivForSMS1" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-disabled="!isSmsActiveUI">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div style="float: none;" class="error" id="glbevecustomDateDatedivErrForSMS1">
+                                    Invalid date
+                                    format!</div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom30px">
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label>Remind Associated Parties:</label>
+                                </div>
+                                <div class="col-md-8 reminder-select divider-label">
+                                    <ui-select ng-disabled="!isSmsActiveUI" multiple
+                                        ng-model="calendarEventCtrl.calendarEvent.sms_contact_ids" theme="select2"
+                                        class="width100">
+                                        <ui-select-match placeholder="Select Associated Party">
+                                            {{$item.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices group-by="calendarEventCtrl.groupContacts"
+                                            group-filter="['Plaintiff(s)','Defendant(s)','Other Party(s)','Insurance Provider(s)','Insured Party(s)','Medical Service Provider(s)','Insurance Adjuster(s)','Lien Insurance Provider(s)','Lien Adjuster(s)','Lien Holder(s)','Physician(s)','Service Provider(s)']"
+                                            repeat="user.contactid as user in calendarEventCtrl.contactList1 | filter:{name:$select.search} | orderBy: 'name'">
+                                            <small>
+                                                {{user.name}}
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </form>
+</div>
+</div>
+
+<div data-ng-if="calendarEventCtrl.successFlag" class="detail-event view-only-fields">
+    <div class="page-title-border ">
+        <h2 class="page-title pull-left" style="text-align: center" data-ng-show="calendarEventCtrl.pageMode != 'edit'">
+            Event Details</h2>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="row-fluid">
+                <div class="col-md-2 ">Event Name:</div>
+                <div class="col-md-8 value">
+                    {{calendarEventCtrl.successData.eventname}}
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-2 ">Start Date:</div>
+                <div class="col-md-8 value">
+                    {{calendarEventCtrl.successData.start|utcDateFilter: 'MM-DD-YYYY'}}
+                    <span
+                        data-ng-show="calendarEventCtrl.successData.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;{{calendarEventCtrl.successData.start|utcDateFilter: 'hh:mm A'}}
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-2 ">End Date:</div>
+                <div class="col-md-8 value">
+                    {{calendarEventCtrl.successData.end|utcDateFilter: 'MM-DD-YYYY'}}
+                    <span
+                        data-ng-show="calendarEventCtrl.successData.all_day == 0">&nbsp;&nbsp;|&nbsp;&nbsp;{{calendarEventCtrl.successData.end|utcDateFilter: 'hh:mm A'}}
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <p>Please click on events to go back to Calendar</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div ng-if="calendarEventCtrl.successFlag">
+
+        <div class="row-fluid">
+
+            <div class="col-md-3 text-right"><strong>Event Name:</strong></div>
+            <div class="col-md-9 value">{{calendarEventCtrl.successData.eventname}}</div>
+
+            <div class="col-md-3 text-right"><strong>Start Date:</strong></div>
+            <div class="col-md-9 value">
+
+                    {{calendarEventCtrl.successData.start|utcDateFilter: 'MM-DD-YYYY'}}
+                     <span data-ng-show="calendarEventCtrl.successData.all_day == 0">
+                        &nbsp;&nbsp;|&nbsp;&nbsp;{{calendarEventCtrl.successData.start|utcDateFilter: 'hh:mm A'}}
+                    </span>
+            </div>
+
+            <div class="col-md-3 text-right"><strong>End Date:</strong></div>
+            <div class="col-md-9 value">
+
+                {{calendarEventCtrl.successData.end|utcDateFilter: 'MM-DD-YYYY'}}
+                     <span data-ng-show="calendarEventCtrl.successData.all_day == 0">
+                        &nbsp;&nbsp;|&nbsp;&nbsp;{{calendarEventCtrl.successData.end|utcDateFilter: 'hh:mm A'}}
+                    </span>
+            </div>
+
+            <hr/>
+            <p>Please click on events to go back to Calendar</p>
+          </div>
+
+     </div>-->
+
+<!--<div class=" pull-right ">
+                <ul class="showBy-btns pull-right absolute-container right0">
+                    <li>
+                        <a href="javascript:void(0);" data-ng-click="calendarEventCtrl.editEvent('edit',calendarEventCtrl.eventClickDetails)"><span class="sprite default-edit "></span></a>
+                    </li>
+                    <button data-ng-click="calendarEventCtrl.cancel()" class="btn btn-default btn-styleNone pull-right">Cancel</button>
+                    &lt;!&ndash;  <li>
+                          <a href="javascript:void(0);" data-ng-click="calendarEventCtrl.delete(calendarEventCtrl.eventClickDetails.id)"><span class="sprite default-delete "></span></a>
+                      </li>&ndash;&gt;
+                </ul>
+            </div>-->
+
+
+
+
+
+
+
+
+
+
+</div>

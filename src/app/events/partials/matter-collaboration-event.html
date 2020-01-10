@@ -1,0 +1,57 @@
+<style>
+    .dropdown-menu-launchpadAccessDenied {
+        margin-right: -4px !important;
+        min-height: 219px !important;
+    }
+
+    .isPortalAccessDenied {
+        min-height: 219px !important;
+    }
+
+    .cell {
+        border-bottom: 1px solid #cccccc
+    }
+
+    .user-div {
+        display: inline-block;
+        width: 60%;
+        vertical-align: top;
+        padding: 10px;
+    }
+
+    .user-div.cust-width {
+        display: inline-block;
+        width: 38%;
+        vertical-align: top
+    }
+
+    .user-div p {
+        margin-bottom: 0px
+    }
+</style>
+<div>
+    <div class="cell pull-top" style="margin-top: 20px; padding-left: 10px; padding-bottom: 13px;">
+        <span style="font-weight:700">Who has access({{matterCollaborationEvent.collab2.length}})</span>
+        <span style="float: right;margin-top: -4px;padding-right: 12px;">
+            <button data-ng-click="matterCollaborationEvent.cancel()" class="btn btn-default" style="font-size: 14px;padding: 0 18px;height: 26px;line-height: 24px;">Cancel</button>
+            <button data-ng-click="matterCollaborationEvent.save()" class="btn btn-default" style="font-size: 14px;padding: 0 18px;height: 26px;line-height: 24px;">Save</button>
+        </span>
+    </div>
+    <div>
+        <div class="cell" cal-width data-ng-repeat="item in matterCollaborationEvent.collab2">
+            <div class="user-div">
+                <p>{{item.contactName}}</p>
+                <p>{{item.emailId}}</p>
+            </div>
+            <div class="user-div cust-width">
+
+                <span class="custom-switch-slide pull-right zero-border ng-pristine ng-untouched ng-valid ng-isolate-scope" ng-switcher=""
+                    ng-model="item.eventPermission" style="display:inline-block;vertical-align: middle">
+                    <div class="switch switch-right" ng-class="{'switch-left': !model, 'switch-right': model}">
+                        <div class="switch-button">&nbsp;</div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,566 @@
+<form name="contactform" ng-show="!addContact.showcheckname" novalidate>
+    <div class="modal-header">
+        <div class="clearfix  row-fluid ">
+            <h2 class=" page-title pull-left">{{addContact.mode}} Contact</h2>
+            <div class=" pull-right">
+                <button data-ng-click="addContact.close()" class="btn btn-default btn-styleNone">Cancel</button>
+                <button data-ng-click="addContact.save(addContact.contact)" class="btn btn-default"
+                    data-ng-disabled="contactform.$invalid || addContact.showVenueFlag">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-tasks-due  model-height-76" data-ng-form="addContact.addContactFrm">
+        <div class="modal-body ">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Type<span class="compulsary-mark">*</span></label>
+                            <ui-select ng-model="addContact.contact.type" theme="selectize"
+                                ng-change="addContact.typeSelected()" class="form-control-width-correct" required>
+                                <ui-select-match placeholder="Select type">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="v in addContact.contactType | filter:$select.search">
+                                    <small>
+                                        {{v}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <div ng-if="((addContact.mode == 'Edit') && (showProfileEditFlag))">
+                                <label>Profile Picture:</label><br>
+                                <img class="contact-profile-pic"
+                                    data-ng-src="{{trustSrc(addContact.contact.contact_picture_uri)}}"><br><br>
+                                <button ng-click="removeEditProfilePic();">Remove Profile Picture</button><br>
+                            </div>
+
+                            <span ng-show="showProfileAddFlag">
+                                <img src="" id="profile-img-tag" class="margin-bottom10px" width="75px"
+                                    height="75px" /><br>
+                                <button ng-click="removeProfile()" id="remove-profile-btn">Remove Profile
+                                    Picture</button><br>
+                            </span>
+
+                            <div ng-if="!((addContact.mode == 'Edit') && (showProfileEditFlag))">
+                                <label>Select an image file: </label>
+                                <input class="filename" type="file" id="xxx" name="file"
+                                    onchange="angular.element(this).scope().showProfilePreview(this);angular.element(this).scope().showRemoveProfileBtn();" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Specialty</label>
+                            <input type="text" data-ng-model="addContact.contact.specialty"
+                                class="form-control form-control-width-correct" data-ng-maxlength="150" name="specialty"
+                                ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6"
+                        ng-show="addContact.contact.type =='Person'|| addContact.contact.type =='Client' || addContact.contact.type =='Lead' ||addContact.contact.type =='Estate Administrator'||addContact.contact.type =='Estate Executor'||addContact.contact.type =='Doctor'||addContact.contact.type =='Other' ">
+                        <div>
+                            <label>Company</label>
+                            <input type="text" data-ng-model="addContact.contact.company"
+                                class="form-control form-control-width-correct" maxlength="150" name="company"
+                                ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-top10px" ng-if="addContact.showVenue">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Venue<span class="compulsary-mark">*</span></label>
+                            <!--US#9055-->
+                            <ui-select multiple class="width100" ng-model="addContact.contact.venue" theme="select2"
+                                ng-change="addContact.showVenueSelected()" required>
+                                <ui-select-match placeholder="Select Venue">
+                                    {{$item.name}}
+                                </ui-select-match>
+                                <ui-select-choices group-by="addContact.groupjurisdictions"
+                                    group-filter="addContact.jurisdictions"
+                                    repeat="v in addContact.venuelist | filter:$select.search track by $index | orderBy: 'name'">
+                                    <small>
+                                        {{v.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="!addContact.showName">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Name<span class="compulsary-mark">*</span></label>
+                            <input type="text" data-ng-model="addContact.contact.first_name"
+                                class="form-control form-control-width-correct" data-ng-maxlength="100" name="name"
+                                required ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+
+                            <ul data-ng-if="addContact.addContactFrm.name.$dirty"
+                                ng-messages="addContact.addContactFrm.name.$error">
+                                <li class="error" data-ng-show="addContact.addContactFrm.name.$error.maxlength">Name
+                                    should not be more than 100 characters
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="addContact.showName">
+                    <div class="col-md-3" ng-if="addContact.showName">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <ui-select ng-model="addContact.contact.title_id" theme="selectize"
+                                class="form-control-width-correct">
+                                <ui-select-match placeholder="Title">
+                                    <span ng-show="$select.selected.value != '{Blank}'"> {{$select.selected.value}}
+                                    </span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="v.id as v in addContact.title | filter:$select.search | orderBy:'id'">
+                                    <small>
+                                        {{v.value}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>First Name<span class="compulsary-mark">*</span></label>
+                            <input type="text" name="first_name" data-ng-model="addContact.contact.first_name"
+                                class="form-control form-control-width-correct" ng-maxlength="100" required
+                                ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+
+                            <ul data-ng-if="addContact.addContactFrm.first_name.$dirty"
+                                ng-messages="addContact.addContactFrm.first_name.$error">
+                                <li class="error" data-ng-show="addContact.addContactFrm.first_name.$error.maxlength">
+                                    First
+                                    name should not be more than 100 characters
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" ng-show="addContact.showName">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input type="text" data-ng-model="addContact.contact.middle_name"
+                                ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                class="form-control form-control-width-correct" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="addContact.showName">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" data-ng-model="addContact.contact.last_name"
+                                ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                class="form-control form-control-width-correct" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Email Address</label>
+                                <div ng-repeat="emailid in addContact.emaillist">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input type="email"
+                                                    ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                                    data-ng-model="emailid.name" name="email{{$index+1}}"
+                                                    ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-maxlength="100"
+                                                    class="form-control form-control-width-correct" />
+                                            </div>
+                                            <div class="col-md-2 padding-add-btn">
+                                                <a data-ng-hide="$index===0" class="sprite default-delete"
+                                                    data-ng-click="addContact.deleteEmail(emailid.id)"></a>
+                                                <span>
+                                                    <a data-ng-hide="!($index===0)" ng-click="addContact.addEmail()"
+                                                        class="sprite default-plus"><span></span></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="addContact.addContactFrm['email'+($index+1)].$dirty"
+                                            ng-messages="addContact.addContactFrm['email'+($index+1)].$error">
+                                            <div class="error pull-left" ng-message="pattern">
+                                                Invalid email address!
+                                            </div>
+                                            <div class="error pull-left" ng-message="email">
+                                                Invalid email address!
+                                            </div>
+                                        </div>
+                                        <div data-ng-if="addContact.addContactFrm['email'+($index+1)].$error.maxlength">
+                                            <div class=" error pull-left">
+                                                Accepts only 100 characters.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Contact Number</label>
+                                <div ng-repeat="phone in addContact.phonelist">
+                                    <div class="form-group relative-container">
+                                        <div class="row">
+                                            <div class="col-md-2 custom-selectize-control">
+
+                                                <ui-select ng-model="phone.contactTypeName" theme="selectize"
+                                                    class="form-control-width-correct add-contact-select-width">
+                                                    <ui-select-match placeholder="Type">
+                                                        {{$select.selected.name}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices
+                                                        repeat="row.name as row in addContact.contactTypeName | filter:$select.search | orderBy:'name'">
+                                                        <small>
+                                                            {{row.name}}
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="col-md-9 padding-contact">
+                                                    <input type="text" ng-trim="false"
+                                                        ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                                        data-ng-model="phone.name" name="phone{{$index+1}}"
+                                                        class="form-control form-control-width-correct add-contact-input-width"
+                                                        data-ng-change="addContact.addContactFrm[phone.extid].$validate()"
+                                                        usphone-number-format maxlength="18"
+                                                        ng-pattern="/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/" />
+                                                    <span class="sprite default-caution error-icon error-icon2"
+                                                        data-ng-if="addContact.addContactFrm['phone'+($index+1)].$error.pattern"
+                                                        ng-messages="addContact.addContactFrm['phone'+($index+1)].$error"></span>
+                                                    <div data-ng-if="addContact.addContactFrm['phone'+($index+1)].$dirty"
+                                                        ng-messages="addContact.addContactFrm['phone'+($index+1)].$error">
+                                                        <div class="error text-left" ng-message="pattern">
+                                                            Invalid contact number.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 padding-extension">
+                                                    <input type="text" class="form-control" placeholder="Ext"
+                                                        name="ext{{$index+1}}"
+                                                        requires="addContact.phonelist[$index].name"
+                                                        data-ng-model="phone.ext" data-ng-pattern="/^[0-9]*$/"
+                                                        maxlength="10"
+                                                        ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+
+                                                    <div data-ng-if="addContact.addContactFrm['ext'+($index+1)].$dirty"
+                                                        data-ng-messages="addContact.addContactFrm['ext'+($index+1)].$error">
+                                                        <div class="error text-left" data-ng-message="requires">
+                                                            Enter a contact number.
+                                                        </div>
+                                                        <div class="error text-left" data-ng-message="pattern">
+                                                            Invalid extension.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-2 padding-add-btn fl-right">
+                                                <a data-ng-hide="$index===0" class="sprite default-delete  "
+                                                    data-ng-click="addContact.deletePhone(phone.id ,$index)"></a>
+                                                <span>
+                                                    <a data-ng-hide="!($index===0)" ng-click="addContact.addPhone()"
+                                                        class="sprite default-plus"><span></span></a>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    <input type="checkbox" data-ng-model="addContact.contact.is_sms_consent"
+                                        data-ng-true-value="1" data-ng-false-value="0">
+                                    <label>Opt-out of messages</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Fax Number</label>
+                                <div data-ng-repeat="fax in addContact.contact.fax_number">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input type="text" phone-number-format data-ng-model="fax.value"
+                                                    class="form-control form-control-width-correct" name="fax"
+                                                    ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                                    ng-maxlength="30" />
+                                                <ul data-ng-if="addContact.addContactFrm.fax.$dirty"
+                                                    ng-messages="addContact.addContactFrm.fax.$error">
+                                                    <li class="error"
+                                                        data-ng-show="addContact.addContactFrm.fax.$error.pattern">
+                                                        Accepts
+                                                        only numbers.
+                                                    </li>
+                                                    <li class="error"
+                                                        data-ng-show="addContact.addContactFrm.fax.$error.maxlength">
+                                                        Accepts
+                                                        only 30 characters.
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-2 padding-add-btn">
+                                                <a data-ng-hide="$index===0" class="sprite default-delete  "
+                                                    data-ng-click="addContact.deleteFax(fax.id)"></a>
+                                                <span>
+                                                    <a data-ng-hide="!($index===0)" ng-click="addContact.addFax()"
+                                                        class="sprite default-plus"><span></span></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-bottom10px" data-ng-if="addContact.showMoreLess">
+                    <span data-ng-click="addContact.toggleCard()">
+                        <a><small>Show more</small></a>
+                        <i class="sprite default-downward-arrow"></i>
+                    </span>
+                </div>
+                <div data-ng-if="addContact.isOpen">
+                    <div ng-class="{'clear-div' :$index == 1}" ng-repeat="list in addContact.contact.address">
+                        <div class="col-md-12 gray-border">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <div class="checkbox"> <input type="checkbox" data-ng-checked="list.checked"
+                                            data-ng-true-value="true" data-ng-false-value="false"
+                                            data-ng-click="addContact.checkAddress(list,addContact.contact.address)"
+                                            class="ng-pristine ng-untouched ng-valid"> <label>Primary
+                                            Address</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Address Type</label>
+                                        <ui-select ng-model="list.address_type" theme="selectize"
+                                            class="form-control-width-correct">
+                                            <ui-select-match placeholder="Select type">
+                                                {{$select.selected.name }}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                repeat="v.id as v in addContact.addressTypeName | filter:$select.search">
+                                                <small>
+                                                    {{v.name}}
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 text-right">
+                                    <a data-ng-hide="$index===0" class="sprite default-delete  "
+                                        data-ng-click="addContact.deleteAddress(list.id)"></a>
+                                    <a data-ng-hide="!($index===0)" ng-click="addContact.addAddress()"
+                                        class="sprite default-plus"><span></span></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Street</label>
+                                        <input type="text" ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                            data-ng-model="list.street" class="form-control form-control-width-correct"
+                                            ng-maxlength="100" name="street" />
+
+                                        <ul data-ng-if="addContact.addContactFrm.street.$dirty"
+                                            ng-messages="addContact.addContactFrm.street.$error">
+                                            <li class="error"
+                                                data-ng-show="addContact.addContactFrm.street.$error.maxlength">
+                                                Street
+                                                should not be more than 100 characters
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group relative-container">
+                                        <label>City</label>
+                                        <input type="text" name="city_name"
+                                            ng-keydown="addContact.checkIfEnterKeyWasPressed($event)"
+                                            data-ng-model="list.city" class="form-control form-control-width-correct"
+                                            ng-maxlength="100" />
+                                        <span class="sprite default-caution error-icon"
+                                            data-ng-show="addContact.addContactFrm.city_name.$dirty && addContact.addContactFrm.city_name.$invalid"></span>
+                                        <div data-ng-if="addContact.addContactFrm.city_name.$dirty"
+                                            ng-messages="addContact.addContactFrm.city_name.$error">
+
+                                            <div class="error" ng-message="pattern"
+                                                ng-show="addContact.addContactFrm.city_name.$error">
+                                                Invalid city name
+                                            </div>
+
+                                            <ul data-ng-if="addContact.addContactFrm.city_name.$dirty"
+                                                ng-messages="addContact.addContactFrm.city_name.$error">
+                                                <li class="error"
+                                                    data-ng-show="addContact.addContactFrm.city_name.$error.maxlength">
+                                                    City
+                                                    name should not be more than 100 characters
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" ng-show="list.stateshow">
+                                        <label>State</label>
+
+                                        <ui-select ng-model="list.state" theme="selectize"
+                                            class="form-control-width-correct">
+                                            <ui-select-match placeholder="Select State">
+                                                {{$select.selected}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="v in addContact.states | filter:$select.search">
+                                                <small>
+                                                    {{v}}
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="form-group" ng-show="!list.stateshow">
+                                        <label>State</label>
+                                        <input type="text" data-ng-model="list.state"
+                                            class="form-control form-control-width-correct" placeholder="Enter State">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group relative-container">
+                                        <label>ZIP Code</label>
+                                        <input type="text" data-ng-model="list.zip_code" allow-only-numbers
+                                            name="zipcode_name" class="form-control form-control-width-correct"
+                                            ng-keydown="addContact.checkIfEnterKeyWasPressed($event)" />
+                                        <!-- <span class="sprite default-caution error-icon" data-ng-show="addContact.checkZipcode == false"></span>
+                                            <div data-ng-if="addContact.addContactFrm.zipcode_name.$dirty" ng-messages="addContact.addContactFrm.zipcode_name.$error">
+    
+                                                <div class="error" data-ng-show="addContact.checkZipcode == false ">
+                                                    Invalid zipcode
+                                                </div>
+                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <ui-select ng-model="list.country" theme="selectize"
+                                            ng-change="addContact.countryChange(addContact.contact.address,$index)"
+                                            class="form-control-width-correct">
+                                            <ui-select-match placeholder="Select Country">
+                                                {{$select.selected}}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                repeat="v in addContact.countries | filter:$select.search">
+                                                <small>
+                                                    {{v}}
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- <div class="form-group relative-container"> -->
+                        <label>Note</label>
+                        <textarea class="form-control full-width" data-ng-model="addContact.contact.note"></textarea>
+                        <!-- </div> -->
+                    </div>
+                    <div class="margin-top15px" data-ng-if="!addContact.showMoreLess">
+                        <span data-ng-click="addContact.toggleCard()"><a><small>Show less</small></a>
+                            <i class="sprite default-upward-arrow"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div ng-show="addContact.showcheckname">
+    <div class="container-fluid">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="addContact.cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="view-only-fields row">
+                <div class=" pull-left col-md-8">
+                    <strong>Duplicate Detected</strong>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body pop-body-scroll-height">
+            <div class="dashboard-tasks-due short-heighted-box">
+                <div ng-repeat="d in addContact.duplicatelist">
+                    <div class="row">
+                        <div class="col-md-3">{{d.first_name}} {{d.last_name}}</div>
+                        <div class="col-md-3">{{d.phone}} </div>
+                        <div class="col-md-3">{{d.street}}
+                            <span ng-show="d.city">, {{d.city}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row margin-top20px">
+                <div class="col-md-12">
+                    System already has the above contact(s) named {{addContact.contact.first_name}} {{
+                    addContact.showName ? addContact.contact.last_name
+                    : ""}}
+                    <br /> Are you sure you want to add contact with the same name?
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button data-ng-click="addContact.yesduplicate()" class="btn btn-default btn-styleNone">
+                Yes</button>
+            <button type="button" class="btn btn-default" data-ng-click="addContact.noduplicate()">
+                No</button>
+        </div>
+    </div>
+</div>

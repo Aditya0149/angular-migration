@@ -1,0 +1,29 @@
+﻿<div data-ng-if="(document.moreInfoSelect=='motion')" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/documentMotion.html'">
+    </div>
+</div>
+
+<div data-ng-if="(document.moreInfoSelect=='liens')" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/liens.html'">
+    </div>
+</div>
+
+<div data-ng-if="document.moreInfoSelect=='medicalbill'" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/add-edit-medical-bills.html'">
+    </div>
+</div>
+
+<div data-ng-if="document.moreInfoSelect=='insurance'" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/add-edit-insaurance.html'">
+    </div>
+</div>
+
+<div data-ng-if="document.moreInfoSelect=='expense'" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/add-edit-expenses.html'">
+    </div>
+</div>
+
+<div data-ng-if="document.moreInfoSelect=='medicalrecord'" style="padding-bottom: 20px !important;">
+    <div data-ng-include="'app/documents/partial/add-medical-info.html'">
+    </div>
+</div>

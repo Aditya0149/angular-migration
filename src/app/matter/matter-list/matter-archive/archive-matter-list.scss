@@ -1,0 +1,39 @@
+.archive-matter-list-wrapper {
+        .scrollablecontainer .headerspacer { 
+        height: 80px;
+    }
+    .scrollArea .box {
+        height: 80px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .scrollableContainer {
+        padding-top: 79px;
+    }
+    .launcher-archive-grid {
+        width: 100%;
+        padding: 0 20px;
+    }
+    .matter-archive-grid {
+        padding: 0 20px;
+    }
+    .data-show {
+        white-space: normal;
+        word-break: break-word;
+    }
+    .custom-height {
+        max-height: 178px;
+    }
+    .moreLink {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        bottom: 10px;
+      }
+      .matter-moreAll-link{
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        bottom: 60px;
+      }
+}

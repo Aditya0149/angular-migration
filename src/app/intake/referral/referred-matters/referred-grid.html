@@ -1,0 +1,384 @@
+﻿<style>
+    .scrollableContainer .headerSpacer {
+        height: 50px !important;
+    }
+
+    .scrollArea table th .box {
+        height: 50px !important;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .scrollableContainer {
+        padding-top: 49px !important;
+    }
+
+    .scrollArea table .tooltip-inner {
+        word-break: break-word;
+        white-space: initial;
+    }
+
+    .tooltip-inner{
+        max-width: 280px;
+    }
+
+    .mattername-wordwrap {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+</style>
+<!-- Start: Applying Filter -->
+<div class="row margin0" id="refGridStyle" style="padding-top: 5px; padding-bottom: 5px;">
+    <div class="col-md-12 paddingRLR">
+        <div class="col-md-5 pull-left paddingRLR dropdown create">
+        </div>
+        <div class="col-md-7 pull-right paddingRLR clearfix">
+            <ul class="pull-right">
+                <li>
+                    <div class="search-input form-control-margin-null ng-hide" data-ng-show="intakeReferred.showSearch">
+                        <div class="default-searchico sprite"></div>
+                        <input type="text" focus-me="intakeReferred.showSearch" data-ng-model-options="{ debounce: 0 }" data-ng-model="intakeReferred.referredFilterText"
+                            data-ng-change="intakeReferred.filterRetain()" class="form-control ng-pristine ng-untouched ng-valid">
+                    </div>
+                </li>
+            </ul>
+            <ul class="showBy-btns pull-right">
+
+                <li class="search-overlap">
+                    <ul data-ng-hide="intakeReferred.showSearch">
+                        <li>
+                            <a data-ng-click="intakeReferred.showSearch = true">
+                                <span class="sprite default-searchico-menu " tooltip="Search" tooltip-placement="left"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="pull-right border">
+            </div>
+            <div class="pull-right">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: Applying Filter -->
+<div id="referralGridUpper"></div>
+<div data-ng-show="intakeReferred.fliterRefferedOutMatters.length > 0">
+    <!-- intakeReferred out-->
+    <div data-ng-if="(!intakeReferred.selectedStatusId.isIntakeStatus  && intakeReferred.dataReceived && intakeReferred.refferedOutMatters.length > 0) && intakeReferred.activeTab === 'referred out'">
+        <scrollable-table tableid="referredgrid1" watch="intakeReferred.refferedOutMatters" to="#referralGridUpper" from="#referralFooter">
+            <table style="table-layout: fixed;" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:15%">Intake Name, Date of Intake</th>
+                        <th style="width:15%">Status & Sub-Status</th>
+                        <th style="width:15%">Referred Out To</th>
+                        <th style="width:15%">Referred Out On</th>
+                        <th style="width:15%">Message</th>
+                        <th style="width:25%">Action
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;" data-ng-click="intakeReferred.showReferredInfo(response,intakeReferred.activeTab)" ng-repeat="response in intakeReferred.fliterRefferedOutMatters = (intakeReferred.refferedOutMatters | filter:intakeReferred.referredFilterText) track by response.id"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div>
+                                <div>
+                                    <span class="mattername-wordwrap" data-toggle="intake_name-tooltip" data-placement="right" title="" data-original-title="{{response.intake_name}}">{{response.intake_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_date-tooltip" data-placement="right" title="" data-original-title="{{response.intake_date}}">{{response.intake_date}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_status_name}}">{{response.intake_status_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_sub_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_status_name}}">{{response.intake_sub_status_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_fname-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_fname}}">{{response.ref_out_fname}} {{response.ref_out_lname}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_on-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_on}}">{{response.ref_out_on}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="message-tooltip" data-placement="left" title="" data-original-title="{{response.message}}">{{response.message}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button-vertical-center">
+
+                                <button data-ng-show="response.isSender" data-ng-click="intakeReferred.cancelReferredOut($event,response)" class="btn btn-default">
+                                    Cancel</button>
+                                <span class="marginLR-5px"></span>
+
+                                <button data-ng-show="response.isSender" class="btn btn-default" data-ng-click="intakeReferred.resendReferredOut($event,response)"
+                                    data-ng-show="intakeReferred.showResendBtn(intakeReferred.selectedStatusId)">
+                                    Resend</button>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+
+    <!-- intakeReferred in-->
+    <div data-ng-if="(!intakeReferred.selectedStatusId.isIntakeStatus  && intakeReferred.dataReceived && intakeReferred.refferedOutMatters.length > 0) && intakeReferred.activeTab === 'referred in'">
+        <scrollable-table tableid="referredgrid2" watch="intakeReferred.refferedOutMatters" to="#referralGridUpper" from="#referralFooter">
+            <table style="table-layout: fixed;" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:15%">Intake Name, Date of Intake</th>
+                        <th style="width:15%">Status & Sub-Status</th>
+                        <th style="width:15%">Referred Out To</th>
+                        <th style="width:15%">Referred Out On</th>
+                        <th style="width:15%">Message</th>
+                        <th style="width:25%">Action
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;" data-ng-click="intakeReferred.showReferredInfo(response,intakeReferred.activeTab)" ng-repeat="response in intakeReferred.fliterRefferedOutMatters = (intakeReferred.refferedOutMatters | filter:intakeReferred.referredFilterText) track by response.id"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div>
+                                <div>
+                                    <span class="mattername-wordwrap" data-toggle="intake_name-tooltip" data-placement="right" title="" data-original-title="{{response.intake_name}}">{{response.intake_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_date-tooltip" data-placement="right" title="" data-original-title="{{response.intake_date}}">{{response.intake_date}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_status_name}}">{{response.intake_status_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_sub_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_status_name}}">{{response.intake_sub_status_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_fname-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_fname}}">{{response.ref_out_fname}} {{response.ref_out_lname}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_on-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_on}}">{{response.ref_out_on}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="message-tooltip" data-placement="bottom" title="" data-original-title="{{response.message}}">{{response.message}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button-vertical-center" data-ng-show="intakeReferred.showReferredActionButtons()">
+
+                                <button data-ng-show="response.isReceiver == 1" data-ng-click="intakeReferred.paymentModal($event,response)" class="btn btn-default">
+                                    Accept</button>
+                                <span class="marginLR-5px"></span>
+
+                                <button class="btn btn-default" data-ng-click="intakeReferred.declineReferral($event,response)" data-ng-show="response.isReceiver == 1">
+                                    Decline</button>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+
+    <!--matter status grid-->
+    <div data-ng-if="intakeReferred.selectedStatusId.isIntakeStatus && intakeReferred.dataReceived && intakeReferred.refferedOutMatters.length > 0 && intakeReferred.activeTab === 'referred out'">
+        <scrollable-table tableid="referredgrid3" watch="intakeReferred.refferedOutMatters" to="#referralGridUpper" from="#referralFooter">
+            <table style="table-layout: fixed;" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Intake Name, Date of Intake</th>
+                        <th style="width:15%">Status & Sub-Status</th>
+                        <th style="width:15%">Type & Subtype</th>
+                        <th style="width:10%">Category</th>
+                        <th style="width:10%">Referred Out To</th>
+                        <th style="width:10%">Referred Out On</th>
+                        <th style="width:10%">Last updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;" data-ng-click="intakeReferred.showReferredInfo(response,intakeReferred.activeTab)" ng-repeat="response in intakeReferred.fliterRefferedOutMatters = (intakeReferred.refferedOutMatters | filter:intakeReferred.referredFilterText) track by response.id"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div>
+                                <div>
+                                    <span class="mattername-wordwrap" data-toggle="intake_name-tooltip" data-placement="right" title="" data-original-title="{{response.intake_name}}">{{response.intake_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_date-tooltip" data-placement="right" title="" data-original-title="{{response.intake_date}}">{{response.intake_date}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_status_name}}">{{response.intake_status_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_sub_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_status_name}}">{{response.intake_sub_status_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_type_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_type_name}}">{{response.intake_type_name}}</span>
+                                </div>
+                                <div>
+                                    <span data-toggle="intake_sub_type_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_type_name}}">{{response.intake_sub_type_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="intake_category_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_category_name}}">{{response.intake_category_name}}</span>
+                            </div>
+                        </td>
+                       
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_fname-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_fname}}">{{response.ref_out_fname}} {{response.ref_out_lname}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_on-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_on}}">{{response.ref_out_on}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="modified_date_display-tooltip" data-placement="bottom" title="" data-original-title="{{response.modified_date_display}}">{{response.modified_date_display}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+
+    <!--intakeReferred In matter status grid-->
+    <div data-ng-if="intakeReferred.selectedStatusId.isIntakeStatus && intakeReferred.dataReceived && intakeReferred.refferedOutMatters.length > 0 && intakeReferred.activeTab === 'referred in'">
+        <scrollable-table tableid="referredgrid4" watch="intakeReferred.refferedOutMatters" to="#referralGridUpper" from="#referralFooter">
+            <table style="table-layout: fixed;" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Intake Name, Date of Intake</th>
+                        <th style="width:15%">Status & Sub-Status</th>
+                        <th style="width:15%">Type & Subtype</th>
+                        <th style="width:10%">Category</th>
+                        <th style="width:10%">Referred Out To</th>
+                        <th style="width:10%">Referred Out On</th>
+                        <th style="width:10%">Last updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;" data-ng-click="intakeReferred.showReferredInfo(response,intakeReferred.activeTab)" ng-repeat="response in intakeReferred.fliterRefferedOutMatters = (intakeReferred.refferedOutMatters | filter:intakeReferred.referredFilterText) track by response.id"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div>
+                                <div>
+                                    <span class="mattername-wordwrap" data-toggle="intake_name-tooltip" data-placement="right" title="" data-original-title="{{response.intake_name}}">{{response.intake_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_date-tooltip" data-placement="right" title="" data-original-title="{{response.intake_date}}">{{response.intake_date}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_status_name}}">{{response.intake_status_name}}</span>
+                                </div>
+                                <div>
+                                    <span class="" data-toggle="intake_sub_status_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_status_name}}">{{response.intake_sub_status_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="intake_type_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_type_name}}">{{response.intake_type_name}}</span>
+                                </div>
+                                <div>
+                                    <span data-toggle="intake_sub_type_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_sub_type_name}}">{{response.intake_sub_type_name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="intake_category_name-tooltip" data-placement="bottom" title="" data-original-title="{{response.intake_category_name}}">{{response.intake_category_name}}</span>
+                            </div>
+                        </td>
+                       
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_fname-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_fname}}">{{response.ref_out_fname}} {{response.ref_out_lname}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="ref_out_on-tooltip" data-placement="bottom" title="" data-original-title="{{response.ref_out_on}}">{{response.ref_out_on}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="modified_date_display-tooltip" data-placement="bottom" title="" data-original-title="{{response.modified_date_display}}">{{response.modified_date_display}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+</div>
+<div class="text-center margin-top20px" data-ng-if="intakeReferred.fliterRefferedOutMatters.length == 0 && intakeReferred.refferedOutMatters.length != 0">
+    No intakes for the applied filter
+</div>
+
+<div class="text-center margin-top20px" data-ng-if="intakeReferred.refferedOutMatters.length == 0 && intakeReferred.activeTab === 'referred in'">
+    You currently do not have any Referred In intakes.
+</div>
+
+<div class="text-center margin-top20px" data-ng-if="intakeReferred.refferedOutMatters.length == 0 && intakeReferred.activeTab === 'referred out'">
+    You currently do not have any Referred Out intakes.
+</div>
+
+<div class="row margin-top20px text-center" id="referralFooter" style="overflow: hidden !important;margin-bottom: 58px;position: fixed;bottom: 0;left: 47%;right: 47%;" >
+    <div data-ng-show="(intakeReferred.refferedOutMatters.length >0 && intakeReferred.dataReceived) && (intakeReferred.refferedOutMatters.length < intakeReferred.totalCount)">
+    
+    <a href="javascript:void(0)" data-ng-click="intakeReferred.getMore(intakeReferred.selectedStatusId,intakeReferred.activeTab)">More</a>
+
+    <span class="paddingLR-10px">|</span>
+
+    <a href="javascript:void(0)" data-ng-click="intakeReferred.getAll(intakeReferred.selectedStatusId,intakeReferred.activeTab)">All</a>
+        </div>
+</div>

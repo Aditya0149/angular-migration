@@ -1,0 +1,103 @@
+<!-- Start HTML For Create Document -->
+<style>
+    tags-input.ng-invalid .tags{
+        box-shadow: none;
+    }
+	.tags-input input {border: none;width: 100% !important;}
+	.tags{-webkit-box-shadow: none !important;-moz-box-shadow: none !important;box-shadow: none !important;}
+</style>
+<div id="content">
+    <div class="container row">
+        <div class="page-title-border clearfix  heading-with-button-bottom-padding row">
+            <h2 class="col-md-5 page-title ng-binding">Microsoft Office Online</h2>
+            <div class=" pull-right ">
+                <button data-ng-click="document.cancelCreateOnline()" class="btn btn-default btn-styleNone">Cancel</button>
+                <button data-ng-click="document.processDocuments(true)" class="btn btn-default" data-ng-disabled="document.docModel.document_name == '' || document.isDatesValid() ">Save</button>
+            </div>
+        </div>
+        <div class="select-document-type row">
+            <div class="document-type-title-block">
+                <label>Select Document Type</label>
+                <ul>
+                    <li ng-class="{'select': document.onlineDocType == 'docx'}">
+                        <a href="javascript:void(0)" ng-click="document.onlineDocType = 'docx'" class="sprite microsoft-excel-big-icon"></a>
+                    </li>
+                    <li ng-class="{'select': document.onlineDocType == 'xlsx'}">
+                        <a href="javascript:void(0)" ng-click="document.onlineDocType = 'xlsx'" class="sprite microsoft-word-big-icon"></a>
+                    </li>
+                    <li ng-class="{'select': document.onlineDocType == 'pptx'}">
+                        <a href="javascript:void(0)" ng-click="document.onlineDocType = 'pptx'" class="sprite microsoft-powerpoint-big-icon"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="select-document-details col-md-9 row">
+
+            <div class="col-md-6 padding-0">
+                <div class="margin-top20px col-md-12 padding-0">
+                    <label>Document Name</label><span class="compulsary-mark">*</span>
+                    <input tabindex="1" type="text" ng-model="document.docModel.document_name" ng-init="document.docModel.document_name = ''"
+                        placeholder="Enter document name" class="form-control ng-pristine ng-valid ng-valid-required ng-touched">
+                </div>
+            </div>
+                <div class="margin-top20px col-md-6 padding-0">
+                    <div class="clear-block col-md-12 row">
+                        <label>Document Category</label><span class="compulsary-mark">*</span>
+                        <ui-select tabindex="4" ng-model="document.docModel.category" data-ng-required="true"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select Category...">
+                                {{$select.selected.doc_category_name}} </ui-select-match>
+                            <ui-select-choices repeat="category as category in document.documentCategories| filter:{doc_category_name:$select.search}| orderBy: 'doc_category_name'">
+                                <small> {{category.doc_category_name}} </small> </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="margin-top20px col-md-6 padding-0" data-ng-form="TagsInputForm">
+                    <label>Tags</label>
+                    <div class="tags-input">
+                        <tags-input tabindex="5" ng-model="document.docAddTags" name="tagName{{$index}}" display-property="name">
+                            <auto-complete source="document.loadTags($query)"></auto-complete>
+                        </tags-input>
+                        <span id="tagsInputErr" style="color:red;" ng-show="TagsInputForm.tagName.$invalid && !TagsInputForm.tagName.$error.duplicateTag"><small>Please enter a minimum of three characters to add or search a tag</small></span>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top: 20px;padding-left: 1px;">
+                    <label>Date filed</label>
+                    <p class="input-group datepicker">
+                        <input type="text" data-ng-model="document.docModel.date_filed_date" datepicker-popup="MM/dd/yyyy" is-open="document.date_filed_date"
+                            data-ng-disabled="false" id="filledDatediv" validate-date error-div="#filledDatediv"
+                            tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" class="form-control" show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default"
+                                data-ng-click="document.openDatePicker($event,'date_filed_date');document.date_filed_date=true;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </p>
+                    <div style="float: none;" class="error" id="filledDatedivError">Invalid date format!</div>
+                </div>
+                <div class="margin-top20px  col-md-6 padding-0" style="clear: both">
+                    <label class="pull-left review-label mt-0">Needs Review</label>
+                    <div class="cell checkbox pull-left">
+                        <div tabindex="6" ng-switcher ng-model="document.docModel.needs_review" ng-click="document.needReview()" class="zero-border"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 reviewer-select-height" ng-class="{'margin-top20px': (document.matterId == 0),'padding-left-0':!(document.matterId == 0), 'margin-top20px': !(document.matterId == 0)}">
+                    <div class="reviewer" data-ng-show="document.showNeedReview">
+                        <label>Reviewer</label><span class="compulsary-mark">*</span>
+                        <ui-select tabindex="7" style="width: 95%;" multiple ng-model="document.reviewUser" theme="select2">
+                            <ui-select-match placeholder="Select Reviewer...">{{$item.fullName}} </ui-select-match>
+                            <ui-select-choices repeat="user.userId as user in document.allUser | filter:{fullName:$select.search} | orderBy:'fullName'">
+                                <small> {{user.fullName}} </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+<!-- End HTML For Create Document -->

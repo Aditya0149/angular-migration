@@ -1,0 +1,112 @@
+<style>
+    table.table.table-bordered {
+        font-size: 12px;
+    }
+
+    table.table.table-bordered td {
+        border-top: none;
+        border-bottom: none;
+        width: 33%;
+    }
+
+    .colaporat-span span {
+        font-size: 11px;
+    }
+
+    span.bluetxt {
+        color: #21cdca;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    span.big-txt {
+        font-size: 12px;
+    }
+
+    .blue-bg {
+        background: rgba(33, 204, 204, 0.11);
+        padding-top: 15px !important;
+        padding-bottom: 0px !important;
+    }
+</style>
+
+<div class="row margin-top20px margin-bottom10">
+    <div class="col-md-4 colaporat-span">
+        <span>Sharing with:</span>
+        <div ng-repeat="users in  matterCollaborationCtrl.contactBlockList">
+            <h5>{{users.contactEntity.name}}, {{users.contactEntityEmail}}</h5>
+        </div>
+    </div>
+
+    <div class="col-md-4 colaporat-span">
+        <!-- <span>Access valid till:</span>
+        <h5>12/31/2018 (25 days)</h5> -->
+    </div>
+</div>
+
+<!-- <div class="row margin-bottom10">
+
+    <div class="col-md-10 colaporat-span">
+        <span>Message:</span>
+        <div class="dashboard-tasks-due" style="max-height:100px;overflow-x: hidden;">
+            <p class="margin-bottom-0">
+                {{matterCollaborationCtrl.write_message}}
+            </p>
+        </div>
+    </div>
+</div> -->
+
+    <div class="row">
+        <div class="col-md-12 colaporat-span">
+            <span>Shared details:</span>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Documents ({{matterCollaborationCtrl.selectedDocuments.length}})</th>
+                        <th>Notes ({{matterCollaborationCtrl.selectedNotes.length}})</th>
+                        <th>Events ({{matterCollaborationCtrl.selectedEvents.length}})</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="static-new-scrollbar" style="max-height:200px;overflow-x: hidden;">
+                                <div ng-repeat="document in matterCollaborationCtrl.selectedDocuments" style="min-height: 35px;">
+                                    <p>{{document.doc_name}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="static-new-scrollbar" style="max-height:200px;overflow-x: hidden;">
+                                <div ng-repeat="note in matterCollaborationCtrl.selectedNotes" style="min-height: 35px;">
+                                    <p data-ng-bind-html="note.plaintext | decodeHtmlEncoding | cut:false:100"></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="static-new-scrollbar" style="max-height:200px;overflow-x: hidden;">
+                                <div ng-repeat="event in matterCollaborationCtrl.selectedEvents" style="min-height: 35px;">
+                                    <p>
+                                        <span ng-if="!(event.label_id == 100 || event.label_id == 32 || event.label_id == 19)">{{event.event_name}}</span> 
+                                        <span ng-if="(event.label_id == 100 || event.label_id == 32 || event.label_id == 19)"> {{event.title}}</span> <br>
+                                        <span class="graytxt">
+                                            <span ng-if="event.all_day == 1">{{event.utcstart | utcDateFilter: 'MM-DD-YYYY' :event.all_day:'start'}}</span>
+                                            <span ng-if="event.all_day == 0">{{event.utcstart | utcDateFilter: 'MM-DD-YYYY hh:mm A' :event.all_day:'start'}}</span>
+                                            <span data-ng-show="event.utcstart != event.utcend">
+                                            - <span ng-if="event.all_day == 1">{{event.utcend | utcDateFilter: 'MM-DD-YYYY' :event.all_day:'end'}}</span>
+                                                <span ng-if="event.all_day == 0">{{event.utcend | utcDateFilter: 'MM-DD-YYYY hh:mm A' :event.all_day:'end'}}</span>
+                                            </span>
+                                            <span data-ng-show="event.utcstart == event.utcend">
+                                            - {{event.utcstart | utcDateFilter: 'MM-DD-YYYY' :event.all_day:'start'}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>

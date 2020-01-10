@@ -1,0 +1,159 @@
+<style>
+    .btn-group .btn-default{line-height: 38px;height: 40px;}
+</style>
+<div data-ng-form="document.documentMotionForm">
+    <div class="fullsize-control">
+        <div class="col-md-12 margin-top35px">
+            <div class="col-md-6 margin-top10px padding-0">
+                <div class="col-md-6" style="height: 50px;">
+                    <label>Date of Service</label>
+                    <span class="input-group datepicker">
+                        <input
+                            type="text"
+                            name="dateOfService"
+                            data-ng-model="document.documentMotionDetailInfo.motion_date_of_service"
+                            datepicker-popup="{{document.dateFormat}}"
+                            clear-text="Clear"
+                            max-date="document.documentMotionDetailInfo.motion_date_returnable"
+                            datepicker-options="document.datepickerOptions"
+                            is-open="document.dateOfServiceEvent.openStartDatepickerForDOS"
+                            show-button-bar="false"
+                            data-ng-disabled="false"
+                            id="motionDatediv"
+                            validate-date error-div="#motionDatediv"       
+                            tooltip="mm/dd/yyyy"
+                            placeholder="mm/dd/yyyy"   
+                            class="form-control" show-button-bar="false"
+                            data-ng-change="document.dateOfServiceDateChange(document.dateOfServiceEvent)" />
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default"
+                                data-ng-click="document.openDateOfService($event,'openStartDatepickerForDOS');document.dateOfServiceEvent.openStartDatepickerForDOS = true;document.returnableDateEvent.openStartDatepickerForRD = false">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </span>
+                    <div class="error" style="float: none;">Invalid date format!</div>
+                    <span
+                        data-ng-show="document.showErrorMsgForDates(document.documentMotionDetailInfo.dateOfService,document.documentMotionDetailInfo.motion_date_returnable)"
+                        class="error">Date of service is after returnable date.
+
+                    </span>
+                </div>
+                <div class="col-md-6" style="height: 50px;">
+                    <label>Returnable Date</label>
+                    <span class="input-group datepicker">
+                        <input type="text"
+                            data-ng-model="document.documentMotionDetailInfo.motion_date_returnable"
+                            datepicker-popup="{{document.dateFormat}}"
+                            clear-text="Clear"
+                            min-date="document.documentMotionDetailInfo.motion_date_of_service"
+                            datepicker-options="document.datepickerOptions"
+                            is-open="document.returnableDateEvent.openStartDatepickerForRD"
+                            data-ng-disabled="false"
+                            id="ReturnDatediv"
+                            validate-date error-div="#ReturnDatediv"       
+                            tooltip="mm/dd/yyyy"
+                            placeholder="mm/dd/yyyy"
+                            show-button-bar="false"
+                            class="form-control" ng-change="document.returnableDateChange(document.returnableDateEvent)" />
+                        <span class="input-group-btn">
+                            <button type="button"
+                                class="btn btn-default"
+                                data-ng-click="document.openReturnableDate($event,'openStartDatepickerForRD');document.dateOfServiceEvent.openStartDatepickerForDOS = false;document.returnableDateEvent.openStartDatepickerForRD = true">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </span>
+                    <div class="error" style="float: none;">Invalid date format!</div>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top10px">
+                <div>
+                    <label>Type</label>
+                    <ui-select name="document_type" ng-model="document.documentMotionDetailInfo.motion_type" theme="selectize">
+                        <ui-select-match placeholder="Select Motion Type">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="type.id as type in document.motionType | filter:{ name:$select.search } | orderBy: 'name'">
+                            <small>
+                                {{type.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top10px">
+                <div>
+                    <label>Title</label>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                        data-ng-model="document.documentMotionDetailInfo.motion_title"
+                        name="document_title"
+                        ng-pattern="/^[\x00-\x7F]*$/"
+                        >
+
+                    <span class="sprite default-caution error-icon" data-ng-show="document.documentMotionForm.document_title.$dirty && document.documentMotionForm.document_title.$invalid"></span>
+                    <div data-ng-if="document.documentMotionForm.document_title.$dirty" ng-messages="document.documentMotionForm.document_title.$error">
+                        <div class="error" ng-message="required">
+                            <span ng-show="document.documentMotionForm.document_title.$error">Title cannot be blank.</span>
+                        </div>
+                        <div class="error" ng-message="pattern">
+                            <span ng-show="document.documentMotionForm.document_title.$error">Motion title contains invalid characters. Please enter another title</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top25px">
+                <div class="">
+                    <clx-btn-group btn-list="document.motionToBeSelected" value="document.documentMotionDetailInfo.motion_on_by"></clx-btn-group>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top10px">
+                <div>
+                    <label>Status</label>
+                    <ui-select  ng-model="document.documentMotionDetailInfo.motion_status" theme="selectize">
+                        <ui-select-match placeholder="Select Status...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="status.id as status in document.motionStatus| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>
+                                {{status.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top10px form-group-margin-null padding-0">
+                <div class="form-group col-md-6 ">
+
+                    <label>Judge</label>
+                    <input type="text"
+                        name="contact"
+                        data-ng-model="document.documentMotionDetailInfo.contact"
+                        data-ng-model-options="{ debounce: 200 }"
+                        placeholder="Search Contacts"
+                        typeahead="row as row.name for row in document.getDocumentMotionContact($viewValue)"
+                        typeahead-input-formatter="document.formatTypeaheadDisplayForDocumentMotion($model)"
+                        typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"   
+                        typeahead-on-select="document.setTypeMotion($model)"
+                        class="form-control ">
+                </div>
+
+                <div class="add-now-wrap">
+                    <span class="or-connector">OR </span>
+                    <button class="btn btn-default" data-ng-click="document.addNewContactforDocumentMotion('docmotion')">Add New</button>
+                </div>
+            </div>
+            <div class="col-md-6 margin-top10px">
+                <div>
+                    <label>Description</label>
+                    <textarea rows="4" class="form-control" data-ng-model="document.documentMotionDetailInfo.motion_description"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+
+    </div>
+</div>
+

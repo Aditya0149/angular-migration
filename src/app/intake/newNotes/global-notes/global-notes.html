@@ -1,0 +1,577 @@
+<div class="global-notes-container">
+    <div class="row" data-ng-if="!globalNotes.openAddContactView && globalNotes.isFilterView">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" data-ng-click="globalNotes.resetNotes()" href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+            </a>
+        </div>
+    </div>
+    <div data-ng-hide="globalNotes.openAddContactView || globalNotes.isFilterView"
+        class="col-md-6 page-title-border-links clearfix subnav heading-with-button-bottom-padding b-0">
+        <ul>
+            <li>
+                <a href="javascript:void(0);" data-ng-click="globalNotes.myNotes()"
+                    ng-class="{' activeLink': globalNotes.currentFilter.tab == 'myglobalnotes'}">My
+                    Notes</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" ng-click="globalNotes.allNotes()"
+                    ng-class="{' activeLink': globalNotes.currentFilter.tab == 'allglobalnotes'}">All
+                    Notes</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6 row" data-ng-if="!globalNotes.openAddContactView && !globalNotes.isFilterView">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" data-ng-click="globalNotes.resetNotes()" href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+            </a>
+        </div>
+    </div>
+    
+    <div data-ng-show="!globalNotes.openAddContactView && !globalNotes.isOpenNotesView"
+        ng-class="{'cursor-pointer-events-none' :globalNotes.compose, '' : !globalNotes.compose}">
+        <!--id="content"-->
+        <div class="content-class-popup">
+            <div class="width100per" id="globalNote">
+                <div class="col-md-12 paddingRLR heading-with-add-icons">
+                    <div class="col-md-4 pull-left paddingRLR dropdown create top-icon-set">
+                        <!--<a data-ng-click="notes.isCollapsed = !notes.isCollapsed">-->
+                        <a data-ng-click="globalNotes.openAddView()"
+                            ng-if="globalNotes.notesPermissions[0].A  == '1'|| globalNotes.showIntakeNote == '1' ">
+                            <!--  Add Note Icon -->
+                            <span class="sprite default-plus" tooltip="Add" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                            data-ng-click="globalNotes.openGlobalNotesEdit(globalNotes.globalNotesGrid.selectedItems[0])"
+                            data-ng-disabled="globalNotes.isUser"
+                            data-ng-show="globalNotes.globalNotesGrid.selectedItems.length === 1">
+                            <span class="sprite default-edit" tooltip="Edit " tooltip-placement="right">&nbsp;</span>
+                        </a>
+    
+                        <a class="margin-left25px"
+                            data-ng-click="globalNotes.deleteNotes(globalNotes.globalNotesGrid.selectedItems[0],globalNotes.globalNotesGrid.selectedItems,globalNotes.filterdNotes)"
+                            data-ng-disabled="globalNotes.isUser"
+                            data-ng-show="globalNotes.globalNotesGrid.selectedItems.length > 0 ">
+                            <span class="sprite default-delete" tooltip="Delete " tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px" data-ng-click="globalNotes.composeNotesMail();"
+                            data-ng-if=" (globalNotes.isGraceOver != 0)"
+                            data-ng-show="(globalNotes.globalNotesGrid.selectedItems.length > 0 && globalNotes.email_subscription == 1) && globalNotes.emailFlag">
+                            <span class="sprite default-mailbox" tooltip="E-mail"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+                    </div>
+    
+                    <div class="col-md-8 pull-right paddingRLR clearfix ">
+                        <ul class="showBy-btns pull-right">
+                            <li>
+                                <a data-ng-click="globalNotes.clearFilter()">Clear
+                                </a>
+                            </li>
+                            <li class="seperation"></li>
+                            <li>
+                                <a data-ng-click="globalNotes.openFilters()">
+                                    <span class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                            <li class="seperation"></li>
+    
+                            <li data-ng-class="{'active-link': globalNotes.currentView=='GRID'}">
+                                <a data-ng-click="globalNotes.setCurrentView('GRID')">
+                                    <span class="sprite default-gridico" tooltip="Grid View"
+                                        tooltip-placement="right"></span>
+                                </a>
+                            </li>
+    
+                            <li data-ng-class="{'active-link': globalNotes.currentView=='LIST'}">
+                                <a data-ng-click="globalNotes.setCurrentView('LIST')">
+                                    <span class="sprite default-listico " tooltip="List View"></span>
+                                </a>
+                            </li>
+    
+                            <!--  Conversation view -->
+                            <li data-ng-class="{'active-link': globalNotes.currentView=='CONV'}">
+                                <a data-ng-click="globalNotes.setCurrentView('CONV')">
+                                    <span class="sprite default-conver-view " tooltip="Conversation View"
+                                        tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-ng-click="globalNotes.printGlobalNote()">
+                                    <span class="sprite default-file sortby-icons" tooltip="Print"
+                                        tooltip-placement="right"></span>
+                                </a>
+                            </li>
+                            <li class="paddingLR-10px ml-0">
+                                <a data-ng-click="globalNotes.exportGlobalNote()">
+                                    <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                        tooltip-placement="left"></span>
+                                </a>
+                            </li>
+                        </ul>
+    
+                        <div class="pull-right">
+                            <!-- 4555 remove attribute data-ng-show="globalNotes.currentView != 'CONV'" -->
+                            <div class="search-input">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" class="form-control" data-ng-model="globalNotes.serachInput"
+                                    data-ng-change="globalNotes.searchRetain()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-hide="globalNotes.isFilterView" class="pull-right margin-top10px" id="globalFilterFlag">
+    
+                    <clx-filter-tags on-filter-cancel="globalNotes.tagCancelled" tag-list="globalNotes.tags">
+                    </clx-filter-tags>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="paddingRLR flexCont" id="globalnotesupper1">
+                <!-- ngRepeat: item in viewModel.statusWiseCounts -->
+            </div>
+            <div class="notes-list margin-top10px" ng-switch on="globalNotes.currentView"
+                ng-show="!globalNotes.isFilterView">
+                <!-- List View -->
+                <div class="workflow-header1" ng-switch-when="LIST">
+                    <div data-ng-if="globalNotes.notesList.length > 0 && globalNotes.isDataAvailable">
+                        <scrollable-table tableid="globalNotesGrid1" watch="globalNotes.notesList" to="#globalnotesupper1"
+                            from="#globalnotesmoreLink">
+                            <table class="table fix-layout">
+                                <thead>
+                                    <tr>
+                                        <th class="th-width-8">
+    
+                                        </th>
+                                        <th class="th-width-15">Matter/Intake Name</th>
+                                        <th class="th-width-25">Note</th>
+                                        <th class="th-width-10">Category</th>
+                                        <th class="th-width-15">Added by</th>
+                                        <th class="th-width-10">Added on</th>
+                                        <th class="th-width-17">Linked Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="note in globalNotes.filterdNotes = (globalNotes.notesList | filter: globalNotes.serachInput|limitTo:globalNotes.notesLimit)"
+                                        row-id="{{ $index }}">
+                                        <td>
+                                            <span ng-show="note.is_important == 1"
+                                                class="default-alert sprite pull-left"></span>
+                                            <span ng-show="note.attachment_count != ''">
+                                                <span
+                                                    class="pull-left margin-left5px sprite default-attachment margin-top2px"></span>
+                                                <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                            </span>
+                                        </td>
+                                        <td class="file-field">
+                                            <a href="javascript:void(0);"
+                                                tooltip="{{note.is_intake == 0 ? 'Matter Note:'+note.matter_name : 'Intake Note:'+note.matter_name}}"
+                                                tooltip-append-to-body="true" tooltip-placement="top-center"
+                                                data-ng-click="globalNotes.goToMatter(note.matter_id, note.is_intake)">
+                                                {{note.matter_name}}</a>
+                                        </td>
+                                        <td class="file-field">
+                                            <span class="ellipsis word-wrap pre-line cursor-pointer"
+                                                data-ng-click="globalNotes.openNotesView(note)">
+                                                {{note.displayText | characters:150: false}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="cursor-pointer" data-ng-click="globalNotes.openNotesView(note)">{{globalNotes.getCateogry(note.noteCategory)
+                                                | SentenseCase}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="cursor-pointer"
+                                                data-ng-click="globalNotes.openNotesView(note)">{{note.user.first_name}}
+                                                {{note.user.last_name}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="cursor-pointer" data-ng-click="globalNotes.openNotesView(note)">
+                                                {{globalNotes.getFormattedDate(note.created_date, 'MM/DD/YYYY')}}
+                                                <br> {{globalNotes.getFormattedDate(note.created_date, 'hh:mm A')}}</span>
+                                        </td>
+                                        <td class=" word-wrap"
+                                            ng-class="{'cursor-pointer':(note.linked_contact.length > 0)}">
+                                            <span class="saved-search-link" data-ng-click="globalNotes.openContactCard(item)"
+                                                ng-repeat="item in note.linked_contact">
+                                                {{item.first_name}} {{item.last_name}}
+                                                <span ng-if="!$last">,</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </scrollable-table>
+                    </div>
+                </div>
+                <!-- Grid View -->
+                <div class="row dashboard-tasks-due gridview" id="gridViewNotes" ng-switch-when="GRID">
+                    <div class="col-md-4"
+                        ng-repeat="note in globalNotes.filterdNotes = (globalNotes.notesList | filter: globalNotes.serachInput|limitTo:globalNotes.notesLimit)"
+                        ng-show="globalNotes.notesList.length > 0">
+                        <div class="note default-cursor"
+                            ng-class="globalNotes.getNoteClass(note.noteCategory.notecategory_id)">
+                            <div class="col-md-12 note-overflow">
+                                <a class="word-wrap" href="javascript:void(0);"
+                                    tooltip="{{note.is_intake == 0 ? 'Matter Note:'+note.matter_name : 'Intake Note:'+note.matter_name}}"
+                                    tooltip-append-to-body="true" tooltip-placement="top-center"
+                                    data-ng-click="globalNotes.goToMatter(note.matter_id, note.is_intake)">
+                                    {{note.matter_name}}</a>
+                                <ul class="notes-status" class="cursor-pointer"
+                                    data-ng-click="globalNotes.openNotesView(note)">
+                                    <li ng-show="note.is_important == 1">
+                                        <a href="javascript:void(0);" class="sprite default-alert"></a>
+                                    </li>
+                                    <li ng-show="note.attachment_count != ''">
+                                        <span class="pull-left sprite default-attachment margin-top2px"></span>
+                                        <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="sprite"
+                                            ng-class="globalNotes.getNoteIcon(note.noteCategory.notecategory_id)"></a>
+                                    </li>
+    
+                                </ul>
+                                <br />
+                                <span class="cursor-pointer" data-ng-click="globalNotes.openNotesView(note)">
+                                    <small>File # {{note.file_number}}</small>
+                                    <br />
+                                    <small>{{note.user.first_name}} {{note.user.last_name}}
+                                    </small>
+                                    <br />
+                                    <small>{{globalNotes.getCateogry(note.noteCategory) | SentenseCase}}&nbsp;
+                                        {{globalNotes.getFormattedDate(note.created_date)}}
+                                    </small>
+                                    <p class="ellipsis word-wrap pre-line cursor-pointer">
+                                        {{note.displayText | characters:150: false}}
+                                    </p>
+                                    <p data-ng-show="note.type=='email'" class="ellipsis word-wrap pre-wrap">{{note.text |
+                                        characters:100: false}}
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Conversation View -->
+                <div class="workflow-header" ng-switch-when="CONV">
+                    <div data-ng-if="globalNotes.notesList.length > 0 && globalNotes.isDataAvailable">
+                        <scrollable-table tableid="globalNotesGrid2" watch="globalNotes.notesList" to="#globalnotesupper1"
+                            from="#globalnotesmoreLink">
+                            <table class="table fix-layout">
+                                <thead>
+                                    <tr>
+                                        <th class="th-width-3">
+                                            <div class="checkbox margin0">
+                                                <input type="checkbox" data-ng-disabled="globalNotes.filterdNotes.length==0"
+                                                    data-ng-model="globalNotes.globalNotesGrid.selectAll"
+                                                    data-ng-checked="globalNotes.allglobalNoteselected()"
+                                                    data-ng-click="globalNotes.selectAllglobalNotes(globalNotes.globalNotesGrid.selectAll)" />
+                                                <label></label>
+                                            </div>
+                                        </th>
+                                        <th class="th-width-6"></th>
+                                        <th class="th-width-10">Added on</th>
+                                        <th class="th-width-10">File #</th>
+                                        <th class="th-width-20">Matter/Intake Name</th>
+                                        <th class="th-width-10">Added by</th>
+                                        <th class="th-width-20">Note</th>
+                                        <th class="th-width-10">Category</th>
+                                        <th class="th-width-11">Linked Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-class="{'selected-grid-row':globalNotes.isglobalNotesSelected(note.note_id) }"
+                                        ng-repeat="note in globalNotes.filterdNotes = (globalNotes.notesList | filter: globalNotes.serachInput|limitTo:globalNotes.notesLimit) "
+                                        row-id="{{ $index }}">
+                                        <td>
+                                            <div class="checkbox custom-checkbox">
+                                                <input type="checkbox"
+                                                    data-ng-checked="globalNotes.isglobalNotesSelected(note.note_id)"
+                                                    data-ng-click="globalNotes.isglobalNotesSelectedForComposeMailIcon(note);"
+                                                    checklist-model="globalNotes.globalNotesGrid.selectedItems"
+                                                    checklist-value="note" />
+                                                <label></label>
+                                            </div>
+                                        </td>
+                                        <td class="padding-left-0 cursor-pointer" data-width="6"
+                                            data-ng-click="globalNotes.openNotesView(note)">
+                                            <span ng-show="note.is_important == 1"
+                                                class="default-alert sprite pull-left"></span>
+                                            <span ng-show="note.attachment_count != ''">
+                                                <span
+                                                    class="pull-left margin-left5px sprite default-attachment margin-top2px"></span>
+                                                <span class="pull-left margin-top5px">{{note.attachment_count}}</span>
+                                            </span>
+                                        </td>
+                                        <td class="cursor-pointer" ng-show="note.is_important == 1" data-width="10"
+                                            data-ng-click="globalNotes.openNotesView(note)">
+                                            <strong>{{globalNotes.getFormattedDate(note.created_date, 'MM/DD/YYYY')}}
+                                                <br> {{globalNotes.getFormattedDate(note.created_date, 'hh:mm A')}}
+                                            </strong>
+                                        </td>
+                                        <td class="cursor-pointer" ng-show="note.is_important != 1" data-width="10"
+                                            data-ng-click="globalNotes.openNotesView(note)">
+                                            {{globalNotes.getFormattedDate(note.created_date, 'MM/DD/YYYY')}}
+                                            <br> {{globalNotes.getFormattedDate(note.created_date, 'hh:mm A')}}
+                                        </td>
+                                        <td class="cursor-pointer file-field" data-width="10"
+                                            data-ng-click="globalNotes.openNotesView(note)">{{note.file_number}}</td>
+                                        <td class="file-field" data-width="20">
+                                            <a href="javascript:void(0);"
+                                                tooltip="{{note.is_intake == 0 ? 'Matter Note:'+note.matter_name : 'Intake Note:'+note.matter_name}}"
+                                                tooltip-append-to-body="true" tooltip-placement="top-center"
+                                                data-ng-click="globalNotes.goToMatter(note.matter_id, note.is_intake)">
+                                                {{note.matter_name}}</a>
+                                        </td>
+                                        <td class="cursor-pointer file-field" ng-show="note.is_important == 1" data-width="10"
+                                             data-ng-click="globalNotes.openNotesView(note)">
+                                            <strong>{{note.user.first_name}} {{note.user.last_name}}</strong>
+                                        </td>
+                                        <td class="cursor-pointer file-field" ng-show="note.is_important != 1" data-width="10"
+                                             data-ng-click="globalNotes.openNotesView(note)">
+                                            {{note.user.first_name}}
+                                            {{note.user.last_name}}</td>
+                                        <td class="word-wrap cursor-pointer" data-width="20"
+                                            data-ng-click="globalNotes.openNotesView(note)">
+                                            <p class="ellipsis word-wrap pre-line cursor-pointer">
+                                                {{note.displayText}} </p>
+                                            <p ng-if="note.type == 'email'"
+                                                data-ng-bind-html="note.text | decodeHtmlEncoding | cut:true:508"
+                                                class="word-wrap"></p>
+                                        </td>
+                                        <td class="cursor-pointer" data-width="10"
+                                            data-ng-click="globalNotes.openNotesView(note)">{{globalNotes.getCateogry(note.noteCategory)
+                                            | SentenseCase}}</td>
+                                        <td class="word-wrap" data-width="11"
+                                            ng-class="{'cursor-pointer':(note.linked_contact.length > 0)}">
+                                            <span class="saved-search-link" data-ng-click="globalNotes.openContactCard(item)"
+                                                ng-repeat="item in note.linked_contact">
+                                                {{item.first_name}} {{item.last_name}}
+                                                <span ng-if="!$last">,</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </scrollable-table>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <!--Bug#6367-->
+                <div data-ng-show="globalNotes.loaderFlagStatus && globalNotes.notesList.length == 0 && globalNotes.isDataAvailable"
+                    class="text-center">
+                    No data found.
+                </div>
+    
+                <div class="clearfix"></div>
+                <div class="custom-morelink" id="globalnotesmoreLink">
+                        <div data-ng-show="globalNotes.showMoreHTML() && globalNotes.showMoreAll" class="text-center">
+                        <a data-ng-click="globalNotes.getMoreNotes()">More</a>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <!--------------------------------------Filter view-------------------------------------->
+            <div ng-show="globalNotes.isFilterView" id="note-filter-flag" class="padding-bottom-30px margin-bottom30 custom-note-filter-flag">
+                <div class="modal-header">
+                    <!-- <div class="row">
+                        <div class="col-md-4 note-matter-globale-height">
+                            <label>Matter</label>
+                            <input type="text" data-ng-model="globalNotes.currentFilter.matterid" data-ng-model-options="{ debounce: 500 }"
+                                placeholder="Search matter" typeahead="row as row.name for row in globalNotes.getMatterList($viewValue)"
+                                typeahead-input-formatter="globalNotes.formatTypeaheadDisplay($model)" typeahead-loading="globalNotes.display.loadingMatterid"
+                                class="form-control">
+                        </div>
+                        <div class="col-md-4 intake-dropdown-height">
+                            <label>Intake</label>
+    
+                            <input type="text" data-ng-model="globalNotes.currentFilter.intake" data-ng-model-options="{ debounce: 500 }"
+                                placeholder="Search intake" typeahead="row as row.intakeName for row in globalNotes.getIntakeList($viewValue,0)"
+                                typeahead-input-formatter="globalNotes.formatTypeaheadIntakeDisplay($model)"
+                                typeahead-loading="globalNotes.display.loadingMatterid" class="form-control">
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="pull-left custom-note"><label>Show
+                                notes of:</label></div>
+                        <div class="col-md-8 custom-form-control padding-right-0 margin-top10px">
+                            <div class="col-md-12 checkbox reduce-left-space">
+                                <input ng-disabled="isIntakeActive != 1" type="checkbox"
+                                    data-ng-model="globalNotes.showIntakeEvents" data-ng-true-value="1"
+                                    data-ng-false-value="0" /><label class="margin-right10px">Intake</label>
+                                <input type="checkbox" data-ng-model="globalNotes.showMatterEvents" data-ng-true-value="1"
+                                    data-ng-false-value="0" /><label>Matter</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div class="note-filter-body">
+                    <div class="row">
+                        <div class="col-md-4 notes-scrollable">
+                            <!-- Category -->
+                            <h3 class="margin-bottom10px">Category</h3>
+                            <form>
+                                <div ng-repeat="category in globalNotes.notesCategories | orderBy:'category_name'" class="checkbox checkbox-primary">
+                                    <input type="checkbox" checklist-model="globalNotes.currentFilter.catFilter"
+                                        checklist-value="category.notecategory_id">
+                                    <label> {{category.category_name | SentenseCase}}</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3 notes-scrollable">
+                            <!--Added By -->
+                            <h3 class="margin-bottom10px">Added By</h3>
+                            <div>
+                                <form>
+                                    <div ng-repeat="user in globalNotes.users" class="checkbox checkbox-primary">
+                                        <input type="checkbox" checklist-model="globalNotes.currentFilter.uidFilter"
+                                            checklist-value="user.uid">
+                                        <label class="ellipsis-nowrap" title='{{user.Name}}'>{{user.Name}}</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ">
+                            <h3 class="margin-bottom10px">Importance</h3>
+                            <form>
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" ng-model="globalNotes.currentFilter.impFilter">
+                                    <label>Important Notes</label>
+                                </div>
+                                <div class="pb-15">
+                                    <h3 class="margin-top20px">Added On</h3>
+                                    <ui-select ng-model="globalNotes.addedOnVal" theme="selectize"
+                                        on-select="globalNotes.setDateFilter(globalNotes.addedOnVal)">
+                                        <ui-select-match placeholder="Select">
+                                            {{$select.selected.val | SentenseCase}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item.name as item in globalNotes.addedOnArr">
+                                            <small>
+                                                {{item.val | SentenseCase}}
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+    
+                                <div class="margin-top10px" aria-label="Default button group"
+                                    ng-show="globalNotes.currentDateFilter == 'CUSTOM_DATE'">
+                                    <h3 class="margin-top10px">Date Range</h3>
+                                    <div class="form-inline note-datepicker">
+                                        <div class="input-group datepicker form-group ">
+                                            <input placeholder="MM/DD/YYYY" type="text" class="form-control"
+                                                datepicker-popup="MM/dd/yyyy"
+                                                data-ng-model="globalNotes.currentFilter.s_custom" is-open="openedStartDate"
+                                                data-ng-disabled="true" id="addedonstartdateDiv" utc-manager
+                                                view-format="MM/DD/YYYY" name="addedon" close-text="Close"
+                                                show-button-bar="false" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default small-cal"
+                                                    ng-click="globalNotes.openCalender($event);openedStartDate = true;openedEndDate=false;">
+                                                    <i class="default-calendar-small sprite"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+    
+                                    </div>
+                                    <div class="form-inline note-datepicker">
+                                        <div class="input-group datepicker form-group">
+                                            <input placeholder="MM/DD/YYYY" type="text" class="form-control"
+                                                datepicker-popup="MM/dd/yyyy"
+                                                data-ng-model="globalNotes.currentFilter.e_custom" is-open="openedEndDate"
+                                                data-ng-disabled="true" id="addedonEnddateDiv" utc-manager
+                                                view-format="MM/DD/YYYY" name="addedon" close-text="Close"
+                                                show-button-bar="false" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default small-cal"
+                                                    ng-click="globalNotes.openCalender($event);openedEndDate = true;openedStartDate = false;">
+                                                    <i class="default-calendar-small sprite"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                
+                                <h3 class="margin-top20px">Linked contact</h3>
+                                <ui-select multiple
+                                    ng-model="globalNotes.currentFilter.linked_contact" theme="select2"
+                                    class="select2 custom-contact" data-ng-init="addGlobalNotes.contact =[]">
+                                    <ui-select-match placeholder="Enter Contact">
+                                        {{$item.firstname + " " + $item.lastname}}
+                                    </ui-select-match>
+                                    <ui-select-choices refresh-delay="1000"
+                                        refresh="globalNotes.getLinkContactFilter($select.search)"
+                                        repeat="contact in globalNotes.contact |  orderBy: 'name'">
+                                        <small>
+                                            {{contact.firstname + " " + contact.lastname}}
+                                            <br> {{contact.street}} {{contact.city}}
+                                            <span
+                                                ng-if="((contact.street && contact.street.length > 0)||(contact.city && contact.city.length > 0)) && (contact.state && contact.state.length > 0)">,</span>
+                                            {{contact.state}}
+                                        </small>
+                                        <hr>
+                                    </ui-select-choices>
+                                </ui-select>
+    
+                            </form>
+                            <button class="btn btn-default pull-right apply-btn" ng-disabled="globalNotes.enableApply"
+                                ng-click="globalNotes.applyFilters(globalNotes.currentFilter)">Apply</button>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="globalNotes.notesPermissions[0].V == 0" class="text-center margin-top20px">
+        You are not authorized to view matter notes
+    </div>
+    
+    
+    <!--------------------------add note---------------------------->
+    
+    <div data-ng-show="globalNotes.openAddContactView">
+        <div class="filter-greybox container main-box">
+            <div class="col-md-9">
+                <div class="info-box">
+                    <div ng-repeat="info in eventFor" class="padding-0">
+                        <div class="radio padding-0 margin0 pull-left margin-right20px">
+                            <input
+                                ng-disabled="(isIntakeActive != 1 && info.id == 1) || ((globalNotes.notesPermissions[0].A == 0 || globalNotes.isGraceOver == 0) && info.id == 2)"
+                                class="margin0" type="radio" data-ng-model="globalNotes.selectedMode" ng-value="info.id" />
+                            <label class="margin0 custom-line-height">&nbsp;{{info.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <div data-ng-if="globalNotes.selectedMode == 2" data-ng-controller="AddGlobalNoteCtrl as addGlobalNotes">
+            <div data-ng-include="'app/notes/global-notes/partials/add-global-note.html'">
+            </div>
+        </div>
+        <div data-ng-if="globalNotes.selectedMode == 1" data-ng-controller="IntakeAddGlobalNoteCtrl as addGlobalNotes">
+            <div data-ng-include="'app/notes/global-notes/partials/add-global-note.html'">
+            </div>
+        </div>
+    </div>
+    
+    <!-- compose mail -->
+    <div class="compose-wrap" ng-if="globalNotes.firmData.API === 'PHP'"
+        data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :globalNotes.compose, '' : !globalNotes.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+    <div class="compose-wrap" ng-if="globalNotes.firmData.API === 'JAVA'"
+        data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+        ng-class="{'composeShow' :globalNotes.compose, '' : !globalNotes.compose}">
+        <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+    </div>
+</div>

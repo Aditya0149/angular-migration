@@ -1,0 +1,174 @@
+<div class="">
+    <div class="row"> 
+        <div data-ng-form="document.multiFilesdata[$index].form">
+            <div class="col-md-12 padding-0">
+                <form class="border-box">
+                    <div class="col-md-6 margin-top10px padding-0" style="height: 55px;">
+                        <div class="col-md-6">
+
+                            <label>Lien Holder</label>
+                            <input type="text"
+                                   data-ng-model="document.multiFilesdata[$index].newLiensInfo.lien_holder"
+                                   data-ng-model-options="{ debounce: 500 }"
+                                   typeahead-on-select="document.setTypeForMultiupload($model,'linholder', $index)"  
+                                   placeholder="Enter name"
+                                   ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                                   typeahead="row as row.name for row in document.getContacts($viewValue,'liens')"
+                                   typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)"
+                                   typeahead-loading="document.display.loadinginsuredpartyid"
+                                   typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                                   class="form-control"
+                                   id="#lienholdername{{$index}}">
+                            <!-- <span data-ng-show="document.display.loadinginsuredpartyid">loading...</span> -->
+
+                        </div>
+                        <div class="add-now-wrap">
+                            <span class="or-connector">OR</span>
+                            <button class="btn btn-default" data-ng-click="document.addNewLineContact(document.multiFilesdata[$index].newLiensInfo,'lien_holder')">
+                                Add New
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px padding-0">
+                        <div class="col-md-6">
+                            <label>Date Paid</label>
+                            <p class="input-group datepicker margin0">
+                                <input type="text"
+                                       data-ng-model="document.multiFilesdata[$index].newLiensInfo.date_paid"
+                                       datepicker-popup="{{document.dateFormat}}"
+                                       datepicker-options="document.dateOptions"
+                                       is-open="document.multiFilesdata[$index].openDatePaidPicker"
+                                       class="form-control" ng-disabled="false"
+                                       id="docpaidDatediv{{$index}}"
+                                       validate-date error-div="#docpaidDatediv{{$index}}"       
+                                       tooltip="mm/dd/yyyy"
+                                       placeholder="mm/dd/yyyy"
+                                       show-button-bar="false"
+                                       />
+                                <span class="input-group-btn">
+                                    <button type="button"
+                                            class="btn btn-default"
+                                            data-ng-click="document.openDatePickerMultiUpload(document.multiFilesdata[$index], $event,'openDatePaidPicker')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </p>
+                                <div style="float: none;" class="error">Invalid date format!</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Date of Claim</label>
+                            <p class="input-group datepicker margin0">
+                                <input type="text" data-ng-model="document.multiFilesdata[$index].newLiensInfo.date_of_claim"
+                                       datepicker-popup="{{document.dateFormat}}" datepicker-options="document.dateOptions"
+                                       is-open="document.multiFilesdata[$index].openDateOfClaimPicker" class="form-control" ng-disabled="false"
+                                       id="docclaimDatediv{{$index}}"
+                                       validate-date error-div="#docclaimDatediv{{$index}}"       
+                                       tooltip="mm/dd/yyyy"
+                                       placeholder="mm/dd/yyyy"
+                                       show-button-bar="false"
+                                       />
+                                <span class="input-group-btn">
+                                    <button type="button"
+                                            class="btn btn-default"
+                                            data-ng-click="document.openDatePickerMultiUpload(document.multiFilesdata[$index], $event,'openDateOfClaimPicker')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </p>
+                            
+                            <div style="float: none;" class="error">Invalid date format!</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px">
+                        <label>Claim Number</label>
+                        <input type="text" class="form-control"  ng-keydown="document.checkIfEnterKeyWasPressed($event)" placeholder="Enter Claim Number" data-ng-model="document.multiFilesdata[$index].newLiensInfo.claim_number" maxlength="50"/>
+                    </div>
+                    <div class="col-md-6 margin-top10px">
+                        <label>Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control" step="0.01"  ng-keydown="document.checkIfEnterKeyWasPressed($event)" custom-currency-filter name="lienamount"  data-ng-model="document.multiFilesdata[$index].newLiensInfo.lien_amount" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px padding-0" style="height: 55px;">
+                        <div class=" col-md-6">
+
+                            <label>Insurance Provider</label>
+                            <input type="text" data-ng-model="document.multiFilesdata[$index].newLiensInfo.insurance_provider"
+                                data-ng-model-options="{ debounce: 500 }"
+                                typeahead-on-select="document.setTypeForMultiupload($model,'insuprovider',$index)"
+                                placeholder="Enter name"
+                                ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                                typeahead="row as row.name for row in document.getContacts($viewValue,'liens')"
+                                typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)"
+                                typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                                typeahead-loading="document.display.loadinginsuranceproviderid" class="form-control" id="insuranceproviderid{{$index}}">
+                        <!-- <span ng-show="document.display.loadinginsuranceproviderid">loading...</span> -->
+
+                        </div>
+                        <div class="add-now-wrap">
+                            <span class="or-connector">OR</span>
+                            <button class="btn btn-default" data-ng-click="document.addNewLineContact(document.multiFilesdata[$index].newLiensInfo,'insurance_provider')">
+                                Add New
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px">
+                        <label>Amount Due </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" class="form-control"  ng-keydown="document.checkIfEnterKeyWasPressed($event)" step="0.01" custom-currency-filter name="dueamount"  data-ng-model="document.multiFilesdata[$index].newLiensInfo.due_amount" id="dueamount{{$index}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px padding-0" style="height: 55px;">
+                        <div class=" col-md-6">
+                            <label>Adjuster Name</label>
+                            <input type="text" data-ng-model="document.multiFilesdata[$index].newLiensInfo.lien_adjuster"
+                                data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+                                 ng-keydown="document.checkIfEnterKeyWasPressed($event)"
+                                typeahead-on-select="document.setTypeForMultiupload($model,'adjuster',$index)"
+                                typeahead="row as row.name for row in document.getContacts($viewValue,'liens')"
+                                typeahead-input-formatter="document.formatTypeaheadDisplayPartials($model)"
+                                typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                                typeahead-loading="document.display.loadingadjusterid" class="form-control" id="adjusterid{{$index}}">
+                        <!-- <span ng-show="document.display.loadingadjusterid">loading...</span> -->
+
+                        </div>
+                        <div class="add-now-wrap">
+                            <span class="or-connector">OR</span>
+                            <button class="btn btn-default" data-ng-click="document.addNewLineContact(document.multiFilesdata[$index].newLiensInfo,'lien_adjuster')">
+                                Add New
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top10px">
+                        <label>Memo</label>
+                        <textarea  class="form-control" placeholder="Add Memo..." ng-model="document.multiFilesdata[$index].newLiensInfo.memo" maxlength="1024" rows="5"></textarea>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- <div class="form-group margin-bottom10">
+                        <label>Associated Plaintiff<span class="compulsary-mark">*</span></label>
+                        <ui-select ng-model="document.multiFilesdata[$index].newLiensInfo.plaintiffid" theme="selectize">
+                            <ui-select-match placeholder="Enter name">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="item.plaintiffid as item in document.multiFilesdata[$index].docPlaintiffs | filter:{ name:$select.search }">
+                                <small>
+                                    {{item.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>-->

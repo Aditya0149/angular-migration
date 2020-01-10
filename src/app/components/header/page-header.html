@@ -1,0 +1,124 @@
+<div class="page-header-wrapper">
+    <div data-ng-controller="PageHeaderCtrl as pageheader">
+        <div class="left-section zero-padd-LT w-75">
+            <div class="logo pull-left" ng-click="pageheader.stateChange()">
+                <a ng-if="pageheader.launchpadAccess" href="{{pageheader.stateName}}" tooltip="{{appName}}"
+                    tooltip-placement="bottom">
+                    <img src="styles/images/cloudlex-logo.png" alt="" height="40" />
+                    <span class="logo-txt">{{appName}}</span>
+                </a>
+                <a ng-if="!pageheader.launchpadAccess" href="{{pageheader.stateName}}" tooltip="Cloudlex"
+                    tooltip-placement="bottom">
+                    <img src="styles/images/header-logo.png" alt="" height="40" />
+
+                </a>
+            </div>
+
+            <ul class="breadcrumList header-label breadcrumbs-arrow cursor-pointer-header">
+                <li data-ng-show="pageheader.breadcrums.length > 0" ng-if="onMatter || onIntake">
+                    <div class="dropdown">
+                        <button type="button" class="sortby-dropdown dropdown-toggle heading-black "
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sprite default-arrow-right-blue position-arrow"></span>
+                            <span class="blue-dotted" tooltip="Menu"
+                                tooltip-placement="left">{{pageheader.breadcrums[0].name}}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-width" role="menu" aria-labelledby="status-strip">
+                            <li data-ng-repeat="other in pageheader.others">
+                                <a data-ui-sref="{{other.state}}">{{other.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="ellipsis" data-ng-repeat="breadcrum in pageheader.breadcrums" data-ng-hide="$first"
+                    data-ng-click="pageheader.routeFromBreadcrum(breadcrum)">
+                    <a
+                        data-ui-sref="{{breadcrum.state ? breadcrum.state : false}}(breadcrum.param ? breadcrum.param : false)">
+                        <span class="trim-info" tooltip='{{breadcrum.name}}' tooltip-placement="bottom">
+                            <span class="sprite default-arrow-right-blue"></span>{{breadcrum.name}}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="right-section  margin-top20px">
+        </div>
+        <div class="right-section" data-ng-if="root.display.sideNav">
+            <div class="dropdown pull-left btn-reffer-div"
+                ng-if="pageheader.isReferralExchange==1 && pageheader.launchpad.enabled != 1" tooltip="Referral"
+                tooltip-placement="left">
+                <a ng-click="pageheader.isActive('RE')">
+                    <span class="sprite default-reffer"
+                        ng-class="{'default-clouds-active':pageheader.highlightReferredOption()}"></span>
+                </a>
+            </div>
+            <div class="dropdown pull-left marketplace-icon"
+                ng-if="root.hideMarketplace && pageheader.launchpad.enabled != 1" tooltip="Marketplace"
+                tooltip-placement="left">
+                <a href="#/marketplace" class="dropdown-toggle"></a>
+            </div>
+
+            <div class="dropdown pull-left notification" data-ng-show="root.hidenotification == false"
+                ng-if="onIntake || onLauncher || onMatter">
+                <a ng-click="pageheader.openNotifications($event)" tooltip="Notification" tooltip-placement="left" id="dropdownMenuNotification">
+                    <span
+                        ng-class="pageheader.totalCount > 0  ? 'notification-messages-number' : ''">{{pageheader.totalCount > 0  ? pageheader.totalCount : ''}}</span>
+                </a>
+                <span class="notification-pipe" ng-if="pageheader.launchpad.enabled == 1"></span>
+                <all-notification ng-if="!hideNoti" dataset="pageheader.notificationList">
+
+                </all-notification>
+
+            </div>
+            <div class="pull-left" data-ng-include="'app/components/header/quick-access-menu.html'"
+                ng-if="pageheader.launchpad.enabled == 1" data-ng-click="pageheader.hideNotify()"></div>
+            <div ng-if="pageheader.showSupport" class="dropdown pull-left help-support-icon" tooltip="Support"
+                tooltip-placement="left">
+                <a href="javascript:void(0)" data-ng-click="pageheader.openhelp('help')"></a>
+            </div>
+
+            <div class="dropdown pull-left height-user-dropdown" data-ng-click="pageheader.hideNotify()">
+                <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+
+                    <div class="profileImage">
+                        <img ng-src="{{sideNav.displayUserImage}}" width="38px" height="38px">
+                    </div>
+                </a>
+                <ul class="launcher-dropdown cust-launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown profile-dropdown-set profile-custom-width"
+                    role="menu" aria-labelledby="dropdownMenu5">
+                    <li class="profile-info">
+                        <span>{{pageheader.user_fname}} {{pageheader.user_lname}}</span>
+                        <small class="ellipsis-nowrap">{{pageheader.user_role}}</small>
+                    </li>
+                    <li ng-if="!pageheader.hideSettings" class="divider"></li>
+                    <li ng-if="!pageheader.hideSettings">
+                        <a href="#/settings">Settings</a>
+                    </li>
+
+                    <li class="divider"></li>
+                    <li>
+                        <a data-ng-click="root.logout()">Log Out</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="left-section mt-20-negative text-center col-md-11" data-ng-if="pageheader.showMessageFlag">
+            <h5 class="text-center subcrib-expire">
+                Your CloudLex subscription has expired and
+                will be restricted to read only access from {{ pageheader.gracePeriodEndDate}}.
+                Please contact us to renew.
+            </h5>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).on('click', '.keep-inside-clicks-open', function (e) {
+        e.stopPropagation();
+    });
+</script>

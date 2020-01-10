@@ -1,0 +1,57 @@
+<div class="modal-content">
+    <!-- <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+    </div> -->
+    <div class="modal-body">
+        {{sidebarCtrl.selectedSMSThread}}
+        <div class="row form-group margin-top20px" ng-if="onLauncher && isIntakeActive">
+            <div class="col-md-9">
+                <div>
+                    <div ng-repeat="info in sidebarCtrl.eventFor" class="padding-0">
+                        <div class="radio padding-0 margin0 pull-left margin-right20px"
+                            ng-init="sidebarCtrl.selectedModeForSidebarForSMS = '0'">
+                            <input class="margin0" type="radio" data-ng-model="sidebarCtrl.selectedModeForSidebarForSMS"
+                                data-ng-click="sidebarCtrl.sms_contact_id = [];sidebarCtrl.getMatterIdForSMS = '';sidebarCtrl.sendMessageForSMS = ''; sidebarCtrl.sms_contact_list = [];"
+                                ng-value="info.id" />
+                            <label class="margin0" style="line-height: inherit;">&nbsp;{{info.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebarForSMS == '1'">
+            <div class="col-md-9 custom-input-list">
+                <label>Intake</label>
+                <input type="text" name="intakeId" class="form-control" data-ng-model-options="{ debounce: 300 }"
+                    placeholder="Search Intake"
+                    typeahead="row.intakeId as removeunwantedhtml(row.intakeName) + row.dateIntake for row in sidebarCtrl.getIntakeListForSMS($viewValue,0)"
+                    typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForIntakeForSMS($model)"
+                    data-ng-model="sidebarCtrl.getMatterIdForSMS" />
+            </div>
+        </div>
+
+        <div class="row form-group margin-top20px" ng-show="sidebarCtrl.selectedModeForSidebarForSMS == '0'">
+            <div class="col-md-9 custom-input-list">
+                <label>Matter</label>
+                <input type="text" name="matterid" class="form-control" data-ng-model-options="{ debounce: 300 }"
+                    placeholder="Search Matter"
+                    typeahead="row.matterid as removeunwantedhtml(row.name)+ ' - ' + row.filenumber  for row in sidebarCtrl.searchMattersForSMS($viewValue)"
+                    typeahead-input-formatter="sidebarCtrl.formatTypeaheadDisplayForSMS($model)"
+                    data-ng-model="sidebarCtrl.getMatterIdForSMS" />
+            </div>
+        </div>
+
+        <!-- <div class="col-md-3 custom-btn">
+            <button class="btn btn-danger" ng-click="sidebarCtrl.sendMessageForSMSFn()"
+                data-ng-disabled="((sidebarCtrl.sendMessageForSMS == '' || sidebarCtrl.sendMessageForSMS == undefined) ||  !(sidebarCtrl.sms_contact_id_compare.length > 0) )">Send</button>
+            <button class="btn btn-danger"
+                ng-click="sidebarCtrl.getAllSMSThreadFn();sidebarCtrl.resetSMSPage(); sidebarCtrl.blockHideAndShow(false, false, false, false, true, false, false);">Cancel</button>
+        </div> -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-click="sidebarCtrl.update()" class="btn btn-default" data-dismiss="modal">Save</button>
+        <button type="button" ng-click="sidebarCtrl.back()" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Enable IE Standards mode -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Microsoft Online</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" id="dynamic-favicon" href="https://onenote.officeapps-df.live.com" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            -ms-content-zooming: none;
+        }
+
+        #office_frame {
+            width: 100%;
+            height: calc(100vh - 10px);
+            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="office_form" name="office_form" target="office_frame" action="" method="post">
+        <input id="access_token" name="access_token" value="" type="hidden" />
+        <input id="access_token_ttl" name="access_token_ttl" value="" type="hidden" />
+    </form>
+    <span id="frameholder"></span>
+    <div submit-doc callback-fn="officeDocCtrl.openOfficeDoc()"></div>
+</body>
+
+</html>

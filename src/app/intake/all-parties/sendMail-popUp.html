@@ -1,0 +1,109 @@
+<style>
+        .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+    
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+    .radio-div {
+    display: inline-block;
+    }
+    .form-control{height: 36px}
+    .input-group-addon {
+        padding: 0px 0px;background: transparent;cursor: pointer;}
+        .glyphicon {
+        top: 10px;}
+    
+        textarea.form-control {
+        height: 100px;
+    }
+    /* #report-content {
+        padding-left: 65px;
+        padding-right: 95px;
+    } */
+    span.smalltxt {
+        font-size: 11px;
+        color: #aaa;
+    }
+    .form-control:focus {
+        border-color: #ccc;
+        -webkit-box-shadow: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    span.top-border {
+        display: block;
+        border-top: 1px solid #cccccc;
+        padding-top: 10px;
+        margin-top: 10px;
+        text-align: right;
+        margin-bottom: 4px;
+    }
+    @media only screen and (min-width: 480px)
+{
+    .modal-dialog {
+    width: 442px;
+}
+}
+    </style>
+            <div class="row" style="padding: 10px 10px;border-bottom: 1px solid #cccccc;margin: 0;">
+                <div class="col-md-4" style="padding-top:6px">
+                        <h4>Share details</h4>
+                </div>
+                <divb class="col-md-8 text-right">
+                    <button class="btn btn-default" tooltip="Cancel" ng-click="IntakeSendMail.close()">Cancel
+                        </button>
+                        <button class="btn btn-default" tooltip="Send" ng-click="IntakeSendMail.sendEmailForSelectedContact(IntakeSendMail.contactEntityEmail)">Send
+                            </button>
+                </divb>
+                </div>
+                <div class="row"  style="padding: 10px 32px;">
+                        <div class="col-md-12"><span>You can share with an existing email or add a new one
+                            </span></div>
+                </div>
+                <div class="row margin-bottom30" ng-init="cblIndex=$index"  style="padding: 10px 32px;">
+                    <div class="col-md-12 margin-bottom20">
+                        <h3>Name </h3>
+                        <label>{{IntakeSendMail.contact.name}} </label>
+                    </div>
+                    <div class="col-md-12">
+                        <h3 style="margin-bottom:5px">Email</h3>
+                        <div ng-show="!(IntakeSendMail['addNewEmailForSelectedContactFlag' + cblIndex])">
+                            <ui-select ng-model="IntakeSendMail.contactEntityEmail" ng-change="IntakeSendMail.checkAddress(IntakeSendMail.contactEntityEmail)" theme="selectize" on-select="">
+                                <ui-select-match placeholder="Select email">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in IntakeSendMail.contactEmails   | filter:$select.search track by $index">
+                                    <small>
+                                        {{item}}
+                                    </small>
+                                    <span ng-if="$last" class="top-border">
+                                        <button data-ng-click="IntakeSendMail['addNewEmailForSelectedContactFlag' + cblIndex]=true;"
+                                            class="btn btn-default">Add New</button>
+                                    </span>
+                                </ui-select-choices>
+                                
+                            </ui-select>
+                        </div>
+                        <div ng-show="IntakeSendMail['addNewEmailForSelectedContactFlag' + cblIndex]">
+                            <div class="input-group">
+                                <input type="text" maxlength="500" placeholder="Enter new email" data-ng-model="IntakeSendMail.addNewEmailForSelectedContactModel[cblIndex]"
+                                    class="form-control" style="border-right: none;">
+                                <span class="input-group-addon" data-tooltip="Save" data-tooltip-position="auto" style="border-right: none;border-left: none;padding-right: 6px;">
+                                    <i class="fa fa-floppy-o" aria-hidden="true" data-ng-click="IntakeSendMail.addNewEmailForSelectedContact(IntakeSendMail.addNewEmailForSelectedContactModel[cblIndex], cblIndex);IntakeSendMail['addNewEmailForSelectedContactFlag' + cblIndex]=false;IntakeSendMail.addNewEmailForSelectedContactModel[cblIndex]='';"></i>
+                                </span>
+                                <span class="input-group-addon" data-tooltip="Cancel" data-tooltip-position="auto" data-ng-click="IntakeSendMail['addNewEmailForSelectedContactFlag' + cblIndex]=false;">
+                                    <i class="glyphicon glyphicon-remove form-control-feedback"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>

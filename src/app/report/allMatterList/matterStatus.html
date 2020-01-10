@@ -1,0 +1,131 @@
+<div class=" clearfix">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap">Matter status summary</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+            <ul class="pull-right">
+                <li><a href="javascript:void(0);"
+                       ng-class="{' active': matterStatusCtrl.shuffleMatter == 1}"
+                       ng-click="matterStatusCtrl.filterByMatterStatus(1);" class="pb-12">
+                    <h2>My Matters</h2>
+                </a></li>
+                <li><a href="javascript:void(0);"
+                       ng-class="{' active': matterStatusCtrl.shuffleMatter == 0}"
+                       ng-click="matterStatusCtrl.filterByMatterStatus(0);">
+                    <h2>All Matters</h2>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="paddingRLR head-padding-10px ">
+    <div class="pull-right" >
+        <ul class="showBy-btns pull-right heading-right-buttons">
+            <li>
+                <a data-ng-click="matterStatusCtrl.print()"><span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span></a></a>
+            </li>
+            <li class="paddingLR-10px">
+                <a data-ng-click="matterStatusCtrl.downloadMatters()"><span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="pull-left">
+        <div class="checkbox">
+            <input type="checkbox" ng-click="matterStatusCtrl.init()" data-ng-model="matterStatusCtrl.filters.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+            />
+            <label>Include Archived Matters</label>
+        </div>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+<div class="flexCont"></div>
+<div class="row paddingRLR head-padding-14px ">
+    <div class="col-md-6" ng-repeat="matterStatus in matterStatusCtrl.displayingMatterStatusData" >
+        <div class="col-md-12 matter-status-box" mb-scrollbar="scrollbar('vertical', true)">
+            <div class="matter-status-inner">
+            <div class="row">
+            <div class="col-md-10"><strong>{{matterStatus.status}}</strong></div>
+            <div class="col-md-2"><strong>{{matterStatus.count}}</strong></div>
+                </div>
+            <div class="margin-top10px">
+            <div ng-repeat="subData in matterStatus.subStatus">
+                <div class="row head-padding-5px">
+                    <div ng-if="(subData.sub_status_name)">
+                        <div class="col-md-10">&#8226;  {{subData.sub_status_name}}</div>
+                        <div class="col-md-2">{{subData.count}}</div>
+                    </div>
+                    <div ng-if="subData.name">
+                        <div class="col-md-10">&#8226;  {{subData.name}}</div>
+                        <div class="col-md-2">0</div>
+                    </div>
+                    <!--<div ng-if="(subData.count>0)"></div>-->
+                </div>
+            </div>
+    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="col-md-12 paddingRLR head-padding-14px ">
+    <div class="col-md-6" ng-repeat="matterStatus in matterStatusCtrl.displayingMatterStatusData" style="border: 1px solid lightgrey">
+        <div class="col-md-11">{{matterStatus.status}}</div>
+        <div class="col-md-1">{{matterStatus.count}}</div>
+
+        <div ng-repeat="subData in matterStatus.subStatus">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">{{subData.sub_status_name}}</div>
+            <div class="col-md-1">{{subData.count}}</div>
+        </div>
+    </div>
+</div>-->
+
+<!--<div class="col-md-12 paddingRLR head-padding-14px " >
+    <div style="border: 1px solid black; padding-top: 40px; margin: 20px;" ng-repeat="matterStatus in matterStatusCtrl.displayMatterStatus">
+        <span ng-if="(matterStatus.status_name == '')">Unassigned</span>
+        <span ng-if="!(matterStatus.status_name == '')">{{matterStatus.status_name}}</span>
+        <span>{{matterStatus.count}}</span>
+        <div class="col-md-12" ng-repeat="matterSubStatus in matterStatusCtrl.displayMatterSubStatus">
+            <div class="col-md-12" ng-if="(matterStatus.status_id == matterSubStatus.matter_status_id)">
+                <div  class="col-md-12"  >
+                    <ul>
+                        <li style="margin-left: 10%">
+                            <span ng-if="(matterSubStatus.sub_status_name == '')">UnAssigned</span>
+                            <span ng-if="!(matterSubStatus.sub_status_name == '')">{{matterSubStatus.sub_status_name}}</span>
+                            <span style="margin-left: 20%">{{matterSubStatus.count}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!--
+<div class="col-md-12 paddingRLR head-padding-14px ">
+    <div ng-repeat="matterStatus in matterStatusCtrl.displayMatterStatus">
+        <div class="col-md-6" ng-repeat="matterSubStatus in matterStatusCtrl.displayMatterSubStatus">
+            <div class="col-md-12" ng-if="(matterStatus.status_id == matterSubStatus.matter_status_id)">
+                <div  class="col-md-12"  style="border: 1px solid black;">
+                    <span>{{matterStatus.status_name}}</span>
+                    <span>{{matterStatus.count}}</span>
+                    <div ng-repeat="substatus in matterSubStatus.subStatus">
+                        <ul>
+                            <li style="margin-left: 10%">
+                                <span>{{substatus.sub_status_name}}</span>
+                                <span style="margin-left: 20%">{{substatus.sub_count}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+
+
+

@@ -1,0 +1,6 @@
+<div>
+    <label class="margin-top10px">Matter Name</label>
+    <input type="text" name="matterId" class="form-control" data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+        typeahead="row as row.name for row in mattselction.searchMatters($viewValue)" typeahead-input-formatter="mattselction.formatTypeaheadDisplay($model)"
+        data-ng-model="mattselction.selectedmatt" />
+</div>

@@ -1,0 +1,115 @@
+<style>
+    .outter {
+    padding: 20px 20px 0px 20px;
+}
+.outter h2 {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    /* margin-bottom: 15px; */
+}
+p {
+    margin-bottom: 0px;
+}
+.innerdiv {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 10px 0px;
+    border: 1px solid #ccc;
+}
+.myredu {
+    width: 6%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.unlimite {
+    width: 72%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.unlimite span {
+    color: #ccc;
+}
+.price {
+    width: 19%;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
+}
+.subcribtion h5 {
+    font-weight: bold;
+}
+.charediv p {
+    font-size: 12px;
+    color: #cccccc;
+}
+.modal-dialog .modal-footer {
+    padding: 14px 0px 20px;
+}
+.radio label::before {
+    width: 19px !important;
+    height: 19px !important;
+    border: 2px solid #2097c6 !important;
+}
+.radio label::after {
+    background-color: #2097c6 !important;
+    top: 5px !important;
+    width: 9px !important;
+    height: 9px !important;
+    left: 5px !important;
+}
+.radio input[type=radio] {
+    margin-left: 0px !important;
+}
+</style>
+
+
+<div class="outter">
+    <h2 ng-if="!subscriptionCtrl.confirm">Subscribe to {{subscriptionCtrl.appName}}</h2>
+    <h2 ng-if="subscriptionCtrl.confirm">Upgrade Your Subscription</h2>
+    <div class="txtdiv" ng-if="!subscriptionCtrl.confirm && !subscriptionCtrl.showSMSplan">
+        <p></p>
+    </div>
+    <div ng-if="!subscriptionCtrl.confirm && subscriptionCtrl.showSMSplan" style="margin-top: 10px;">
+        <p>Click <b>"Subscribe"</b> and our Customer Success team will get in touch with you shortly to get you started.
+        </p>
+    </div>
+    <div ng-if="subscriptionCtrl.confirm && subscriptionCtrl.showSMSplan" style="margin-top: 10px;">
+        <p>Click <b>"Confirm"</b> and our Customer Success team will get in touch with you shortly to get you started.
+        </p>
+    </div>
+    <div class="txtdiv" ng-if="subscriptionCtrl.confirm && !subscriptionCtrl.showSMSplan">
+        <!-- <p>Oops! You have reached your monthly limit of -- texts.</p> -->
+        <p>Choose a plan and our Customer Success team will get in touch with you shortly to get you set up.</p>
+    </div>
+
+    <!-- <p style="margin-top: 15px;color: #ccc;">Select Subscription:</p> -->
+    <!-- <div class="subcribtion">
+        <div class="innerdiv" data-ng-repeat="item in subscriptionCtrl.planList"> -->
+            <!-- <div class="radio padding-0 margin0 myredu">
+                <input ng-disabled="item.disablePlan" type="radio" name="response" data-ng-model="subscriptionCtrl.subscriptionPlan.plan"
+                    ng-value="item" />
+                <label style="line-height: inherit;"></label>
+            </div>
+            <div class="unlimite" style="line-height: inherit;">
+                <p> {{item.name}}</p>
+                <span>{{item.description}}</span>
+            </div> -->
+            <!-- <div class="price">
+                <h6>{{item.amount|currency}}</h6>
+            </div> -->
+        <!-- </div>
+    </div> -->
+    <!-- <div class="charediv"> -->
+        <!-- <p ng-if="!subscriptionCtrl.confirm"> You will be charged on the first day of each month.</p>
+        <p ng-if="!subscriptionCtrl.confirm">Payment occur securely via an encryption code and PCI compliant</p> -->
+        <!-- <p ng-if="subscriptionCtrl.confirm">By clicking “Confirm”, you agree to the terms of service.</p> -->
+    <!-- </div> -->
+    <div class="modal-footer ">
+        <button type="button" class="btn btn-default" ng-click="subscriptionCtrl.cancel()">
+            Cancel </button>
+        <button type="button" class="btn btn-default" ng-if="subscriptionCtrl.confirm" ng-click="subscriptionCtrl.savePlan(subscriptionCtrl.subscriptionPlan.plan)">
+            Confirm </button>
+        <button class="btn btn-default" ng-if="!subscriptionCtrl.confirm" ng-click="subscriptionCtrl.subscribe()">
+            Subscribe </button> </div>
+</div>

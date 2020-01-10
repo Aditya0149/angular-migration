@@ -1,0 +1,151 @@
+<style type="text/css">
+    .table {
+        margin-bottom: 0px !important;
+    }
+</style>
+<div class=" clearfix" scrolly="venue.scrollReachedBottom()" reached-top="venue.scrollReachedTop()">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap">Court and Venue</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+            <ul class="pull-right">
+                <li>
+                    <a href="javascript:void(0);"
+                        data-ng-class="{' active': venue.filter.for === 'mymatter'}"
+                        data-ng-click="venue.filterByUser('mymatter');venue.selectedTab=1;">
+                        <h2>My Matters</h2>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"
+                        data-ng-class="{' active': venue.filter.for === 'allmatter'}"
+                        data-ng-click="venue.filterByUser('allmatter');venue.selectedTab=0;">
+                        <h2>All Matters</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="fixed-grid-report">
+    <div class="col-md-12 custom-padding">
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons">
+                <li class="seperation-filter"></li>
+                <li>
+                    <a data-ng-click="venue.print()">
+                        <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="paddingLR-10px">
+                    <a data-ng-click="venue.exportReport()">
+                        <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dropdown head-padding-10px pull-right">
+            Sort By :
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{venue.selectedSort}}
+                        <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+            <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                <li>
+                    <a data-ng-click="venue.applySortByFilter(1)">Venue ASC
+                    </a>
+                </li>
+                <li>
+                    <a data-ng-click="venue.applySortByFilter(2)">Venue DESC
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="pull-left" style="margin-left:-43px;">
+            <div class="checkbox">
+                <input type="checkbox" data-ng-click="venue.getVenueList()" data-ng-model="venue.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                />
+                <label>Include Archived Matters</label>
+            </div>
+        </div> -->
+    </div>
+</div>
+<div data-ng-show="venue.venueList.length > 0">
+    <show-record-count-only
+        more="venue.getMore()"
+        all="venue.getAll()"
+        displayed="venue.venueList.length"
+        hide-pager="{{venue.showPaginationButtons() && venue.venueList.length > 0}}"
+        total="venue.total"></show-record-count-only>
+</div>
+
+<!-- Start: New scroll-table tableid  -->
+<div class="clearfix"></div>
+<div id="listUpper"></div>
+<div class="report-scroll-all-matter">
+
+
+    <scroll-table tabselected="venue.selectedTab" sort="venue.selectedSort" watch="venue.venueList" tableid="venueReportlistGrid" to="#listUpper" from="#moreAllLinkRecord">
+        <table class="table table-scroll">
+            <thead>
+                <tr>
+                    <th class="th-width-33">
+                        <div>
+                            <b>Court</b>
+                        </div>
+                    </th>
+                    <th class="th-width-33">
+                        <div> <span><b>Venue Details</b></span></div>
+                    </th>
+                    <th class="th-width-33">
+                        <div> <span><b>Matter Count</b></span></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="dashboard-tasks-due" id="venueReportlistBody"
+                style="overflow-y:overlay;height: 45vh;max-height: 45vh;">
+                <tr data-highlight-clicked-row="{{$index}},venue.clickedRow"
+                    data-ng-class="{'selected-grid-row' : $index == venue.clickedRow}"
+                    data-ng-repeat="data in venue.venueList">
+
+                    <td class="th-width-33">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.courtName}}">
+                                {{data.courtName }}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-33">
+                        <div>
+                            <span tooltip-placement="bottom" tooltip="{{data.courtVenue}}">
+                                {{data.courtVenue }}</span>
+                        </div>
+                    </td>
+                    <td class="th-width-33">
+                        <div>
+                            <span class="big-num-val-grid" tooltip-placement="bottom" tooltip="{{data.count}}">
+                                {{data.count }}</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+</div>
+<!-- Start: New scroll-table tableid  -->
+
+<div data-ng-show="venue.dataLoaderFlag && venue.venueList.length == 0" class="text-center">
+    Court and Venue data not present.
+</div>
+
+<div class="row text-center" data-ng-show="venue.showPaginationButtons() && venue.venueList.length > 0">
+    <a href="javascript:void(0)" data-ng-click="venue.getMore()">More</a>
+
+    <span class="paddingLR-10px">|</span>
+    <a href="javascript:void(0)" class="" data-ng-click="venue.getAll()">All</a>
+
+</div>

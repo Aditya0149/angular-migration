@@ -1,0 +1,72 @@
+
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Report Filters</h1>
+    <button class="close fl-right"
+            data-ng-click="contactReportFilterCtrl.close()">
+        <span aria-hidden="true">×</span></button>
+</div>
+
+<div class="filter-greybox container modal-body dashboard-tasks-due" style="max-height: 70vh;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div>
+                        <div class="checklist">
+                            <h2 class="subtitle">Status</h2>
+                            <ul>
+                                <li class="checkbox" data-ng-repeat="status in contactReportFilterCtrl.viewModel.statuses">
+                                    <input checklist-value="status" checklist-model="contactReportFilterCtrl.selectionModel.statuses" type="checkbox" />
+                                    <label>{{status.name |replaceByBlank}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div>
+                        <div class="checklist">
+                            <h2 class="subtitle">Role</h2>
+                            <ul>
+                                <li class="checkbox" data-ng-repeat="role in contactReportFilterCtrl.viewModel.roles">
+                                    <input checklist-value="role" checklist-model="contactReportFilterCtrl.selectionModel.roles" type="checkbox" />
+                                    <label>{{role.name | replaceByBlank}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="col-md-8">
+                    <h2 class="subtitle">Contact</h2>
+                    <input type="text"
+                           name="contact"
+                           data-ng-model="contactReportFilterCtrl.selectionModel.contact"
+                           data-ng-model-options="{ debounce: 200 }"
+                           typeahead-editable="false"
+                           placeholder="Search Contacts"
+                           typeahead="row as row.name for row in contactReportFilterCtrl.getContactForReport($viewValue)"
+                           typeahead-input-formatter="contactReportFilterCtrl.formatTypeaheadDisplayForContactReport($model)"
+                           class="form-control ">
+                </div>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="pull-right ">
+        <button data-ng-click="contactReportFilterCtrl.resetFilters()"
+                type="button"
+                class="btn btn-default btn-styleNone">
+            Reset</button>
+
+        <button data-ng-click="contactReportFilterCtrl.apply(contactReportFilterCtrl.selectionModel)"
+                ng-disabled="contactReportFilterCtrl.enableApply"
+                type="button"
+                class="btn btn-default">
+            Apply</button>
+    </div>
+</div>

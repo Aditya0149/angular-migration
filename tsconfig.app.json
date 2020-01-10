@@ -1,0 +1,38 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": [
+      "node",
+      "angular",
+      "underscore",
+      "moment",
+      "moment-timezone"
+    ]
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "src/**/*.spec.ts",
+    
+    "src/app/templates/templates-ctrl.js",
+    "src/app/templates/partials/template-component.js",
+    "src/app/templates/templates-module.js",
+    "src/app/templates/partials/generate-template-ctrl.js",
+    "src/app/templates/partials/template-config.js",
+
+    "src/app/intake/templates/templates-ctrl.js",
+    "src/app/intake/templates/partials/template-component.js",
+    "src/app/intake/templates/templates-module.js",
+    "src/app/intake/templates/partials/generate-template-ctrl.js",
+    "src/app/intake/templates/partials/template-config.js",
+
+    "src/app/constants.js"
+  ]
+}

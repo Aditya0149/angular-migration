@@ -1,0 +1,22 @@
+.timeline-wrapper {
+        .list { 
+        display: inline-block;
+        margin: 0px 8px;
+    }
+    .search-overlap {
+        ul {
+            >li {
+                padding: inherit;
+                margin: 0 10px;
+            }
+        }
+    }
+    .defaultprofileImage {
+        border-radius: 50%;
+    }
+    .timeline-box {
+        overflow: hidden;
+        position: fixed;
+        bottom: 60px;
+    }
+}

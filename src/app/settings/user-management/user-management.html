@@ -1,0 +1,121 @@
+<div class="user-management-wrapper">
+    <div class="page-title-border clearfix  ">
+        <h1 class="pull-left page-title">Users</h1>
+    </div>
+    <div>
+        <div class="row gridSec margin0">
+            <div class="col-md-12 paddingRLR">
+                <div class="col-md-4 pull-left paddingRLR dropdown create top-icon-set">
+                    <a data-ng-click="userMgmt.addUser()" data-ng-if="(userMgmt.activeUsers < userMgmt.maxUsers) && (userMgmt.isGraceOver != 0)">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].A}}" class="sprite default-plus" tooltip="Add">&nbsp;</span>
+                    </a>
+    
+                    <div class="dropdown pull-left height-user-dropdown" data-ng-if="(userMgmt.activeUsers >= userMgmt.maxUsers)">
+                        <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+                            <span class="sprite default-plus">&nbsp;</span>
+                        </a>
+                        <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown" role="menu" aria-labelledby="dropdownMenu5">
+                            <li>
+                                <span class="default-alert sprite"></span>&nbsp;&nbsp;
+                                <small>{{userMgmt.userMsg}}</small>
+                            </li>
+                            <li class="divider" ng-if="false"></li>
+                            <li ng-if="false">
+                                <small>Please
+                                    <a href="javascript: void(0)">click here</a> to increase user capacity.</small>
+                            </li>
+                            <!--   <li><a href="#">Profile</a></li>-->
+                        </ul>
+                    </div>
+    
+                    <a class="margin-left25px" ng-class="{linkDisabled: userMgmt.userGrid.selectedItems[0].isActive == 0 || userMgmt.userGrid.selectedItems[0].isDeleted == 1}"
+                        data-ng-click="userMgmt.editUser(userMgmt.userGrid.selectedItems[0])" data-ng-if="userMgmt.userGrid.selectedItems.length === 1 && userMgmt.isGraceOver != 0">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].E}}" class="sprite default-edit col-md-offset-1" tooltip="Edit">&nbsp;</span>
+                    </a>
+    
+                    <a class="margin-left25px" data-ng-click="userMgmt.deleteUser(userMgmt.userGrid.selectedItems[0])" data-ng-if="userMgmt.userGrid.selectedItems.length === 1 && userMgmt.isGraceOver !=0"
+                        data-ng-show="userMgmt.showDelete()">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].D}}" class="sprite default-delete col-md-offset-1" tooltip="Delete">&nbsp;</span>
+                    </a>
+                    <a class="margin-left25px" data-ng-click="userMgmt.undeleteUser(userMgmt.userGrid.selectedItems[0])" data-ng-if="userMgmt.userGrid.selectedItems.length === 1 && userMgmt.isGraceOver != 0"
+                        data-ng-show="userMgmt.showUndelete()">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].E}}" class="sprite default-undelete col-md-offset-1" tooltip="Undelete">&nbsp;</span>
+                    </a>
+                    <a class="margin-left25px" data-ng-click="userMgmt.blockUser(userMgmt.userGrid.selectedItems[0])" data-ng-show="userMgmt.showBlockUser()"
+                        data-ng-if="userMgmt.userGrid.selectedItems.length === 1 && userMgmt.isGraceOver != 0">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].E}}" class="sprite default-block col-md-offset-1" tooltip="Block">&nbsp;</span>
+                    </a>
+                    <a class="margin-left25px" data-ng-click="userMgmt.unblockUser(userMgmt.userGrid.selectedItems[0])" data-ng-show="userMgmt.showUnblockUser()"
+                        data-ng-if="userMgmt.userGrid.selectedItems.length === 1 && userMgmt.isGraceOver != 0">
+                        <span has-access="{{userMgmt.ugmtPermissions[0].E}}" class="sprite default-unblock col-md-offset-1" tooltip="Unblock">&nbsp;</span>
+                    </a>
+                </div>
+    
+                <div class="col-md-8 pull-right paddingRLR clearfix">
+                    <ul class="pull-right">
+                        <li>
+                            <div class="search-input form-control-margin-null">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" data-ng-model-options="{ debounce: 0 }" data-ng-model="userMgmt.searchText" class="form-control" ng-keyup="userMgmt.hideTooltip()" />
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="pull-right legend-head">
+                        <div class="legend">
+    
+                            <div class="legend-color grid-row-deleted pull-left "></div>
+                            <div class="pull-left">Deleted</div>
+                            <div class="legend-color grid-row-block pull-left"></div>
+                            <div class="pull-left">Blocked</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="report-responsive pb-10" data-ng-show="userMgmt.userList.length > 0">
+            <div class="row header-row">
+                <div class="cell" data-width="5">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="userMgmt.userGrid.selectAll" data-ng-checked="userMgmt.allUsersSelected()" data-ng-click="userMgmt.selectAllUsers(userMgmt.userGrid.selectAll)"
+                        />
+                        <label></label>
+                    </div>
+                </div>
+                <div class="cell" data-ng-repeat="header in ::userMgmt.userGrid.headers" data-width={{header.dataWidth}}>
+                    {{header.displayName}}
+                </div>
+            </div>
+
+            <!-- table body starts here -->
+            <div class="row body-row" data-ng-repeat="data in filtered = (userMgmt.userList | filter:userMgmt.searchText)" grid-size>
+                <div class="cell checkbox" data-width="5" data-ng-class="{'grid-row-block':data.isActive == '0','grid-row-deleted':data.isDeleted == '1'}">
+                    <div class="">
+                        <input type="checkbox" data-ng-checked="userMgmt.isUserSelected(data.uid)" checklist-model="userMgmt.userGrid.selectedItems"
+                            checklist-value="data" />
+                        <label></label>
+                    </div>
+                </div>
+                
+                <div class="cell" data-ng-class="{'grid-row-block':data.isActive == '0','grid-row-deleted':data.isDeleted == '1'}" data-ng-repeat="header in ::userMgmt.userGrid.headers"
+                    data-width={{header.dataWidth}}>
+                    <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+            <div class="text-center margin-top10px" data-ng-show="filtered.length == 0">
+            <p>No data for applied filters</p>
+        </div>
+    
+        <div class="row margin-top20px text-center" data-ng-show="userMgmt.showPaginationButtons() && userMgmt.userList.length > 0">
+            <a href="javascript:void(0)" data-ng-click="userMgmt.getMore()">More</a>
+    
+            <span class="paddingLR-10px">|</span>
+    
+            <a href="javascript:void(0)" data-ng-click="userMgmt.getAll()">All</a>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,95 @@
+.clx-document-wrapper {
+  .image-div {
+    height: 400px;
+    vertical-align: top;
+    position: relative;
+  }
+  .image-div {
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+  .header-height {
+    height: 70px;
+  }
+  .custom-body {
+    height: 450px;
+    overflow-y: hidden;
+  }
+  .p-0 {
+    padding: 0;
+  }
+  .contact-list-3 {
+    width: 3%;
+  }
+  .contact-list-30 {
+    width: 30%;
+  }
+  .contact-list-35 {
+    width: 35%;
+  }
+  .contact-list-25 {
+    width: 25%;
+  }
+  .contact-list-28 {
+    width: 28%;
+  }
+  .form-control {
+    width: 100%;
+  }
+  .scrollableContainer,
+  .dropdown-menu {
+    width: 97% !important;
+  }
+  .scrollArea table th .box {
+    padding-top: 10px;
+  }
+
+  .scrollableContainer .dashboard-tasks-due {
+    max-height: 300px !important;
+  }
+}
+
+.mms-doc-wrapper {
+  .image-div {
+    height: 380px;
+    vertical-align: top;
+    position: relative;
+  }
+
+  .image-div img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .typeahead-dd ul.dropdown-menu {
+    width: 84%;
+    max-height: 37vh;
+  }
+}
+
+.dropup {
+  .dropdown-menu {
+    width: auto;
+    min-width: 160px !important;
+    padding: 2px !important;
+  }
+}
+

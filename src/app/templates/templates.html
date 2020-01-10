@@ -1,0 +1,163 @@
+<div data-ng-class="{'content-class-popup':template.outerWrapFlag===true}" class="matter-templates">
+    <div class="row gridSec margin0">
+        <div class="col-md-12 paddingRLR">
+            <div class="col-md-8 pull-left paddingRLR dropdown create">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null" data-ng-show="template.showSearch">
+                            <div class="default-searchico sprite"></div>
+                            <input type="text" focus-me="template.showSearch" data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="template.filterText" data-ng-change="template.filterRetain();"
+                                class="form-control">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+                    <li class="search-overlap">
+                        <ul data-ng-hide="template.showSearch">
+                            <li><a data-ng-click="template.clickSearch($event)"><span
+                                        class="sprite default-searchico-menu " tooltip="Search"
+                                        tooltip-placement="right"></span></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <div class="pull-right">
+                    <div class="dropdown">
+                        Sort By :
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{template.display.sortSeleted}}
+                            <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li data-ng-repeat="svalue in template.display.sortOption">
+                                <a data-ng-click="template.sortTemplate(svalue.key,svalue.sortorder,svalue.lable);"
+                                    data-ng-class="{'active': template.display.sortby == svalue.key}">{{svalue.lable}}
+                                </a>
+                                <ul data-ng-if="svalue.divider===1">
+                                    <li class="divider"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <ui-select class=" pull-right paddingRLR" ng-model="template.newTemplateInfo.category_id"
+                    theme="selectize" on-select="template.filterTemplateList(template.newTemplateInfo.category_id);">
+                    <ui-select-match placeholder="Select Category">
+                        {{$select.selected.Name}}
+                    </ui-select-match>
+                    <ui-select-choices
+                        repeat="item.Id as item in template.templateCategories | filter:$select.search | orderBy: 'Name'">
+                        <small>
+                            {{item.Name}}
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="margin-top5px"><button class="btn btn-default" data-ng-click="template.reset()">Reset</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row margin-top20px text-center"
+        data-ng-show="template.showPaginationButtons() && template.templateList.length > 0">
+        <a href="javascript:void(0)" data-ng-click="template.getMore()">More</a>
+
+        <span class="paddingLR-10px">|</span>
+
+        <a href="javascript:void(0)" data-ng-click="template.getAll()">All</a>
+    </div>
+    <div class="clearfix"></div>
+    <div id="templateupper1"></div>
+
+    <scroll-table tableid="mattertemplatesgrid1" watch="template.templateList" to="#templateupper1"
+        from="#moreLinkTemplate">
+        <table class="table table-scroll">
+            <thead>
+                <tr>
+                    <th style="width:35%">Template Name</th>
+                    <th style="width:35%">Description</th>
+                    <th style="width:20%">Category</th>
+                    <th style="width:10%">Action</th>
+                </tr>
+            </thead>
+            <tbody class="dashboard-tasks-due">
+
+                <tr class=" body-row "
+                    data-ng-class="{'grid-row-block':data.isActive === '0','grid-row-deleted':data.isDeleted === '1', 'selected-grid-row':($index == template.clickedRow)}"
+                    data-highlight-clicked-row="{{$index}},template.clickedRow"
+                    data-ng-repeat="data in template.filteredTemplates= (template.templateList | filter:template.filterText)  ">
+                    <td style="width:35%">
+                        <span class="default-pointer" tooltip="{{data.template_name}}"
+                            data-placement="bottom">{{data.template_name}}</span>
+
+                    </td>
+                    <td style="width:35%">
+                        <span class="default-cursor"
+                            tooltip="{{data.template_description}}">{{data.template_description}}</span><br>
+                    </td>
+                    <td style="width:20%">
+                        <span class="default-cursor" tooltip-placement="top" tooltip="{{data.categoryname}}">
+                            {{data.categoryname}}
+                        </span>
+                    </td>
+                    <td style="width:10%">
+                        <div class="button-vertical-center">
+
+                            <div data-ng-hide="sideNav.display.openDrawer== true || template.matterInfo.archivalMatterReadOnlyFlag"
+                                class="pull-left" data-ng-click="template.GenerateTemplate($event,data)"><span
+                                    class="sprite default-generate cursor-pointer" tooltip="Generate"
+                                    tooltip-append-to-body="true"></span>
+                                &nbsp;</div><span class="marginLR-5px"></span>
+
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </scroll-table>
+
+    <!-- <div class="report-responsive ">
+        <div class="row header-row">
+            <div class="cell" data-ng-repeat="header in ::template.templateGrid.headers"
+                data-width={{header.dataWidth}}>
+                {{header.displayName}}
+            </div>
+        </div>
+        <div class="row body-row"
+            data-ng-class="{'grid-row-block':data.isActive === '0','grid-row-deleted':data.isDeleted === '1', 'selected-grid-row':($index == template.clickedRow)}"
+            data-highlight-clicked-row="{{$index}},template.clickedRow"
+            data-ng-repeat="data in template.filteredTemplates= (template.templateList | filter:template.filterText)  "
+            grid-size>
+            <div class="cell" data-ng-repeat="header in ::template.templateGrid.headers"
+                data-width={{header.dataWidth}}>
+                <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell>
+                </div>
+
+            </div>
+        </div>
+    </div> -->
+
+    <!--Bug#6765-->
+    <div class="text-center margin-top10px" data-ng-show="template.filteredTemplates.length === 0">
+        No data for applied filters
+    </div>
+
+    <div id="moreLinkTemplate" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 60px;">
+        <!-- <div data-ng-show="template.showPaginationButtons() && template.templateList.length > 0">
+            <a href="javascript:void(0)" data-ng-click="template.getMore()">More</a>
+
+            <span class="paddingLR-10px">|</span>
+
+            <a href="javascript:void(0)" data-ng-click="template.getAll()">All</a>
+        </div> -->
+
+    </div>
+</div>

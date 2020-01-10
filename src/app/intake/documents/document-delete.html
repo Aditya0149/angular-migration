@@ -1,0 +1,18 @@
+<div class="" ><div class="modal-header ng-scope">
+    <h2 class="ng-binding">Delete ?</h2>
+</div>
+<div class="modal-body ng-scope">
+    <span class="ng-binding">Are you sure you want to delete ?</span><br>
+    <span ng-if="docDelete.coAuthDocName !=''">The following documents are in Edit so kindly unselect those documents :</span>
+    <ul style="overflow-y: scroll;max-height: 130px;" ng-if="docDelete.coAuthDocName !=''">
+    <li class= "word-wrap margin-top10px" ng-repeat = "item in docDelete.coAuthDocName">
+        {{item}}
+    </li>
+    </ul>
+    <!--<p ng-if="docDelete.coAuthDocName !=''"> {{docDelete.coAuthDocName}}</p>-->
+</div>
+<div class="modal-footer ng-scope">
+    <button class="btn btn-default" type="button" data-ng-click="docDelete.cancel()">Cancel</button>
+    <button class="btn btn-default" type="button" data-ng-disabled="docDelete.coAuthDocName.length > 0" data-ng-click="docDelete.deleteSelectedDocument()">Delete</button>
+</div>
+</div>

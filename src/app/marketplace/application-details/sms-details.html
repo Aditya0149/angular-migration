@@ -1,0 +1,53 @@
+<div class="marketplace-details-main row-m-0">
+    <div class="ng-scope row">
+        <div class="container col-md-12 main-top">
+            <div class="pull-left back-btn-block">
+                <a href="#/marketplace" data-ng-click="applicationCtrl.clearStorage()" class="marketplace-back-btn"></a>
+            </div>
+            <div class="pull-left left-img">
+                <img class="small-imga" src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677">
+            </div>
+            <div class="col-md-7 marketplace-details-block border-right">
+                <div class="title">Client Messenger</div>
+                <div class="text col-md-10 padding-0">With Client Messenger, you can efficiently communicate with your clients from the convenience of CloudLex®, instead of your personal cell. Send and receive texts—pics, videos, and docs too—in our centralized and secure platform allowing for quick and easy reference and retrieval of your conversations.</div>
+            </div>
+            <div class="col-md-2 padding-right-0 marketplace-details-block">
+                <div class="text clear-both">
+                    <div class="margin-top30px">
+                        <button class="btn btn-default" ng-if="applicationCtrl.isSMS.is_active==0" ng-disabled="applicationCtrl.isSMS.permission.E==0 || (applicationCtrl.dissableSubscribe)"
+                            ng-click="applicationCtrl.save(applicationCtrl.isSMS, 'SMS')">SUBSCRIBE</button>
+                        <button class="btn btn-default" ng-if="applicationCtrl.isSMS.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+            </div>
+        </div>
+    </div>
+
+    <div id="report-content">
+        <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+            <carousel interval="applicationCtrl.myInterval">
+                <slide ng-repeat="slide in applicationCtrl.slides" active="slide.active">
+                    <img  class="fiex-height-img" ng-src="{{slide.image}}">
+                    <span class="slide-txt static-new-scrollbar" ng-bind-html="slide.text"></span>
+                    <div class="carousel-caption">
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+</div>
+
+
+
+<footer position-center >
+    <ul>
+        <li>
+            <a href="#/marketplace" class="active-footer">Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+    </ul>
+</footer>

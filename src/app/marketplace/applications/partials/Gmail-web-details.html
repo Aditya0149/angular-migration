@@ -1,0 +1,57 @@
+<style>
+    .modal-dialog{width: 800px !important;}
+</style>
+<div class="">
+    <div class="modal-header">
+        <h2 class="pull-left">Email connector setup</h2>
+        <button class="close pull-right" data-ng-click="outlookWebCtrl.cancel()">
+              <span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body marketplace-details-main marketplace-popup-slider">
+        <div class="col-md-12 col-centered">
+            <carousel interval="outlookWebCtrl.myInterval">
+                <slide active="slide.active">
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/01.jpg">
+                    <p class="txt"></p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/02.jpg">
+                    <p class="txt">To install Connector for Gmail, first log into your Gmail account from your web browser. Then, click on the <b>Settings</b> icon located at the top-right corner of the screen. Choose the option that says, “<b>Get add-ons</b>”."
+                    </p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/Slide-3.png">
+                    <p class="txt"> Next, click <b>Install</b>.</p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/Slide-4.png">
+                    <p class="txt static-new-scrollbar">Once the connector has been successfully installed, you will be able to upload emails and their attachment(s) from your inbox directly to CloudLex. To do so, click on the CloudLex logo located on the right-hand side of any open email and then <b>login</b> to your CloudLex account.
+                    </p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/Slide-5.png">
+                    <p class="txt">Type the <b>Matter or Intake name</b> that corresponds to the email you want to save in the textbox, and then click Search. (You can search for a matter/intake by typing the first three letters of the matter/intake name.)
+                    </p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/Slide-6.png">
+                    <p class="txt">You can also mark the Note as ‘Important’ by checking the box. ’If you want to mark the note as <b>“important”</b>, select the check box. If not, leave the check box blank.</p>
+                </slide>
+                <slide>
+                    <img src="../../../styles/images/marketplace-images/slider/connector-for-gmail/Slide-7.png">
+                    <p class="txt">If the email contains any attachments, the option <b>“Upload with attachment”</b> will automatically be selected. If you do not want to upload the attachment(s), simply uncheck the box. To finalize the process, click <b>Upload Email</b>.
+                    </p>
+                </slide>
+                <div class="carousel-caption"></div>
+            </carousel>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer" style="border-top: white;">
+        <!-- <button data-ng-click="outlookWebCtrl.cancel()" class="btn btn-default btn-default">Cancel</button> -->
+        <button data-ng-click="outlookWebCtrl.confirm()" class="btn btn-default btn-default">Ok</button>
+        
+    </div>
+</div>

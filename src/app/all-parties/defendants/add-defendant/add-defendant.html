@@ -1,0 +1,47 @@
+<div id="report-content">
+    <div class=" margin-top10px ">
+
+        <div class="row">
+            <div class="col-md-3">
+                <h2 ng-if="!addDefendant.isEditMode" class="page-title">Add Defendant Wizard</h2>
+                <h2 ng-if="addDefendant.isEditMode" class="page-title">Edit Defendant Wizard</h2>
+            </div>
+            <div class="col-md-6">
+                <div class="container-fluid">
+                    <div class="wizard-timeline" ng-hide="addDefendant.isEditMode">
+                        <div class="row">
+                            <div class="col-md-4 connector" data-ng-class="addDefendant.getSearchContactConnectorClass()" data-ng-click="addDefendant.goToPage('searchOrAdd')">
+                                <div class="connector-text" title="Search or Add Existing">Search or Add Contact</div>
+                                <div data-ng-class="addDefendant.getSearchContactStepClass()"></div>
+                            </div>
+                            <div class="col-md-4" data-ng-click="addDefendant.goToPage('generalInfo')">
+                                <div class="connector-text" title="General Information">General Information</div>
+                                <div data-ng-class="addDefendant.getGenInfoStepClass()"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 pull-right">
+                <div class=" pull-right paddingTB-5px">
+                    <button data-ng-click="addDefendant.cancel()" class="btn btn-default btn-styleNone">Cancel</button>
+                    <button data-ng-if="!addDefendant.currentPage.generalInfo"
+                            data-ng-click="addDefendant.next()" class="btn btn-default" 
+                            ng-disabled="addDefendant.disableNext() || addDefendant.isDatesValid() ">
+                        Next
+                    </button>
+                    <button data-ng-if="addDefendant.currentPage.generalInfo"
+                        data-ng-disabled="addDefendant.isDatesValid()"    
+                        data-ng-click="addDefendant.save()" class="btn btn-default">
+                        Save</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paddingRLR flexCont">
+    </div>
+    <div data-ng-show="addDefendant.currentPage.searchOrAdd" data-ng-include="'app/all-parties/defendants/add-defendant/partials/searchOrAdd.html'"></div>
+    <div data-ng-show="addDefendant.currentPage.generalInfo" data-ng-include="'app/all-parties/defendants/add-defendant/partials/generalInfo.html'"></div>
+
+</div>

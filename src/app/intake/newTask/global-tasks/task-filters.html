@@ -1,0 +1,151 @@
+<div class="row margin-top10px">
+    <div class="col-md-6">
+        <div class="row-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="pull-left margin-top5px" style="margin-top: 10px;padding-left: 15px;"><label>Show
+                                task of:</label></div>
+                        <div class="col-md-8 custom-form-control padding-right-0" style="margin-top: 10px;">
+                            <div style="margin-left: -15px;" class="col-md-12 checkbox">
+                                <input ng-disabled="isIntakeActive != 1" type="checkbox" data-ng-model="LaunchGlobalTasks.filtersData.showIntakeTask"
+                                    data-ng-true-value="1" data-ng-false-value="0" /><label style="margin-right: 10px;">Intake</label>
+                                <input type="checkbox" data-ng-model="LaunchGlobalTasks.filtersData.showMatterTask" data-ng-true-value="1"
+                                    data-ng-false-value="0" /><label>Matter</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>Matter</label>
+                        <input type="text" class="form-control" data-ng-model-options="{ debounce: 500 }" placeholder="Enter name" typeahead="row.matterid as row.name for row in LaunchGlobalTasks.searchMatters($viewValue)"
+                            typeahead-input-formatter="LaunchGlobalTasks.formatTypeaheadDisplay($model)" data-ng-required="true" data-ng-model="LaunchGlobalTasks.filtersData.matterId"
+                        />
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top30px">
+            <div class=" col-md-6">
+                <label>Status</label>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="status in LaunchGlobalTasks.taskStatus">
+                        <input type="checkbox" checklist-model="LaunchGlobalTasks.filtersData.status" checklist-value="status" />
+                        <label>{{status}}</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <label>% Complete</label>
+                <ul>
+                    <li class="checkbox" data-ng-repeat="complete in LaunchGlobalTasks.percentageComplete">
+                        <input type="checkbox" checklist-model="LaunchGlobalTasks.filtersData.complete" checklist-value="complete.value" />
+                        <label>{{complete.label}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label>Assigned</label>
+                <clx-btn-group btn-list="LaunchGlobalTasks.timeButtons" value="LaunchGlobalTasks.filtersData.period">
+                </clx-btn-group>
+
+                <div class="form-group margin-top10px">
+                    <clx-btn-group btn-list="LaunchGlobalTasks.filterByUserBtn" btn-click="LaunchGlobalTasks.assignedFilterChanged"
+                        value="LaunchGlobalTasks.filtersData.mytask">
+                    </clx-btn-group>
+                </div>
+
+                <div class="form-group margin-top10px" data-ng-show="LaunchGlobalTasks.filtersData.mytask === 1">
+                    <clx-btn-group btn-list="LaunchGlobalTasks.assignedToBtn" value="LaunchGlobalTasks.filtersData.assigned">
+                    </clx-btn-group>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-fluid ">
+                <div class="col-md-6 margin-top20px">
+                    <div>
+                        <label>Assigned By</label>
+                        <ui-select ng-model="LaunchGlobalTasks.filtersData.assignedby" theme="selectize">
+                            <ui-select-match placeholder="Select assigned by...">
+                                {{$select.selected.fname}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in LaunchGlobalTasks.assignedUserList.assignedby| filter:{fname:$select.search}  | orderBy:'fname' ">
+                                <small>
+                                    {{item.fname}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-6 margin-top20px">
+                    <div>
+                        <label>Assigned To</label>
+                        <ui-select ng-model="LaunchGlobalTasks.filtersData.assignedto" theme="selectize">
+                            <ui-select-match placeholder="Select assigned to...">
+                                {{$select.selected.fname}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in LaunchGlobalTasks.assignedUserList.assignedto| filter:{fname:$select.search} | orderBy:'fname'">
+                                <small>
+                                    {{item.fname}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" data-ng-hide="LaunchGlobalTasks.filters.tab === 'cu'">
+            <div class="row-fluid ">
+                <div class="col-md-12 margin-top20px">
+                    <h2>Due Date</h2>
+                </div>
+                <div class="col-md-4 margin-top20px">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="LaunchGlobalTasks.filtersData.dueStartDate"
+                            is-open="openedEndDate" data-ng-disabled="false" name="dueStartDate" id="dueStartDate"
+                            validate-date error-div="#dueStartDate" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            close-text="Close" placeholder="start" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="LaunchGlobalTasks.openCalender($event);openedEndDate = true;openedStartDate=false;">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <span></span>
+                    </div>
+                    <div class="error" id="duestartdateerr">Invalid date format!</div>
+                </div>
+                <div class="col-md-4 margin-top20px">
+                    <div class="input-group datepicker ">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="LaunchGlobalTasks.filtersData.dueEndDate"
+                            is-open="openedStartDate" data-ng-disabled="false" name="dueEndDate" id="dueEndDate"
+                            validate-date error-div="#dueEndDate" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            close-text="Close" ng-change="LaunchGlobalTasks.setDates('end')" placeholder="end" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="LaunchGlobalTasks.openCalender($event);openedStartDate = true;openedEndDate = false; ">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div>
+                        <span></span>
+                    </div>
+                    <div class="error" id="dueenddateerr">Invalid date format!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>
+<div class=" pull-right margin-top10px">
+    <!-- <button data-ng-click="LaunchGlobalTasks.resetFilters()" class="btn btn-default ">Reset</button>-->
+    <button data-ng-click="LaunchGlobalTasks.applyfilters()" ng-disabled="LaunchGlobalTasks.enableApply" class="btn btn-default ">Apply</button>
+</div>

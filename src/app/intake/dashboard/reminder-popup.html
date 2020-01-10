@@ -1,0 +1,80 @@
+<!--<div data-ng-repeat="reminder in rp.reminders">
+    <pre>{{reminder}}</pre>
+</div>-->
+   
+
+<div class="container">
+<div class="modal-header padding-15-0">
+    <h2 class="modal-title fl-left">Reminders</h2>
+
+    <button class="close fl-right" data-ng-click="rp.closePopUp()">
+        <span aria-hidden="true">×</span></button>
+</div>
+<div class="modal-body task-event-reminders padding-0">
+    
+    <div class="container-fluid padding-0">
+
+       <div class="row reminder-headers {{' '+rp.reminderHeaders}}">
+                    <div class="col-md-1">{{reminder.selectAll}}
+                       <div class="checkbox">
+                            <input type="checkbox"
+                             data-ng-model="reminder.isSelected"
+                             data-ng-click="rp.selectAllNotifications(reminder.isSelected)"
+                             data-ng-checked = "rp.allNotificationSelected()"   
+                                   /><label>                                </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-top-10px">Intake</div>
+                    <div class="col-md-4 padding-top-10px">Event / Task Name</div>
+                    <div class="col-md-3 padding-top-10px">Event / Due Date</div>
+                    <div class="col-md-1"></div>
+     </div>
+        
+      <div class="reminder-row solid-boder"></div>    
+      <div class="dashboard-tasks-due message-scroll" id="remindersDiv">    
+      <div class="row reminder-row" data-ng-repeat="reminder in rp.reminders">
+            <div class="col-md-1  padding-top-10px reminders-checkbox">
+                <div class="checkbox">
+                            <input type="checkbox"
+                                data-ng-model="reminder.isSelected"
+                                data-ng-checked = "rp.isNotifySelected(reminder.reminderid)"
+                                data-ng-click="rp.selecReminder(reminder,reminder.isSelected)"
+                                   /><label></label>
+                </div>
+            </div> 
+            <div class="col-md-3  padding-top-10px cursor-pointer file-field" data-ng-click="rp.goToReminderMatter(reminder)">
+                {{reminder.matterName}}
+            </div> 
+            <div class="col-md-4 padding-top-10px cursor-pointer file-field" data-ng-click="rp.gotoReminderEvent(reminder)">
+                {{reminder.reminderName}}
+            </div>
+          
+            <div class="col-md-3 reminder-cell padding-top-10px" data-ng-show="reminder.allday == 1 && reminder.type== 'event'">
+            {{reminder.reminderTime|utcDateFilter:'MM/DD/YYYY':reminder.allday:'start'}}
+            </div>
+            <div class="col-md-3  padding-top-10px" data-ng-show="reminder.allday == 0 && reminder.type== 'event'">
+            {{reminder.reminderTime|utcDateFilter:'MM/DD/YYYY hh:mm a':reminder.allday:'start'}}        
+            </div>
+            <div class="col-md-3  padding-top-10px" data-ng-show="reminder.type== 'task'">
+             {{reminder.reminderTime}}
+            </div>    
+             <div class="col-md-1"></div>
+          </div> 
+        </div>  
+        
+    </div>    
+     
+    
+    <div class="modal-footer mt-0">
+    <div class="pull-right">
+        <button class="btn btn-default btn-styleNone" 
+                data-ng-click="rp.dismissReminder()">Dismiss</button>
+        <button class="btn btn-default btn-styleNone" 
+                data-ng-click="rp.snooze()">Snooze</button>
+    </div>
+    </div> 
+    
+    
+</div>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="row ">
+    <div class="col-md-6 margin-top10px"
+        data-ng-repeat="data in matterOverview.matterOverviewData.todaysEvent | limitTo:6">
+        <a data-ng-click="matterOverview.goToEvent(data)">{{data.name | impDatesFilter}}
+        </a>
+        <br />
+        <span data-ng-show="data.allday === '0'">{{data.utcstart |utcDateFilter:'hh:mm A'}} - {{data.utcend| utcDateFilter:'hh:mm A'}}</span>
+        <span data-ng-show="data.allday === '1'">Full Day</span>
+        <br />
+        {{data.location || '-'}}
+    </div>
+    <div class="col-md-12">
+        <a class="pull-right"
+            data-ng-show="matterOverview.dataReceived &&  matterOverview.matterOverviewData.todaysEvent.length > 0"
+            href="#/events/{{matterOverview.matterId}}">View All</a>
+
+    </div>
+</div>
+
+        <div
+            class="margin-top10px text-center"
+            data-ng-show="matterOverview.matterOverviewData.todaysEvent.length === 0">
+            There are no scheduled events for today.
+        </div>

@@ -1,0 +1,146 @@
+<div class="add-edit-expenses-wrapper">
+    <div class="modal-header">
+        <div class=" clearfix  heading-with-button-bottom-padding">
+            <h2 class=" pull-left page-title" ng-show="addExpenses.pageMode != 'edit'">Add Expense Information</h2>
+            <h2 class=" pull-left page-title" ng-show="addExpenses.pageMode == 'edit'">Edit Expense Information</h2>
+            <div class="pull-right">
+                <button class="btn btn-default pull-right" data-ng-disabled="addExpenses.isDatesValid()" data-ng-click="addExpenses.addExpensesInfo(addExpenses.newExpenseInfo)">
+                    Save
+                </button>
+                <button class="btn btn-default btn-styleNone pull-right margin-right10px" data-ng-click="addExpenses.close()">Cancel</button>
+    
+            </div>
+    
+        </div>
+        <!-- <span data-ng-if="addExpenses.isMovedToEM">
+                <p class="red-alert"> This expense has been moved to QuickBooks. It cannot be edited.
+                </p>
+            </span> -->
+    
+    </div>
+    
+    
+    <div class="modal-body static-new-scrollbar">
+        <div class="row">
+            <div>
+                <div class="col-md-12">
+                    <form class="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label>Associated Party</label>
+                                    <ui-select ng-model="addExpenses.newExpenseInfo.associated_party" on-select="addExpenses.setPartyRole(addExpenses.newExpenseInfo.associated_party)" theme="selectize">
+                                        <ui-select-match placeholder="Select name">
+                                            {{$select.selected.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices group-by="addExpenses.groupPlaintiffDefendants" group-filter="['Plaintiffs','Defendants','Other Parties']" repeat="item in addExpenses.plaintiffs | filter:{ name:$select.search } | orderBy: 'name'">
+                                            <small>
+                                                {{item.name}}
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Expense Name</label>
+                                <input type="text" class="form-control full-width" data-ng-model="addExpenses.newExpenseInfo.expense_name" maxlength="100" placeholder="Enter name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 margin-top10px">
+                                <label>Expense Type</label>
+                                <!--<select class="form-control"
+                                data-ng-model="addExpenses.newExpenseInfo.expense_type_id"
+                                data-ng-options="data.LabelId as data.Name for data in addExpenses.expenseTypes">
+                                </select>-->
+                                <ui-select ng-model="addExpenses.newExpenseInfo.expense_type" theme="selectize">
+                                    <ui-select-match placeholder="Select type">
+                                        {{$select.selected.expense_type_name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item as item in addExpenses.expenseTypes | filter:{ expense_type_name:$select.search } | orderBy: 'expense_type_name'">
+                                        <small>
+                                            {{item.expense_type_name}}
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-6 margin-top10px">
+                                <label>Date Incurred</label>
+                                <p class="input-group datepicker margin0">
+                                    <input type="text" data-ng-model="addExpenses.newExpenseInfo.incurred_date" datepicker-popup="MM/dd/yyyy" is-open="addExpenses.incurredServicePicker" data-ng-disabled="false" id="incurredDatediv" validate-date error-div="#incurredDatediv" tooltip="mm/dd/yyyy"
+                                        placeholder="mm/dd/yyyy" class="form-control" show-button-bar="false" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-ng-click="addExpenses.incurredDatePicker($event)">
+                                            <i class="default-calendar-small sprite"></i>
+                                        </button>
+                                    </span>
+                                </p>
+                                <div class="error no-float" id="incurredDateError">Invalid date format!</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 margin-top10px">
+                                <label>Payment Status</label>
+                                <clx-btn-group btn-list="addExpenses.paymentBtns" value="addExpenses.newExpenseInfo.payment_mode" btn-click="addExpenses.calExpenseBill"></clx-btn-group>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="col-md-6 margin-top10px custom-btn">
+                                <label>Disbursable</label>
+                                <clx-btn-group btn-list="addExpenses.disbursableBtns" value="addExpenses.newExpenseInfo.disbursable"></clx-btn-group>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 margin-top10px">
+                                <label>Expense Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" step="0.01" custom-currency-filter class="form-control" data-ng-model="addExpenses.newExpenseInfo.expense_amount" ng-change="addExpenses.changeValues(addExpenses.newExpenseInfo)" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 margin-top10px">
+                                <label>Paid Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="addExpenses.newExpenseInfo.paid_amount" ng-change="addExpenses.changeValues(addExpenses.newExpenseInfo)" ng-disabled="addExpenses.newExpenseInfo.payment_mode!=3"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 margin-top10px">
+                                <label>Outstanding Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="addExpenses.newExpenseInfo.outstandingamount" ng-disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 margin-top10px" data-ng-form="addExpenses.expenseform">
+                                <label>Check #</label>
+                                <input type="text" class="form-control full-width" data-ng-pattern="/^[\040-\100,\133-\140,\173-\177]*$/" name="cheque_no" placeholder="Enter check no" data-ng-model="addExpenses.newExpenseInfo.cheque_no" maxlength="20" />
+                                <div ng-if="addExpenses.expenseform.cheque_no.$dirty" ng-messages="addExpenses.expenseform.cheque_no.$error">
+                                    <div class="error error-ch" ng-message="pattern">
+                                        Invalid Check no
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 margin-top10px">
+                                <label>Bank Account Details</label>
+                                <input type="text" class="form-control full-width" placeholder="Enter bank details" data-ng-model="addExpenses.newExpenseInfo.bank_account" maxlength="100" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 margin-top10px">
+                                <label>Memo</label>
+                                <textarea class="form-control full-width" placeholder="Add Memo ..." ng-model="addExpenses.newExpenseInfo.memo" maxlength="1024" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div id="report-content">
+    <div class="margin-top10px">
+        <div class="row">
+            <div class="col-md-2">
+                <h2 data-ng-if="!addPlaintiff.isEditMode" class="page-title">Add Plaintiff Wizard</h2>
+                <h2 data-ng-if="addPlaintiff.isEditMode" class="page-title">Edit Plaintiff Wizard</h2>
+            </div>
+            <div class="col-md-7 paddingRLR">
+                <div class="container-fluid">
+                    <div class="wizard-timeline">
+                        <div class="row">
+                            <div class="col-md-4 connector" ng-hide="addPlaintiff.isEditMode" data-ng-class="addPlaintiff.getSearchContactConnectorClass()"
+                                data-ng-click="addPlaintiff.goToPage('searchOrAdd')">
+                                <div class="connector-text" title="Search or Add Existing Contact">Search or Add Contact</div>
+                                <div data-ng-class="addPlaintiff.getSearchContactStepClass()"></div>
+                            </div>
+                            <div class="col-md-4 connector" data-ng-class="addPlaintiff.getGenInfoConnectorClass()" data-ng-click="addPlaintiff.goToPage('generalInfo')">
+                                <div class="connector-text" title="General Information">General Information</div>
+                                <div data-ng-class="addPlaintiff.getGenInfoStepClass()"></div>
+                            </div>
+                            <div class="col-md-4" data-ng-click="addPlaintiff.goToPage('otherInfo')">
+                                <div class="connector-text" title="Other Information">Other Information</div>
+                                <div data-ng-class="addPlaintiff.getOtherInfoStepClass()"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 pull-right">
+                <div class=" pull-right btn-botm">
+                    <button data-ng-click="addPlaintiff.cancel()" class="btn btn-default btn-styleNone">Cancel</button>
+                    <button data-ng-if="!addPlaintiff.currentPage.otherInfo" data-ng-click="addPlaintiff.next()" ng-disabled="addPlaintiff.disableNext() || addPlaintiff.isDatesValid()"
+                        class="btn btn-default">Next</button>
+                    <button data-ng-if="addPlaintiff.currentPage.otherInfo" ng-disabled="addPlaintiff.isDatesValid()" data-ng-click="addPlaintiff.save()"
+                        class="btn btn-default">Save</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paddingRLR flexCont">
+    </div>
+    <div data-ng-show="addPlaintiff.currentPage.searchOrAdd" data-ng-include="'app/all-parties/add-plaintiff/partials/searchOrAdd.html'"></div>
+    <div data-ng-show="addPlaintiff.currentPage.generalInfo" data-ng-include="'app/all-parties/add-plaintiff/partials/generalInfo.html'"></div>
+    <div data-ng-show="addPlaintiff.currentPage.otherInfo" data-ng-include="'app/all-parties/add-plaintiff/partials/otherInfo.html'"></div>
+
+</div>

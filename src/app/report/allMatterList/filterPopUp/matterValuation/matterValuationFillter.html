@@ -1,0 +1,95 @@
+<style>
+  .custom-input-list ul.dropdown-menu {
+    max-height: 59vh
+  }
+</style>
+
+<div class="modal-header clearfix">
+  <h1 class="modal-title fl-left">Filters</h1>
+  <button class="close fl-right" data-ng-click="matterValuationFillter.cancel()">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="filter-greybox container modal-body">
+
+
+  <div class="margin-top20px">
+    <label>Attorney</label>
+    <ui-select ng-model="matterValuationFillter.filter.attorney" theme="selectize">
+      <ui-select-match placeholder="Select attorney...">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="item in matterValuationFillter.viewModel.attorney| filter:{name:$select.search}| orderBy:'name'">
+        <small>
+          {{item.name}}
+        </small>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <!-- <div class="margin-top20px">
+    <label>Staff</label>
+    <ui-select ng-model="matterValuationFillter.viewModel.userFilter.staff" theme="selectize">
+      <ui-select-match placeholder="Select staff...">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="item in matterValuationFillter.viewModel.staff| filter:{name:$select.search}| orderBy:'name'">
+        <small>
+          {{item.name}}
+        </small>
+      </ui-select-choices>
+    </ui-select>
+  </div> -->
+  <div class="margin-top20px">
+    <label>Paralegal</label>
+    <ui-select ng-model="matterValuationFillter.filter.paralegal" theme="selectize">
+      <ui-select-match placeholder="Select paralegal...">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="item in matterValuationFillter.viewModel.paralegal| filter:{name:$select.search} | orderBy:'name'">
+        <small>
+          {{item.name}}
+        </small>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+
+  <div class="margin-top20px">
+    <label>Valuation</label>
+    <div class="container" style="padding-left: 0;">
+      <div class="col-md-5" style="width: 48.3%;padding-left: 0;">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input style="padding: 17px 12px;" type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="matterValuationFillter.filter.minimumAmount"
+          />
+        </div>
+      </div>
+      <div class="pull-left policy-limit-divider">/</div>
+      <div class="col-md-5" style="width: 48.3%;">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input style="padding: 17px 12px;" type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="matterValuationFillter.filter.maximumAmount"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="margin-top20px">
+    <div class="checkbox">
+        <input type="checkbox" data-ng-model="matterValuationFillter.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+        />
+        <label>Include Archived Matters</label>
+    </div>
+</div>
+
+</div>
+<div class="modal-footer">
+  <div class="pull-right ">
+    <button data-ng-click="matterValuationFillter.resetFilters()" type="button" class="btn btn-default btn-styleNone">
+      Reset
+    </button>
+    <button data-ng-click="matterValuationFillter.apply(matterValuationFillter.filter)" ng-disabled="matterValuationFillter.enableApply"
+      type="button" class="btn btn-default">
+      Apply
+    </button>
+  </div>
+</div>

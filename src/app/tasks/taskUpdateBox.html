@@ -1,0 +1,75 @@
+<!--<div class="radio" ng-repeat="items in rescheduleEvent">
+        <input type="radio" data-ng-model="" value="{{items}}" ng-click=""/>
+        <label>{{items}}</label>
+    </div>-->
+<style type="text/css">
+    .radio {
+        margin-top: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .radio input[type="radio"] {
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        top: -3px;
+    }
+
+    .radio input {
+        outline: none !important;
+        box-sizing: initial !important;
+    }
+
+    .radio label,
+    .radio label {
+        padding-left: 25px !important;
+    }
+
+    .radio label::after {
+        background-color: #2097c6 !important;
+        top: 5px !important;
+        width: 9px !important;
+        height: 9px !important;
+        left: 5px !important;
+    }
+
+    .radio label::before {
+        width: 19px !important;
+        height: 19px !important;
+        border: 2px solid #2097c6 !important;
+    }
+
+    .reason-list-order li {
+        float: left;
+        margin-left: 20px;
+        width: 95px;
+    }
+</style>
+
+<div class="row margin-top20px margin-left10px">
+    <div class="col-md-1" ng-if="reason==true"> <label>Reason</label></div>
+    <div class="col-md-6" ng-if="reason==true">
+        <ul class="reason-list-order">
+            <li data-ng-repeat="item in taskReason">
+                <div class="radio">
+                    <input type="radio" name="response" data-ng-model="defaultReason" ng-click="setTask(item)" ng-value="{{item.reason_order}}" />
+                    <label>{{item.reason_name}}</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="modal-body pop-body-scroll-height">
+    <label>Remark</label>
+    <textarea class="col-md-12 form-control margin-top10px" name="text" placeholder="Task Update Reason" data-ng-model="updateRemark"
+        maxlength="250" ng-required="true"></textarea>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-default" data-ng-click="cancel()">
+        Cancel</button>
+    <button class="btn btn-default margin-left10px pull-right" data-ng-click="saveRemark()">
+        Done</button>
+
+
+</div>

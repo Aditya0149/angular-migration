@@ -1,0 +1,250 @@
+<style>
+    .report-custom-drop-height .open .dropdown-menu {
+        max-height: inherit !important;
+    }
+
+    body .report-responsive .body-row .cell {
+        overflow: visible !important;
+    }
+
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<div class="row" scrolly="matterValuationCtrl.scrollReachedBottom()"
+    reached-top="matterValuationCtrl.scrollReachedTop()">
+    <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Matter Valuation Report</h1>
+</div>
+<div class="flexCont"></div>
+<div class="row  margin0 fixed-grid-report">
+    <div class="col-md-12 paddingRLR heading-filter-removed ">
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons paddingLR-10px">
+
+                <li class="seperation-filter"></li>
+                <li>
+                    <a>
+                        <span data-ng-click="matterValuationCtrl.filterMatterValuationList()"
+                            class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="seperation-filter"></li>
+                <li>
+                    <a data-ng-click="matterValuationCtrl.print()">
+                        <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="paddingLR-10px">
+                    <a data-ng-click="matterValuationCtrl.downloadMatterValuationList()">
+                        <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                            tooltip-placement="right"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown head-padding-10px pull-right">
+            Sort By :
+            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{matterValuationCtrl.selectedSort}}
+
+                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+            </button>
+            <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                <li data-ng-repeat="sort in matterValuationCtrl.sorts">
+                    <a data-ng-click="matterValuationCtrl.applySortByFilter(sort)">{{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pull-right">
+        <clx-filter-tags on-filter-cancel="matterValuationCtrl.tagCancelled" tag-list="matterValuationCtrl.tags">
+        </clx-filter-tags>
+    </div>
+</div>
+<div data-ng-show="matterValuationCtrl.plaintiffDataList.length >0"></div>
+<show-record-count-only more="matterValuationCtrl.getMore()" all="matterValuationCtrl.getAll()"
+    hide-pager="{{(matterValuationCtrl.showPaginationButtons() && (matterValuationCtrl.plaintiffDataList.length > 0))}}"
+    displayed="matterValuationCtrl.plaintiffDataList.length" total="matterValuationCtrl.total">
+</show-record-count-only>
+</div>
+
+
+<div class="clearfix">
+
+</div>
+
+<!-- Start: New scroll-table tableid -->
+<div class="clearfix"></div>
+<div id="listUpper"></div>
+<div class="report-scroll-all-matter">
+
+    <scroll-table tag="matterValuationCtrl.tags" sort="matterValuationCtrl.selectedSort" watch="matterValuationCtrl.plaintiffMailingList" tableid="matterValuationlistGrid" to="#listUpper"
+        from="#moreAllLinkRecord">
+
+        <table class="table table-scroll text_ellipsis_valuation">
+            <thead data-ng-show="matterValuationCtrl.plaintiffMailingList.length!=0">
+                <tr>
+                    <th class="th-width-12">
+                        <div>
+                            <span>
+                                <b>Matter Name</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-13">
+                        <div>
+                            <span>
+                                <b>Matter Type, Subtype & Category</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-12">
+                        <div>
+                            <span>
+                                <b>Status & Substatus</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-13">
+                        <div>
+                            <span>
+                                <b>Attorney</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-15">
+                        <div>
+                            <span>
+                                <b>Paralegal</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <span>
+                                <b>Staff</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-10">
+                        <div>
+                            <span>
+                                <b>Valuation Amount</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-15">
+                        <div>
+                            <span>
+                                <b>Referred To & Referred By</b>
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="dashboard-tasks-due" id="matterValuationlistbody" style="overflow-y:overlay;height: 80vh;">
+                <tr data-ng-repeat="data in matterValuationCtrl.plaintiffMailingList"
+                    data-highlight-clicked-row="{{$index}},matterValuationCtrl.clickedRow"
+                    data-ng-class="{'selected-grid-row':$index == matterValuationCtrl.clickedRow}">
+                    <div class="cell">
+
+                        <td class="th-width-12">
+                            <div>
+                                <a class="word-wrap" href="#/matter-overview/{{data.matter_id}}"
+                                    tooltip-placement="right" tooltip="{{data.matter_name}}">
+                                    {{data.matter_name}}
+                                </a>
+                            </div>
+                        </td>
+                        <td class="th-width-13">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.type | replaceByDash}}">
+                                    {{data.type | replaceByDash}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_type | replaceByDash}}">
+                                    {{data.sub_type | replaceByDash}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.category | replaceByDash}}">
+                                    {{data.category | replaceByDash}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-12">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.status | replaceByDash}}">
+                                    {{data.status | replaceByDash}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_status | replaceByDash}}">
+                                    {{data.sub_status | replaceByDash}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-13">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.matter_attorney}}">
+                                    {{data.matter_attorney}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.matter_paralegals}}">
+                                    {{data.matter_paralegals}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.matter_staffs}}">
+                                    {{data.matter_staffs}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="amount_ellipsis" tooltip="${{data.expected_value | number:2}}"
+                                    tooltip-append-to-body="true" tooltip-placement="bottom">
+                                    {{data.expected_value || data.expected_value == 0 ? "$" : ""}}{{data.expected_value | number:2}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.referred_to}}">
+                                    {{data.referred_to}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.referred_by}}">
+                                    {{data.referred_by}}
+                                </span>
+                            </div>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+</div>
+
+<!-- Start: New scroll-table tableid -->
+
+<div data-ng-show="matterValuationCtrl.plaintiffDataList.length >0"></div>
+<show-record-more-and-all more="matterValuationCtrl.getMore()" all="matterValuationCtrl.getAll()"
+    hide-pager="{{(matterValuationCtrl.showPaginationButtons() && (matterValuationCtrl.plaintiffDataList.length > 0))}}"
+    displayed="matterValuationCtrl.plaintiffDataList.length" total="matterValuationCtrl.total">
+</show-record-more-and-all>
+</div>
+
+<p class="text-center margin-top10px" data-ng-show="matterValuationCtrl.plaintiffMailingList.length <= 0">
+    No data for the applied filters
+</p>

@@ -1,0 +1,64 @@
+<div class="marketplace-details-main row-m-0">
+    <div class="ng-scope row">
+        <div class="container col-md-12 main-top">
+            <div class="pull-left back-btn-block">
+                <a href="#/marketplace" data-ng-click="applicationCtrl.clearStorage()" class="marketplace-back-btn"></a>
+            </div>
+            <div class="pull-left left-img">
+                <img class="small-imga" src="styles/images/marketplace-images/icon/microsoft-online.svg?v=15">
+            </div>
+            <div class="col-md-7 marketplace-details-block border-right">
+                <div class="title">Microsoft Office Online®</div>
+                <div class="text col-md-10 padding-0">Create, edit, and co-author your Word, Excel, and PowerPoint documents without leaving the Legal Cloud. Updates made in CloudLex are automatically reflected across all team members and devices, so you can spend less time coordinating and more time collaborating.</div>
+            </div>
+            <div class="col-md-2 padding-right-0 marketplace-details-block">
+                <div class="text clear-both">
+                    <!--<b class="pull-left" style="color: #1bb8b2;">Coming Soon</b>-->
+                     <div  class="margin-top30px">
+                        <button class="btn btn-default" ng-if="applicationCtrl.isOfficeOnline.is_active==0"
+                           ng-disabled="applicationCtrl.isOfficeOnline.permission.E==0 || (applicationCtrl.dissableSubscribe)" ng-click="applicationCtrl.showOfficeOnlinePopup(applicationCtrl.isOfficeOnline)">SUBSCRIBE</button>
+                        <!--<button class="btn btn-default" data-toggle="modal" data-target="#payment" ng-if="applicationCtrl.isOfficeOnline.is_active==0 && applicationCtrl.paymentFlag"
+                            ng-disabled="applicationCtrl.isOfficeOnline.permission.E==0" ng-click="applicationCtrl.showOfficeOnlinePopup(applicationCtrl.isOfficeOnline)">SUBSCRIBE</button>-->
+                        <button class="btn btn-default" ng-if="applicationCtrl.isOfficeOnline.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                    </div>
+                </div>
+                <!--<div class="text margin-top15px">
+                    <b>Whats New</b><br>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>-->
+            </div>
+            <div class="">
+                <!--<div class="adopted-by"><span><span style="font-size: 22px;">40</span><br>Laws Firms</span><br>Adopted By</div>-->
+            </div>
+        </div>
+    </div>
+    <div id="report-content">
+        <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+            <carousel interval="applicationCtrl.myInterval">
+                <slide ng-repeat="slide in applicationCtrl.slides" active="slide.active">
+                    <img ng-src="{{slide.image}}">
+                    <span class="slide-txt" ng-bind-html="slide.text"></span>
+                    <div class="carousel-caption">
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+</div>
+
+
+
+<footer position-center>
+    <ul>
+        <li>
+            <a href="#/marketplace" class="active-footer">Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+        <!-- <li>
+            <a href="#/marketplace/upcoming">Upcoming</a>
+        </li> -->
+
+    </ul>
+</footer>

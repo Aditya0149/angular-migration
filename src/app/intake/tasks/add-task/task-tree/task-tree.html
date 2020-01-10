@@ -1,0 +1,41 @@
+﻿<div data-ng-form="taskTree.form">
+    <div class="modal-header">
+        <h2 class="pull-left page-title">Task Categories</h2> <div class="pull-right">
+            <button
+                data-ng-click="taskTree.ok()"
+                data-ng-disabled="taskTree.form.$invalid"
+                class="btn btn-default pull-right">
+                Save
+            </button>
+            <button class="btn btn-default btn-styleNone pull-right"
+                data-ng-click="taskTree.cancel()">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <treecontrol
+            options="taskTree.opts"
+            on-selection="taskTree.subTaskSelected(node)"
+            selected-node="taskTree.selectedCategory"
+            expanded-nodes="taskTree.expandedNodes"
+            class="tree-classic" tree-model="taskTree.displayCategories">
+        {{node.label}}
+       </treecontrol>
+
+        <div class="row col-md-6 margin-top5px margin-left22 margin-bottom20" data-ng-show="taskTree.selectedCategory.intake_task_subcategory_id === 0">
+            <input type="text"
+                maxlength="100"
+                data-ng-model="taskTree.selectedCategory.notes"
+                data-ng-required="taskTree.selectedCategory.intake_task_subcategory_id === 0"
+                class="form-control" />
+        </div>
+
+    </div>
+
+    <div class="clearfix ">&nbsp;</div>
+
+</div>
+
+

@@ -1,0 +1,43 @@
+.referred-grid-wrapper {
+        .headerspacer { height: 50px;
+    }
+    .scrollArea {
+                .box {
+                    height: 50px;
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+            .tooltip-inner {
+                word-break: break-word;
+                white-space: initial;
+                max-width: 280px;
+            }
+    }
+    .scrollableContainer {
+        padding-top: 49px;
+    }
+    .mattername-wordwrap {
+        white-space: normal;
+        word-break: break-word;
+    }
+    .referral-footer {
+        overflow: hidden;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin-bottom: 58px;
+    }
+}
+
+.referred-matter-wrapper{
+    #report-content {
+        width: 100%;
+        padding-bottom: 0px;
+        .card {
+            height: 65px;
+            padding: 3px 19px 13px;
+        }
+    }
+}

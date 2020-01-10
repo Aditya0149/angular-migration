@@ -1,0 +1,194 @@
+<div class="margin-top20px">
+    <strong class="margin-top10px">Plaintiff</strong>
+</div>
+<div class="margin-top10px">
+    <div class="flex-grid-row flex-grid-header-row">
+        <div class="flex-grid-item">Name</div>
+        <!--   <div class="flex-grid-item">Role</div>-->
+        <div class="flex-grid-item">DOB / SSN</div>
+        <div class="flex-grid-item">Phone</div>
+    </div>
+
+    <div class="flex-grid-row" data-ng-repeat="contact in matterOverview.matterOverviewData.plaintiffsContact.data">
+        <div class="flex-grid-item" style="color: #2a83b1;">
+            <div ng-if="contact.isalive == 0 && contact.estateadminid" class="cursor-pointer"
+                data-ng-click="matterOverview.getContactCard(contact.estateadminid)">
+                <strong class="saved-search-link">{{contact.estateadminid.searchlabel}}
+                    (Administrator)
+                </strong>
+            </div>
+            <div ng-if="contact.isalive != 0 && contact.estateadminid" class="cursor-pointer"
+                data-ng-click="matterOverview.getContactCard(contact.estateadminid)">
+                <strong class="saved-search-link">{{contact.estateadminid.searchlabel}}
+                    (Power Of Attorney)
+                </strong>
+            </div>
+            <div data-ng-click="matterOverview.getContactCard(contact.contactid)"
+                class="cursor-pointer saved-search-link">
+                {{contact.contactid.searchlabel}}</div>
+        </div>
+        <div class="flex-grid-item">
+            {{contact.dateofbirth}}
+            /<span class="key-contacts-number-span">&nbsp;{{contact.ssn}}
+            </span>
+        </div>
+
+        <div class="flex-grid-item">
+            <div ng-if="!contact.estateadminid">{{contact.contactid.phone_cell||contact.contactid.phone_work ||contact.contactid.phone_home |
+                emptyValDash:'-'}}</div>
+            <div ng-if="contact.estateadminid">{{contact.estateadminid.phone_cell||contact.estateadminid.phone_work ||contact.estateadminid.phone_home |
+                        emptyValDash:'-'}}</div>
+        </div>
+    </div>
+    <div class="flex-grid-row" ng-show="matterOverview.plaintiffsContact.data.length==0">
+        <div class="flex-grid-item">
+            <a>-</a>
+        </div>
+        <div class="flex-grid-item">
+            <a>-</a>
+            /<span class="key-contacts-number-span">&nbsp;-
+            </span>
+        </div>
+
+        <div class="flex-grid-item">
+            <div>-</div>
+        </div>
+    </div>
+</div>
+<!--<div ng-show="matterOverview.plaintiffsContact.data.length==0" class=" margin-top5px">No data</div>-->
+
+<div class="margin-top20px">
+    <strong class="margin-top10px">Defendant</strong>
+</div>
+<div class="margin-top10px">
+    <div class="flex-grid-row flex-grid-header-row">
+        <div class="flex-grid-item">Attorney / Phone </div>
+        <div class="flex-grid-item">Defendant</div>
+    </div>
+
+
+    <div class="flex-grid-row" ng-repeat="contact in matterOverview.matterOverviewData.defendentContact.data">
+        <div class="flex-grid-item cursor-pointer key-contacts-number-div"
+            data-ng-click="matterOverview.getContactCard(contact.defendant_attorney)">
+            <a href="javascript:void(0);">{{contact.defendant_attorney.searchlabel | emptyValDash:'-'}}</a>
+            /<span class="key-contacts-number-span">&nbsp;{{contact.defendant_attorney.phone_cell||contact.defendant_attorney.phone_work
+                ||contact.defendant_attorney.phone_home | emptyValDash:'-'}}
+            </span>
+
+        </div>
+        <div class="flex-grid-item">
+            <a href="javascript:void(0)" data-ng-click="matterOverview.getContactCard(contact.defendant)">{{contact.defendant.searchlabel
+                | emptyValDash:'-'}}</a>
+        </div>
+    </div>
+    <div ng-show="matterOverview.defendentContact.data.length==0" class="flex-grid-row">
+        <div class="flex-grid-item cursor-pointer key-contacts-number-div">
+            <a>-</a>
+            /<span class="key-contacts-number-span">&nbsp;-
+            </span>
+
+        </div>
+        <div class="flex-grid-item">
+            <a>-</a>
+        </div>
+    </div>
+
+
+</div>
+<!-- <div ng-show="matterOverview.defendentContact.data.length==0" class=" margin-top5px">No data</div> -->
+
+<div class="margin-top20px">
+    <strong>Insurance Adjuster</strong>
+</div>
+<div class="margin-top10px" ng-hide="matterOverview.adjusterContact.data.length==0">
+    <div class="flex-grid-row flex-grid-header-row">
+        <div class="flex-grid-item">Name / Phone (Work) <br>Provider</div>
+        <div class="flex-grid-item">Insured / Claim Number <br>Type</div>
+    </div>
+    <div class="flex-grid-row"
+        ng-repeat="contact in matterOverview.matterOverviewData.adjusterContact.insurance_adjuster">
+        <div class="flex-grid-item key-contacts-number-div">
+            <a href="javascript:void(0);" data-ng-click="matterOverview.getContactCard(contact)">{{contact.searchlabel
+                | emptyValDash:'-'}} </a>
+            <span> /<span class="key-contacts-number-span">&nbsp;{{contact.phone_work | emptyValDash:'-'}}</span>
+            </span> <br>
+            <a href="javascript:void(0);" data-ng-click="matterOverview.getContactCardforProvider(contact)">{{contact.provider
+                | emptyValDash:'-'}} </a>
+
+        </div>
+        <div class="flex-grid-item">
+            <a href="javascript:void(0);"
+                data-ng-click="matterOverview.getContactCard(matterOverview.matterOverviewData.adjusterContact.insured_party[$index])">{{matterOverview.matterOverviewData.adjusterContact.insured_party[$index].searchlabel
+                | emptyValDash:'-'}}</a>
+            <span> / {{matterOverview.matterOverviewData.adjusterContact.insured_party[$index].claim_number |
+                emptyValDash:'-'}}</span> <br>
+            <span>{{contact.type | emptyValDash:'-'}} </span>
+
+        </div>
+    </div>
+    <div class="flex-grid-row" ng-show="matterOverview.matterOverviewData.adjusterContact.insurance_adjuster.length==0">
+        <div class="flex-grid-item key-contacts-number-div">
+            <a>-</a>
+            <span>/<span class="key-contacts-number-span">&nbsp;-</span>
+            </span> <br>
+            <a>-</a>
+
+        </div>
+        <div class="flex-grid-item">
+            -
+            <span> / -</span> <br>
+            <span>- </span>
+
+        </div>
+    </div>
+</div>
+<!--<div ng-show="matterOverview.adjusterContact.data.length==0" class="margin-top5px">No data</div>-->
+
+
+<div class="margin-top20px">
+    <strong>Referred To</strong>
+</div>
+<div class="margin-top10px">
+    <div class="flex-grid-row flex-grid-header-row">
+        <div class="flex-grid-item">Name</div>
+        <div class="flex-grid-item">Phone (Work)</div>
+    </div>
+    <div class="flex-grid-row">
+        <div class="flex-grid-item"
+            data-ng-click="matterOverview.getContactCard(matterOverview.matterOverviewData.matterInfo.referred_to_data)">
+            <a href="javascript:void(0);">{{matterOverview.matterOverviewData.matterInfo.referred_to_data.searchlabel
+                | emptyValDash:'-'}}</a>
+        </div>
+        <div class="flex-grid-item">
+            <div>
+                {{matterOverview.matterOverviewData.matterInfo.referred_to_data.phone_work | emptyValDash:'-'}}
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--<div ng-hide="matterOverview.matterOverviewData.matterInfo.referred_to_data.contactid" class="margin-top5px">No data</div>-->
+
+<div class="margin-top20px">
+    <strong>Referred By</strong>
+</div>
+<div class="margin-top10px">
+    <div class="flex-grid-row flex-grid-header-row">
+        <div class="flex-grid-item">Name</div>
+        <div class="flex-grid-item">Phone (Work)</div>
+    </div>
+    <div class="flex-grid-row">
+        <div class="flex-grid-item"
+            data-ng-click="matterOverview.getContactCard(matterOverview.matterOverviewData.matterInfo.referred_by_data)">
+            <a href="javascript:void(0);">{{matterOverview.matterOverviewData.matterInfo.referred_by_data.searchlabel
+                | emptyValDash:'-'}}</a>
+        </div>
+        <div class="flex-grid-item">
+            <div>
+                {{matterOverview.matterOverviewData.matterInfo.referred_by_data.phone_work | emptyValDash:'-'}}
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--<div ng-hide="matterOverview.matterOverviewData.matterInfo.referred_by_data.contactid" class="margin-top5px">No data</div>-->

@@ -1,0 +1,96 @@
+<div id="dailymailupper1"></div>
+<div data-ng-show="dailymailscan.activeTab=='uploadeddailymail'" data-ng-if="dailymailscan.uploadedList.totallength >0 ">
+    <scrollable-table tableid="dailymailgrid1" watch="dailymailscan.uploadedList.data" to="#dailymailupper1" from="#moreAllLink">
+        <table style="table-layout: fixed;" class="table">
+            <thead>
+                <tr>
+                    <th style="width:5%">
+                        <div class="checkbox" style="margin:0">
+                            <input type="checkbox" data-ng-disabled="dailymailscan.filteredUploads.length==0" data-ng-model="dailymailscan.uploadedGridOptions.selectAll" data-ng-checked="dailymailscan.allUploadedSelected()"
+                                data-ng-click="dailymailscan.selectAllUploaded(dailymailscan.uploadedGridOptions.selectAll)"
+                            />
+                            <label></label>
+                        </div>
+                    </th>
+                    <th style="width:10%">
+                        <div data-ng-if="dailymailscan.userRole=='LexviasuperAdmin'"></div>
+                    </th>
+                    <th style="width:35%">Document Name</th>
+                    <th style="width:20%">Uploaded By</th>
+                    <th style="width:20%">Uploaded On</th>
+                    <th style="width:10%">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="response in dailymailscan.filteredUploads = (dailymailscan.uploadedList.data|filter:dailymailscan.display.uploaded.filterText) track by response.id"
+                    row-id="{{ response.id }}" data-ng-class="{'selected-grid-row':dailymailscan.isUploadedSelected(response)}">
+                    <td>
+                        <div class="checkbox" style="margin:0;position: relative !important;">
+                            <input type="checkbox" data-ng-checked="dailymailscan.isUploadedSelected(response)" checklist-model="dailymailscan.uploadedGridOptions.uploadedSelectedItems"
+                                checklist-value="response" />
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="relative-container">
+                            <a data-ng-click="dailymailscan.editUploaded(response.id)" data-ng-hide="response.editable && response.editable===1">
+                                <span class="sprite small-edit-icon ">&nbsp;</span>
+                            </a>
+                            <ul class="showBy-btns small-edit-cancel-btn" style="top: 0;position: inherit;">
+                                <li>
+                                    <a data-ng-click="dailymailscan.editStatus(response.id)" data-ng-show="response.editable && response.editable===1" class="sprite small-save-icon"></a>
+                                </li>
+                                <li>
+                                    <a data-ng-click="dailymailscan.revertStatus(response.id)" data-ng-show="response.editable && response.editable===1" class="sprite small-cancel-icon"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a data-ng-href="javascript:void(0)" data-ng-click="dailymailscan.viewDailyMailScan(response.uri,response.id,'dms')">
+                                <u>{{ response.name }}</u>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <strong>{{ response.uploadBy }}
+                            </strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div>{{ response.dateuploaded_date }}</div>
+                    </td>
+                    <td>
+                        <div>
+                            <span data-ng-init="response.newstatus=response.status" data-ng-hide="response.editable && response.editable===1">{{ response.status }}
+                            </span>
+                            <select data-ng-show="response.editable && response.editable===1 && dailymailscan.userRole=='LexviasuperAdmin'" data-ng-model="response.newstatus"
+                                class="form-control">
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </scrollable-table>
+</div>
+
+<div class="row margin-top20px text-center " id="moreAllLink" style="overflow: hidden !important;margin-bottom: 5px;position: fixed;width: 80%;bottom: 0;">
+    <div data-ng-if="!dailymailscan.hideUpDocPager && dailymailscan.activeTab=='uploadeddailymail'">
+        <a href="javascript:void(0)" class="" data-ng-click="dailymailscan.getNextLimitUploaded()">More</a>
+        <span class="paddingLR-10px">|</span>
+        <a href="javascript:void(0)" class="" data-ng-click="dailymailscan.getNextLimitUploaded('all')">All</a>
+    </div>
+
+</div>
+
+<p data-ng-show="dailymailscan.activeTab=='uploadeddailymail'" class="text-center" data-ng-if="dailymailscan.uploadedList.totallength===0 
+        && dailymailscan.display.uploaded.uploadedListReceived">
+    No data for the applied filters
+</p>

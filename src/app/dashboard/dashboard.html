@@ -1,0 +1,61 @@
+    <div id="report-content">
+    <div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('analytics')}" data-ui-sref=".analytics">Analytics</a>
+            </li>
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('critical-dates')}" data-ui-sref=".critical-dates">Critical Dates</a>
+            </li>
+            <li>
+                <a data-ng-class="{'activeLink':dashboard.isActive('tasks')}" data-ui-sref=".tasks">Tasks</a>
+            </li>
+        </ul>
+    </div>
+    <div ui-view></div>
+
+
+    <footer position-center delayRender='true'>
+
+        <ul>
+            <li>
+                <a
+                    ui-sref="matter-list"
+                    ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Ongoing'}">Matters</a>
+            </li>
+            <li>
+                <a ui-sref="globalContact"
+                    ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Closed'}">Contacts</a></li>
+            <li>
+                <a ui-sref="documents"
+                    ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Archived'}">Documents</a>
+
+            </li>
+            <li>
+                <a ui-sref="report.allMatterListReport"
+                    ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Archived'}">Reports</a>
+
+            </li>
+        </ul>
+
+    </footer>
+
+</div>
+
+<!-- <div
+        data-ng-if="false"
+        data-ng-include="'app/dashboard/analytics/analytics.html'"
+        data-ng-controller="AnalyticsCtrl as dashboardAnalytics">
+    </div>
+
+    <div
+        data-ng-if="false"
+        data-ng-controller="DashboardTasksCtrl as dashboardTasks"
+        data-ng-include="'app/dashboard/tasks/dashboard-tasks.html'">
+    </div>
+
+    <div
+        data-ng-controller="CriticalDatesCtrl as dashboardCriticalDates"
+        data-ng-include="'app/dashboard/critical-dates/critical-dates.html'">
+    </div>-->
+

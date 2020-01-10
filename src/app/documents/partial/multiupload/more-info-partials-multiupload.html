@@ -1,0 +1,104 @@
+﻿<div class="add_document">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div
+                data-ng-if="(document.multiFilesdata[$index].moreInfoSelect=='motion' && document.multiFilesdata[$index].categoryid==10)">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/documentMotion.html'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div data-ng-if="(document.multiFilesdata[$index].moreInfoSelect=='liens')">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/liens.html'">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div data-ng-if="document.multiFilesdata[$index].moreInfoSelect=='medicalbill'">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/add-edit-medical-bills.html'">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div data-ng-if="document.multiFilesdata[$index].moreInfoSelect=='insurance'">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/add-edit-insaurance.html'">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div data-ng-if="document.multiFilesdata[$index].moreInfoSelect=='expense'">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/add-edit-expenses.html'">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div data-ng-if="document.multiFilesdata[$index].moreInfoSelect=='medicalrecord'">
+
+                <div class="panel-heading accordion-toggle bgAccordian" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseBody{{$index}}" id="collapseHeading{{$index}}"
+                    ng-click="document.accordianFn($index)">
+                    <h4 class="panel-title"></h4>
+                </div>
+                <div id="collapseBody{{$index}}" class="panel-collapse collapse in">
+                    <div class="panel-body bt-none">
+                        <div data-ng-include="'app/documents/partial/multiupload/add-medical-info.html'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

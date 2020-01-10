@@ -1,0 +1,138 @@
+<div ng-if="addImpDates.criticalDatesPermission[0].V != 0" >
+<h3>Important Dates</h3>
+<div class="row form-margin"  >
+    <!--ng-repeat on objects sort the properties in alphabetical order and then repeats
+    to avoid this get the keys and repeat them-->
+    <div class="col-md-4 border-separator-right" data-ng-repeat="type in addImpDates.getObjectKeys(addImpDates.impDates)">
+        <label class="col-md-12">{{type|uppercase}}</label>
+        <div data-ng-repeat="date in addImpDates.impDates[type]"
+            data-ng-hide="addImpDates.hideDeletedDate(addImpDates.impDates[type], $index)">
+            <div class="col-md-9">
+                <div class="dateInputs">
+                    <p class="input-group datepicker">
+                        <input type="text"
+                            data-ng-disabled="true"
+                            class="form-control"
+                            max-date="addImpDates.maxdate"
+                            datepicker-popup="{{addImpDates.dateFormat}}"
+                            data-ng-model="addImpDates.impDates[type][$index].startCopy"
+                            is-open="false"
+                            data-ng-change="addImpDates.dateChanged(type,$index)"   
+                            view-format = "MM/DD/YYYY"
+                            datepicker-options="dateOptions"
+                            ng-required="true"
+                            close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                data-ng-disabled=""
+                                data-ng-click="addImpDates.openCalender($event,$parent.$index,$index,type,addImpDates.impDates[type][$index]);">
+                                <i class="default-calendar-small sprite"></i>
+                            </button>
+                        </span>
+                    </p>
+                    </div>
+            </div>
+            <div class="col-md-3">
+                <span has-access="{{addImpDates.criticalDatesPermission[0].D}}"
+                    data-ng-hide="addImpDates.hideDeleteBtn(addImpDates.impDates[type],$index)"
+                    class="sprite default-delete"
+                    data-ng-click="addImpDates.deleteDate(type,$index)"></span>
+
+                <span 
+                    data-ng-hide="addImpDates.disableAddBtn(addImpDates.impDates[type],$index) || addImpDates.criticalDatesPermission[0].A ==0"
+                    class="sprite default-plus"
+                    data-ng-click="addImpDates.addDate(type,$index)"></span>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+</div>
+<div class="row">
+        <div class="list margin-top10px text-center" data-ng-show="addImpDates.criticalDatesPermission[0].V==0">
+            You are not authorized to view critical events
+        </div>
+    </div>
+
+
+
+
+
+<!--  <div class="col-lg-3 border-separator">
+        <label>NOC</label>
+        <div class="dateInputs" ng-repeat="nocItem in inputModel.NOC | orderBy: 'impDate'">
+            <p class="input-group datepicker">
+                <input type="text" class="form-control" datepicker-popup="{{dateFormat}}"
+                    ng-model="nocItem.impDate" is-open="opened"
+                    datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                    ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                        ng-click="openCalender($event); opened = !opened;">
+                        <i class="default-calendar-small sprite"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
+        <div class="dateInputs">
+            <a ng-click="addImportantDate('NOC');">Add Date</a>
+        </div>
+    </div>
+    <div class="col-lg-3 border-separator dateLine">
+        <label>NOI</label>
+        <div class="dateInputs" ng-repeat="noiItem in inputModel.NOI | orderBy: 'impDate'">
+            <p class="input-group datepicker">
+                <input type="text" class="form-control" datepicker-popup="{{dateFormat}}"
+                    ng-model="noiItem.impDate" is-open="opened"
+                    datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+                    ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                        ng-click="openCalender($event); opened = !opened;">
+                        <i class="default-calendar-small sprite"></i>
+                    </button>
+                </span>
+            </p>
+        </div>
+        <div class="dateInputs">
+            <a ng-click="addImportantDate('NOI');">Add Date</a>
+        </div>
+    </div>-->
+
+
+
+<!--<div class="col-lg-2 dateInc">
+        <ul class="dateLine">
+            <li>
+                <label>Date of Incident</label>
+                <span class="circle-red"></span>
+                <span class="date">{{dateOfIncidence | date :'MM/dd/yyyy'}}</span>
+            </li>
+        </ul>
+
+    </div>-->
+
+<!--        <ul class="dateLine">
+            <li ng-repeat="solItem in inputModel.SOL | orderBy: 'impDate'">
+                <label>SOL</label>
+                <span class="circle-gray"></span>
+                <span class="date">{{solItem.impDate|date:dateFormat}}</span>
+            </li>
+        </ul>-->
+
+<!--<ul class="dateLine">
+            <li ng-repeat="nocItem in inputModel.NOC | orderBy: 'impDate'">
+                <label>NOC</label>
+                <span class="circle-gray"></span>
+                <span class="date">{{nocItem.impDate|date:dateFormat}}</span>
+            </li>
+        </ul>-->
+
+<!--<ul class="dateLine">
+            <li ng-repeat="noiItem in inputModel.NOI | orderBy: 'impDate'">
+                <label>NOI</label>
+                <span class="circle-gray"></span>
+                <span class="date">{{noiItem.impDate|date:dateFormat}}</span>
+            </li>
+        </ul>-->

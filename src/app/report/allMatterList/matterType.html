@@ -1,0 +1,61 @@
+<div class=" clearfix">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap">Matter type & sub-type summary</h1>
+        <div class="col-md-7 pull-right page-sublinks subnav">
+           <ul class="pull-right">
+                <li><a href="javascript:void(0);"
+                       ng-class="{' active': matterTypeCtrl.shuffleMatterForMatterType == 1}"
+                       ng-click="matterTypeCtrl.filterByMatterStatus(1);">
+                    <h2>My Matters</h2>
+                </a></li>
+                <li><a href="javascript:void(0);"
+                       ng-class="{' active': matterTypeCtrl.shuffleMatterForMatterType == 0}"
+                       ng-click="matterTypeCtrl.filterByMatterStatus(0);">
+                    <h2>All Matters</h2>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="paddingRLR head-padding-10px ">
+    <div class="pull-right" >
+        <ul class="showBy-btns pull-right heading-right-buttons">
+            <li>
+                <a data-ng-click="matterTypeCtrl.printMatterType()"><span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span></a></a>
+            </li>
+            <li class="paddingLR-10px">
+                <a data-ng-click="matterTypeCtrl.downloadMatterType()"><span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="right"></span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="pull-left">
+        <div class="checkbox">
+            <input type="checkbox" ng-click="matterTypeCtrl.init()" data-ng-model="matterTypeCtrl.filters.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+            />
+            <label>Include Archived Matters</label>
+        </div>
+    </div>
+<div class="clearfix"></div>
+</div>
+<div class="flexCont"></div>
+<div class="row paddingRLR head-padding-14px ">
+    <div class="col-md-6" ng-repeat="matterStatus in matterTypeCtrl.displayingMatterType" >
+        <div class="col-md-12 matter-status-box" mb-scrollbar="scrollbar('vertical', true)" >
+            <div class="matter-status-inner">
+            <div class="row">
+            <div class="col-md-10"><strong>{{matterStatus.matter_type_name}}</strong></div>
+            <div class="col-md-2"><strong>{{matterStatus.count}}</strong></div>
+                </div>
+            <div class="margin-top10px">
+            <div ng-repeat="subData in matterStatus.subType">
+                  <div class="row head-padding-5px">
+                <div class="col-md-10">&#8226;  {{subData.matter_sub_type_name}}</div>
+                <div class="col-md-2">{{subData.count}}</div>
+                </div>
+            </div>
+    </div>
+                </div>
+        </div>
+    </div>
+</div>

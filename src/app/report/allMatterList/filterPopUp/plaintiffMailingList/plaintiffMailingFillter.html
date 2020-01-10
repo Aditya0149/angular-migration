@@ -1,0 +1,87 @@
+<style>
+  .custom-input-list ul.dropdown-menu
+  {
+  max-height: 59vh;
+  width: 92%;
+  }
+  
+  </style>
+
+<div class="modal-header clearfix">
+  <h1 class="modal-title fl-left">Filters</h1>
+  <button class="close fl-right" data-ng-click="plaintiffMailingFillter.cancel()">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="filter-greybox container modal-body">
+  <span class="custom-input-list">
+  <label class="margin-top10px">Matter Name</label>
+  <input type="text" name="matterid" class="form-control dashboard-tasks-due" data-ng-model-options="{ debounce: 500 }" placeholder="Enter name"
+    typeahead="row as removeunwantedhtml(row.name) for row in plaintiffMailingFillter.searchMatters($viewValue)"  typeahead-input-formatter="plaintiffMailingFillter.formatTypeaheadDisplay($model)"
+    data-ng-model="plaintiffMailingFillter.filter.matter_id" />
+	</span> 
+  <label class="margin-top10px">Plaintiff</label>
+  <ui-select ng-model="plaintiffMailingFillter.filter.plaintiff_id" theme="selectize">
+    <ui-select-match placeholder="Plaintiff Name">
+      {{$select.selected.firstname}}
+    </ui-select-match>
+    <ui-select-choices repeat="plaintiff as plaintiff in plaintiffMailingFillter.plaintiffData.data| filter:{firstname:$select.search} | orderBy:'firstname'">
+      <small>
+        {{plaintiff.firstname}}
+      </small>
+    </ui-select-choices>
+  </ui-select>
+
+  <label class="margin-top10px">State</label>
+  <ui-select ng-model="plaintiffMailingFillter.filter.state" theme="selectize">
+    <ui-select-match placeholder="State">
+      {{$select.selected.name}}
+    </ui-select-match>
+    <ui-select-choices repeat="state as state in plaintiffMailingFillter.states | filter:{name:$select.search} ">
+      <small>
+        {{state.name}}
+      </small>
+    </ui-select-choices>
+  </ui-select>
+
+  <div> 
+      <li class="checkbox">
+          <input type="checkbox" data-ng-model="plaintiffMailingFillter.filter.had_surgery" data-ng-change=""
+          data-ng-true-value="1" data-ng-false-value="0">
+          <label>Surgery Performed</label>
+      </li>
+  </div>
+  <div> 
+    <li class="checkbox">
+        <input type="checkbox" data-ng-model="plaintiffMailingFillter.filter.is_active" data-ng-change=""
+        data-ng-true-value="1" data-ng-false-value="0">
+        <label>Show Active Matters Only</label>
+    </li>
+</div>
+<div> 
+  <li class="checkbox">
+      <input type="checkbox" data-ng-model="plaintiffMailingFillter.filter.is_closed" data-ng-change=""
+      data-ng-true-value="1" data-ng-false-value="0">
+      <label>Show Closed Matters Only</label>
+  </li>
+</div>
+<div>
+  <li class="checkbox">
+      <input type="checkbox" data-ng-disabled="plaintiffMailingFillter.enableArchivedCheck" data-ng-model="plaintiffMailingFillter.filter.include_archived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+      />
+      <label>Include Archived Matters</label>
+  </li>
+</div>
+  
+
+</div>
+<div class="modal-footer">
+  <div class="pull-right ">
+    <button data-ng-click="plaintiffMailingFillter.resetFilters()" type="button" class="btn btn-default btn-styleNone">
+      Reset
+    </button>
+    <button data-ng-click="plaintiffMailingFillter.apply(plaintiffMailingFillter.filter)" ng-disabled="plaintiffMailingFillter.enableApply" type="button" class="btn btn-default">
+      Apply
+    </button>
+  </div>
+</div>

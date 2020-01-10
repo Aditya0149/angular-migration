@@ -1,0 +1,25 @@
+<div class="row ">
+    <div class="col-md-6 margin-top25px" data-ng-repeat="image in matterOverview.photos|limitTo:4">
+        
+        <a class="matter-photo-popup-open" data-ng-click="matterOverview.openImgeGallery(image,matterOverview.photos)"></a> 
+<!--        Image tag for images-->
+        <img 
+            data-ng-if="!(image.isPDF)"  
+            class="img image-temp-class border-radius-4px"
+            data-ng-src="{{image.uri}}" width="100%" />
+        
+<!--           IFrame tag for PDFs-->
+            <iframe data-ng-if="image.isPDF"
+                    class="img image-temp-class border-radius-4px"
+                    data-ng-src="{{image.uri}}" height="150" width="100%">
+            </iframe>      
+    </div>
+    <div class="text-center margin-top10px paddingLR-10px"
+        data-ng-show="matterOverview.photos.length === 0">
+        There are no photos associated with this matter. 
+    </div>
+    <div class="pull-right margin-top10px"
+        data-ng-show="matterOverview.photos.length > 0">
+        <a data-ng-click="matterOverview.openImgeGallery(matterOverview.photos[0],matterOverview.photos)">View All</a>
+    </div>
+</div>

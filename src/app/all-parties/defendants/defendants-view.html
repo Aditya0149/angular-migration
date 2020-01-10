@@ -1,0 +1,200 @@
+<style>
+    .black-accordion div.panel-heading a.accordion-toggle{cursor: default !important;}
+    .black-accordion .panel-title strong {
+    word-break: keep-all;
+}
+</style>
+<div class="row-fluid gridSec  container ">
+    <div class="col-md-6  paddingRLR clearfix search-overlap">
+        <ul class="showBy-btns pull-left ">
+            <li ng-hide="defendantsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                <a data-ui-sref="addDefendant({matterId:{{defendantsViewCtrl.matterId}}})" ng-if="defendantsViewCtrl.isGraceOver != 0 ">
+                    <span class="sprite default-plus" tooltip="Add">&nbsp;</span>
+                </a>
+            </li>
+            <li data-ng-show="defendantsViewCtrl.selectedDefendants.length && !defendantsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                <a href="javascript:void(0)" data-ng-click="defendantsViewCtrl.deleteSelectedDefendants()" ng-if="  defendantsViewCtrl.isGraceOver != 0 ">
+                    <span class="sprite default-delete " tooltip="Delete">&nbsp;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="paddingRLR flexCont"></div>
+<div data-ng-show="!defendantsViewCtrl.defendants.length" class="margin-top10px text-center">
+    No defendants have been added.
+</div>
+<accordion close-others="true" class="form-margin black-accordion">
+    <accordion-group ng-repeat="defendant in defendantsViewCtrl.defendants" is-disabled="true" is-open="defendant.open"
+        ng-class="{'opened-panel': defendant.open, 'closed-panel': !defendant.open}">
+        <accordion-heading>
+            <div class="row" data-ng-show="!defendant.open">
+                <div class="pull-left">
+                    <div class="checkbox">
+                        <!--<input type="checkbox" data-ng-click="defendantsViewCtrl.setSelectedDefendant(defendant)" ng-model="defendant.selected">-->
+                        <input type="checkbox" ng-checked="defendant.checked" data-ng-click="defendantsViewCtrl.setSelectedDefendant(defendant)"
+                            data-ng-disabled="defendant.defendant_otherparty_id.length" />
+                        <label></label>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                        <div class="col-md-3" data-ng-click="allParties.openContactCard(defendant.contactid)">
+                            <strong style="color: #2a83b1;">{{defendant.contactid.firstname}}
+                                {{defendant.contactid.lastname}}</strong>
+                        </div>
+                        <div class="col-md-3">{{defendant.type}}</div>
+                    </a>
+                </div>
+                <!--<i class="pull-right glyphicon " ng-class="{'default-upward-arrow sprite': defendant.open, 'default-downward-arrow sprite': !defendant.open}"></i>-->
+                <a data-ng-click="defendantsViewCtrl.toggleAccordionGroup(defendant)"><i class="pull-right glyphicon "
+                        ng-class="{'default-upward-arrow sprite': defendant.open, 'default-downward-arrow sprite': !defendant.open}"></i></a>
+            </div>
+
+            <div class="row  margin0 " data-ng-show="defendant.open">
+                <div class="col-md-12 paddingRLR">
+                    <div style="color: #2a83b1;" class="col-md-4 pull-left paddingRLR dropdown create" data-ng-click="allParties.openContactCard(defendant.contactid)">
+                        <h3>{{defendant.contactid.firstname}} {{defendant.contactid.lastname}}</h3>
+                    </div>
+                    <div class="col-md-6 pull-right paddingRLR clearfix search-overlap">
+                        <ul class="showBy-btns pull-right">
+                            <li ng-hide="defendantsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                                <a tooltip="Print" data-ng-click="defendantsViewCtrl.allPartiesPrint(defendant)" href="javascript:void(0);">
+                                    <span class="sprite default-file "></span>
+                                </a>
+                            </li>
+                            <li  ng-hide="defendantsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                                <a data-ng-click="defendantsViewCtrl.editDefendant(defendant, $event)" data-ng-if="defendantsViewCtrl.isGraceOver != 0">
+                                    <span class="sprite default-edit " tooltip="Edit"></span>
+                                </a>
+                            </li>
+                            <li  ng-hide="defendantsViewCtrl.matterInfo.archivalMatterReadOnlyFlag">
+                                <a data-ng-click="defendantsViewCtrl.deleteSelectedDefendant(defendant, $event)"
+                                    data-ng-if="defendantsViewCtrl.isGraceOver != 0">
+                                    <span class="sprite default-delete" tooltip="Delete"></span>
+                                </a>
+                            </li>
+                            <!--<li> <a data-ng-click="defendantsViewCtrl.print(defendant, $event)"><span class="sprite default-file col-md-offset-1">&nbsp;</span></a></li>-->
+                            <!-- <li class="seperation"></li>-->
+                            <li>
+                                <a data-ng-click="defendantsViewCtrl.toggleAccordionGroup(defendant)">
+                                    <i class="default-upward-arrow sprite pull-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </accordion-heading>
+
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-6 vertical-space-group">
+                    <div class="row-fluid">
+                        <div class="col-md-3 text-right">Role: </div>
+                        <div class="col-md-9"><strong>{{defendant.type}}</strong></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-3 text-right"> Phone(Work):</div>
+                        <div class="col-md-9">{{defendant.contactid.phone_work}}</div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-3 text-right"> Phone(Home):</div>
+                        <div class="col-md-9">{{defendant.contactid.phone_home}}</div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-3 text-right"> phone(Cell):</div>
+                        <div class="col-md-9">{{defendant.contactid.phone_cell}}</div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-3 text-right"> Email:</div>
+                        <div class="col-md-9">{{defendant.contactid.email}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3 text-right"> Address:</div>
+                    <div class="col-md-9" ng-bind-html="defendant.contactid.streetCityStateZip">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row-fluid">
+                        <div class="col-md-3 text-right"> Note:</div>
+                        <div class="col-md-9">
+                            <pre class="pre-default" ng-bind-html="defendant.contactid.contact_note"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 vertical-space-group">
+                    <div class="row-fluid">
+                        <div class="col-md-3 text-right">SSN: </div>
+                        <div class="col-md-9"><strong>{{defendant.ssn}}</strong></div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-3 text-right">DOB:</div>
+                        <div class="col-md-9"> <strong>{{defendant.dateofbirth}}</strong></div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-3 text-right">Gender:</div>
+                        <div class="col-md-9"> <strong>{{defendant.gender | SentenseCase}}</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid margin-top10px" ng-show="defendant.defendant_otherparty_id">
+            <!-- associated other party section starts -->
+            <div class="col-md-6 vertical-space-group">
+                <div class="row-fluid">
+                    <div class="col-md-12"><strong>Associated Other Parties</strong></div>
+                </div>
+                <div class="row-fluid" ng-repeat="otherParty in defendant.defendant_otherparty_id">
+
+                    <div class="row-fluid">
+                        <div class="col-md-3 text-right"></div>
+                        <div class="col-md-9" data-ng-click="allParties.openContactCard(otherParty)">
+                            <strong style="color: #2a83b1;" class="title cursor-pointer"> {{otherParty.firstname}}
+                                {{otherParty.lastname}}</strong>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 text-right">Role:</div>
+                            <div class="col-md-9">
+                                {{otherParty.contactrolename}}
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-3 text-right">Phone(Work):</div>
+                            <div class="col-md-9">
+                                {{otherParty.phone_work}}
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-3 text-right">Phone(Home):</div>
+                            <div class="col-md-9">
+                                {{otherParty.phone_home}}
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-3 text-right">phone(Cell):</div>
+                            <div class="col-md-9">
+                                {{otherParty.phone_cell}}
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-3 text-right">Email:</div>
+                            <div class="col-md-9">
+                                {{otherParty.emailid}}
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 text-right">Address:</div>
+                            <div class="col-md-9" ng-bind-html="otherParty.streetCityStateZip">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row-fluid">
+                            <div class="col-md-3 text-right">Note:</div>
+                            <div class="col-md-9">
+                                <pre class="pre-default" ng-bind-html="otherParty.contact_note"></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- associated other party section ends -->
+        </div>
+    </accordion-group>
+</accordion>

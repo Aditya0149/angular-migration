@@ -1,0 +1,69 @@
+.add-mnote {
+    .select2-choices {
+        max-height: 57px !important;
+        overflow-y: auto !important;
+      }
+      
+      .selectize-dropdown-content {
+        max-height: 90px !important;
+      }
+      
+      .ui-select-choices-group hr.ng-scope {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        border-top: 1px solid #d3d9de;
+      }
+      
+      .select2-drop-active {
+        border-top: 1px solid #ccc;
+        border: 1px solid #ccc;
+      }
+      
+      .select2-results {
+        max-height: 160px;
+      }
+      
+      div#matterNotesAdd ul li {
+        list-style: disc;
+        margin-left: 10px;
+      }
+}
+
+/*notes scss start */
+.notes-wrapper {
+    .notes-header{ margin: 10px 0 0 0;
+    width: calc( 100% - 100px);
+    padding: 0 11px 0 20px;
+  }
+  .notes-icon {
+    top: 2px;
+    position: relative;
+  }
+  .cust-checkbox {
+    margin: 0;
+    position: relative;
+  }
+  .moreLink {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    bottom: 60px;
+  }
+  .report-container {
+        .th-inner {
+          top: 8px;
+        }
+  }
+  .sprite.default-userprofile {
+    background-position: -240px -701px;
+    height: 27px;
+    width: 35px;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+  }
+  .dashboard-tasks-due {
+    max-height: 55vh;
+  }
+}
+/*notes scss end*/

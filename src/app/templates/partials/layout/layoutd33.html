@@ -1,0 +1,399 @@
+<div class="row" ng-form="plaintiffform">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.document_caption1">
+                    <span>
+                        <label>Caption Document </label>
+                        <br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.captionDocumentId1" theme="selectize">
+                        <ui-select-match placeholder="Select document...">
+                            <small> {{$select.selected.documentname}}</small>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item.documentid as item in GenerateTemplateCtrl.captionDocumentList | filter:{documentname:$select.search}">
+                            <small>{{item.documentname}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.captionDocumentList.length == 0">
+                        <small>No Documents found...</small>
+                    </span>
+                    </span>
+                </div>
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffs">
+                    <span>
+                        <label>Plaintiff</label>
+                        </br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.plaintiffs" theme="selectize" ng-change="GenerateTemplateCtrl.filterMedicalServiceProvider(GenerateTemplateCtrl.TemplateModelInfo.plaintiffs); GenerateTemplateCtrl.TemplateModelInfo.medicalproviderid = undefined;GenerateTemplateCtrl.TemplateModelInfo.medicalbillproviderid = undefined">
+                        <ui-select-match placeholder="Select plaintiff...">
+                            <span>{{$select.selected.name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in GenerateTemplateCtrl.plaintiff_dropdown | filter:{name:$select.search} | orderBy: 'name'"
+                            ng-trim='false'>
+                            <small>{{item.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.plaintiff_dropdown.length == 0">
+                        <small>No plaintiff found...</small>
+                    </span>
+                </div> -->
+                <!-- Start: Plaintiff Dropdown -->
+                <clx-select list="GenerateTemplateCtrl.plaintiff_dropdown" model="GenerateTemplateCtrl.TemplateModelInfo" modelname="plaintiffs"
+                    label="Select Plaintiff" placeholder="Select plaintiff..." validation="No plaintiff found..." ngexpression="item"
+                    selectedviewproperty='<span>{{$select.selected.name}}</span>' dropdownviewproperty='<small> {{item.name}} </small>'
+                    ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.plaintiffs">
+                </clx-select>
+                <!-- End: Plaintiff Dropdown -->
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendants1">
+                    <span>
+                        <label>Defendant</label>
+                        </br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.defendants1" theme="selectize">
+                        <ui-select-match placeholder="Select defendant...">
+                            <span>{{$select.selected.name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in GenerateTemplateCtrl.defendants_dropdown | filter:{name:$select.search} | orderBy: 'name'"
+                            ng-trim='false'>
+                            <small>{{item.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.defendants_dropdown.length == 0">
+                        <small> No defendants found... </small>
+                    </span>
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens">
+                    <span>
+                        <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_label}}</label>
+                        </br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.lienholderid" theme="selectize" ng-change="GenerateTemplateCtrl.filterLinesHolderInsuranceProvider(GenerateTemplateCtrl.TemplateModelInfo.lienholderid);GenerateTemplateCtrl.TemplateModelInfo.onlyLineHolderInsuranceId = undefined">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_placeholder}}">
+                            <span>{{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in GenerateTemplateCtrl.AllMatterLiens | filter:{contact_name:$select.search} | orderBy: 'contact_name'"
+                            ng-trim='false'>
+                            <small ng-if="item.contact_name != ''">{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.AllMatterLiens.length == 0">
+                        <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_validation}}</small>
+                    </span>
+                </div>
+
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_holder_insurance">
+                    <span>
+                        <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_holder_insurance_label}}</label>
+                        <br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.onlyLineHolderInsuranceId" theme="selectize">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_holder_insurance_placeholder}}">
+                            <span> {{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item as item in GenerateTemplateCtrl.linesHolderInsuranceProvider | filter:{contact_name:$select.search}">
+                            <small>{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="((GenerateTemplateCtrl.TemplateModelInfo.lienholderid != undefined) && (GenerateTemplateCtrl.linesHolderInsuranceProvider.length == 0))">
+                        <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.liens_holder_insurance_validation}}</small>
+                    </span>
+                    <span ng-if="GenerateTemplateCtrl.TemplateModelInfo.lienholderid == undefined">
+                        <small>Please select lien holder...</small>
+                    </span>
+                    </span>
+                </div>
+
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance">
+                    <span>
+                        <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_label}}</label>
+                        <br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId" theme="selectize">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_placeholder}}">
+                            <span> {{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item as item in GenerateTemplateCtrl.onlyInsuranceProvider| filter:{contact_name:$select.search}">
+                            <small>{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.onlyInsuranceProvider.length == 0">
+                                <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_validation}}</small>
+                            </span>
+                    </span>
+                </div> -->
+                <!-- Start:Insurance Company Dropdown -->
+                <clx-select list="GenerateTemplateCtrl.onlyInsuranceProvider" model="GenerateTemplateCtrl.TemplateModelInfo" modelname="onlyInsuranceId"
+                    label="Insurance Company" placeholder="Select insurance company..." validation="No insurance company found..."
+                    ngexpression="item" ngfilter="| filter:{contact_name:$select.search}" selectedviewproperty='<span> {{$select.selected.contact_name}}</span>'
+                    dropdownviewproperty='<small>{{item.contact_name}}</small>' ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance">
+                </clx-select>
+                <!-- End:Insurance Company Dropdown -->
+                <div ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_provider_defendant">
+                    <span>
+                        <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_provider_defendant_label}}</label>
+                        <br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.onlyInsuranceId" theme="selectize">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_provider_defendant_placeholder}}">
+                            <span>{{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item as item in GenerateTemplateCtrl.onlyInsuranceProviderDefendant | filter:{contact_name:$select.search}">
+                            <small>{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.onlyInsuranceProviderDefendant.length == 0">
+                        <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_provider_defendant_validation}}</small>
+                    </span>
+                    </span>
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider">
+                    <span>
+                        <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider_label}}</label>
+                        <br>
+                    </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.medicalproviderid" theme="selectize">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider_placeholder}}">
+                            <small> {{$select.selected.contact_name}}</small>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item as item in GenerateTemplateCtrl.allMedicalProviders | filter:{contact_name:$select.search} | orderBy: 'contact_name'">
+                            <small>{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.allMedicalProviders.length == 0">
+                                <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.medical_provider_validation_msg}}</small>
+                            </span>
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insured_party">
+                    <span>
+                                <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insured_party_label}}</label>
+                                <br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.insured_party_id" theme="selectize">
+                        <ui-select-match placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insured_party_placeholder}}">
+                            <span> {{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item.insuranceid as item in GenerateTemplateCtrl.insuredParties | filter:{contact_name:$select.search}">
+                            <small>
+                                        {{item.contact_name}}
+                                    </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.insuredParties.length == 0">
+                                <small>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.insured_party_validation}}</small>
+                            </span>
+                    </span>
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_words">
+                    <span>
+                                <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_words_label}}</label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_words_placeholder}}"
+                        class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.amountInWords" maxlength="50"
+                    />
+                </div>
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_numbers">
+                    <span>
+                                <label>{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_numbers_label}}</label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="{{GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_numbers_placeholder}}"
+                        class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.amountInNumbers" step="0.01" custom-currency-filter
+                    />
+                </div> -->
+                <!-- Start: TextBox -->
+                <clx-textbox model="GenerateTemplateCtrl.TemplateModelInfo" modelname="amountInNumbers" label="Amount in Numbers" placeholder="Enter amount in numbers..."
+                    currency="yes" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.amount_in_numbers">
+                </clx-textbox>
+                <!-- End: TextBox -->
+                <div ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.insurance_claim_number">
+                    <span>
+                                <label>Claim Number</label>
+                                <br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.insuranceclaimnumber" theme="selectize">
+                        <ui-select-match placeholder="Select claim no...">
+                            <span>{{$select.selected.claimnumber}}</span>
+                        </ui-select-match>
+                        <ui-select-choices ng-trim='false' repeat="item in GenerateTemplateCtrl.filterClaim | filter:{claimnumber:$select.search} | filter: GenerateTemplateCtrl.nullValExclude">
+                            <small>{{item.claimnumber}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.filterClaim.length == 0">
+                                <small>No claim no. found...</small>
+                            </span>
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendantFileNumber">
+                    <span>
+                                <label> Defendant File Number</label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="Enter defendant file number..." class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.defendantFileNumber"
+                        maxlength="50" />
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.new_plaintiff_name">
+                    <span>
+                                <label>New plaintiff Name </label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="Enter new plaintiff name..." class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.newPlaintiffName"
+                        maxlength="50" />
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.new_defendant_name">
+                    <span>
+                                <label>New Defendant Name</label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="Enter new defendant name..." class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.newDefendantName"
+                        maxlength="50" />
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.deceased_name">
+                    <span>
+                                <label>Deceased Name</label>
+                                </br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.deceasedName" theme="selectize">
+                        <ui-select-match placeholder="Select deceased name...">
+                            <span>{{$select.selected.name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices group-by="GenerateTemplateCtrl.groupPlaintiffDefendant" group-filter="GenerateTemplateCtrl.pd_Type" repeat="item in GenerateTemplateCtrl.plaintiffOrdefendant | filter:{name:$select.search} | orderBy: 'name'"
+                            ng-trim='false'>
+                            <small>{{item.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.plaintiffOrdefendant.length == 0">
+                                <small>No deceased found...</small>
+                            </span>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+
+
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.defendant_Law_Firm">
+                    <span>
+                                <label> Defendant Attorney</label>
+                                <br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.defendantLawFirm" theme="selectize">
+                        <ui-select-match placeholder="Select defendant attorney...">
+                            <span> {{$select.selected.name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in GenerateTemplateCtrl.defendantAttorneyids | filter:{name:$select.search}">
+                            <small>{{item.name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.defendantAttorneyids.length == 0">
+                                <small>No defendant attorneys found...</small>
+                            </span>
+                </div> -->
+
+                <!-- Start:Defendant Attorney Dropdown -->
+                <clx-select list="GenerateTemplateCtrl.defendantAttorneyids" model="GenerateTemplateCtrl.TemplateModelInfo" modelname="defendantLawFirm"
+                    label="Defendant Attorney" placeholder="Select defendant attorney..." validation="No defendant attorneys found..."
+                    ngexpression="item" selectedviewproperty='<span>{{$select.selected.name}}</span>' dropdownviewproperty='<small> {{item.name}} </small>'>
+                </clx-select>
+                <!-- End: Defendant Attorney Dropdown -->
+
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.executrix_name">
+                    <span>
+                                <label>Executrix Name</label>
+                                <br>
+                            </span>
+                    <input type="text" placeholder="Enter executrix name..." class=" form-control" ng-model="GenerateTemplateCtrl.TemplateModelInfo.executrixName"
+                        maxlength="50" />
+                </div>
+                <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.date_of_death">
+                    <label>Date of Death</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="GenerateTemplateCtrl.TemplateModelInfo.dateOfDeath"
+                            is-open="GenerateTemplateCtrl.dateOfDeathDatediv" data-ng-disabled="false" name="doi" id="dateOfDeathDatediv"
+                            validate-date error-div="#dateOfDeathDatediv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close"
+                        />
+                        <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="GenerateTemplateCtrl.openCalender($event);GenerateTemplateCtrl.dateOfDeathDatediv = true;">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                    </div>
+                    <div class="error" style="float:left;width:100%;" id="dateOfDeathDateError">
+                        <small>Invalid date format!</small>
+                        <br>
+                    </div>
+                </div>
+                <div class=" margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.index_number_filed_date">
+                    <label>Index Number Filed Date</label>
+                    <div class="input-group datepicker">
+                        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="GenerateTemplateCtrl.TemplateModelInfo.indexNumberFiledDate"
+                            is-open="GenerateTemplateCtrl.indexNumberFiledDateDiv" data-ng-disabled="false" name="doi" id="indexNumberFiledDateDiv"
+                            validate-date error-div="#indexNumberFiledDateDiv" tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy"
+                            close-text="Close" />
+                        <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="GenerateTemplateCtrl.openCalender($event);GenerateTemplateCtrl.indexNumberFiledDateDiv = true;">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                    </div>
+                    <div class="error" style="float:left;width:100%;" id="indexNumberFiledDateDivError">
+                        <small>Invalid date format!</small>
+                    </div>
+                </div>
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.smpAttorney">
+                    <span>
+                                <label>Select Attorney</label>
+                                <br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.leadattorneyid" theme="selectize">
+                        <ui-select-match placeholder="Select attorney...">
+                            <span> {{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices group-by="GenerateTemplateCtrl.groupAllAttorneys" group-filter="GenerateTemplateCtrl.attorneyTypes" repeat="item.uid as item in GenerateTemplateCtrl.allAttorneysList| filter:{name:$select.search}">
+                            <small> {{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.allAttorneysList.length == 0">
+                                <small>No attorneys found...</small>
+                            </span>
+                </div> -->
+                <!-- Start: Attorney Dropdown -->
+                <clx-select list="GenerateTemplateCtrl.allAttorneysList" model="GenerateTemplateCtrl.TemplateModelInfo" modelname="leadattorneyid"
+                    label="Select Attorney..." placeholder="Select attorney..." validation="No attorneys found..." ngexpression="item.uid"
+                    ngfilter="| filter:{contact_name:$select.search} " groupby="GenerateTemplateCtrl.groupAllAttorneys" groupfilter="GenerateTemplateCtrl.attorneyTypes"
+                    selectedviewproperty='<span>{{$select.selected.contact_name}} </span>' dropdownviewproperty='<small> {{item.contact_name}} </small>'
+                    ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.smpAttorney">
+                </clx-select>
+                <!-- End:  Attorney Dropdown -->
+                <!-- <div class="margin-bottom10" ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.paralegal_only">
+                    <span>
+                                <label>Select Paralegal</label>
+                                <br>
+                            </span>
+                    <ui-select ng-model="GenerateTemplateCtrl.TemplateModelInfo.paralegalid" theme="selectize">
+                        <ui-select-match placeholder="Select paralegal...">
+                            <span> {{$select.selected.contact_name}}</span>
+                        </ui-select-match>
+                        <ui-select-choices group-by="GenerateTemplateCtrl.groupParalegals" group-filter="GenerateTemplateCtrl.paralegalType" ng-trim='false'
+                            repeat="item.uid as item in GenerateTemplateCtrl.paralegalListFilter = GenerateTemplateCtrl.paralegalList| filter:{contact_name:$select.search} | filter: {type : 'Paralegal'}">
+                            <small>{{item.contact_name}}</small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span ng-if="GenerateTemplateCtrl.paralegalListFilter.length == 0">
+                                <small>No Paralegals found...</small>
+                            </span>
+                    </span>
+                </div> -->
+
+                <!-- Start: Paralegal Dropdown -->
+                <clx-select list="GenerateTemplateCtrl.paralegalList" model="GenerateTemplateCtrl.TemplateModelInfo" modelname="paralegalid"
+                    label="Select Paralegal" placeholder="Select paralegal..." validation="No Paralegals found..." ngexpression="item.uid"
+                    ngfilter="| filter:{contact_name:$select.search} | filter: {type : 'Paralegal'}" groupby="GenerateTemplateCtrl.groupParalegals"
+                    groupfilter="GenerateTemplateCtrl.paralegalType" selectedviewproperty='<span>{{$select.selected.contact_name}} </span>'
+                    dropdownviewproperty='<small> {{item.contact_name}} </small>' ng-if="GenerateTemplateCtrl.configure_template.display_prop.display_fields.paralegal_only">
+                </clx-select>
+                <!-- End:  Paralegal Dropdown -->
+            </div>
+        </div>
+    </div>
+</div>

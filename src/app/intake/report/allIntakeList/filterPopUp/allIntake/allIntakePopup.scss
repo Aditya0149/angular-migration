@@ -1,0 +1,22 @@
+.allIntakePopup-wrapper {
+    .modal-body{ 
+    max-height: 70vh;
+    overflow-x: hidden;
+    }
+    .custom-width {
+    width: 28.5%;
+    }
+    .status-box {
+    max-height: 100vh;
+    position: relative;
+    }
+    .modal-dialog {
+    width: 60%;
+    }
+    .datepicker-popup-ipad-position .dropdown-menu {
+    left: -180px;
+    }
+    .min-width-select {
+        width: 263px !important;
+    }
+}

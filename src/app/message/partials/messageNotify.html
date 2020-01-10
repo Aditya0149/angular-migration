@@ -1,0 +1,103 @@
+<style>
+.radio input[type="radio"] {
+    margin-left: 0 !important;
+    width: 20px;
+    height: 20px;
+    top: -3px;
+}
+.radio label::before {
+    width: 19px !important;
+    height: 19px !important;
+    border: 2px solid #2097c6 !important;
+}
+.radio label::after {
+    background-color: #2097c6 !important;
+    top: 5px !important;
+    width: 9px !important;
+    height: 9px !important;
+    left: 5px !important;
+}
+.radio label, .radio label {
+    padding-left: 25px !important;
+}
+.radio + .radio, .checkbox + .checkbox {
+    margin-top: 10px !important;
+}
+</style>
+<!--<div ng-controller="MessageNotifyCtrl as messageNotify">-->
+    <div class="modal-content" >
+    <div class="clearfix ng-scope paddingTB-15px">
+    <div class="col-md-5">
+        <span class="pull-left margin-top5px margin-right10px">Search Matter:</span>
+        <div class="search-input pull-left"> 
+            <div class="default-searchico sprite"></div>
+            <input type="search" class="form-control ng-pristine ng-valid ng-touched"
+              data-ng-model-options="{ debounce: 500 }"
+              typeahead="row.matterid as row.name for row in messageNotify.searchMatters($viewValue)"
+              typeahead-input-formatter="messageNotify.formatTypeaheadDisplay($model)"
+              data-ng-required="true"
+              data-ng-model="messageNotify.mid" />
+        </div>
+    </div>
+    <div class="col-md-6">   
+       <div class ="radio pull-left">
+            <input type="radio"
+                data-ng-model="messageNotify.client_portal"
+                name="option"
+                value = '1'
+                /><label>All Matter</label> 
+        </div>  
+        <div class ="radio pull-left">
+            <input type="radio"
+                data-ng-model="messageNotify.client_portal"
+                name="option"
+                value = '0'
+                /><label>Matter with client portal</label> 
+        </div>
+  </div>
+
+    <div class="col-md-1"><button class="close fl-right" data-ng-click="messageNotify.closePopUp()"><span aria-hidden="true">×</span></button></div>
+  
+  <div class="col-md-12 margin-top20px">
+    <h1 tooltip-placement="bottom-left" class="ellipsis-nowrap ng-binding">
+        {{messageNotify.checkMessage[0].matter_name}}
+    </h1>
+    <span class="heading-left-title">File #:<strong class="ng-binding">{{messageNotify.checkMessage[0].file_number}} </strong> |    
+        Index#: <strong class="ng-binding"> {{messageNotify.checkMessage[0].index_number}}</strong> | 
+        Date of Incident:<strong class="ng-binding"> {{messageNotify.checkMessage[0].dateofincidence |utcDateFilter: 'MM-DD-YYYY'}}</strong>  |
+        Date of Intake:<strong class="ng-binding"> {{messageNotify.checkMessage[0].intake_date |utcDateFilter: 'MM-DD-YYYY'}}</strong> 
+        </span>
+
+    <div class="col-md-12 message-block padding-0">
+        <div class="dashboard-tasks-due dashboard-task" style="max-height:350px;" callback-fn="messageNotify.scrollUp()" scroll-to-bottom="messageNotify.messageDetails">
+        <div ng-repeat="item in messageNotify.messageDetails" class="">
+            <div ng-if="item.message_type == 'CP'" class="message-sender">
+                <div class="block-s">
+                    <b>{{item.username}}</b>&nbsp;&nbsp;{{item.messagetime | dateFormatFilter: 'MM/DD/YYYY'}}&nbsp;&nbsp;<small>{{item.messagetime | utcDateFilter: 'hh:mm A'}} </small><br>
+                    <p>{{item.messagecontent}}</p>    
+                </div>
+            </div>
+            <div ng-if="item.message_type == 'CL'" class="message-receiver">
+                <div class="block-r">
+                    <pre><b>{{item.username}}</b>&nbsp;&nbsp;{{item.messagetime | dateFormatFilter: 'MM/DD/YYYY'}}&nbsp;&nbsp;<small>{{item.messagetime | utcDateFilter: 'hh:mm A'}} </small>
+                    <p>{{item.messagecontent}}</p></pre>   
+                </div>    
+            </div>
+        </div><br>
+        </div>
+        <div class="message-type" >
+            <strong>{{messageNotify.checkType[0].username}}</strong>&nbsp;&nbsp;<span>{{messageNotify.todayDate}}</span>&nbsp;&nbsp;<small>{{messageNotify.todayTime}}</small>
+            <div class="block-m">
+                <textarea ng-model="messageNotify.sendMessage" placeholder ="Write your message..."></textarea>
+                <button class="btn btn-danger" ng-click="messageNotify.sendMessages(messageNotify.messageDetails)" >Send</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+
+</div>
+<!--</div>-->

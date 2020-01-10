@@ -1,0 +1,147 @@
+<style>
+    .node {
+        cursor: pointer;
+    }
+    
+    .found {
+        fill: #ff4136;
+        stroke: #ff4136;
+    }
+    
+    .node text {
+        font: 10px sans-serif;
+    }
+    
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+    }
+    
+    .link::hover {
+        color: blue;
+    }
+    
+    .link text {
+        font: 10px sans-serif;
+        fill: #595B59;
+        font-weight: bold;
+        stroke: #595B59;
+        stroke-width: 0px;
+    }
+    
+    .plaintiff-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #F5BCA9;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .defendant-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #A9BCF5;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .spouse-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #F2F5A9;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .family-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #A9F5A9;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .other-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #F5A9A9;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .zero-level-legend {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #E6E6E6;
+        margin-right: 10px;
+        top: 5px;
+        position: relative;
+    }
+    
+    .radio + .radio,
+    .checkbox + .checkbox {
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+</style>
+<div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-label="Close" ng-click="relationGraphCtrl.cancel()">Cancel</button>            &nbsp;&nbsp;
+            <button type="button" class="btn btn-default pull-right margin-right10px" data-dismiss="modal" ng-click="relationGraphCtrl.directiveFn()">Reset</button>
+            <h1 class="modal-title fl-left" id="myModalLabel">Relationship Graph</h1>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="col-md-3">
+                            <span ng-node-graph-dropdown-multiselect="" id="graphRoles" callback-fn="relationGraphCtrl.getSelectRolesDetails(arg)" options="relationGraphCtrl.contactMatterRoles"
+                                selected-model="relationGraphCtrl.selectedModel" extra-settings="relationGraphCtrl.extraSettings"></span>
+                        </div>
+                        <!--<div class="col-md-3">
+                            <div class="form-group">
+                                <ui-select ng-model="relationGraphCtrl.roleSearch" theme="selectize" ng-change="relationGraphCtrl.roleCustomSearch()" class="form-control-width-correct"
+                                    required>
+                                    <ui-select-match placeholder="select search">
+                                        {{$select.selected.c_role_name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="role in relationGraphCtrl.contactMatterRoles | filter:$select.search">
+                                        <small>
+                                        {{role.c_role_name}}
+                                    </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <tree-view callback-fun="relationGraphCtrl.directiveCallbackFun(args)" tree-json="relationGraphCtrl.tree" filter-role="relationGraphCtrl.filterRoles" filter-preselect-role="relationGraphCtrl.defaultRoles"></tree-view>
+                    </div>
+                    <div class="col-md-2" style="position: relative;top: -55px;">
+                        <div class="row padding-0"><span class="plaintiff-legend"></span>Plaintiff</div>
+                        <div class="row padding-0"><span class="defendant-legend"></span>Defendant</div>
+                        <div class="row padding-0"><span class="spouse-legend"></span>Spouse</div>
+                        <div class="row padding-0"><span class="family-legend"></span>Family</div>
+                        <div class="row padding-0"><span class="other-legend"></span>All Other(s)</div>
+                        <div class="row padding-0"><span class="zero-level-legend"></span>Zero level</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

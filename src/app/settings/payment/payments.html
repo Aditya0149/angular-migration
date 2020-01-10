@@ -1,0 +1,101 @@
+<div class="page-title-border clearfix  ">
+            <h1 class="pull-left page-title">Payments</h1>
+</div>
+
+<div class="row gridSec margin0">
+    <div class="col-md-12 paddingRLR">
+           <div class="col-md-8 pull-right paddingRLR clearfix">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null">
+                            <div class="default-searchico sprite"></div>
+                            <input
+                                type="text"
+                                focus-me="paymentCtrl.showSearch"
+                                data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="paymentCtrl.searchText"
+                                data-ng-change="paymentCtrl.retainsearchText();"
+                                class="form-control">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+                    <li class="seperation-filter"></li>
+                    <li tooltip="Filter" tooltip-placement="right"><a>
+                        <span data-ng-click="paymentCtrl.toggleFilterPage();"
+                            class="sprite default-filter"></span>
+                    </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li class="search-overlap">
+                        <ul data-ng-hide="matterCtrl.showSearch">
+                            <li><a data-ng-click="paymentCtrl.downloadPayments()"><span class="sprite default-sharedown sortby-icons" tooltip="Export Payments" tooltip-placement="right"></span></a></li>
+
+                            <li><a data-ng-click="paymentCtrl.print()"><span class="sprite default-file sortby-icons" tooltip="Print Payments" tooltip-placement="right"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="pull-right border">
+                </div>
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <span class="sortby-align">Sort By:</span>
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{paymentCtrl.getSortByLabel(paymentCtrl.sortBy)}}
+								<span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                            <li data-ng-repeat-start="sort in paymentCtrl.sorts"
+                                data-ng-class="{' active': paymentCtrl.sortBy == sort.key}">
+                                <a data-ng-click="paymentCtrl.applySortByFilter(sort.key)">{{sort.name}}</a>
+                            </li>
+                            <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="pull-right ">
+                <clx-filter-tags
+                    on-filter-cancel="paymentCtrl.tagCancelled"
+                    tag-list="paymentCtrl.tags"></clx-filter-tags>
+            </div>
+
+    </div>
+</div>
+
+<div data-ng-show="paymentCtrl.paymentList.length >0">
+        <show-record-count
+            displayed="paymentCtrl.paymentList.length"
+            hide-pager="{{paymentCtrl.paymentList.length < paymentCtrl.totalPayments}}"
+            more="paymentCtrl.getMorePayments()"
+            all="paymentCtrl.getAllPaymentList()"
+            total="paymentCtrl.totalPayments"></show-record-count>
+</div>
+
+<div class="report-responsive" data-ng-show="paymentCtrl.paymentList.length > 0"
+     data-scrolly="paymentCtrl.increaseLimit()" reached-top="paymentCtrl.decreaseLimit()">
+    <div class="row header-row">
+            <div class="cell"
+                render-header
+                header="{{header.displayName}}"
+                data-ng-repeat="header in ::paymentCtrl.paymentGrid.headers" data-width="{{header.dataWidth}}">
+            </div>
+    </div>
+    <div class="row body-row"
+        data-ng-class="{'grid-row-block':data.isActive === '0','grid-row-deleted':data.isDeleted === '1'}"
+        data-ng-repeat="data in filtered = (paymentCtrl.paymentList | filter:paymentCtrl.searchText) | limitTo:paymentCtrl.limit ">
+        <div class="cell" data-ng-repeat="header in ::paymentCtrl.paymentGrid.headers" data-width={{header.dataWidth}} grid-size>
+            <div data-ng-repeat="field in ::header.field"
+                cell-data="{{data}}" field="{{field}}" render-cell> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center margin-top10px" data-ng-show="paymentCtrl.paymentList.length === 0">
+    <p>No data for applied filters</p>
+</div>
+
+<div style="clear: both;height:3px;background-color:#ffffff;"></div>

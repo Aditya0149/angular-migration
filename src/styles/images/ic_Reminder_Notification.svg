@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_Reminder_Notification</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="ic_Reminder_Notification" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic_Reminder_Notification-Copy-2" fill-rule="nonzero" stroke="#677885" stroke-width="0.8">
+            <circle id="Oval" cx="10.015916" cy="10.787218" r="7.63909774"></circle>
+            <polyline id="Path-34" points="10.015916 6.32105263 10.015916 10.787218 14.0354649 13.4669173"></polyline>
+            <path d="M2.16655871,4.84454283 L5.57272831,2.0202741" id="Line-3" stroke-linecap="square"></path>
+            <path d="M14.4585224,4.84454283 L17.9183113,2.0202741" id="Line-3-Copy" stroke-linecap="square" transform="translate(16.188417, 3.432408) scale(-1, 1) translate(-16.188417, -3.432408) "></path>
+        </g>
+    </g>
+</svg>

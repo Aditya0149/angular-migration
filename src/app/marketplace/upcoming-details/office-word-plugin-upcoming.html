@@ -1,0 +1,60 @@
+<div class="marketplace-details-main">
+    <div class="ng-scope row">
+        <div class="container col-md-12 main-top">
+            <div class="pull-left back-btn-block">
+                <a href="#/marketplace/upcoming" data-ng-click="upcompingAppsCtrl.clearStorage()" class="marketplace-back-btn"></a>
+            </div>
+            <div class="pull-left left-img">
+                <img src="styles/images/marketplace-images/icon/office-connector.png">
+            </div>
+            <div class="col-md-7 marketplace-details-block border-right">
+                <div class="title">Office Connector</div>
+                <div class="text col-md-10 padding-0">Work on CloudLex documents while offline. Create and edit documents in Word, while accessing important case information from CloudLex. Once back online, confidently save and tag documents to their respective matters in CloudLex.</div>
+                <div class="text clear-both"><b style="color: #1bb8b2;">Now available for preview.</b></div>
+            </div>
+            <div class="col-md-2 padding-right-0 marketplace-details-block">
+                <div class="text">Last update: <b>11 jan 2017</b></div>
+                <div class="text">Current Version: <b>1.5</b></div>
+                <!--<div class="text clear-both">
+                    
+                     <div class="margin-top30px">
+                        <button class="btn btn-default"  ng-disabled="upcompingAppsCtrl.isWordOfficePlugin.permission.E==0" ng-if="upcompingAppsCtrl.isWordOfficePlugin.is_active==0" ng-click="upcompingAppsCtrl.subWordOfficePlugin(upcompingAppsCtrl.isWordOfficePlugin)">SUBSCRIBE</button>
+                        <button class="btn btn-default" ng-if="upcompingAppsCtrl.isWordOfficePlugin.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                    </div>
+                </div>-->
+               
+            </div>
+            <div class="">
+               
+            </div>
+        </div>
+    </div>
+    <div id="report-content">
+        <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+            <carousel interval="upcompingAppsCtrl.myInterval">
+                <slide ng-repeat="slide in upcompingAppsCtrl.slides" active="slide.active">
+                    <img ng-src="{{slide.image}}">
+                    <div class="carousel-caption">
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+</div>
+
+
+
+<footer position-center>
+    <ul>
+        <li>
+            <a href="#/marketplace" >Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+        <li>
+            <a href="#/marketplace/upcoming" class="active-footer">Upcoming</a>
+        </li>
+
+    </ul>
+</footer>

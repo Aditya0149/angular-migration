@@ -1,0 +1,17 @@
+<style>
+.modal-body {
+    height: 190px;
+    max-height: 190px;
+}
+</style>
+<div class="modal-body clearfix ng-scope">
+    <div class="modal-title fl-left"> <b>Please add employer name for the following Intakes:</b></div><br>
+    <div class="static-new-scrollbar" style="margin-top: 3px;padding-top:5px;height: 136px !important;overflow-y:auto;overflow-x: hidden;padding-left: 0px;">
+        <div ng-repeat="item in validateEmp.details" style="padding-bottom:10px">
+            {{item.intake_name}}
+        </div>
+    </div>
+    
+</div>
+<button style="margin-left: 440px;margin-bottom: 7px;"  class="btn btn-default" ng-click="validateEmp.dismiss()">OK</button>
+

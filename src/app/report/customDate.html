@@ -1,0 +1,97 @@
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Custom Date</h1>
+    <button class="close fl-right"
+        data-ng-click="cancel()">
+        <span aria-hidden="true">×</span></button>
+</div>
+
+<div class="filter-greybox container modal-body">
+    <div class="row">
+        <div class=" col-md-12">
+            <div class="checklist">
+                <label>Start Date</label>
+                <div ng-if="allMtrLstFlag" class="input-group datepicker">
+                    <input type="text"
+                        data-ng-model="viewModel.filters.s"
+                        datepicker-popup="{{dateFormat}}"
+                        datepicker-options="calendarEvent.datepickerOptions"
+                        is-open="calendarEvent.openStartDatepicker"
+                        show-button-bar="false"
+                        class="form-control"
+                        data-ng-change="getFormattedDateString(calendarEvent)" />
+                    <span class="input-group-btn">
+                        <button type="button"
+                            class="btn btn-default"
+                            data-ng-click="openStartDate($event,'openStartDatepicker')">
+                            <i class="default-calendar-small sprite"></i>
+                        </button>
+                    </span>
+                </div>
+                <div ng-if="mtrInTookDtFlag" class="input-group datepicker">
+                    <input type="text"
+                        data-ng-model="viewModel.filters.fromdate"
+                        datepicker-popup="{{dateFormat}}"
+                        datepicker-options="calendarEvent.datepickerOptions"
+                        is-open="calendarEvent.openStartDatepicker"
+                        show-button-bar="false"
+                        class="form-control"
+                        data-ng-change="getFormattedDateString(calendarEvent)" />
+                    <span class="input-group-btn">
+                        <button type="button"
+                            class="btn btn-default"
+                            data-ng-click="openStartDate($event,'openStartDatepicker')">
+                            <i class="default-calendar-small sprite"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row margin-top20px">
+        <div class="col-md-12">
+            <div class="checklist">
+                <label>End Date</label>
+                <p ng-if="allMtrLstFlag" class="input-group datepicker">
+                    <input type="text"
+                        data-ng-model="viewModel.filters.e"
+                        datepicker-popup="{{dateFormat}}"
+                        datepicker-options="calendarEvent.datepickerOptions"
+                        is-open="calendarEvent.openReminderDatepicker"
+                        show-button-bar="false"
+                        class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button"
+                            class="btn btn-default"
+                            data-ng-click="openStartDate($event,'openReminderDatepicker')">
+                            <i class="default-calendar-small sprite"></i>
+                        </button>
+                    </span>
+                </p>
+                <p ng-if="mtrInTookDtFlag" class="input-group datepicker">
+                    <input type="text"
+                        data-ng-model="viewModel.filters.todate"
+                        datepicker-popup="{{dateFormat}}"
+                        datepicker-options="calendarEvent.datepickerOptions"
+                        is-open="calendarEvent.openReminderDatepicker"
+                        show-button-bar="false"
+                        class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button"
+                            class="btn btn-default"
+                            data-ng-click="openStartDate($event,'openReminderDatepicker')">
+                            <i class="default-calendar-small sprite"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+
+            <button ng-click="resetMultiSelectFilter()" type="button" class="btn btn-default btn-styleNone">Reset</button>
+            <button ng-click="apply(viewModel.filters)" type="button" class="btn btn-default">Apply</button>
+
+        </div>
+    </div>
+</div>

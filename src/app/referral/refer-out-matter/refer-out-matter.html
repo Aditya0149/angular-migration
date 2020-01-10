@@ -1,0 +1,107 @@
+<style>
+.form-control{width:100%;}
+.radio, .checkbox{margin: 0;}
+</style>
+<div id="content" class="padding-bottom0" data-ng-form="referOut.form">
+    <div class="row margin-top10px">
+        <div class="col-md-6 header-line-height ellipsis-nowrap">
+            <span>Refer Out Matter:</span>  <strong>{{referOut.matterInfo.matter_name}}</strong>
+        </div>
+        <div class="col-md-6 pull-right ">
+            <div class="pull-right btn-botm">
+                <button
+                    data-ng-click="referOut.goToMatterOverview()"
+                    class="btn btn-default btn-styleNone">
+                    Cancel</button>
+                <button class="btn btn-default"
+                    data-ng-click="referOut.referMatterOut(referOut.referOutInfo)">
+                    Refer Out</button>
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="margin-top20px">
+                <div  class="col-md-3 padding-left-0">
+                    <input type="text"
+                        name="contact"
+                        ng-disabled="true"
+                        data-ng-model="referOut.referOutInfo.contact"
+                        placeholder="Select CloudLex User"
+                        class="form-control" />
+                </div>
+                 <div  class="pull-left">                   
+                    <button class="btn btn-default margin-top3px" ng-disabled="referOut.referOutInfo.invitenew==1" data-ng-click="referOut.selectContact()">
+                        Refer Out To</button>
+                </div>
+                <label  class="pull-left padding-top-8px margin-left15px">OR</label>
+                
+        <div class="col-md-3 pt-6">
+            <div class="pull-left padding-0 margin-right10px"><label>Invite someone to Cloudlex: </label> </div>
+              <div  class="checkbox mt-0">
+                  <input type="checkbox" data-ng-model="referOut.referOutInfo.invitenew" data-ng-click="referOut.setFeeAgreement(referOut.referOutInfo.invitenew)"
+                      data-ng-true-value="'1'" data-ng-false-value="'0'"/>
+                      <label></label>
+            </div>
+          </div>
+                <div data-ng-form="referOut.form" class="col-md-3">
+                    <input class="form-control"
+                        data-ng-model="referOut.referOutInfo.inviteNewContact"
+                        ng-readonly="referOut.referOutInfo.invitenew == 0"
+                        ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" 
+                        name="invite_emailId"
+                        placeholder="Invite someone to cloudlex"
+                        type="email">
+                    <div data-ng-if="referOut.form.invite_emailId.$dirty"
+                        ng-messages="referOut.form.invite_emailId.$error">
+                        <div class="error"
+                            ng-message="pattern">
+                            invalid email id
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <!--<div class="add-now-wrap">                    
+       <button class="btn btn-default" data-ng-click="referOut.selectContact()">
+        Select Contact</button>
+     </div>-->
+
+
+
+    <div class="row margin-top20px">
+        <div class="col-md-5">
+            <label>
+                Message <span class="compulsary-mark">*</span>
+            </label>
+            <textarea rows="6"
+                data-ng-required="true"
+                name="message"
+                data-ng-model="referOut.referOutInfo.message"
+                class="form-control"></textarea>
+            <div class="error"
+                data-ng-show="referOut.form.message.$error.required && referOut.form.message.$dirty">
+                Message is Required
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row margin-top10px">
+        <div class="col-md-5 checkbox">
+            <input type="checkbox" data-ng-model="referOut.referOutInfo.attachFeeAgreement" />
+            <label>Attach Fee Agreement</label>
+            <div
+                data-editable-html=""
+                data-disable-edit="!referOut.referOutInfo.attachFeeAgreement"
+                data-ng-model="referOut.referOutInfo.fee"
+                data-ng-class="{' disable-content-editable':!referOut.referOutInfo.attachFeeAgreement}"
+                class="fee-agreement form-control margin-top10px">
+            </div>
+        </div>
+    </div>
+
+</div>

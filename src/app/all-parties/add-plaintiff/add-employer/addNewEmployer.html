@@ -1,0 +1,130 @@
+<div class="">
+    <div class="modal-header">
+        <h2 class="pull-left page-title">Employment Information</h2>
+        <div class="pull-right">
+            <button data-ng-click="close()" class="btn btn-default btn-styleNone">Cancel</button>
+            <button ng-if="!isEdit" data-ng-disabled="isDatesValid()" data-ng-click="add()" class="btn btn-default" id="saveButton">
+                Save
+            </button>
+            <button ng-if="isEdit" data-ng-disabled="isDatesValid()" data-ng-click="update()" class="btn btn-default" id="saveButton">
+                    Update
+            </button>
+        </div>
+    </div>
+    <div id="wrapper" class="container modal-body">
+        
+        <div>
+            <div class="addmatter-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="checkbox" style="margin:0 0 15px 15px">
+                            <input type="checkbox" data-ng-click="addEmp.clearDate()" data-ng-model="addEmp.employee.iscurrent" data-ng-true-value="'1'" data-ng-false-value="'0'">
+                            <label>Current Employer</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-7">
+                        <div class="">
+                            <div class="col-md-7">
+                                <label>Employer Name</label>
+                                <input type="text" data-ng-model="addEmp.employee.contactid" data-ng-model-options="{ debounce: 500 }" placeholder="enter name"
+                                    typeahead="row as row.name for row in addEmp.getContacts($viewValue,'EMPLOYEE')" typeahead-input-formatter="addEmp.formatTypeaheadDisplay($model)"
+                                    typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                                    typeahead-on-select="addEmp.setType($model)" class="form-control">
+                            </div>
+                            <div class="col-md-5" style="margin-top: 22px;">
+                                <div></div>
+                                <div class="">
+                                    OR
+                                    <button style="margin-left: 20px;" class="btn btn-default" data-ng-click="addEmp.addNewContact('EMPLOYEE')">Add New</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-5 ">
+
+                        <div class="col-md-6">
+                            <label>Start Date</label>
+                            <div class="input-group datepicker">
+                                <input type="text" datepicker-popup="MM/dd/yyyy" data-ng-model="addEmp.employee.employmentstartdate" datepicker-popup="{{addEmp.employee.dateFormat}}"
+                                    is-open="addEmp.openEmpStartDatePicker" id="DojDatediv" validate-date error-div="#DojDatediv"
+                                    tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" class="form-control" ng-disabled="false" show-button-bar="false"
+                                />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" data-ng-click="addEmp.openCalender($event,'openEmpStartDatePicker')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div style="float:none;" class="error" id="DojDateError">Invalid date format!</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>End Date</label>
+                            <div class="input-group datepicker">
+                                <input type="text" datepicker-popup="MM/dd/yyyy" data-ng-model="addEmp.employee.employmentenddate" datepicker-popup="{{addEmp.employee.dateFormat}}"
+                                    is-open="addEmp.openEmpEndDatePicker" id="DorDatediv" validate-date error-div="#DorDatediv"
+                                    tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" class="form-control" 
+                                    ng-disabled="addEmp.employee.iscurrent == 1" show-button-bar="false"
+                                />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-disabled="addEmp.employee.iscurrent == 1" class="btn btn-default" data-ng-click="addEmp.openCalender($event,'openEmpEndDatePicker')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div style="float:none;" class="error" id="DorDateError">Invalid date format!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin-top10px">
+                    <div class="col-md-7">
+                        <div class="col-md-7">
+                            <label>Occupation</label>
+                            <input type="text" data-ng-model="addEmp.employee.occupation" class="form-control">
+                        </div>
+                        <div class="col-md-7 margin-top10px">
+                            <label>Position</label>
+                            <input type="text" data-ng-model="addEmp.employee.position" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="col-md-12">
+                            <div>
+                                <label>Salary Mode</label>
+                                <clx-btn-group btn-list="addEmp.salaryBtns" value="addEmp.employee.salarymode" btn-click="addEmp.setsalaryMode()">
+                                </clx-btn-group>
+                            </div>
+                            <div class="margin-top10px">
+                                <label>{{addEmp.selectedsalaryMode}} Salary</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" data-ng-model="addEmp.employee.monthlysalary" class="form-control" step="0.01" custom-currency-filter>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  margin-top10px" style="margin-bottom:10px">
+                    <div class="col-md-7">
+                        <div class="col-md-7">
+                            <label>Employment History</label>
+                            <textarea class="form-control" placeholder="Add employment history ..." ng-model="addEmp.employee.memo" maxlength="1024"
+                                rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class=" col-md-12">
+                            <label>Days Lost</label>
+                            <input type="text" amount-format data-ng-model="addEmp.employee.lostdays" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,719 @@
+<div data-ng-if="practiceAndBillingCtrl.displayData && practiceAndBillingCtrl.viewFlag"
+    class="container margin-top40px">
+    <div class="page-title-border clearfix" style="clear: both;">
+        <h2 class="pull-left page-title" style="margin-top: 9px;">Practice & Billing</h2>
+        <div class="pull-right col-md-4 pull-right">
+            <ul class="showBy-btns pull-right heading-right-buttons">
+                <li>
+                    <a>
+                        <span class="sprite default-edit" data-ng-click="practiceAndBillingCtrl.editPracAndBill()"
+                            tooltip="Edit"></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- <button class="btn btn-default" data-ng-click="practiceAndBillingCtrl.editPracAndBill()">Edit</button>-->
+        </div>
+    </div>
+
+
+    <div class="container padding-0">
+        <div class="col-md-6 margin-top20px practice-billing-height">
+            <h2>Firm Address Details</h2>
+            <div class="row margin-top10px">
+
+                <div class="col-md-4 margin-top10px">
+                    <span>Street Name:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewAddressInfo.firm_street}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>City:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewAddressInfo.firm_city}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>State:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewAddressInfo.firm_state}}</strong>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>ZIP Code:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewAddressInfo.firm_zipcode}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>Country:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewAddressInfo.firm_country}}</strong>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6 margin-top20px practice-billing-height">
+            <h2>Credit Card Details</h2>
+            <div class="row margin-top10px">
+
+                <div class="col-md-5 margin-top10px ">
+                    <span>Card Holder Name:</span>
+                </div>
+                <div class="col-md-7 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewCardInfo.credit_holder_name}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 margin-top10px">
+                    <span>Card Type:</span>
+                </div>
+                <div class="col-md-7 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewCardInfo.credit_card_type}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 margin-top10px">
+                    <span>Credit Card Number:</span>
+                </div>
+                <div class="col-md-7 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewCardInfo.credit_card_no}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 margin-top10px">
+                    <span>Card Expiry Date:</span>
+                </div>
+                <div class="col-md-7 margin-top10px" ng-if="practiceAndBillingCtrl.displayExpiryDate">
+                    <strong>{{practiceAndBillingCtrl.viewCardInfo.credit_card_expiry_date | utcDateFilter: 'MM-YYYY'}}</strong>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container padding-0">
+        <div class="col-md-6 practice-billing-height">
+            <h2>Billing Address</h2>
+            <div class="row margin-top10px">
+
+                <div class="col-md-4 margin-top10px ">
+                    <span>Street Name:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewBillingInfo.bill_street}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>City:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewBillingInfo.bill_city}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>State:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewBillingInfo.bill_state}}</strong>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>ZIP Code:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewBillingInfo.bill_zipcode}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 margin-top10px">
+                    <span>Country:</span>
+                </div>
+                <div class="col-md-8 margin-top10px">
+                    <strong>{{practiceAndBillingCtrl.viewBillingInfo.bill_country}}</strong>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-6">
+            <h2>Lexvia Services</h2>
+            <div class="row margin-top10px">
+                <div class="col-md-2">
+                    <div class="form-group relative-container checkbox">
+                        <input type="checkbox"
+                                data-ng-disabled="true"
+                                data-ng-model="practiceAndBillingCtrl.viewSubscribe_lexvia_service" />
+                        <label>Subscribe</label>
+                    </div>
+                </div>
+                <div class="col-md-2 margin-top5px margin-left5px">
+                    <a href="javascript:void(0)"
+                        class="sprite default-info">
+                        <span class=""></span></a>
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+
+</div>
+
+<div data-ng-if="practiceAndBillingCtrl.displayData && !practiceAndBillingCtrl.viewFlag" class="margin-top40px">
+    <div data-ng-form="practiceAndBillingCtrl.pracAndBillForm">
+        <div class="page-title-border clearfix  heading-with-button-bottom-padding "
+            style="clear: both;margin-left: 20px;">
+            <h2 class="pull-left page-title" style="margin-top: 9px;">Practice & Billing</h2>
+            <div class="pull-right">
+
+                <button class="btn btn-default btn-styleNone"
+                    ng-click="practiceAndBillingCtrl.cancelEdit()">Cancel</button>
+                <button class="btn btn-default" data-ng-click="practiceAndBillingCtrl.save()"
+                    data-ng-disabled="((practiceAndBillingCtrl.pracAndBillForm.$invalid) || (!(practiceAndBillingCtrl.isDateAfter)))">Save</button>
+            </div>
+        </div>
+        <div class="container padding-0">
+            <div class="col-md-9" style="margin-left: 20px;">
+                <h3 class="margin-top10px">You’re safe</h3>
+                <p>Your firm and credit card details are safe with us as this is a secure 128-bit SSL Encrypted Payment.
+                </p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="container practice-billing ">
+            <div class="col-md-6">
+                <strong>Firm Address</strong>
+                <div class="form-group relative-container margin-top10px">
+                    <label>
+                        Street
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" data-ng-model="practiceAndBillingCtrl.addressInfo.firm_street"
+                        ng-change="practiceAndBillingCtrl.checkAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                        placeholder="Enter street" class="form-control" data-ng-required="true" name="street_name">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.street_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.street_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.street_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.street_name.$error">
+                        <div class="error" ng-message="required">
+                            Street name is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        City
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" data-ng-model="practiceAndBillingCtrl.addressInfo.firm_city"
+                        ng-change="practiceAndBillingCtrl.checkAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                        placeholder="Enter city" ng-pattern="/^[a-zA-Z ]*$/" class="form-control"
+                        data-ng-required="true" name="city_name">
+
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.city_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.city_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.city_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.city_name.$error">
+
+                        <div class="error" ng-message="required">
+                            city is required
+                        </div>
+                        <div class="error" ng-message="pattern"
+                            ng-show="practiceAndBillingCtrl.pracAndBillForm.city_name.$error">
+                            Invalid city name
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group relative-container">
+                    <label>
+                        State
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <div ng-if="(practiceAndBillingCtrl.addressInfo.firm_country === 'US')">
+                        <ui-select name="state_name" data-ng-required="true"
+                            ng-model="practiceAndBillingCtrl.addressInfo.firm_state"
+                            on-select="practiceAndBillingCtrl.stateChangeForAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select State">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="state.value as state in practiceAndBillingCtrl.addressInfo.states | filter:{ name:$select.search }">
+                                <small>
+                                    {{state.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="practiceAndBillingCtrl.pracAndBillForm.state_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.state_name.$invalid"></span>
+                        <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.state_name.$dirty"
+                            ng-messages="practiceAndBillingCtrl.pracAndBillForm.state_name.$error">
+                            <div class="error" ng-message="required">
+                                State is required
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="(practiceAndBillingCtrl.addressInfo.firm_country !== 'US')">
+                        <input type="text" data-ng-model="practiceAndBillingCtrl.addressInfo.firm_state"
+                            ng-change="practiceAndBillingCtrl.checkAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                            class="form-control" placeholder="Enter State" ng-pattern="/^[a-zA-Z ]*$/"
+                            data-ng-required="true" name="state_name">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="practiceAndBillingCtrl.pracAndBillForm.state_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.state_name.$invalid"></span>
+                        <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.state_name.$dirty"
+                            ng-messages="practiceAndBillingCtrl.pracAndBillForm.state_name.$error">
+                            <div class="error" ng-message="required">
+                                State is required
+                            </div>
+                            <div class="error" ng-message="pattern">
+                                Invalid state name
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        ZIP Code
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter zipcode" data-ng-required="true"
+                        ng-pattern="/^[0-9]*$/" ng-minlength="5" maxlength="5"
+                        ng-change="practiceAndBillingCtrl.checkAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                        ng-model="practiceAndBillingCtrl.addressInfo.firm_zipcode" name="zipcode_name">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.zipcode_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.zipcode_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.zipcode_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.zipcode_name.$error">
+                        <div class="error" ng-message="required">
+                            ZIP code is required.
+                        </div>
+                        <div class="error" ng-message="pattern">
+                            Invalid ZIP code.
+                        </div>
+                        <div class="error" ng-message="minlength">
+                            ZIP code should be a 5 digit no.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        Country
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <ui-select name="country" data-ng-required="true"
+                        ng-model="practiceAndBillingCtrl.addressInfo.firm_country"
+                        on-select="practiceAndBillingCtrl.stateChangeForAddressInfo(practiceAndBillingCtrl.billingInfo.checkBoxInfo)"
+                        theme="selectize">
+                        <ui-select-match placeholder="Select Country">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="country.code as country in practiceAndBillingCtrl.addressInfo.countries | filter:{ name:$select.search }">
+                            <small>
+                                {{country.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.country.$dirty && practiceAndBillingCtrl.pracAndBillForm.country.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.country.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.country.$error">
+                        <div class="error" ng-message="required">
+                            Country is required
+                        </div>
+                    </div>
+                </div>
+                <strong>Billing Address</strong>
+                <div class="form-group relative-container checkbox">
+                    <input type="checkbox" ng-model="practiceAndBillingCtrl.billingInfo.checkBoxInfo"
+                        ng-change="practiceAndBillingCtrl.getCheckBoxInfo()" />
+                    <label>Is billing address same as firm address?</label>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        Street
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Street"
+                        ng-model="practiceAndBillingCtrl.billingInfo.bill_street" name="bill_street_name"
+                        data-ng-required="true" ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_street_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_street_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_street_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_street_name.$error">
+                        <div class="error" ng-message="required">
+                            billing address street is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        City
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control" data-ng-required="true" placeholder="Enter city"
+                        ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo" ng-pattern="/^[a-zA-Z ]*$/"
+                        ng-model="practiceAndBillingCtrl.billingInfo.bill_city" name="bill_city_name">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_city_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_city_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_city_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_city_name.$error">
+                        <div class="error" ng-message="required">
+                            billing address city is required
+                        </div>
+                        <div class="error" ng-message="pattern">
+                            Invalid city name
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group relative-container">
+                    <label>
+                        State
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <div ng-if="(practiceAndBillingCtrl.billingInfo.bill_country=='US')">
+                        <ui-select name="bill_state_name" data-ng-required="true"
+                            ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo"
+                            ng-model="practiceAndBillingCtrl.billingInfo.bill_state" theme="selectize">
+                            <ui-select-match placeholder="Select State">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="state.value as state in practiceAndBillingCtrl.billingInfo.states | filter:{ name:$select.search }">
+                                <small>
+                                    {{state.name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$invalid"></span>
+                        <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$dirty"
+                            ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$error">
+                            <div class="error" ng-message="required">
+                                State is required
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="(practiceAndBillingCtrl.billingInfo.bill_country!='US')">
+                        <input type="text" data-ng-model="practiceAndBillingCtrl.billingInfo.bill_state"
+                            class="form-control" placeholder="Enter State" data-ng-required="true"
+                            ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo"
+                            name="bill_state_name">
+                        <span class="sprite default-caution error-icon"
+                            data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$invalid"></span>
+                        <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$dirty"
+                            ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_state_name.$error">
+                            <div class="error" ng-message="required">
+                                State is required
+                            </div>
+                            <div class="error" ng-message="pattern">
+                                Invalid state name
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        ZIP Code
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control" data-ng-required="true"
+                        ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo" placeholder="Enter zip code"
+                        ng-minlength="5" maxlength="5" ng-pattern="/^[0-9]*$/"
+                        ng-model="practiceAndBillingCtrl.billingInfo.bill_zipcode" name="bill_zipcode_name">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_zipcode_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_zipcode_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_zipcode_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_zipcode_name.$error">
+                        <div class="error" ng-message="required">
+                            ZIP code is required
+                        </div>
+                        <div class="error" ng-message="pattern"
+                            ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_zipcode_name.$error">
+                            Invalid ZIP code
+                        </div>
+                        <div class="error" ng-message="minlength">
+                            ZIP code should be a 5 digit no.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        Country
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <ui-select name="bill_country_name" data-ng-required="true"
+                        ng-disabled="practiceAndBillingCtrl.billingInfo.checkBoxInfo"
+                        on-select="practiceAndBillingCtrl.stateChangeForBillingInfo()"
+                        ng-model="practiceAndBillingCtrl.billingInfo.bill_country" theme="selectize">
+                        <ui-select-match placeholder="Select Country">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices
+                            repeat="country.code as country in practiceAndBillingCtrl.billingInfo.countries | filter:{ name:$select.search }">
+                            <small>
+                                {{country.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.bill_country_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.bill_country_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.bill_country_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.bill_country_name.$error">
+                        <div class="error" ng-message="required">
+                            Country is required
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <script type="text/javascript"
+                        src="https://seal.verisign.com/getseal?host_name=www.cloudlex.net&amp;size=XS&amp;use_flash=NO&amp;use_transparent=NO&amp;lang=en"></script>
+                </div>
+                <strong>Credit Card Details</strong>
+                <div class="form-group relative-container margin-top10px">
+                    <label>
+                        Card Holders Name
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control" data-ng-required="true" name="card_holder_name"
+                        data-ng-change="practiceAndBillingCtrl.changeCreditCardDetails('','')"
+                        placeholder="Enter your name" ng-pattern="/^[a-zA-Z0-9 .]*$/"
+                        ng-model="practiceAndBillingCtrl.cardInfo.credit_holder_name">
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.card_holder_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.card_holder_name.$invalid"></span>
+                    <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.card_holder_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.card_holder_name.$error">
+                        <div class="error" ng-message="required">
+                            Card holder name is required
+                        </div>
+                        <div class="error" ng-message="pattern"
+                            ng-show="practiceAndBillingCtrl.pracAndBillForm.card_holder_name.$error">
+                            Invalid card holder name
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        Card Number
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <span ng-if="practiceAndBillingCtrl.cardInfo.credit_card_type == 'Visa'">
+                        <div class="sprite default-visa cardImage"></div>
+                        <!-- <div class="creditCard_Visa"></div>-->
+                    </span>
+                    <span ng-if="practiceAndBillingCtrl.cardInfo.credit_card_type == 'MasterCard'">
+                        <div class="sprite default-mastercard cardImage"></div>
+                    </span>
+                    <span ng-if="practiceAndBillingCtrl.cardInfo.credit_card_type == 'AmericanExpress'">
+                        <div class="sprite default-amex cardImage"></div>
+                    </span>
+                    <input type="text" class="form-control" data-credit-card-type
+                        data-ng-minlength="practiceAndBillingCtrl.cardInfo.creditCardLength"
+                        data-ng-maxlength="practiceAndBillingCtrl.cardInfo.creditCardLength" ng-pattern="/^[0-9*]*$/"
+                        data-credit-card-number placeholder="Enter credit card number" data-ng-required="true"
+                        data-ng-change="practiceAndBillingCtrl.changeCreditCardDetails('','')" name="card_number_name"
+                        ng-model="practiceAndBillingCtrl.cardInfo.credit_card_no"
+                        my-maxlength="{{practiceAndBillingCtrl.cardInfo.creditCardLength}}">
+
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.card_number_name.$invalid"></span>
+                    <ul data-ng-if="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error">
+                        <li class="clearfix">
+                            <span class="error" ng-message="required">Credit card number is required</span>
+                        </li>
+                        <li class="clearfix">
+                            <span class="error" ng-message="pattern"
+                                ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error">Invalid credit
+                                card number</span>
+                        </li>
+
+                        <li class="clearfix">
+                            <span
+                                ng-if="(practiceAndBillingCtrl.cardInfo.credit_card_type!='Visa' && practiceAndBillingCtrl.cardInfo.credit_card_type!='MasterCard')">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error.minlength">Credit
+                                    card must be 15 digits</span>
+                            </span>
+                            <span
+                                ng-if="(practiceAndBillingCtrl.cardInfo.credit_card_type=='Visa' || practiceAndBillingCtrl.cardInfo.credit_card_type=='MasterCard')">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error.minlength">Credit
+                                    card must be 16 digits</span>
+                            </span>
+                            <span
+                                ng-if="(practiceAndBillingCtrl.cardInfo.credit_card_type!='Visa' && practiceAndBillingCtrl.cardInfo.credit_card_type!='MasterCard')">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error.maxlength">Amex
+                                    card cannot be greater than 15 digit</span>
+                            </span>
+                        </li>
+                        <li class="clearfix">
+                            <span class="error"
+                                ng-show="practiceAndBillingCtrl.pracAndBillForm.card_number_name.$error.invalid">Credit
+                                card must be a valid Amex, Visa or Master Card</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group relative-container">
+                    <label>
+                        Expiration Date
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <ui-select name="month_name" data-ng-required="true"
+                                on-select="practiceAndBillingCtrl.changeCreditCardDetails(practiceAndBillingCtrl.cardInfo.monthId, 'month')"
+                                ng-model="practiceAndBillingCtrl.cardInfo.monthId"
+                                ng-change="practiceAndBillingCtrl.checkExpirationDate()" theme="selectize">
+                                <ui-select-match placeholder="Select Month">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="month.id as month in practiceAndBillingCtrl.cardInfo.months | filter:{ name:$select.search }">
+                                    <small>
+                                        {{month.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="sprite default-caution error-icon"
+                                data-ng-show="practiceAndBillingCtrl.pracAndBillForm.month_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.month_name.$invalid"></span>
+                            <div data-ng-if="practiceAndBillingCtrl.pracAndBillForm.month_name.$dirty"
+                                ng-messages="practiceAndBillingCtrl.pracAndBillForm.month_name.$error">
+                                <div class="error" ng-message="required">
+                                    Month is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <ui-select name="month_name" data-ng-required="true"
+                                on-select="practiceAndBillingCtrl.changeCreditCardDetails(practiceAndBillingCtrl.cardInfo.yearId, 'year')"
+                                ng-model="practiceAndBillingCtrl.cardInfo.yearId"
+                                ng-change="practiceAndBillingCtrl.checkExpirationDate()" theme="selectize">
+                                <ui-select-match placeholder="Select Year">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                    repeat="year.id as year in practiceAndBillingCtrl.cardInfo.years | filter:{ name:$select.search }">
+                                    <small>
+                                        {{year.name}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div
+                            ng-if="(practiceAndBillingCtrl.pracAndBillForm.month_name.$dirty) && (!(practiceAndBillingCtrl.isDateAfter))">
+                            <span class="sprite default-caution error-icon"
+                                data-ng-show="(practiceAndBillingCtrl.pracAndBillForm.month_name.$dirty) && (!(practiceAndBillingCtrl.isDateAfter))"></span>
+                            <div class="clearfix"> </div>
+                            <div style="margin-right:17px">
+                                <span class="error" ng-show="!(practiceAndBillingCtrl.isDateAfter)">Invalid Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group relative-container">
+                    <label>
+                        CVV
+                        <span class="compulsary-mark">*</span>
+                    </label>
+                    <input type="text" class="form-control"
+                        data-ng-minlength="practiceAndBillingCtrl.cardInfo.cvvNumberLength" ng-pattern="/^[0-9*]*$/"
+                        data-credit-cvv-number placeholder="Enter cvv number" data-ng-required="true"
+                        data-ng-change="practiceAndBillingCtrl.changeCreditCardDetails('','')" name="cvv_name"
+                        ng-model="practiceAndBillingCtrl.cardInfo.card_cvv_number"
+                        my-maxlength="{{practiceAndBillingCtrl.cardInfo.cvvNumberLength}}">
+
+                    <span class="sprite default-caution error-icon"
+                        data-ng-show="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$dirty && practiceAndBillingCtrl.pracAndBillForm.cvv_name.$invalid"></span>
+                    <ul data-ng-if="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$dirty"
+                        ng-messages="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$error">
+                        <li class="clearfix">
+                            <span class="error" ng-message="required">
+                                CVV number is required
+                            </span>
+                        </li>
+                        <li class="clearfix">
+                            <span class="error" ng-message="pattern"
+                                ng-show="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$error">Invalid CVV
+                                number</span>
+                        </li>
+                        <li class="clearfix">
+                            <span ng-if="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$invalid">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$error.pattern">CVV must be
+                                    digits only</span>
+                            </span>
+                        </li>
+                        <li class="clearfix">
+                            <span
+                                ng-if="(practiceAndBillingCtrl.cardInfo.credit_card_type!='Visa' && practiceAndBillingCtrl.cardInfo.credit_card_type!='MasterCard')">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$error.minlength">CVV must
+                                    be 4 digit</span>
+                            </span>
+                            <span
+                                ng-if="(practiceAndBillingCtrl.cardInfo.credit_card_type=='Visa' || practiceAndBillingCtrl.cardInfo.credit_card_type=='MasterCard')">
+                                <span class="error"
+                                    ng-show="practiceAndBillingCtrl.pracAndBillForm.cvv_name.$error.minlength">CVV must
+                                    be 3 digits</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- <div class="form-group">
+                    <strong>Lexvia Services</strong>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group relative-container checkbox">
+                                <input type="checkbox" data-ng-disabled="practiceAndBillingCtrl.disableSubscription && practiceAndBillingCtrl.subscribe_lexvia_service"
+                                    data-ng-model="practiceAndBillingCtrl.subscribe_lexvia_service" />
+                                <label>Subscribe</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 margin-top5px margin-left10px">
+                            <a href="javascript:void(0)" class="sprite default-info">
+                                <span class=""></span>
+                            </a>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<iframe src="nortonlogo.html" height="110" class="bottom0"></iframe>
+
+
+
+<!--data-ng-click="practiceAndBillingCtrl.showInfo()"-->

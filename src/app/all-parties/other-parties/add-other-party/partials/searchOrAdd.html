@@ -1,0 +1,32 @@
+<div class="row ">
+    <form class="ng-pristine ng-valid">
+        <div class="col-md-7">
+            <div class="row">
+                <div class=" col-md-6 search-contact">
+
+                    <label>Search Existing Contacts</label>
+                    <input type="text" data-ng-model="addOtherParty.otherPartyInfo.contact" data-ng-model-options="{ debounce: 500 }" placeholder="Enter Name"
+                         typeahead="row as row.name +' '+ row.street +' '+ row.city +' '+ row.state for row in addOtherParty.getContacts($viewValue)"
+                        typeahead-input-formatter="addOtherParty.formatTypeaheadDisplay($model)" typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+                        typeahead-on-select="addOtherParty.setType($model)" class="form-control form-control-width-correct">
+                </div>
+
+                <div class="add-now-wrap">
+                    <span class="or-connector">OR</span>
+                    <button class="btn btn-default" data-ng-click="addOtherParty.addNewContact('allTypeListWithoutCourt')">
+                        Add New</button>
+                </div>
+            </div>
+            <div class="row margin-top10px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Specialty</label>
+                        <input type="text" data-ng-model="addOtherParty.otherPartyInfo.contact.specialty" class="form-control form-control-width-correct" data-ng-maxlength="150"
+                            name="specialty" placeholder="Enter Specialty" ng-keydown="addOtherParty.checkIfEnterKeyWasPressed($event)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-md-6 "></div>
+</div>

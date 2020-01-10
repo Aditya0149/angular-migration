@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Welcome to CloudLex</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="app/favicon.ico" type="image/x-icon" id="dynamic-favicon">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="styles/css/cloudlex.css">
+</head>
+
+<body on-class-change="" ng-cloak data-ng-controller="rootController as root" clx-disable-scroll>
+  <div ng-class="{' lightbox': !showWaitMessage, ' darkbox': showWaitMessage == true}"
+      data-ng-show="root.requestPending" request-pending="root.requestPending">
+  </div>
+  <div class="lexvia-loader" data-ng-show="root.requestPending" request-pending="root.requestPending">
+      <img src="styles/images/lexvia_loader.gif">
+      <h6 class="margin-top10px" ng-bind-html="waitMessage"></h6>
+  </div>
+  <toaster-container toaster-options="{'time-out':10000}">
+  </toaster-container>
+  <error-toast></error-toast>
+  <watch-storage></watch-storage>
+
+  <!-- Navigation -->
+  <clx-side-nav-drawer data-ng-if="root.display.sideNav"></clx-side-nav-drawer>
+  <!-- Content -->
+  <div data-ui-view=""></div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $("body").niceScroll({ horizrailenabled: false });
+
+        $(document).on('click', function () {
+            setTimeout(function () {
+                if ($(document).height() <= $(window).height()) {
+
+                } else {
+                    $("body").getNiceScroll().resize();
+                }
+            }, 1000);
+        });
+    });
+    </script>
+   <ng-include src="'app/ngTemplates.html'"></ng-include>
+   <script src="app/constants.js"></script>
+</body>
+
+</html>

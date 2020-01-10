@@ -1,0 +1,129 @@
+<!--New HTML-->
+
+<div class="container-fluid new-login-block">
+    <div class="row-fluid">
+
+        <div ng-hide="login.hidePage" class="col-md-4 col-sm-5 col-xs-12 login-right login-right-new">
+            <div class="main-left-wrapper">
+            <div class="loginpage-logo">
+                <img src="styles/images/logo.png" title="Logo" alt="cloudlex logo">
+            </div>
+            <div class="new-login-form">
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username </label>
+                    <input class="form-control" type="text" placeholder="Enter username"
+                        enter-submit="login.authenticate(login.user)" id="exampleInputEmail1"
+                        data-ng-model="login.user.username" autocomplete="off">
+                </div>
+                <div class="form-group margin-bottom20px">
+                    <label for="exampleInputPassword1">Password </label>
+                    <input class="form-control" type="password" placeholder="Enter Password"
+                        data-ng-model="login.user.password" enter-submit="login.authenticate(login.user)"
+                        id="exampleInputPassword1" autocomplete="off">
+                </div>
+                <form class="margin-bottom20px" data-ng-submit="login.authenticate(login.user)">
+                    <input type="submit" value="LOGIN" class="btn btn-default" />
+                    <input type="hidden" data-ng-model="login.user.hiddenUsername" />
+                    <input type="hidden" data-ng-model="login.user.hiddenPassword" />
+                </form>
+            </div>
+        </div>
+            
+        <div class="forget-pass-main">
+                <a class="forget-pass forget-pass-new" href="#/forgot-password" target="_blank">Forgot Password?</a>
+                <div class="login-bottom-div">
+                    <p>By logging in, I agree to the <a class="forget-pass" href="#/terms" target="_blank">Terms of
+                            Use</a></p>
+                    <p>Not a customer? <a class="forget-pass"
+                            href="https://www.cloudlex.com/legal-cloud-software-demo" target="_blank">Schedule a
+                            demo! </a></p>
+                </div>
+            </div>
+            <div class="brand-logo">
+                <div class="brand-group">
+                    <h6>Powered by</h6>
+                    <div class="branding text-left"><img src="styles/images/marketplace-images/azure.png?v=12" alt="azure">
+                    </div>
+                    <div class="branding"><img src="styles/images/marketplace-images/microsoft-bizspark.png?v=12"
+                            alt="microsoft bizspark"></div>
+                    <div class="branding"><img src="styles/images/marketplace-images/office.png?v=12" alt="office">
+                    </div>
+                </div>
+                <div class="capterra">
+                    <img class="margin-top0px" src="styles/images/marketplace-images/capterra.png?v=12"
+                        alt="capterra">
+                </div>
+            </div>
+
+        </div>
+        <div ng-hide="login.hidePage" class="col-md-8 col-sm-7 col-xs-12 login-left login-left-new">
+            <div id="loginmyCarousel" class="carousel slide slide-auto-height" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#loginmyCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#loginmyCarousel" data-slide-to="1"></li>
+                    <li data-target="#loginmyCarousel" data-slide-to="2"></li>
+                    <li data-target="#loginmyCarousel" data-slide-to="3"></li>
+                    <li data-target="#loginmyCarousel" data-slide-to="4"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="new-page-header">
+                            <h1 class="text-center new-login-title">Today’s plaintiffs demand more <br> from their
+                                attorneys.</h1>
+                            <p class="text-center">Are you keeping up with their demands?</p>
+                        </div>
+                        <div class="login-slider-images-new"><img ng-src="{{login.loginImg1}}"
+                                alt="Today’s plaintiffs demand more from their attorneys."></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="new-page-header">
+                            <h1 class="text-center new-login-title">How do you stand out in the <br> competitive
+                                Personal Injury world?</h1>
+                        </div>
+                        <div class="login-slider-images-new extra-pading"><img ng-src="{{login.loginImg2}}" alt="How do you stand out in the competitive world of
+                                PI?"></div>
+                    </div>
+
+                    <div class="item">
+                        <div class="new-page-header">
+                            <h1 class="text-center new-login-title">How can you use the
+                                Legal Cloud® <br>to unleash your firm’s full potential?</h1>
+                        </div>
+                        <div class="login-slider-images-new extra-pading"><img ng-src="{{login.loginImg3}}" alt="How can you use the
+                                Legal Cloud® to unleash your firm’s full potential?"></div>
+                    </div>
+                    <div class="item">
+                        <div class="new-page-header">
+                            <h1 class="text-center new-login-title">Don’t settle for <br> just a case management
+                                system.</h1>
+                        </div>
+                        <div class="login-slider-images-new extra-pading extra-pading-plus"><img
+                                ng-src="{{login.loginImg4}}" alt="Don’t settle for just a case management
+                                system"></div>
+                    </div>
+                    <div class="item last-slider">
+                        <div class="login-slider-images-new"><img ng-src="{{login.loginImg5}}"
+                                alt="Build, Manage and Grow"></div>
+                        <div class="new-page-header last-slider-text">
+                            <p class="text-center">The Next-Gen Legal Cloud® to</p>
+                            <h1 class="text-center new-login-title">Build, Manage and Grow</h1>
+                            <p class="text-center">your personal injury practice </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="bottom-text">
+                <p>© 2019 CloudLex, Inc. All rights reserved. All logos and brands are property of their respective
+                    owners.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- <iframe src="nortonlogo.html" class="absolute-container bottom35" height="110"></iframe> -->

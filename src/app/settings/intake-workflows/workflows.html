@@ -1,0 +1,143 @@
+<style>
+    .top-icon-set a {
+        display: inline-block;
+        float: left;
+    }
+</style>
+<div data-ng-show="intakeWorkflowDisplay.page=='WorkflowList'" class="row">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="sideNav.loadPage('Workflow',$event)" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div ng-show="intakeWorkflowDisplay.page=='WorkflowList'" class="container content-class-popup margin-top10px">
+    <!-- <div class="page-title-border clearfix  ">
+    
+         <span>   <h1 class="pull-left page-title">Workflow Template</h1></span>
+        </div> -->
+
+    <div class="row gridSec margin0" id="workflow-header-icon">
+        <div class="col-md-12 paddingRLR" id="workflowTemplate">
+            <div class="col-md-4 pull-left paddingRLR dropdown create top-icon-set">
+                <a data-ng-click="intakeWorkCtrl.addWorkflow()">
+                    <span class="pull-left sprite default-plus" tooltip="Add">&nbsp;</span>
+                </a>
+                <a data-ng-click="intakeWorkCtrl.editWorkflow(intakeWorkCtrl.userGrid.selectedItems[0] )"
+                    data-ng-if="intakeWorkCtrl.userGrid.selectedItems.length === 1" class="margin-left25px">
+                    <span class="sprite default-edit" tooltip="Edit">&nbsp;</span>
+                </a>
+                <a data-ng-click="intakeWorkCtrl.cloneWorkflow(intakeWorkCtrl.userGrid.selectedItems[0],'true')"
+                    data-ng-if="intakeWorkCtrl.userGrid.selectedItems.length === 1" class="margin-left25px">
+                    <span class="sprite default-clone" tooltip="Clone">&nbsp;</span>
+                </a>
+                <a data-ng-click="intakeWorkCtrl.deleteWorkflow(intakeWorkCtrl.userGrid.selectedItems,intakeWorkCtrl.filtered)"
+                    data-ng-if="intakeWorkCtrl.userGrid.selectedItems.length > 0" class="margin-left25px">
+                    <span class="sprite default-delete" tooltip="Delete">&nbsp;</span>
+                </a>
+            </div>
+            <div class="col-md-8 pull-right paddingRLR clearfix">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null">
+                            <div class="default-searchico sprite"></div>
+                            <input type="text" data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="intakeWorkCtrl.searchText" class="form-control" />
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="paddingRLR flexCont" id="globalworkflow1"> </div>
+    <div data-ng-if="intakeWorkCtrl.workflowList.length > 0" style="margin-top: 10px;">
+        <scrollable-table tableid="globalWorkflowGrid1" watch="intakeWorkCtrl.workflowList" to="#globalworkflow1"
+            from="#globalworkflowmoreLink">
+            <table style="table-layout: fixed;" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:5%">
+                            <div class="checkbox" style="margin:0">
+                                <input style="margin-top: 8px;" type="checkbox"
+                                    data-ng-disabled="intakeWorkCtrl.filtered.length==0"
+                                    data-ng-model="intakeWorkCtrl.userGrid.selectAll"
+                                    data-ng-checked="intakeWorkCtrl.allWorkflowSelected()"
+                                    data-ng-click="intakeWorkCtrl.selectAllWorkflow(intakeWorkCtrl.userGrid.selectAll)" />
+                                <label style="margin: 0px;"></label>
+                            </div>
+                        </th>
+                        <th style="width:25%">Workflow Name</th>
+                        <th style="width:40%">Workflow Description</th>
+                        <th style="width:15%">Created By</th>
+                        <th style="width:15%">Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-class="{'selected-grid-row':intakeWorkCtrl.isUserSelected(note) }"
+                        ng-repeat="note in intakeWorkCtrl.filtered = (intakeWorkCtrl.workflowList | filter:intakeWorkCtrl.searchText)"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div class="checkbox" style="margin:0;position: relative !important;">
+                                <input type="checkbox" data-ng-checked="intakeWorkCtrl.isUserSelected(note)"
+                                    checklist-model="intakeWorkCtrl.userGrid.selectedItems" checklist-value="note" />
+                                <label></label>
+                            </div>
+                        </td>
+                        <td class="cursor-pointer">
+                            <span ng-click="intakeWorkCtrl.viewWorkflow(note)" tooltip-append-to-body="true"
+                                tooltip={{note.workflow_name}}>{{note.workflow_name}}</span>
+                        </td>
+                        <td>
+                            <span tooltip-append-to-body="true" style="text-align: left;" tooltip-placement="top"
+                                tooltip={{note.description}}>{{note.description}}</span>
+                        </td>
+                        <td>
+                            <span tooltip-append-to-body="true"
+                                tooltip={{note.created_by.fullName}}>{{note.created_by.fullName}}</span>
+
+                        </td>
+                        <td>
+                            <span tooltip-append-to-body="true" tooltip={{note.created_on}}>{{note.created_on}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+    <div class="text-center margin-top10px" data-ng-show="intakeWorkCtrl.workflowList.length == 0">
+        <p>There is no workflow</p>
+    </div>
+    <div class="text-center margin-top10px" data-ng-show="intakeWorkCtrl.filtered.length === 0">
+        <p>No data for applied filters</p>
+    </div>
+
+
+
+</div>
+<div id="globalworkflowmoreLink"
+    style="overflow: hidden !important;margin-bottom: 5px;position: fixed;width: 80%;bottom: 0;">
+</div>
+
+<div ng-if="intakeWorkCtrl.is_workflow==false" class="text-center margin-top10px">
+    <p>You are not Subscribed to Workflow </p>
+</div>
+
+<div data-ng-if="intakeWorkflowDisplay.page == 'viewWorkflowflagNew'">
+    <div data-ng-controller="viewintakeWorkflowCtrl as viewWorkflow"
+        data-ng-include="'app/settings/intake-workflows/view-workflow/view-workflow.html'">
+    </div>
+</div>
+
+<div data-ng-if="intakeWorkflowDisplay.page=='addWorkflow'">
+    <div data-ng-controller="addintakeWorkflowCtrl as addWorkflow"
+        data-ng-include="'app/settings/intake-workflows/add-workflow/add-workflow.html'">
+    </div>
+</div>
+<div data-ng-if="intakeWorkflowDisplay.page=='editWorkflow'">
+    <div data-ng-controller="addintakeWorkflowCtrl as addWorkflow"
+        data-ng-include="'app/settings/intake-workflows/add-workflow/add-workflow.html'">
+    </div>
+</div>
+<!-- <div style="clear: both;height:3px;background-color:#ffffff;"></div> -->

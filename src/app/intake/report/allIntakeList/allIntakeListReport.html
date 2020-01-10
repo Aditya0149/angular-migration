@@ -1,0 +1,117 @@
+<div class="allIntakeListReport-wrapper">
+<div scrolly="allIntakeListReportCtrl.scrollReachedBottom()" reached-top="allIntakeListReportCtrl.scrollReachedTop()">
+    <div class=" clearfix">
+        <div class="row">
+            <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">All Intake List </h1>
+            <div class="col-md-7 pull-right page-sublinks subnav">
+                <ul class="pull-right">
+                    <li>
+                        <a href="javascript:void(0);"
+                            ng-class="{' active': allIntakeListReportCtrl.selectionModel.allMatter == 1}" ng-click="allIntakeListReportCtrl.filterByUser(1);">
+                            <h2>My Intakes</h2>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);"
+                            ng-class="{' active': allIntakeListReportCtrl.selectionModel.allMatter == 0}" ng-click="allIntakeListReportCtrl.filterByUser(0);">
+                            <h2>All Intakes</h2>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed ">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="allIntakeListReportCtrl.filterAllIntakeReport()" tooltip="Filter" tooltip-placement="right" class="sprite default-filter"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="allIntakeListReportCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="allIntakeListReportCtrl.downloadMatters()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export" tooltip-placement="left"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="pull-right head-padding-10px ">
+                <button class="btn  btn-default" data-ng-click="allIntakeListReportCtrl.resetAllFilter()" value="Reset">
+                    Clear Filter</button>
+            </div>
+            <div class="dropdown head-padding-10px pull-right">
+                Sort By :
+                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{allIntakeListReportCtrl.selectedSort}}
+                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+                <ul class="dropdown-menu divider-alt sortby-dropdown-height all-list-dropdown" role="menu" aria-labelledby="dLabel">
+                    <div class="dashboard-tasks-due">
+                        <li data-ng-repeat="sort in allIntakeListReportCtrl.sorts">
+                            <a data-ng-click="allIntakeListReportCtrl.applySortByFilter(sort)">{{sort.name}}
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="allIntakeListReportCtrl.tagCancelled" tag-list="allIntakeListReportCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="allIntakeListReportCtrl.viewModel.allIntake.length >0 ">
+        <show-record-count2 displayed="allIntakeListReportCtrl.viewModel.allIntake.length" more="allIntakeListReportCtrl.applyFilterLazyLoading()"
+            all="allIntakeListReportCtrl.getAllIntakeList()" hide-pager="{{allIntakeListReportCtrl.showPager}}" total="allIntakeListReportCtrl.total"></show-record-count2>
+    </div>
+    <div class="report-scroll-all-matter">
+        <div class="report-responsive all-matter" data-ng-if="allIntakeListReportCtrl.viewModel.allIntake.length >0 ">
+            <div class="row header-row">
+                <div class="cell" data-ng-repeat="header in ::allIntakeListReportCtrl.clxGridOptions.headers"
+                    data-width="{{header.dataWidth}}">
+                    {{header.displayName}}
+                </div>
+            </div>
+
+            <div class="row body-row" data-ng-if="allIntakeListReportCtrl.display.filtered" data-ng-class="{'selected-grid-row':($index == allIntakeListReportCtrl.clickedRow) }"
+                data-highlight-clicked-row="{{$index}},allIntakeListReportCtrl.clickedRow" data-ng-repeat="data in allIntakeListReportCtrl.filteredMatters = (allIntakeListReportCtrl.viewModel.allIntake|filter:allIntakeListReportCtrl.viewModel.filters.filterText|limitTo:allIntakeListReportCtrl.matterLimit)"
+                grid-size>
+                <div class="cell" data-ng-repeat="header in ::allIntakeListReportCtrl.clxGridOptions.headers"
+                    data-width="{{header.dataWidth}}" data-ng-class="{'selected-grid-row':allIntakeListReportCtrl.isMatterSelected(data)}">
+                    <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell
+                        data-ng-class="{'display-inline-block':field.showInline}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center margin-top10px" data-ng-if="allIntakeListReportCtrl.viewModel.allIntake.length===0
+        && allIntakeListReportCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+        <p class="text-center margin-top10px" data-ng-show="allIntakeListReportCtrl.filteredMatters.length === 0 && allIntakeListReportCtrl.display.matterListReceived">
+            No data for the applied filters
+        </p>
+    </div>
+    <div class="col-md-12 relative-container">
+        <div class="text-right pull-left width-54per" data-ng-show="allIntakeListReportCtrl.showPager">
+            <a href="javascript:void(0)" data-ng-click="allIntakeListReportCtrl.applyFilterLazyLoading()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" data-ng-click="allIntakeListReportCtrl.getAllIntakeList()">All</a>
+        </div>
+    </div>
+</div>
+</div>

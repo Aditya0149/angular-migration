@@ -1,0 +1,15 @@
+<style>
+    .dropdown-menu>li>a {
+        white-space: normal !important;
+    }
+</style>
+<a>
+    <div>
+        <span style="display:block" bind-html-unsafe="match.model.name"></span>
+        <small>{{match.model.address[0].street | showSafeHtml}}</small>
+        <small>{{match.model.address[0].city  | showSafeHtml}}</small>
+        <small ng-if="((match.model.address[0].street)||(match.model.address[0].city)) && (match.model.address[0].state)">,</small>
+        <small>{{match.model.address[0].state  | showSafeHtml}}</small>
+        <hr style="margin-top: 1px;margin-bottom: 1px;border: 0;border-top: 1px solid #eeeeee;">
+    </div>
+</a>

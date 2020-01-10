@@ -1,0 +1,94 @@
+.all-parties-wrapper {
+    .dropdown-menu { 
+        width: 93%;
+    }
+    .custom-new-drop-width .dropdown-menu {
+        width: 48%;
+    }
+    .top-margin-defendant {
+        margin-top: 25px;
+    }
+    .add-now-wrap {
+        margin: 27px 0 0;
+    }
+    .main-card-start {
+        width: 72%;
+        margin: 15px auto 50px auto;
+        padding-bottom: 50px;
+    }
+    .main-card-start-btn {
+        margin: 10px auto 15px auto;
+        height: 25px;
+        width: 72%;
+    }
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 9999;
+    }
+    .caution-icon {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+    }
+    .top-icon {
+        width: 71%;
+        margin: 0 auto;
+    }
+    .child-info {
+        margin: 8px auto auto -7px;
+    }
+    .main-block {
+        padding: 15px 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+    .date-format {
+        position: absolute;
+        left: 16px;
+        top: 55px;
+    }
+    .incident-day,.incident-time {
+        float: left;
+        margin: -23px 20px 0 27px;
+        font-weight: bold;
+        width: 105px;
+    }
+    .incident-time {
+        margin-bottom: 20px;
+        width: 200px;
+    }
+    .policy-limit-divider {
+        margin-left: -5px;
+        width: 20px;
+    }
+    .icon-margin {
+        margin: -12px 15px 0 50px;
+    }
+    .add-insurance {
+        margin: -5px 15px 0 -122px;
+        position: absolute;
+    }
+    .intake-form-padding {
+        padding: 40px 0 20px 0;
+    }
+    .form-control.memo-area {
+        height: inherit !important;
+    }
+    .report-content {
+        top: -60px;
+        position: relative;
+    }
+    .w-48{
+        width:48% !important
+    }
+    .w-120 {
+        width: 120px !important;
+    }
+    .w-135 {
+        width: 135px !important;
+    }
+}

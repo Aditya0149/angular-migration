@@ -1,0 +1,13 @@
+<div class="modal-header clearfix ng-scope memo-header">
+    <h2 class="modal-title fl-left">Memo</h2>
+    <button class="close fl-right" data-ng-click="viewMemoInfo.close()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row dashboard-tasks-due message-scroll">
+        <div class="col-md-12">
+            <pre class="memo-popup">{{viewMemoInfo.memo}}</pre>
+        </div>
+    </div>
+</div>

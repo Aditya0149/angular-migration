@@ -1,0 +1,45 @@
+<div id="report-content" style="padding-bottom: 10px;">
+    <div class="margin-top10px">
+        <div class="row">
+            <div class="col-md-7 paddingRLR">
+                <div class="container-fluid">
+                    <div class="wizard-timeline">
+                        <div class="row">
+                            <div class="col-md-4 connector" ng-hide="matterCollaborationCtrl.isEditMode" data-ng-class="matterCollaborationCtrl.getSearchContactConnectorClass()"
+                                data-ng-click="matterCollaborationCtrl.goToPage('searchOrAdd')">
+                                <div class="connector-text" title="Search or Add Existing Contact">Select Users</div>
+                                <div data-ng-class="matterCollaborationCtrl.getSearchContactStepClass()"></div>
+                            </div>
+                            <div class="col-md-4 connector" data-ng-class="matterCollaborationCtrl.getGenInfoConnectorClass()">
+                                <div class="connector-text" title="General Information">Select Matter Details</div>
+                                <div data-ng-class="matterCollaborationCtrl.getGenInfoStepClass()" data-ng-click="matterCollaborationCtrl.goToSelectMatter()"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="connector-text" title="Other Information">Confirm Details</div>
+                                <div data-ng-class="matterCollaborationCtrl.getconfirmDetailsStepClass()" data-ng-click="matterCollaborationCtrl.goToPage('confirmDetails')"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-5 pull-right">
+                <div class=" pull-right btn-botm">
+                    <button data-ng-click="matterCollaborationCtrl.cancel()" class="btn btn-default">Cancel</button>
+                    <button data-ng-if="matterCollaborationCtrl.currentPage.confirmDetails || matterCollaborationCtrl.currentPage.matterDetails" data-ng-click="matterCollaborationCtrl.previous()"
+                        class="btn btn-default">Previous</button>
+                    <!-- ng-disabled="matterCollaborationCtrl.disableNext() || matterCollaborationCtrl.isDatesValid()" -->
+                    <button data-ng-if="!matterCollaborationCtrl.currentPage.confirmDetails" data-ng-click="matterCollaborationCtrl.next()"
+                        class="btn btn-default">Next</button>
+                    <button data-ng-if="matterCollaborationCtrl.currentPage.confirmDetails" ng-disabled="matterCollaborationCtrl.isDatesValid()"
+                        data-ng-click="matterCollaborationCtrl.save()" class="btn btn-default">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paddingRLR flexCont">
+    </div>
+    <div data-ng-show="matterCollaborationCtrl.currentPage.searchOrAdd" data-ng-include="'app/matter/matter-collaboration/partials/searchOrAdd.html'"></div>
+    <div data-ng-show="matterCollaborationCtrl.currentPage.matterDetails" data-ng-include="'app/matter/matter-collaboration/partials/matter-details.html'"></div>
+    <div data-ng-show="matterCollaborationCtrl.currentPage.confirmDetails" data-ng-include="'app/matter/matter-collaboration/partials/confirm-details.html'"></div>
+
+</div>

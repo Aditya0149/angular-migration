@@ -1,0 +1,122 @@
+<style>
+    .input-group-addon {
+        height: 34.5px;
+    }
+
+    .modal-dialog {
+        width: 30% !important;
+    }
+
+    .selectize-control {
+        width: 100% !important;
+    }
+</style>
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right" data-ng-click="insuranceFilterCtrl.cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body">
+    <div class="padding-0 col-md-12">
+        <div class="">
+            <label>Insurance Provider</label>
+            <input type="text" data-ng-model="insuranceFilterCtrl.newInsauranceInfo.insurance_provider"
+                data-ng-model-options="{ debounce: 500 }"
+                placeholder="Enter name"
+                ng-keydown="insuranceFilterCtrl.checkIfEnterKeyWasPressed($event)"
+                typeahead="row as row.name +' '+ row.state +' '+ row.city for row in insuranceFilterCtrl.getContacts($viewValue)"
+                typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"   
+                typeahead-input-formatter="insuranceFilterCtrl.formatTypeaheadDisplay($model)"
+                typeahead-loading="insuranceFilterCtrl.display.loadinginsuranceproviderid"
+                class="form-control" style="width: 100%;">
+
+        </div>
+        <div class="margin-top10px">
+            <label>Insurance Type</label>
+            <ui-select data-ng-model="insuranceFilterCtrl.filter.insurancetype" theme="selectize">
+                <ui-select-match placeholder="Select insurance type">
+                    {{$select.selected}}
+                </ui-select-match>
+                <ui-select-choices repeat="item in insuranceFilterCtrl.insuranceTypeList.sort() | filter:$select.search">
+                    <small>{{item}}</small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="margin-top10px">
+            <label>Policy Limit</label>
+            <div class="row">
+                <div class="col-md-5" style="width: 48.3%;">
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input style="padding: 17px 12px;" type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="insuranceFilterCtrl.filter.policylimit"
+                        />
+                    </div>
+                </div>
+                <div class="pull-left policy-limit-divider">/</div>
+                <div class="col-md-5" style="width: 48.3%;">
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input style="padding: 17px 12px;" type="text" class="form-control" step="0.01" custom-currency-filter data-ng-model="insuranceFilterCtrl.filter.policylimit_max"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- US12053 Added Excess confirmed and Policy exhausted -->
+        <div class="margin-top10px">
+            <h3>Excess Confirmed</h3>
+            <form class="col-md-12 padding-0">
+                <div ng-repeat="excessconfirm in insuranceFilterCtrl.excessconfirmed" class="pull-left" style="padding: 0 10px 0 0;">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" checklist-model="insuranceFilterCtrl.filter.excess_confirmed" checklist-value="excessconfirm.value">
+                        <label> {{excessconfirm.label | SentenseCase}}</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="margin-top10px">
+            <h3>Policy Exhausted</h3>
+            <form class="col-md-12 padding-0">
+                <div ng-repeat="policyExecust in insuranceFilterCtrl.excessconfirmed" class="pull-left" style="padding: 0 10px 0 0;">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" checklist-model="insuranceFilterCtrl.filter.policy_exhausted" checklist-value="policyExecust.value">
+                        <label> {{policyExecust.label | SentenseCase}}</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="margin-top10px row col-md-12">
+            <li style="clear:both" class="checkbox">
+              <input type="checkbox" data-ng-model="insuranceFilterCtrl.filter.includeClosed" data-ng-change="" data-ng-true-value="1" data-ng-false-value="0">
+              <label>Include Closed Matters</label>
+            </li>
+          </div>
+            <div>
+                <div class="checkbox" style="float:left;clear:both">
+                    <input type="checkbox" data-ng-disabled="insuranceFilterCtrl.enableArchivedCheck" data-ng-model="insuranceFilterCtrl.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                    />
+                    <label>Include Archived Matters</label>
+                </div>
+            </div>
+        <!-- <div style="margin-top: 33px;">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" data-ng-model="insuranceFilterCtrl.filter.includeArchived" data-ng-true-value="'1'" data-ng-false-value="'0'"
+                />
+                <label>Include Archived Matters</label>
+            </div>
+        </div> -->
+    </div>
+</div>
+</div>
+<div class="modal-footer">
+    <div class="pull-right ">
+        <button data-ng-click="insuranceFilterCtrl.resetFilters()" type="button" class="btn btn-default btn-styleNone">
+            Reset
+        </button>
+        <button data-ng-click="insuranceFilterCtrl.apply(insuranceFilterCtrl.filter)" ng-disabled="insuranceFilterCtrl.enableApply"
+            type="button" ng-disabled="insuranceFilterCtrl.isDatesValid()" class="btn btn-default">
+            Apply
+        </button>
+    </div>
+</div>

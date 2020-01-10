@@ -1,0 +1,151 @@
+<!-- CONTENT SECTION-->
+<!-- Listing Daily mail scan -->
+<div class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px"
+                data-ng-click="dailymailscan.resetPage()"
+                href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div class="content-class-popup">
+<div data-ng-hide="dailymailscan.enableUpload"  >
+	<div class="page-title-border-links clearfix subnav">
+        <ul class="centered-nav">
+            <li data-ng-click="dailymailscan.activateTab('uploadeddailymail')">
+                <a href="javascript:void(0)" ng-class="{' activeLink': dailymailscan.activeTab == 'uploadeddailymail'}" >Uploaded Documents</a>
+            </li>
+            <li data-ng-click="dailymailscan.activateTab('unindexeddailymail')">
+                <a href="javascript:void(0)"  ng-class="{' activeLink': dailymailscan.activeTab == 'unindexeddailymail'}" >Unindexed Documents</a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="row gridSec margin0 head-padding-10px">
+        <div class="col-md-12 ">
+            <div class="col-md-4 pull-left paddingRLR dropdown create">
+                <a data-ng-click="dailymailscan.enableUploadArea()"  data-ng-if=" (dailymailscan.isGraceOver != 0)" >
+                    <span class="sprite default-plus" tooltip="Add">&nbsp;</span>
+                </a>
+                <a class="margin-left25px" data-ng-click="dailymailscan.deleteUploaded(dailymailscan.uploadedGridOptions.uploadedSelectedItems,dailymailscan.filteredUploads)" 
+                    data-ng-show="dailymailscan.activeTab=='uploadeddailymail' && dailymailscan.uploadedGridOptions.uploadedSelectedItems.length > 0 && (dailymailscan.isGraceOver != 0)">
+                    <span class="sprite default-delete" tooltip="Delete">&nbsp;</span>
+                </a>
+                 <a class="margin-left25px" data-ng-click="dailymailscan.deleteUploaded()"
+                    data-ng-show="dailymailscan.userRole=='LexviasuperAdmin' && dailymailscan.activeTab=='unindexeddailymail' && dailymailscan.unindexedGridOptions.unindexedSelectedItems.length > 0 && (dailymailscan.isGraceOver != 0)">
+                    <span class="sprite default-delete" tooltip="Delete">&nbsp;</span>
+                </a>
+                <a class="margin-left25px" data-ng-click="dailymailscan.downloadDocument()"
+                    data-ng-show="(dailymailscan.activeTab=='uploadeddailymail' && dailymailscan.uploadedGridOptions.uploadedSelectedItems.length > 0) || (dailymailscan.activeTab=='unindexeddailymail' && dailymailscan.unindexedGridOptions.unindexedSelectedItems.length > 0)">
+                    <span class="sprite default-sharedown" tooltip="Export">&nbsp;</span>
+                </a>
+            </div>
+			<!-- Uploaded Documents Filter -->
+            <div class="col-md-8 pull-right paddingRLR clearfix" data-ng-show="dailymailscan.activeTab=='uploadeddailymail'" >
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null" data-ng-show="dailymailscan.showSearch" >
+                            <div class="default-searchico sprite" ></div>
+                            <input
+                                type="text"
+                                focus-me="dailymailscan.showSearch"
+                                data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="dailymailscan.display.uploaded.filterText"
+                                data-ng-change="dailymailscan.filterRetain();"
+                                class="form-control">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+                    <li class="search-overlap">
+                        <ul data-ng-hide="dailymailscan.showSearch">
+                            <li><a data-ng-click="dailymailscan.showSearch = true"><span class="sprite default-searchico-menu "  tooltip="Search"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="pull-right border">
+                </div>
+                <div class="pull-right" >
+                    <div class="dropdown">
+                        Sort By :
+							  <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  {{dailymailscan.display.uploaded.sortSeleted}}
+								<span class="default-downward-arrow sprite dropdown-arrow"></span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                            <li><a data-ng-click="dailymailscan.sortUploaded(1,'asc');dailymailscan.display.uploaded.sortSeleted='Document Name'"
+                                data-ng-class="{' active': dailymailscan.display.uploaded.sortby == 1}">Document Name</a></li>
+	                            <li class="divider" ></li>
+	                            <li><a data-ng-click="dailymailscan.sortUploaded(2,'asc');dailymailscan.display.uploaded.sortSeleted='Uploaded By'"
+                                data-ng-class="{' active': dailymailscan.display.uploaded.sortby == 2}">Uploaded By</a></li>
+	                            <li class="divider" ></li>
+	                            <li><a data-ng-click="dailymailscan.sortUploaded(3,'desc');dailymailscan.display.uploaded.sortSeleted='Uploaded On'"
+                                data-ng-class="{' active': dailymailscan.display.uploaded.sortby == 3}">Uploaded On</a></li>
+	                            <li class="divider" ></li>
+	                            <li><a data-ng-click="dailymailscan.sortUploaded(4,'desc');dailymailscan.display.uploaded.sortSeleted='Status'"
+                                data-ng-class="{' active': dailymailscan.display.uploaded.sortby == 4}">Status</a></li>
+                              </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Unindexed Documents Filter -->
+            <div class="col-md-8 pull-right paddingRLR clearfix" data-ng-show="dailymailscan.activeTab=='unindexeddailymail'" >
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null" data-ng-show="dailymailscan.showunindexedSearch" >
+                            <div class="default-searchico sprite"></div>
+                            <input
+                                type="text"
+                                focus-me="dailymailscan.showunindexedSearch"
+                                data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="dailymailscan.display.unindexed.filterText"
+                                data-ng-change="dailymailscan.filterRetain();"
+                                class="form-control">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right">
+                    <li class="search-overlap">
+                        <ul data-ng-hide="dailymailscan.showunindexedSearch">
+                            <li><a data-ng-click="dailymailscan.showunindexedSearch = true"><span class="sprite default-searchico-menu " tooltip="Search"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+                        
+            <div class="clearfix"></div>
+            <div class="pull-right" data-ng-show="dailymailscan.activeTab=='uploadeddailymail'" >
+                <clx-filter-tags
+                    on-filter-cancel="dailymailscan.cancleFilterTags"
+                    tag-list="dailymailscan.display.uploaded.filtertags"></clx-filter-tags>
+            </div>
+            <div class="pull-right" data-ng-show="dailymailscan.activeTab=='unindexeddailymail'" >
+                <clx-filter-tags
+                    on-filter-cancel="dailymailscan.cancleFilterTags"
+                    tag-list="dailymailscan.display.unindexed.filtertags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+	
+	<!-- Uploaded Documents for firm users -->
+	<div id="dailyMailFlag" data-ng-if="dailymailscan.userRole && dailymailscan.userRole!=='LexviasuperAdmin'" data-ng-include="'app/dailymailscan/uploaded_firmuser.html'" >
+    </div>
+    
+    <!-- Uploaded Documents for Lexvia super Admin users -->
+    <div id="dailyMailFlag" data-ng-if="dailymailscan.userRole && dailymailscan.userRole==='LexviasuperAdmin'" data-ng-include="'app/dailymailscan/uploaded_superadminuser.html'">
+    </div>
+	
+	<!-- Unindexed Documents for firm user and Lexvia super Admin users -->
+    <div id="dailyMailFlag" data-ng-include="'app/dailymailscan/unindexed_documents.html'">
+    </div>
+</div>
+
+<!-- Upload Document -->
+ <div id="dailyMailFlag" data-ng-include="'app/dailymailscan/file_upload.html'" >
+ </div>
+</div>

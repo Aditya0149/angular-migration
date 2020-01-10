@@ -1,0 +1,37 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="note-subhead">
+            <strong>Archive Matters</strong>
+        </div>
+        <button class="close fl-right" data-ng-click="cancel()" style="margin-top: -25px;"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-2 text-center"><div class="sprite archive-matters-popup-icon">&nbsp;</div></div>
+            <div class="col-md-10">
+                <ul class="list-bullet">
+                    <li>You can archive any closed matter with our Digital Archiver.</li>
+                    <li>The matter will be stored for 7 years and it can always be retrieved from the Archived Matter list.</li>
+                    <li>There is a one time fee to archive a matter. Please contact us at (646) 415-8307 for pricing.</li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div>
+        <div style="margin-left: 115px;color: #53585f;">
+            <span>Selected Matters: {{archivematterId.length}}
+            </span>
+        </div>
+    </div>
+    <!-- <div ng-if="archiveData.archived_matter_number > 1"class="modal-footer archive-matters-popup-subtext">
+        * There are {{archiveData.archived_matter_number}} previously archived matters
+    </div>
+    <div ng-if="archiveData.archived_matter_number == 1"class="modal-footer archive-matters-popup-subtext">
+        * There is {{archiveData.archived_matter_number}} previously archived matter       
+    </div> -->
+    <div class="modal-footer margin-top0px">
+        <button data-ng-click="cancel()" class="btn btn-default btn-default">Cancel</button>
+        <button data-ng-click="archiveMatters()" class="btn btn-default btn-default" ng-disabled="disablePayoption" 
+        ng-if="actionbuttonText">{{actionbuttonText}}</button>
+    </div>
+</div>

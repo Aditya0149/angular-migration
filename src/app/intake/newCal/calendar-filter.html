@@ -1,0 +1,55 @@
+<style>
+    .modal-dialog{width:450px;}
+</style>
+<div class="modal-header clearfix">
+    <h1 class="modal-title fl-left">Filters</h1>
+    <button class="close fl-right" data-ng-click="cancel()">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="filter-greybox container modal-body">
+    <div class="col-md-3 padding-0 margin-top5px"><label>Assign to:</label></div>
+    <div class="col-md-9 custom-form-control padding-right-0">
+        <ui-select class="width100" multiple ng-model="calendar.assignedUsers" theme="select2">
+            <ui-select-match placeholder="Select Users">
+                {{$item.full_name}}
+            </ui-select-match>
+            <ui-select-choices repeat="user in calendar.assignedToUserList  | filter:{full_name:$select.search} ">
+                <small>{{user.full_name}}</small>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="col-md-3 padding-0 margin-top25px"><label>Location:</label></div>
+    <div class="col-md-9 custom-form-control margin-top25px padding-right-0">
+        <input type="text" maxlength="500" style="width: 100%;" data-ng-model="calendar.location" placeholder="Location"
+            class="form-control" />
+    </div>
+    <div class="pull-left padding-0 margin-top5px" style="margin-top: 10px;"><label>Show events of:</label></div>
+    <div class="col-md-8 custom-form-control padding-right-0" style="margin-top: 10px;">
+        <div style="margin-left: -15px;" class="col-md-2 checkbox">
+            <input ng-disabled = "isIntakeActive != 1" type="checkbox" data-ng-model="calendar.showIntakeEvents" data-ng-true-value="'1'"
+                data-ng-false-value="'0'" /><label>Intake</label>
+            <input type="checkbox" data-ng-model="calendar.showMatterEvents" data-ng-true-value="'1'"
+                data-ng-false-value="'0'" /><label>Matter</label>
+        </div>
+    </div>
+
+    <!--us#7122 check box to show future vents -->
+    <!-- data-ng-change="calendar.allCompliedEventList(true)" -->
+    <div ng-if="calendar.showMatterEvents == 1" class="pull-left padding-0 margin-top5px" style="margin-top: 10px;"><label>Include
+            future events of closed matters:</label></div>
+    <div ng-if="calendar.showMatterEvents == 1" class="col-md-2 custom-form-control padding-right-0" style="margin-top: 10px;">
+        <div style="margin-left: -15px;" class="col-md-2 checkbox">
+            <input type="checkbox" data-ng-model="calendar.showFuturEvents" data-ng-true-value="'1'"
+                data-ng-false-value="'0'" /><label></label>
+        </div>
+    </div>
+    <!--end-->
+</div>
+<div class="modal-footer">
+    <div class="">
+        <button ng-click="reset()" type="button" class="btn btn-default">Reset</button>
+        <button ng-click="apply(calendar.assignedUsers,calendar.location,calendar.showIntakeEvents,calendar.showMatterEvents,calendar.showFuturEvents)"
+            ng-disabled="enableApply" type="button" class="btn btn-default">Apply</button>
+    </div>
+</div>

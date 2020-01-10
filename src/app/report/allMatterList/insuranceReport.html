@@ -1,0 +1,258 @@
+<style>
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<!-- CONTENT SECTION-->
+<div scrolly="insuranceReportCtrl.scrollReachedBottom()" reached-top="insuranceReportCtrl.scrollReachedTop()">
+    <div class=" clearfix">
+        <div class="row">
+            <h1 class="col-md-5 ellipsis-nowrap  padding-topbottom-14px">Insurance Report</h1>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed ">
+            <div class="pull-right head-padding-10px ">
+                <ul class="showBy-btns pull-right heading-right-buttons">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="insuranceReportCtrl.openPopupFilter()" class="sprite default-filter"
+                                tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="insuranceReportCtrl.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="insuranceReportCtrl.downloadInsuranceInfo()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--<div class="dropdown head-padding-10px pull-right">
+                Sort By :
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{insuranceReportCtrl.selectedSort}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                <ul class="dropdown-menu divider-alt dashboard-tasks-due" role="menu" aria-labelledby="dLabel" style="max-height: 350px;">
+                    <li data-ng-repeat="sort in insuranceReportCtrl.sorts">
+                        <a data-ng-click="insuranceReportCtrl.applySortByFilter(sort)">{{sort.name}}
+                        </a>
+
+                    </li>
+
+                </ul>
+            </div>-->
+        </div>
+        <div class="clearfix">
+            <div class="pull-right">
+                <clx-filter-tags on-filter-cancel="insuranceReportCtrl.tagCancelled"
+                    tag-list="insuranceReportCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="insuranceReportCtrl.insuranceDataList.length > 0 ">
+        <show-record-count-only more="insuranceReportCtrl.getMore()" all="insuranceReportCtrl.getAll()"
+            hide-pager="{{insuranceReportCtrl.insuranceDataList.length < insuranceReportCtrl.total}}"
+            displayed="insuranceReportCtrl.insuranceDataList.length" total="insuranceReportCtrl.total">
+        </show-record-count-only>
+    </div>
+
+    <!-- Start: New scroll-table tableid -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <div class="report-scroll-all-matter">
+
+        <scroll-table tag="insuranceReportCtrl.tags" watch="insuranceReportCtrl.filteredInsuranceRecords" tableid="insuranceReportlistGrid"
+            to="#listUpper" from="#moreAllLinkRecord">
+
+            <table class="table table-scroll text_ellipsis">
+                <thead data-ng-show="insuranceReportCtrl.insuranceDataList.length != 0">
+                    <tr>
+                        <th class="th-width-20">
+                            <div>
+                                <span>
+                                    <b>Matter name, File Number,Date of Incident</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Associated Party</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Insurance Type</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Insured Party</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Insurance Provider</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Policy Number</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Policy Limit</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Adjuster Name</b>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <span>
+                                    <b>Claim Number</b>
+                                </span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="dashboard-tasks-due" id="insuranceReportlistbody"
+                    style="overflow-y:overlay;height: 60vh !important;">
+                    <tr data-ng-class="{'selected-grid-row':($index == insuranceReportCtrl.clickedRow)}"
+                        data-highlight-clicked-row="{{$index}},insuranceReportCtrl.clickedRow"
+                        data-ng-repeat="data in insuranceReportCtrl.filteredInsuranceRecords = (insuranceReportCtrl.insuranceDataList)">
+
+                        <td class="th-width-20">
+                            <div>
+                                <a class="word-wrap" href="#/matter-overview/{{data.matter_id}}"
+                                    tooltip-placement="right" tooltip="{{data.matter_name}}">
+                                    {{data.matter_name}}
+                                </a><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.file_number}}">
+                                    File# {{data.file_number}}
+                                </span>
+                                <span tooltip-placement="bottom" tooltip="{{data.doi}}">
+                                     {{data.doi}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.associated_party}}">
+                                    {{data.associated_party}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.insurance_type}}">
+                                    {{data.insurance_type}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.insured_party}}">
+                                    {{data.insured_party}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="word-wrap" tooltip-placement="bottom"
+                                    tooltip="{{data.insurance_provider}}">
+                                    {{data.insurance_provider}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="amount_ellipsis" class="word-wrap" tooltip-placement="bottom"
+                                    tooltip="{{data.policy_number}}">
+                                    {{data.policy_number}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="amount_ellipsis" class="word-wrap" tooltip="{{data.policy_limits}}"
+                                    tooltip-append-to-body="true" tooltip-placement="bottom">
+                                    {{data.policy_limits}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="saved-search-link cursor-pointer" data-ng-click="insuranceReportCtrl.openContactCard(data.insurance_adjuster)" tooltip-placement="bottom" tooltip="{{data.insurance_adjusterName}}">
+                                    {{data.insurance_adjusterName}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-10">
+                            <div>
+                                <span class="amount_ellipsis" tooltip-placement="bottom"
+                                    tooltip="{{data.claim_number}}">
+                                    {{data.claim_number}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </scroll-table>
+        <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+            style="overflow: hidden !important;position: fixed;bottom: 0px;">
+        </div>
+    </div>
+
+    <!-- Start: New scroll-table tableid -->
+
+    <div data-ng-show="insuranceReportCtrl.insuranceDataList.length > 0 ">
+        <show-record-more-and-all more="insuranceReportCtrl.getMore()" all="insuranceReportCtrl.getAll()"
+            hide-pager="{{insuranceReportCtrl.insuranceDataList.length < insuranceReportCtrl.total}}"
+            displayed="insuranceReportCtrl.insuranceDataList.length" total="insuranceReportCtrl.total">
+        </show-record-more-and-all>
+    </div>
+
+    <div class="text-center margin-top10px" data-ng-show="insuranceReportCtrl.insuranceDataList.length <= 0">
+        No data for the applied filters
+    </div>
+
+
+
+</div>

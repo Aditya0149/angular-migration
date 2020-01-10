@@ -1,0 +1,94 @@
+<div class="negligence-wrapper ">
+    <div class="row dashboard-tasks-due pb-120 edge-ie-scroll-height">
+        <div class="row-fluid  margin-top10px   ">
+            <div class="col-md-3 pull-right btn-botm">
+                <button
+                    data-ng-disabled="(!negligenceCtrl.negligenceLiability.description) || (negligenceCtrl.isGraceOver != 1) "
+                    data-ng-show="negligenceCtrl.mode != 'view'"
+                    data-ng-click="negligenceCtrl.saveDescription(negligenceCtrl.negligenceLiability)"
+                    class="btn btn-default pull-right margin-left10px">
+                    Save</button>
+                <button
+                    data-ng-show="negligenceCtrl.mode === 'view' && !negligenceCtrl.matterInfo.archivalMatterReadOnlyFlag"
+                    data-ng-click="negligenceCtrl.mode = 'edit'" data-ng-disabled="(negligenceCtrl.isGraceOver != 1)"
+                    class="btn btn-default btn-styleNone pull-right">
+                    Edit</button>
+                <button data-ng-show="negligenceCtrl.mode !== 'view'" data-ng-click="negligenceCtrl.goToViewMode()"
+                    class="btn btn-default btn-styleNone pull-right">
+                    Cancel</button>
+
+            </div>
+        </div>
+
+
+    <div class="row-fluid">
+        <div class="col-md-12 form-group">
+
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <strong class="strong-label">Negligence-Liability Description</strong>
+                    <!-- <div ng-if="negligenceCtrl.mode === 'view'">
+                        <wysiwyg textarea-id="negligenceLiabilityDescriptionView" textarea-class="new-editor-height globle-note-color form-control"
+                            textarea-name="text" textarea-required ng-model="negligenceCtrl.negligenceLiability.description"
+                            enable-bootstrap-title="true" read-only-field="true"></wysiwyg>
+                    </div>
+                    <div ng-if="negligenceCtrl.mode === 'edit'">
+                        <wysiwyg textarea-id="negligenceLiabilityDescriptionEdit" textarea-class="new-editor-height globle-note-color form-control"
+                            textarea-name="text" textarea-required ng-model="negligenceCtrl.negligenceLiability.description"
+                            enable-bootstrap-title="true"></wysiwyg>
+                    </div> -->
+
+                    <div ng-show="negligenceCtrl.mode === 'view'"
+                        class="modal-body pop-body-scroll-height dashboard-tasks-due disk-bullet text-height170px">
+                        <p data-ng-bind-html="negligenceCtrl.negligenceLiability.description | showSafeHtml"
+                            class="word-wrap"></p>
+                    </div>
+                    <!-- <text-angular detect-change-editor-text-angular class="margin-top10px textarea-100-per"
+                        ng-show="negligenceCtrl.mode === 'edit'" ta-toolbar="[['bold','italics','strikeThrough','underline'],['justifyLeft','justifyCenter','justifyRight'],
+            ['ul', 'ol']]"
+                        data-ta-disabled="negligenceCtrl.mode === 'view'" class="full-textarea" ng-model="negligenceCtrl.negligenceLiability.description"></text-angular> -->
+                    <wysiwyg textarea-id="matterNotesAdd" class="matterNotesAdd"
+                        textarea-class="new-editor-height globle-note-color form-control"
+                        ng-show="negligenceCtrl.mode === 'edit'" data-ta-disabled="negligenceCtrl.mode === 'view'"
+                        textarea-name="text" ng-model="negligenceCtrl.negligenceLiability.description"
+                        enable-bootstrap-title="true"></wysiwyg>
+                </div>
+                <div class="col-md-12 margin-top20px">
+                    <div class="checkbox">
+                        <input data-ng-disabled="negligenceCtrl.mode === 'view'" type="checkbox"
+                            data-ng-model="negligenceCtrl.negligenceLiability.damageStatus"
+                            data-ng-change="negligenceCtrl.damageStatusChange()" data-ng-true-value=true
+                            data-ng-false-value=false>
+                        <label>
+                            <strong>Property Damage</strong>
+                        </label>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12" ng-show="negligenceCtrl.negligenceLiability.damageStatus">
+                    <strong class="strong-label">Property Damage Details</strong>
+                    <text-angular class="margin-top10px textarea-100-per full-textarea"
+                        ng-show="negligenceCtrl.mode === 'edit'" ta-toolbar="[]"
+                        data-ta-disabled="!negligenceCtrl.negligenceLiability.damageStatus || negligenceCtrl.mode === 'view'"
+                        ng-model="negligenceCtrl.negligenceLiability.propertyDamage"></text-angular>
+
+                    <!-- <text-angular ta-toolbar="[]" ng-show="negligenceCtrl.mode === 'view'"
+                        data-ta-disabled="!negligenceCtrl.negligenceLiability.damageStatus || negligenceCtrl.mode === 'view'"
+                        class="full-textarea " ng-model="negligenceCtrl.negligenceLiability.propertyDamage">
+                    </text-angular> -->
+
+                    <div ng-show="negligenceCtrl.mode === 'view'"
+                        class="modal-body pop-body-scroll-height dashboard-tasks-due disk-bullet text-height170px">
+                        <p data-ng-bind-html="negligenceCtrl.negligenceLiability.propertyDamage | showSafeHtml"
+                        class="word-wrap">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,90 @@
+<style>
+    .hide-scroll {
+        padding-bottom: 0px !important;
+        overflow-y: hidden !important;
+    }
+</style>
+<div id="report-content" ng-class="{'hide-scroll': !master}">
+    <input type="checkbox" id="sidebartoggler" ng-model="master" report-nav="">
+
+    <div class="page-wrapper">
+        <label class="toggle" for="sidebartoggler" id="hamburger"><i class="icon-toggle-img">&nbsp;</i></label>
+        <div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="sidebar">
+                        <div class="clearfix"></div>
+                        <div class="accordion-height-adjust" ng-mousemove="mouseMove()">
+                            <accordion close-others="true" class="report-accord">
+                                <accordion-group is-open="intakeReportCtrl.status.matters">
+                                    <accordion-heading>
+                                        <div class="ellipsis-nowrap report-accordion-head"
+                                            data-ng-class="{'active': intakeReportCtrl.status.matters, 'inactive': !intakeReportCtrl.status.matters}">
+                                            Intakes</div>
+                                        <i class="pull-right glyphicon margin-accordion-arrow" data-ng-class="{'default-blueupward-arrow sprite': intakeReportCtrl.status.matters, 
+                                    'default-bluedownward-arrow sprite': !intakeReportCtrl.status.matters}"></i>
+                                    </accordion-heading>
+                                    <div class="sidepanel-report">
+                                        <p class="ellipsis-nowrap">
+                                            <a data-ng-click="intakeReportCtrl.changeReportView1('intakereport.allIntakeListReport')"
+                                                data-ng-class="{'accordionReportSelected': intakeReportCtrl.sublinkstate == 'intakereport.allIntakeListReport'}"
+                                                tooltip="All Intake List">All Intake List</a>
+                                        </p>
+
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeUpcomingSOLs')"
+                                                tooltip="Upcoming
+                                            SOLs"
+                                                ng-class="{'accordionReportSelected': intakeReportCtrl.sublinkstate == 'intakereport.intakeUpcomingSOLs'}">Upcoming
+                                                SOLs</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeUpcomingNOCs')"
+                                                tooltip="Upcoming
+                                            NOCs"
+                                                ng-class="{'accordionReportSelected': intakeReportCtrl.sublinkstate == 'intakereport.intakeUpcomingNOCs'}">Upcoming
+                                                NOCs</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap" data-ng-if="intakeReportCtrl.isUser">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeValuation')"
+                                                ng-class="{'accordionReportSelected ': intakeReportCtrl.sublinkstate == 'intakereport.intakeValuation'}"
+                                                tooltip="Intake Valuation Report"> Intake Valuation Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeCampaignReport')"
+                                                ng-class="{'accordionReportSelected ': intakeReportCtrl.sublinkstate == 'intakereport.intakeCampaignReport'}"
+                                                tooltip="Intake Campaign Report"> Intake Campaign Report</a>
+                                        </p>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeStateAndVenue')"
+                                                ng-class="{'accordionReportSelected ': intakeReportCtrl.sublinkstate == 'intakereport.intakeStateAndVenue'}"
+                                                tooltip="State And Venue Report"> State And Venue Report</a>
+                                        </p>
+                                    </div>
+                                </accordion-group>
+                                <accordion-group is-open=" reportCtrl.status.tasks">
+                                    <accordion-heading>
+                                        <div style="display: inline-block"
+                                            ng-class="{'active': intakeReportCtrl.status.tasks, 'inactive': !intakeReportCtrl.status.tasks}"
+                                            class="ellipsis-nowrap report-accordion-head ">Tasks</div>
+                                        <i class="pull-right glyphicon margin-accordion-arrow" ng-class="{'default-blueupward-arrow sprite': intakeReportCtrl.status.tasks,
+                                        'default-bluedownward-arrow sprite': ! intakeReportCtrl.status.tasks}"></i>
+                                    </accordion-heading>
+                                    <div>
+                                        <p class="ellipsis-nowrap">
+                                            <a ng-click="intakeReportCtrl.changeReportView1('intakereport.intakeTaskSummary')"
+                                                ng-class="{'accordionReportSelected': intakeReportCtrl.sublinkstate == 'intakereport.intakeTaskSummary'}"
+                                                tooltip="Task Summary">Task Summary</a>
+                                        </p>
+                                    </div>
+                                </accordion-group>
+                            </accordion>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-content">
+                    <div ui-view></div>
+                </div>
+            </div>
+        </div>
+    </div>

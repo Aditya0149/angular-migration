@@ -1,0 +1,438 @@
+<div class="intake-matter-wrapper">
+    <div data-ng-if="!matterCtrl.archivedTab && matterCtrl.addIntake == false">
+        <div id="report-content" class="padding-bottom0">
+            <div class="page-title-border-links clearfix">
+                <div class="row">
+                    <div class="col-md-6 pull-right page-sublinks subnav">
+                        <ul class="pull-right">
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' active': matterCtrl.selectionModel.allMatter == 1}"
+                                    ng-click="matterCtrl.filterByUser(1);">
+                                    <h2>My Intakes</h2>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' active': matterCtrl.selectionModel.allMatter == 0}"
+                                    ng-click="matterCtrl.filterByUser(0);">
+                                    <h2>All Intakes</h2>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin0" ng-hide="matterCtrl.selectionModel.statusName == 'Migrated' ? true : false">
+                <div class="paddingRLR flexCont ongoing-matter display-block">
+                    <!-- All -->
+                    <div ng-click="matterCtrl.applyStatusFilter(item);"
+                        ng-class="{'active': matterCtrl.highlightSelectedStatus(item.id)}" class="flex-column card "
+                        ng-repeat="(itemKey,item) in matterCtrl.viewModel.statusWiseCountsAll">
+                        <h2 class="numb">{{item.count}}</h2>
+                        <span class="textA">{{itemKey}}</span>
+                    </div>
+
+                    <!--rest status-->
+                    <div ng-click="matterCtrl.applyStatusFilter(value);"
+                        ng-class="{'active': matterCtrl.highlightSelectedStatus(value.id)}" class="flex-column card "
+                        ng-repeat="key in matterCtrl.notSorted(matterCtrl.viewModel.statusWiseCounts)"
+                        ng-init="value = matterCtrl.viewModel.statusWiseCounts[key]">
+                        <h2 class="numb">{{matterCtrl.viewModel.statusWiseCounts[key].count}}</h2>
+                        <span class="textA">{{key}}</span>
+                    </div>
+
+                    <!-- Stalled -->
+                    <!--<div ng-click="matterCtrl.applyStatusFilter(item);" ng-class="{'active': matterCtrl.highlightSelectedStatus(item.id)}" class="flex-column card "
+                                ng-repeat="(itemKey,item) in matterCtrl.viewModel.statusWiseCountsStalled">
+                                <h2 class="numb">{{item.Count}}</h2>
+                                <span class="textA">{{itemKey}}</span>
+                            </div>-->
+                </div>
+            </div>
+            <div class="row gridSec margin0 matterGridSecStyle">
+                <div class="col-md-12 paddingRLR">
+                    <div class="col-md-5 pull-left paddingRLR dropdown create top-icon-set">
+                        <a data-ng-click="matterCtrl.openAddEditmatterview()"
+                            ng-show="(matterCtrl.totalmattersUsed < matterCtrl.subscribematterLimit) && (matterCtrl.isGraceOver != 0) && (matterCtrl.selectionModel.statusName == 'Migrated' ? false : true)">
+                            <span class="sprite default-plus" tooltip="Add Intake"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <div class="dropdown pull-left height-user-dropdown"
+                            ng-if="(matterCtrl.totalmattersUsed >= matterCtrl.subscribematterLimit) && (matterCtrl.isGraceOver != 0) "
+                            ng-hide="matterCtrl.selectionModel.statusName == 'Migrated' ? true : false">
+                            <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+                                <span class="sprite default-plus">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown matterlist-dropdown"
+                                role="menu" aria-labelledby="dropdownMenu5">
+
+                                <li>
+                                    <span class="default-alert sprite"></span>&nbsp;&nbsp;
+                                    <span>{{matterCtrl.userMsg}}</small>
+                                </li>
+                                <li class="divider" ng-if="true"> </li>
+
+                                <li ng-if="matterCtrl.isSubsriber">
+                                    <small>
+                                        <a href="javascript:void(0);"
+                                            ng-click="matterCtrl.applyFooterFilters('Closed')">Archive
+                                            closed matters</a>
+                                    </small>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a class="margin-left25px"
+                            data-ng-if="matterCtrl.clxGridOptions.selectedItems[0].isMigrated!= 1"
+                            data-ng-click="matterCtrl.openAddEditmatterview(matterCtrl.clxGridOptions.selectedItems[0].intakeId)"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0)">
+                            <span class="sprite default-edit" tooltip="Edit" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!-- <a class="margin-left25px" data-ng-click="matterCtrl.openMigrationPopUp(matterCtrl.clxGridOptions.selectedItems[0])"
+                                    data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0)">
+                                    <span  class="sprite default-edit" tooltip="Edit" tooltip-placement="right">&nbsp;</span>
+                                </a> -->
+                        <a class="margin-left25px"
+                            data-ng-click="matterCtrl.deleteMatters(matterCtrl.clxGridOptions.selectedItems,matterCtrl.filteredMatters)"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length > 0 &&  (matterCtrl.isGraceOver != 0)">
+                            <span class="sprite default-delete" tooltip="Delete" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!-- Refer-out start -->
+                        <a class="margin-left25px" data-ng-click="matterCtrl.goToReferOut()"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0) && matterCtrl.isReferralExchange == 1 && isReferalActive == 1 && matterCtrl.selectionModel.statusName != 'Closed' ">
+                            <span class="sprite default-refer" tooltip="Refer Out"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!--- Refer-out end----->
+                        <a class="margin-left25px"
+                            data-ng-click="matterCtrl.openMigrationPopUp(matterCtrl.clxGridOptions.selectedItems)"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length > 0 &&  (matterCtrl.isGraceOver != 0)">
+                            <span class="sprite default-migration-icon col-md-offset-1"
+                                tooltip="Migrate to Matter Manager" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                            data-ng-click="matterCtrl.sendMail(matterCtrl.clxGridOptions.selectedItems[0])"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0)">
+                            <span class="sprite share-icon col-md-offset-1" tooltip="Share form"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="margin-left25px"
+                            data-ng-click="matterCtrl.openInatkeFormTab(matterCtrl.clxGridOptions.selectedItems[0])"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0)">
+                            <span class="sprite open-new-tab col-md-offset-1" tooltip="Open the form in a new tab"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <!-- user subsribed-->
+                        <a class="margin-left25px"
+                            data-ng-show="(matterCtrl.clxGridOptions.selectedItems.length > 0 && 
+                                             matterCtrl.selectionModel.statusName=='Closed' && matterCtrl.isSubsriber && matterCtrl.isDigiArchivalSub)">
+                            <span class="sprite default-archive"
+                                data-ng-click="matterCtrl.showArchivePopup(matterCtrl.clxGridOptions.selectedItems,matterCtrl.filteredMatters)"
+                                tooltip="Archive" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!--end-->
+                        <!-- if user subscription expired-->
+                        <span class="dropdown  height-user-dropdown" ng-if="(matterCtrl.clxGridOptions.selectedItems.length > 0 && 
+                                    matterCtrl.selectionModel.statusName=='Closed' && 
+                                    !(matterCtrl.isSubsriber) && matterCtrl.isDigiArchivalSub)">
+                            <!--Bug#6675 -->
+                            <a class="dropdown-toggle col-md-offset-1" id="dropdownMenu5" tooltip="Archive"
+                                tooltip-placement="right" data-toggle="dropdown" aria-expanded="true">
+                                <span class="sprite default-archive">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown matterlist-dropdown"
+                                role="menu" aria-labelledby="dropdownMenu5">
+                                <li>
+                                    <span class="default-alert sprite"></span>&nbsp;&nbsp;
+                                    <span class="pop-msg">Please contact the subscribing managing partner to archive
+                                        matters.</span>
+                                </li>
+                            </ul>
+                        </span>
+                        <!-- end-->
+                    </div>
+
+                    <div class="col-md-7 pull-right paddingRLR clearfix">
+                        <ul class="pull-right">
+                            <li>
+                                <!--data-ng-change="matterCtrl.filterMatterList(matterCtrl.viewModel.filters.filterText)"-->
+                                <div class="search-input form-control-margin-null" data-ng-show="matterCtrl.showSearch">
+                                    <div class="default-searchico sprite"></div>
+                                    <input type="text" focus-me="matterCtrl.showSearch"
+                                        data-ng-model-options="{ debounce: 0 }"
+                                        data-ng-model="matterCtrl.viewModel.filters.filterText"
+                                        data-ng-change="matterCtrl.filterRetain();" class="form-control">
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="showBy-btns pull-right">
+                            <li class="seperation-filter"></li>
+                            <li tooltip="Filter" tooltip-placement="top">
+                                <a class="list">
+                                    <span data-ng-click="matterCtrl.toggleFilterPage();"
+                                        class="sprite default-filter"></span>
+                                </a>
+                            </li>
+                            <li class="seperation-filter"></li>
+                            <li>
+                                <a class="list" ng-disabled="true">
+                                    <span class="sprite default-file sortby-icons" data-ng-click="matterCtrl.print()"
+                                        ng-disabled="true" tooltip="Print Intake" tooltip-placement="top">&nbsp;</span>
+                                </a>
+                            </li>
+
+
+
+                            <li>
+                                <a class="list margin-left10px">
+                                    <span class="sprite default-sharedown" data-ng-click="matterCtrl.downloadMatters()"
+                                        tooltip="Export Intake" tooltip-placement="top">&nbsp;</span>
+                                </a>
+                            </li>
+                            <a class="list"></a>
+                            <li class="search-overlap">
+                                <ul data-ng-hide="matterCtrl.showSearch">
+                                    <li>
+                                        <a class="margin-left10px" data-ng-click="matterCtrl.showSearch = true"><span
+                                                class="sprite default-searchico-menu " tooltip="Search"
+                                                tooltip-placement="top">&nbsp;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <div class="pull-right border">
+                        </div>
+                        <div class="pull-right">
+                            <div class="dropdown">
+                                <span class="sortby-align">Sort By:</span>
+                                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{matterCtrl.getSortByLabel(matterCtrl.viewModel.filters.sortby)}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu sortby-dropdown-height intake-matter-dropdown" role="menu"
+                                    aria-labelledby="dLabel">
+                                    <div>
+                                        <li data-ng-repeat-start="sort in matterCtrl.sorts"
+                                            data-ng-class="{' active': matterCtrl.viewModel.filters.sortby == sort.value}">
+                                            <a data-ng-click="matterCtrl.applySortByFilter(sort.key)">{{sort.name}}</a>
+                                        </li>
+                                        <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-right ">
+                        <clx-filter-tags on-filter-cancel="matterCtrl.tagCancelled" tag-list="matterCtrl.tags">
+                        </clx-filter-tags>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div data-ng-if="matterCtrl.viewModel.matters.length > 0">
+                    <show-record-count-only displayed="matterCtrl.viewModel.matters.length"
+                        hide-pager="{{matterCtrl.showPager}}" more="matterCtrl.applyFilterLazyLoading()"
+                        all="matterCtrl.getAllMatterList()" total="matterCtrl.totalIntake"></show-record-count-only>
+                </div>
+                <div class="clearfix"></div>
+                <div id="archivalGridUpper"></div>
+
+                <div data-ng-show="matterCtrl.filteredMatters.length > 0">
+                    <scroll-table-intake tableid="archivalGrid1" watch="matterCtrl.viewModel.matters" to="#archivalGridUpper"
+                        from="#moreAllLink">
+                        <table class="table table-scroll">
+                            <thead>
+                                <tr>
+                                    <th class="th-width-3">
+                                        <div class="checkbox margin0"
+                                            ng-show="matterCtrl.selectionModel.statusName != 'Migrated'">
+                                            <input type="checkbox" data-ng-model="matterCtrl.clxGridOptions.selectAll"
+                                                data-ng-checked="matterCtrl.allMatterSelected()"
+                                                data-ng-click="matterCtrl.selectAllMatters(matterCtrl.clxGridOptions.selectAll)" />
+                                            <label></label>
+                                        </div>
+                                        <div class="checkbox margin0"
+                                            ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                            <!-- <input type="checkbox" data-ng-model="matterCtrl.clxGridOptions.selectAll"
+                                                        data-ng-checked="matterCtrl.allMatterSelected()" data-ng-click="matterCtrl.selectAllMatters(matterCtrl.clxGridOptions.selectAll)"
+                                                        ng-class="{ 'visibilityClass' : matterCtrl.selectionModel.statusName == 'Migrated'}" />
+                                                    <label></label> -->
+                                        </div>
+
+                                    </th>
+                                    <th class="th-width-25"><b>Lead Name</b></th>
+                                    <th class="th-width-20"><b>Status & Substatus</b></th>
+                                    <th class="th-width-22"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <b>Type,
+                                            Subtype, Category</b></th>
+                                    <th class="th-width-25"
+                                        ng-show="matterCtrl.selectionModel.statusName != 'Migrated'">
+                                        <b>Type,
+                                            Subtype, Category</b></th>
+                                    <th class="th-width-10"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <b>Date
+                                            Created</b></th>
+                                    <th class="th-width-17"
+                                        ng-show="matterCtrl.selectionModel.statusName != 'Migrated'">
+                                        <b>Date
+                                            Created</b></th>
+                                    <th class="th-width-10"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <b>Migrated
+                                            Date</b></th>
+                                    <th class="th-width-10"><b>Assigned To</b></th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="dashboard-tasks-due"  id="matterlistbody" style="overflow-y:overlay">
+                                <tr row-id="{{ $index }}"
+                                    data-ng-class="{'selected-grid-row':(matterCtrl.display.matterSelected[data.intakeId])}"
+                                    data-ng-if="matterCtrl.display.filtered"
+                                    data-ng-repeat="data in matterCtrl.filteredMatters = (matterCtrl.viewModel.matters|filter:matterCtrl.viewModel.filters.filterText) track by data.intakeId"
+                                    data-highlight-clicked-row="{{data.intakeId}},matterCtrl.clickedRow">
+                                    <td class="th-width-3">
+                                        <div class="checkbox relative-container margin0"
+                                            ng-class="{ 'visibilityClass' : matterCtrl.selectionModel.statusName == 'Migrated'}">
+                                            <input type="checkbox" data-ng-checked="matterCtrl.isMatterSelected(data)"
+                                                checklist-model="matterCtrl.clxGridOptions.selectedItems"
+                                                checklist-value="data" />
+                                            <label></label>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-25">
+                                        <div>
+                                            <div>
+                                                <a href="#/intake/intake-overview/{{data.intakeId}}">
+                                                    <span data-toggle="matter_name-tooltip" data-placement="bottom"
+                                                        tooltip="{{data.intakeName}}">{{data.intakeName}}</span>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td class="th-width-20">
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.status_name | replaceByDash}}">{{data.status_name
+                                                        | replaceByDash}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.sub_status_name | replaceByDash}}">{{data.sub_status_name
+                                                        | replaceByDash}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-25"
+                                        ng-show="matterCtrl.selectionModel.statusName != 'Migrated'">
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeType | replaceByDash}}">{{data.intakeType
+                                                        | replaceByDash}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeSubType | replaceByDash}}">{{data.intakeSubType
+                                                        | replaceByDash}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeCategory | replaceByDash}}">{{data.intakeCategory
+                                                        | replaceByDash}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-22"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeType | replaceByDash}}">{{data.intakeType
+                                                            | replaceByDash}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeSubType | replaceByDash}}">{{data.intakeSubType
+                                                            | replaceByDash}}</span>
+                                        </div>
+                                        <div>
+                                            <span class="" tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.intakeCategory | replaceByDash}}">{{data.intakeCategory
+                                                            | replaceByDash}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-17"
+                                        ng-show="matterCtrl.selectionModel.statusName != 'Migrated'">
+                                        <div>
+                                            <span tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.createdDate}}">{{data.createdDate}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-10"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <div>
+                                            <span tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.createdDate}}">{{data.createdDate}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-10"
+                                        ng-show="matterCtrl.selectionModel.statusName == 'Migrated'">
+                                        <div>
+                                            <span tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.migrationDate}}">{{data.migrationDate}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="th-width-10">
+                                        <div class="default-white-space">
+                                            <span tooltip-append-to-body="true" data-placement="bottom"
+                                                tooltip="{{data.assignedUserNames}}">{{data.assignedUserNames}}</span>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </scroll-table-intake>
+                </div>
+
+
+                <p class="text-center margin-top10px"
+                    data-ng-if="((!matterCtrl.filteredMatters)||(matterCtrl.filteredMatters.length === 0 || matterCtrl.viewModel.matters.length===0))&& matterCtrl.display.matterListReceived">
+                    No data for the applied filters
+                </p>
+
+                <div class="clearfix"></div>
+                <div class="col-md-12 more-link-wrapper" id="moreAllLink">
+                    <show-record-more-and-all
+                        data-ng-show="matterCtrl.viewModel.matters.length >0  && (matterCtrl.viewModel.matters.length < matterCtrl.totalIntake)"
+                        displayed="matterCtrl.viewModel.matters.length" hide-pager="{{matterCtrl.showPager}}"
+                        more="matterCtrl.applyFilterLazyLoading()" all="matterCtrl.getAllMatterList()"
+                        total="matterCtrl.totalIntake">
+                    </show-record-more-and-all>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer data-ng-if="matterCtrl.viewModel.page=='GRIDVIEW'" position-center>
+
+    <ul>
+        <li>
+            <a href="javascript:void(0);" ng-click="matterCtrl.applyFooterFilters('Ongoing','clickedTab')"
+                ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Ongoing'}">Ongoing</a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" ng-click="matterCtrl.applyFooterFilters('Migrated','clickedTab')"
+                ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Migrated'}">Migrated</a>
+        </li>
+    </ul>
+
+</footer>

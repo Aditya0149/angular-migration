@@ -1,0 +1,266 @@
+<div class="archive-matter-list-wrapper">
+
+    <div ng-class="{'launcher-archive-grid': !archiveMatterCtrl.isMM, 'matter-archive-grid':archiveMatterCtrl.isMM}"
+    ng-attr-id="{{archiveMatterCtrl.isMM ? 'report-content': 'report-content1'}}" scrolly="archiveMatterCtrl.scrollReachedBottom()"
+    reached-top="archiveMatterCtrl.scrollReachedTop()" class="margin-top15px">
+
+    <div class="col-md-3 padding-0 margin-top10px">
+        <h1 class="col-md-6 padding-0">Archived Matters </h1>
+        <div class="col-md-12 padding-0 h-20">
+            <a data-ng-click="archiveMatterCtrl.retriveArchivedMatter(archiveMatterCtrl.clxGridOptions.selectedItems,archiveMatterCtrl.filteredMatters)"
+                ng-show="archiveMatterCtrl.clxGridOptions.selectedItems.length > 0 && archiveMatterCtrl.isGraceOver == 1">
+                <span class="sprite retrieve-alert-icon margin-top5px" tooltip="Retrieve"
+                    tooltip-placement="right">&nbsp;</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-9 gridSec margin0 archiveGridSecStyle">
+        <div class="col-md-12 paddingRLR">
+            <div class="col-md-8 pull-right paddingRLR clearfix">
+                <ul class="pull-right">
+                    <li>
+                        <div class="search-input form-control-margin-null" data-ng-show="archiveMatterCtrl.showSearch">
+                            <div class="default-searchico sprite"></div>
+                            <input type="text" focus-me="archiveMatterCtrl.showSearch" data-ng-model-options="{ debounce: 0 }"
+                                data-ng-model="archiveMatterCtrl.viewModel.filters.filterText" data-ng-change="archiveMatterCtrl.filterRetain();"
+                                class="form-control">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="showBy-btns pull-right margin-top5px">
+                    <li class="seperation-filter"></li>
+                    <li tooltip="Filter" tooltip-placement="right">
+                        <a>
+                            <span data-ng-click="archiveMatterCtrl.toggleFilterPage();" class="sprite default-filter"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <!-- <li>
+                        <a class="list" data-ng-click="archiveMatterCtrl.print()">
+                            <span class="sprite default-file sortby-icons margin-right5px" tooltip="Print Matters"
+                                tooltip-placement="left"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="list" data-ng-click="archiveMatterCtrl.downloadArchivedMatters()">
+                            <span class="sprite default-sharedown sortby-icons margin-right10px" tooltip="Export Matters"
+                                tooltip-placement="left"></span>
+                        </a>
+                    </li> -->
+                    <a class="list"></a>
+                    <li class="search-overlap">
+                        <ul data-ng-hide="archiveMatterCtrl.showSearch">
+                            <li><a data-ng-click="archiveMatterCtrl.showSearch = true"><span class="sprite default-searchico-menu "
+                                        tooltip="Search" tooltip-placement="left"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="pull-right border">
+                </div>
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <span class="sortby-align">Sort By:</span>
+                        <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            {{archiveMatterCtrl.getSortByLabel(archiveMatterCtrl.viewModel.filters.sortby)}}
+                            <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu custom-height" role="menu" aria-labelledby="dLabel">
+                            <li data-ng-repeat-start="sort in archiveMatterCtrl.sorts" data-ng-class="{' active': archiveMatterCtrl.viewModel.filters.sortby == sort.key}">
+                                <a data-ng-click="archiveMatterCtrl.applySortByFilter(sort.key)">{{sort.name}}</a>
+                            </li>
+                            <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="pull-right ">
+                <clx-filter-tags on-filter-cancel="archiveMatterCtrl.tagCancelled" tag-list="archiveMatterCtrl.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="archiveMatterCtrl.viewModel.matters.length >0 && archiveMatterCtrl.filteredMatters.length > 0">
+        <show-record-count displayed="archiveMatterCtrl.viewModel.matters.length" hide-pager="{{archiveMatterCtrl.viewModel.matters.length < archiveMatterCtrl.totalMatters}}"
+            more="archiveMatterCtrl.applyFilterLazyLoading()" all="archiveMatterCtrl.getAllMatterList()" total="archiveMatterCtrl.totalMatters"></show-record-count>
+    </div>
+    <div class="clearfix"></div>
+    <div id="archivalGridUpper"></div>
+    <div data-ng-show="archiveMatterCtrl.viewModel.matters.length >0 && archiveMatterCtrl.filteredMatters.length > 0">
+        <scrollable-table tableid="archivalGrid1" watch="archiveMatterCtrl.viewModel.matters" to="#archivalGridUpper"
+            from="#moreAllLink">
+            <table class="table fix-layout">
+                <thead>
+                    <tr>
+                        <th class="th-width-3">
+                            <div class="checkbox margin0">
+                                <input type="checkbox" data-ng-model="archiveMatterCtrl.clxGridOptions.selectAll"
+                                    data-ng-checked="archiveMatterCtrl.allMatterSelected()" data-ng-click="archiveMatterCtrl.selectAllMatters(archiveMatterCtrl.clxGridOptions.selectAll)" />
+                                <label></label>
+                            </div>
+                        </th>
+                        <th class="th-width-15">Matter Name, File# and Index/Docket#</th>
+                        <th class="th-width-8">Archival Status</th>
+                        <th class="th-width-12">Type, Sub-Type,
+                            <br /> Law-Type & Category</th>
+                        <th class="th-width-12">Court & Venue</th>
+                        <th class="th-width-9">Date of Archival & Date of Incident</th>
+                        <th class="th-width-8">Settlement Date</th>
+                        <th class="th-width-8">Settlement Amount</th>
+                        <th class="th-width-10">Total Paid & Outstanding Amount</th>
+                        <th class="th-width-8">Retainer No</th>
+                        <th class="th-width-7">Closing Statement No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-class="{'selected-grid-row':(archiveMatterCtrl.display.matterSelected[response.matter_id] || (archiveMatterCtrl.clickedRow == response.matter_id))}"
+                        ng-repeat="response in archiveMatterCtrl.filteredMatters = (archiveMatterCtrl.viewModel.matters|filter:archiveMatterCtrl.viewModel.filters.filterText)"
+                        row-id="{{ $index }}">
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" data-ng-checked="archiveMatterCtrl.isMatterSelected(response)"
+                                    checklist-model="archiveMatterCtrl.clxGridOptions.selectedItems" checklist-value="response" />
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                        <a href="#/matter-overview/{{response.matter_id}}" ng-hide="response.matter_archive_status != 2">
+                                            <span data-toggle="matter_name-tooltip" data-placement="bottom" title=""
+                                            data-original-title="{{response.matter_name}}">{{response.matter_name}}</span>
+                                        </a>
+
+                                        <span data-toggle="matter_name-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.matter_name}}" ng-hide="response.matter_archive_status == 2">{{response.matter_name}}</span>
+                                </div>
+                                <div>
+                                    <span>File #</span>
+                                    <span class="" data-toggle="file_number-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.file_number}}">{{response.file_number}}</span>
+                                </div>
+                                <div>
+                                    <span>Index/Docket#</span>
+                                    <span class="" data-toggle="index_number-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.index_number}}">{{response.index_number}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span class="data-show" data-toggle="status-tooltip"
+                                        data-placement="bottom" title="" data-original-title="{{response.status}}">{{response.status}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span data-toggle="matter_type_name-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.matter_type_name | replaceByDash}}">{{response.matter_type_name
+                                        | replaceByDash}}</span>
+                                </div>
+                                <div>
+                                    <span data-toggle="matter_sub_type_name-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.matter_sub_type_name | replaceByDash}}">{{response.matter_sub_type_name
+                                        | replaceByDash}}</span>
+                                </div>
+                                <div>
+                                    <span data-toggle="law_type_name-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.law_type_name | replaceByDash}}">{{response.law_type_name
+                                        | replaceByDash}}</span>
+                                </div>
+                                <div>
+                                    <span data-toggle="category_name-tooltip" data-placement="bottom" title=""
+                                        data-original-title="{{response.category_name | replaceByDash}}">{{response.category_name
+                                        | replaceByDash}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="mattercourt-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.mattercourt}}">{{response.mattercourt}}</span>
+                            </div>
+                            <div>
+                                <span data-toggle="venue_name-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.venue_name}}">{{response.venue_name}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="matter_archive_date-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.matter_archive_date}}">{{response.matter_archive_date}}</span>
+                            </div>
+                            <div>
+                                <span data-toggle="dateofincidence-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.dateofincidence}}">{{response.dateofincidence}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="settlement_date-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.settlement_date}}">{{response.settlement_date}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.settlement_amount | currency}}" ng-if="response.settlement_amount!='-'">{{
+                                    response.settlement_amount | currency}}</span>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.settlement_amount}}" ng-if="response.settlement_amount=='-'">{{
+                                    response.settlement_amount}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.total_paid | currency}}" ng-if="response.total_paid!='-'">{{
+                                    response.total_paid | currency}}</span>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.total_paid}}" ng-if="response.total_paid=='-'">{{
+                                    response.total_paid}}</span>
+                            </div>
+                            <div>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.outstanding_amount | currency}}" ng-if="response.outstanding_amount!='-'">{{
+                                    response.outstanding_amount | currency}}</span>
+                                <span data-toggle="settlement_amount-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.outstanding_amount}}" ng-if="response.outstanding_amount=='-'">{{
+                                    response.outstanding_amount}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="retainer_no-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.retainer_no}}">{{response.retainer_no}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span data-toggle="closing_statement_no-tooltip" data-placement="bottom" title=""
+                                    data-original-title="{{response.closing_statement_no}}">{{response.closing_statement_no}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+    <div class="col-md-12" id="moreAllLink" ng-class="{'moreLink': !archiveMatterCtrl.isMM, 'matter-moreAll-link':archiveMatterCtrl.isMM}">
+        <div class="text-center">
+                <!-- data-ng-show="(archiveMatterCtrl.viewModel.matters.length >0 && archiveMatterCtrl.filteredMatters.length > 0) && (archiveMatterCtrl.viewModel.matters.length < archiveMatterCtrl.totalMatters)" -->
+            <!-- <a href="javascript:void(0)" data-ng-click="archiveMatterCtrl.applyFilterLazyLoading()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" data-ng-click="archiveMatterCtrl.getAllMatterList()">All</a> -->
+        </div>
+    </div>
+    <p class="text-center margin-top10px clear-both" data-ng-show="(archiveMatterCtrl.filteredMatters.length === 0 || archiveMatterCtrl.viewModel.matters.length===0)&& archiveMatterCtrl.display.matterListReceived">
+        There are no archived matters.
+    </p>
+</div>
+</div>

@@ -1,0 +1,24 @@
+// color constants
+$color_gray_dark: #999;
+$color_aqua_haze_2: #eff3f6;
+$color_tundora: #484848;
+$color_white: #ffffff;
+$color_red: #ff0000;
+$color_aqua_haze: #f7f9fa;
+$color_early_dawn: #fff9e5;
+$color_geyser: #d3d9de;
+$color_gray80: #ccc;
+$color_mystic: #e9eef0;
+$color_light_grayish_blue: #eaeff1;
+$color_dark_grayish_red: #807f7f;
+$color_strong_blue: #2097c6;
+$color_moderate_blue: #3c9fca;
+$color_light_grayish_red: #f0eded;
+$dark_black: #000;
+$light_black:rgba(109, 70, 70, 0);
+$divider_border:1px solid #ccc;
+
+// generic mixins
+@mixin set_background_color($color) {
+  background-color: $color !important;
+}

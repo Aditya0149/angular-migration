@@ -1,0 +1,176 @@
+<style>
+    .select2-container-multi .select2-choices {
+        max-height: 85px;
+        overflow-y: auto;
+    }
+
+    .ui-select-choices-group hr.ng-scope {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        border-top: 1px solid #d3d9de;
+    }
+
+    .select2-drop-active {
+        border-top: 1px solid #ccc;
+        border: 1px solid #ccc;
+    }
+
+    .selectize-dropdown-content {
+        border-top: 1px solid #ccc;
+        max-height: 160px
+    }
+
+    .selectize-dropdown .optgroup {
+        border-top: 0px !important;
+    }
+
+    .dropdown-menu-94per .dropdown-menu {
+        width: 94% !important;
+    }
+
+    .select2-results {
+        max-height: 250px !important;
+    }
+
+    .add-note-height-180 .ta-scroll-window {
+        height: 320px !important;
+    }
+
+    .panel-content-overflow {
+        height: 100vh !important;
+    }
+
+    .dropdown-menu {
+        max-height: 250px;
+    }
+
+    div#globalNotesAdd ul li {
+        list-style: disc;
+        margin-left: 10px;
+    }
+</style>
+<div class="row">
+    <div class="pull-right margin-top10px margin-right30px">
+        <a class="paddingLR-10px" data-ng-click="addGlobalNotes.resetAddGlobalNotes()" href="javascript:void(0)">Reset
+        </a>
+        <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+        </a>
+    </div>
+</div>
+<div>
+    <div style="margin-left: 25px;" class="form-group" ng-form="addGlobalNotes.addNote">
+        <div class="page-title-border clearfix  heading-with-button-bottom-padding global-page-title">
+            <h1 class="pull-left page-title">{{addGlobalNotes.noteToBeAdded.mode === 'edit' ? 'Edit' : 'Add'}} Note</h1>
+            <div class="pull-right">
+                <button class="btn btn-default pull-right" data-ng-click="addGlobalNotes.saveMatterNote()"
+                    data-ng-disabled="addGlobalNotes.addNote.$invalid">
+                    Done</button>
+                <button class="btn btn-default btn-styleNone pull-right" data-ng-click="addGlobalNotes.cancel()">
+                    Cancel</button>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6 padding-0">
+                <div class="col-md-12 padding-0 add-note-height-180 padding-right-0">
+                    <label>Note<span class="compulsary-mark">*</span></label>
+                    <wysiwyg textarea-id="globalNotesAdd"
+                        textarea-class="new-editor-height globle-note-color form-control"
+                        textarea-name="globalNoteAddText" textarea-required ng-model="addGlobalNotes.noteToBeAdded.text"
+                        enable-bootstrap-title="true" form-data="addGlobalNotes.addNote.globalNoteAddText"></wysiwyg>
+
+                    <div data-ng-show="addGlobalNotes.addNote.globalNoteAddText.$error.maxSize"
+                        ng-messages="addGlobalNotes.addNote.globalNoteAddText.$error">
+                        <div class="error" style="float: left !important;" ng-message="maxSize">
+                            Note description max limit exceeded
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 14px;">
+                <div class="col-md-12 padding-0">
+                    <div ng-if="isIntake" class="col-md-6 padding-0 margin-top30px">
+                        <label>Intake<span class="compulsary-mark">*</span></label>
+                        <div class="dropdown-menu-94per">
+                            <input type="text" data-ng-model="addGlobalNotes.noteToBeAdded.matter"
+                                data-ng-required="true" data-ng-disabled="addGlobalNotes.noteToBeAdded.mode == 'edit'"
+                                data-ng-model-options="{ debounce: 500 }" placeholder="Search intake"
+                                typeahead-editable="false"
+                                typeahead="row as removeunwantedhtml(row.intakeName + row.dateIntake) for row in addGlobalNotes.getMatterList($viewValue,0)"
+                                typeahead-input-formatter="addGlobalNotes.formatTypeaheadDisplay($model)"
+                                class="form-control full-width">
+                        </div>
+                    </div>
+                    <div ng-if="!isIntake" class="col-md-6 padding-0 margin-top30px">
+                        <label>Matter<span class="compulsary-mark">*</span></label>
+                        <div class="dropdown-menu-94per"><input type="text" name="matterid"
+                                data-ng-model="addGlobalNotes.noteToBeAdded.matter" data-ng-required="true"
+                                data-ng-disabled="addGlobalNotes.noteToBeAdded.mode == 'edit'"
+                                data-ng-model-options="{ debounce: 500 }" placeholder="Search matter"
+                                typeahead-editable="false"
+                                typeahead="row as removeunwantedhtml(row.name) + ' - ' + row.filenumber for row in addGlobalNotes.getMatterList($viewValue)"
+                                typeahead-input-formatter="addGlobalNotes.formatTypeaheadDisplay($model)"
+                                class="form-control full-width"></div>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-0">
+                    <div class="col-md-6 padding-0 margin-top30px">
+                        <label>Link Contact</label>
+                        <ui-select multiple ng-model="addGlobalNotes.noteToBeAdded.linked_contact" theme="select2"
+                            class="width100" data-ng-init="addGlobalNotes.contactList1 =[]">
+                            <ui-select-match placeholder="Enter Contact">
+                                {{$item.firstname + " " + $item.lastname}}
+                            </ui-select-match>
+                            <ui-select-choices refresh-delay="1000"
+                                refresh="addGlobalNotes.getLinkContact($select.search)"
+                                repeat="contact.contactid as contact in addGlobalNotes.contactList1  | orderBy: 'name'">
+                                <small>
+                                    {{contact.firstname + " " + contact.lastname}} <br>
+                                    {{contact.street}} {{contact.city}}<span
+                                        ng-if="((contact.street && contact.street.length > 0)||(contact.city && contact.city.length > 0)) && (contact.state && contact.state.length > 0)">,</span>
+                                    {{contact.state}}
+                                </small>
+                                <hr>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-6 add-now-wrap padding-0">
+                        <span class="or-connector connector-txt">OR</span>
+                        <button class="btn btn-default contact-btn margin0" data-ng-click="addGlobalNotes.addNewContact('all_notes')">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-0">
+                    <div class="col-md-6 padding-0 margin-top30px">
+                        <label>Category</label>
+
+                        <ui-select class="full-width" ng-model="addGlobalNotes.noteToBeAdded.noteCategory.notecategory_id"
+                            theme="selectize">
+                            <ui-select-match placeholder="Select category">
+                                {{$select.selected.category_name |  SentenseCase}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                repeat="item.notecategory_id as item in addGlobalNotes.notesCategories | filter:{ category_name:$select.search }">
+                                <small>
+                                    {{item.category_name |  SentenseCase}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="col-md-6 padding-0 margin-top55px form-group form-inline">
+                        <div>
+                            <div ng-switcher ng-model="addGlobalNotes.noteToBeAdded.is_important"
+                                class="form-control zero-border remove-bg">
+                            </div>
+                            <label>
+                                <a href="javascript:void(0);">Important</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="margin-top30px">&nbsp;</div>
+        </div>
+    </div>
+</div>

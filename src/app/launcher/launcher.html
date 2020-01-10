@@ -1,0 +1,379 @@
+
+<div class="launcher-wrapper" ng-class="{'chrome-mac' :isChromeOnMac}">
+    <div id="main-event">
+        <div class="col-md-12 " data-ng-hide="showSearch">
+            <div class="pull-right">
+            </div>
+        </div>
+        <div class="col-md-8 padding-right-0 custom-div" data-ng-hide="showSearch">
+            <!-- <div class="padding-left-0 margin-top10px welcom" style="font-size: 15px;">Welcome {{userName}}</div> -->
+            <p class="subscriptions">Your Subscriptions</p>
+            <!-- <div class="whatnew">WHAT'S NEW!</div> -->
+            <div class="main-block">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('MM','dashboard.analytics');">
+                    <div class="img-block">
+                        <a href="#/dashboard">
+                            <img class="cursor-pointer" src="../styles/images/launcher-icons/matter-manager.png">
+                        </a>
+                    </div>
+                    <div class="details-block">
+                        <span ng-click="launcher.isActive('MM','dashboard.analytics',$event)"
+                            class="title cur-pointer">MATTER
+                            MANAGER</span>
+                        <div class="link-block">
+                            <a ng-click="launcher.isActive('MM','dashboard.analytics',$event)"
+                                class="link">Dashboard</a>
+                            <span class="pipe">|</span>
+                            <a ng-click="launcher.isActive('MM','matter-list',$event)" class="link">Matters</a>
+                            <!-- <a href="#" class="dots dropdown-toggle" id="mm1" data-toggle="dropdown" aria-expanded="true"></a> -->
+                            <span ng-click="launcher.stopEvent($event)"><img class="dotedimg"
+                                    src="../styles/images/more.png"></span>
+                            <span class="set-txt">
+                                <!-- <span id="mmi1" class="star-icon"></span> -->
+                                <div class="cell checkbox launcher-checkbox">
+                                    <input type="checkbox" data-ng-checked="isMatterManagerSelected" id="mmi1"
+                                        ng-click="launcher.applycss('mm1',$event)" ng-model="check"
+                                        class="ng-scope ng-pristine ng-valid ng-touched">
+                                    <!-- <label><a href="#" id="mm1" ng-click="launcher.applycss('mm1')">Set as Default</a></label> -->
+                                    <label ng-click="launcher.stopEventOnDefalult($event)"
+                                        tooltip="Navigate directly to your favorite app as soon as you log in."
+                                        tooltip-placement="bottom">Set as Default</label>
+                                </div>
+                            </span>
+                            <div id="toggleDiv" class="togglediv">
+                                <p> <a ng-click="launcher.isActive('MM','globalContact',$event)"
+                                        class="link">Contacts</a></p>
+                                <p><a ng-click="launcher.isActive('MM','documents',$event)">Documents</a></p>
+                                <p><a ng-click="launcher.isActive('MM','report.allMatterListReport',$event)">Reports</a>
+                                </p>
+
+
+                            </div>
+                            <!-- <ul class="launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown newdrop"
+                                role="menu" aria-labelledby="mm">
+                                <a ng-click="launcher.isActive('MM','documents')">Documents</a>
+                                <li class="divider"></li>
+                                <a ng-click="launcher.isActive('MM','report.allMatterListReport')">Reports</a>
+                                <li class="divider"></li>
+                                <a ng-click="launcher.isActive('MM','globalContact')" class="link">Contacts</a>
+
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-block" data-ng-show="isIntakeActiveUI">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('IM','intakedashboard.analytics')">
+                    <div class="img-block">
+                        <a ng-href="{{isUserIntakeActive ? '#/intake/dashboard':'javascript:void(0)'}}">
+                            <img ng-click="launcher.isActive('IM','intakedashboard.analytics')" class="cursor-pointer"
+                                src="../styles/images/launcher-icons/intake-manager.png">
+                        </a>
+                    </div>
+                    <div class="details-block">
+                        <span ng-click="launcher.isActive('IM','intakedashboard.analytics',$event)"
+                            class="title cur-pointer">INTAKE MANAGER</span>
+                        <div class="link-block">
+                            <a ng-click="launcher.isActive('IM','intakedashboard.analytics',$event)"
+                                class="link">Dashboard</a>
+                            <span class="pipe">|</span>
+                            <a ng-click="launcher.isActive('IM','intake-list',$event)" class="link">Intakes</a>
+                            <!-- <span class="pipe">|</span>
+                            <a ng-click="launcher.isActive('IM','intakeglobalContact')" class="link">Contacts</a> -->
+                            <!-- <a href="#" class="dots dropdown-toggle" id="mm" data-toggle="dropdown" aria-expanded="true"></a> -->
+                            <span ng-click="launcher.stopIntakeEvent($event)"><img class="dotedimg"
+                                    src="../styles/images/more.png"></span>
+                            <span class="set-txt"
+                                ng-class="{'cursor-pointer-events-none' :isIntakeActive == 0, '' : isIntakeActive == 1}">
+                                <div class="cell checkbox launcher-checkbox">
+                                    <input type="checkbox" data-ng-checked="isIntakeManagerSelected" id="mmi2"
+                                        ng-click="launcher.applycss('mm2',$event)" ng-model="checked"
+                                        class="ng-scope ng-pristine ng-valid ng-touched">
+                                    <!-- <label><a href="#" id="mm2" ng-click="launcher.applycss('mm2')">Set as Default</a></label> -->
+                                    <label ng-click="launcher.stopEventOnDefalult($event)"
+                                        tooltip="Navigate directly to your favorite app as soon as you log in."
+                                        tooltip-placement="bottom">Set as Default</label>
+                                </div>
+                                <!-- <span id="mmi2" class="star-icon"></span> -->
+                            </span>
+                            <div id="toggleIntakeDiv" class="togglediv intakeToggle">
+                                <p> <a ng-click="launcher.isActive('IM','intakeglobalContact',$event)"
+                                        class="link">Contacts</a></p>
+                                <p><a
+                                        ng-click="launcher.isActive('IM','intakereport.allIntakeListReport',$event)">Reports</a>
+                                </p>
+                            </div>
+                            <!-- <ul class="launcher-dropdown dropdown-menu username-dropdown username-profile-dropdown"
+                                role="menu" aria-labelledby="mm" style="margin-right:58px">
+                                <a ng-click="launcher.isActive('IM','intakereport.allIntakeListReport')">Reports</a>
+                                <li class="divider"></li>
+                                <a ng-click="launcher.isActive('IM','intakeglobalContact')" class="link">Contacts</a>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-block" data-ng-show="isReferalActiveUI">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('RE')">
+                    <div class="img-block">
+                        <a ng-href="{{isUserReferalActive ? '#/referred-matters':'javascript:void(0)'}}">
+                            <img class="cursor-pointer" src="../styles/images/launcher-icons/referral-engine.png">
+                        </a>
+                    </div>
+                    <div class="details-block">
+                        <span class="title cur-pointer">REFERRAL ENGINE</span>
+                        <!-- <div class="set-txt">
+                        <span id="mmi3" class="star-icon"></span>
+                        <a href="#"  id="mm3" ng-click="launcher.applycss('mm3')">Set as Default</a>
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="main-block" data-ng-show="isDigiArchivalSubUI">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('DA')">
+                    <div class="img-block">
+                        <a ng-href="{{isUserDigiArchivalSub ? '#/archival':'javascript:void(0)'}}">
+                            <img class="cursor-pointer" src="../styles/images/launcher-icons/digital-archiver.png">
+                        </a>
+                    </div>
+                    <div class="details-block">
+                        <span class="title cur-pointer">DIGITAL
+                            ARCHIVER</span>
+                        <!-- <div class="set-txt">
+                            <span id="mmi4" class="star-icon"></span>
+                            <a href="#"  id="mm4"  ng-click="launcher.applycss('mm4')">Set as Default</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="main-block">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('CM')">
+                    <div class="img-block">
+                        <a href="#/launcher/contacts">
+                            <img ng-click="launcher.isActive('CM')" class="cursor-pointer"
+                                src="../styles/images/marketplace-images/icon/contact-manager.png?v=15">
+                        </a>
+                    </div>
+                    <div ng-click="launcher.isActive('CM')" class="details-block">
+                        <span class="title cursor-pointer">CONTACT MANAGER</span>
+                    </div>
+                </div>
+            </div>
+            <!-- US16929: Expense Manager (Quickbooks integration) -->
+            <div class="main-block" data-ng-show="isExpenseActiveUI">
+                <div class="lanch-block cursor-pointer" ng-click="launcher.isActive('EM')">
+                    <div class="img-block">
+                        <a ng-href="{{isUserExpenseActive ? '#/expenseManager':'javascript:void(0)'}}">
+                            <img class="cursor-pointer"
+                                src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=1">
+                        </a>
+                    </div>
+                    <div class="details-block">
+                        <span class="title cursor-pointer">EXPENSE MANAGER</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div data-ng-show="launcher.is_Subscriber"> -->
+            <div class="bottom-div"
+                data-ng-if="!isReferalActiveUI || !isDigiArchivalSubUI || !isIntakeActiveUI  || !isSmsActiveUI">
+                <p class="addon">Add-ons: <span>Subscribe to these applications to enhance your firm’s
+                        productivity.</span></p>
+
+
+
+                <div class="main-block" data-ng-if="!isReferalActiveUI">
+                    <div class="lanch-block cursor-pointer" ng-click="launcher.showDetailsData('RE')">
+                        <div class="img-block">
+                            <a href="#/application-details/referral">
+                                <img class="cursor-pointer"
+                                    src="../styles/images/marketplace-images/icon/referral-engine.png">
+                            </a>
+
+                        </div>
+                        <div class="details-block">
+                            <span class="cursor-pointer">REFERRAL ENGINE</span>
+                            <!-- <p>Lexvia Services</p> -->
+                        </div>
+                        <div class="subcrib">
+                            <button type="button" class="btn subscrib">GET</button>
+                            <!-- <button type="button" data-ng-disabled="launcher.is_Subscriber == false && launcher.is_admin == false" ng-click="launcher.save(launcher.isRefferalEngine, 'RE',launcher.isRefferalEngine.app_order)" class="btn subscrib">GET</button> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-block" data-ng-if="!isDigiArchivalSubUI">
+                    <div class="lanch-block cursor-pointer" ng-click="launcher.showDetailsData('DA')">
+                        <div class="img-block">
+                            <a href="#/application-details/digital-archival">
+                                <img class="cursor-pointer" src="../styles/images/launcher-icons/digital-archiver.png">
+                            </a>
+                        </div>
+                        <div class="details-block">
+                            <span class="cursor-pointer">DIGITAL ARCHIVER</span>
+                            <!-- <p>Lexvia Services</p> -->
+                        </div>
+                        <div class="subcrib">
+                            <button type="button" class="btn subscrib">GET</button>
+                            <!-- <button type="button" data-ng-disabled="launcher.is_Subscriber == false && launcher.is_admin == false" ng-click="launcher.save(launcher.isDigitalArchival, 'DA',launcher.isDigitalArchival.app_order)" class="btn subscrib">GET</button> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="main-block" data-ng-if="!isIntakeActiveUI">
+                    <div class="lanch-block cursor-pointer" ng-click="launcher.showDetailsData('IM')">
+                        <div class="img-block">
+                            <a href="#/application-details/intake-manager">
+                                <img ng-click="launcher.showDetailsData('IM')" class="cursor-pointer"
+                                    src="../styles/images/launcher-icons/intake-manager.png"></a>
+                        </div>
+                        <div class="details-block">
+                            <span ng-click="launcher.showDetailsData('IM')" class="cursor-pointer">INTAKE MANAGER</span>
+                            <!-- <p>Lexvia Services</p> -->
+                        </div>
+                        <div class="subcrib">
+                            <button type="button" ng-click="launcher.showDetailsData('IM')"
+                                class="btn subscrib">GET</button>
+                            <!-- <button type="button" data-ng-disabled="launcher.is_Subscriber == false && launcher.is_admin == false" ng-click="launcher.save(launcher.isIntakeManager, 'IM',launcher.isIntakeManager.app_order)" class="btn subscrib">GET</button> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- US16929: Expense Manager (Quickbooks integration) -->
+                <!-- <div class="main-block" data-ng-show="isExpenseActiveUI">
+                    <div class="lanch-block cursor-pointer" ng-click="launcher.showDetailsData('EM')">
+                        <div class="img-block">
+                            <a href="#/application-details/expense-manager">
+                                <img ng-click="launcher.showDetailsData('EM')" class="cursor-pointer"
+                                    src="styles/images/marketplace-images/icon/Expense_Manager.svg?v=16677"></a>
+                                 
+                        </div>
+                        <div class="details-block">
+                            <span ng-click="launcher.showDetailsData('EM')" class="cursor-pointer">EXPENSE
+                                MANAGER</span>
+                        </div>
+                        <div class="subcrib">
+                            <button type="button" ng-click="launcher.showDetailsData('EM')"
+                                class="btn subscrib">GET</button>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <div class="main-block " data-ng-show="isSmsActiveUI ==  false" ng-if="!hideSMS">
+                    <div class="lanch-block cursor-pointer" ng-click="launcher.showDetailsData('SMS')">
+                        <div class="img-block">
+                            <a href="#/application-details/sms">
+                                <img ng-click="launcher.showDetailsData('SMS')" class="cursor-pointer"
+                                    src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677"></a>
+                        </div>
+                        <div class="details-block">
+                            <span ng-click="launcher.showDetailsData('SMS')" class="cursor-pointer">CLIENT
+                                MESSENGER</span>
+                            <!-- <p>Lexvia Services</p> -->
+                        </div>
+                        <div class="subcrib">
+                            <button type="button" ng-click="launcher.showDetailsData('SMS')"
+                                src="styles/images/marketplace-images/icon/two-way-text.svg?v=16677"
+                                class="btn subscrib">GET</button>
+                            <!-- <button type="button" data-ng-disabled="launcher.is_Subscriber == false && launcher.is_admin == false" ng-click="launcher.save(launcher.isIntakeManager, 'IM',launcher.isIntakeManager.app_order)" class="btn subscrib">GET</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <div class="col-md-4 right-block custom-div-small bluebg" data-ng-hide="showSearch">
+            <!-- <p class="new-release">New Releases</p> -->
+            <div class="main-block">
+                <!-- <div class="slider">
+                    <carousel interval="launcher.myInterval">
+                        <slide ng-repeat="slide in launcher.slides" active="slide.active">
+                            <img ng-src="{{slide.image}}" class="cursor-pointer" ng-click="launcher.viewImage(slide.image)"
+                                style="margin:auto;">
+                        </slide>
+                    </carousel>
+                </div> -->
+                <div ng-if="launcher.showReferralProgram">
+                    <div class="referral-prg" data-ui-sref="referral-program">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="mail-box" src="../styles/images/client-referral-small.svg">
+                            </div>
+                            <div class="col-md-9">
+                                <p>Invite your colleagues to join
+                                    CloudLex!</p>
+                            </div>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="referral-card">
+                                <h2>$250<sup>*</sup></h2>
+                                <p>for every <br> demo</p>
+                            </div>
+
+                            <div class="referral-card pluse-img">
+                                +
+                            </div>
+                            <div class="referral-card">
+                                <h2>$500<sup>*</sup></h2>
+                                <p>for every <br> subscription</p>
+                            </div>
+                        </div>
+                        <div class="refferal-bottom">
+                            <p>*Your available credit will be applied to your <br> CloudLex subscription.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="main-block ">
+                    <div class="lanch-block newapp cursor-pointer" data-ui-sref="marketplace.applications">
+                        <div class="img-block">
+                            <a href="#/marketplace">
+                                <img data-ui-sref="marketplace.applications" class="cursor-pointer"
+                                    src="../styles/images/launcher-icons/marketplace-icon.png"></a>
+                        </div>
+                        <div class="details-block">
+                            <span data-ui-sref="marketplace.applications"
+                                class="title cur-pointer">MARKETPLACE</span>
+                            <p>Browse and subscribe to CloudLex apps, integrations, and more.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="appcategory">
+                    <p>Application categories</p>
+                    <div class="text-blue">
+                        <p><span data-ui-sref="marketplace.services" class="title cur-pointer"
+                                href="#/marketplace/services">Services</span></p>
+                        <p><span data-ui-sref="marketplace.applications" class="title cur-pointer"
+                                href="#/marketplace">MS
+                                Office</span></p>
+                        <p><span data-ui-sref="marketplace.applications" class="title cur-pointer"
+                                href="#/marketplace">Google
+                                Products</span></p>
+                        <p><span data-ui-sref="marketplace.applications" class="title cur-pointer"
+                                href="#/marketplace">Cloud
+                                Storage</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $("p").toggle();
+            });
+            $("#main-event").mouseup(function (e) {
+                var subject = $("#toggleDiv, #toggleIntakeDiv");
+                if (e.target.id != subject.attr('id')) {
+                    subject.fadeOut("fast");
+                }
+            });
+        });
+    </script>

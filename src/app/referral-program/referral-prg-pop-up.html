@@ -1,0 +1,103 @@
+<form  name="referral" ng-if="!referralPopUp.showThanKYouMsg">
+  <div class="modal-header clearfix">
+    <button type="button" class="close referral-close" ng-click="referralPopUp.close()">&times;</button>
+    <h4 class="modal-title">Enter Your Reference Details</h4>
+  </div>
+  <div class="filter-greybox container modal-body dashboard-tasks-due referral-body">
+    <div class="form-group">
+      <label>First Name</label><span class="compulsary-mark">*</span>
+      <input ng-model="referralPopUp.referral_info.firstName" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Last Name</label><span class="compulsary-mark">*</span>
+      <input ng-model="referralPopUp.referral_info.lastName" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Firm Name</label>
+      <input ng-model="referralPopUp.referral_info.firmName" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Email ID</label> <span class="compulsary-mark">*</span>
+      <input ng-model="referralPopUp.referral_info.emailId" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email"
+        ng-keydown="referralPopUp.checkIfEnterKeyWasPressed($event)" type="email" class="form-control">
+      <div data-ng-show="referral.email.$dirty && referral.email.$error.pattern">
+        <div class="error margin-right30px">
+          Invalid email address!
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label><span class="compulsary-mark">*</span>
+      <input usphone-number-format maxlength="18" ng-model="referralPopUp.referral_info.phoneNumber"
+        ng-pattern="/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/" type="text" name="phoneNum"
+        class="form-control">
+      <div data-ng-show="referral.phoneNum.$dirty && referral.phoneNum.$error.pattern">
+        <div class="error pull-left">
+          Invalid contact number.
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" name="city_name" ng-keydown="referralPopUp.checkIfEnterKeyWasPressed($event)"
+        data-ng-model="referralPopUp.referral_info.city" class="form-control" ng-maxlength="100" />
+      <span class="sprite default-caution error-icon"
+        data-ng-show="referral.city_name.$dirty && referral.city_name.$invalid"></span>
+      <div data-ng-show="referral.city_name.$dirty"
+        ng-messages="referral.city_name.$error">
+        <ul data-ng-show="referral.city_name.$dirty"
+          ng-messages="referral.city_name.$error">
+          <li class="error" style="padding-right: 25px;" data-ng-show="referral.city_name.$error.maxlength">
+            City name should not be more than 100 characters
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>State</label>
+      <ui-select ng-model="referralPopUp.referral_info.state" theme="selectize">
+        <ui-select-match placeholder="Select State">
+          {{$select.selected}}
+        </ui-select-match>
+        <ui-select-choices repeat="v in referralPopUp.states | filter:$select.search">
+          <small>
+            {{v}}
+          </small>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="">
+      <button type="submit" class="btn refer-btn referal-small-btn" data-ng-click="referralPopUp.save()"
+        data-ng-disabled="referral.$invalid">Refer
+        Now!</button>
+    </div>
+  </div>
+</form>
+<div class="thank-box text-center" ng-if="referralPopUp.showThanKYouMsg">
+  <div>
+    <button type="button" class="close referral-close" ng-click="referralPopUp.closeThankYou()">&times;</button>
+  </div>
+  <div class="thank-top">
+    <img src="../styles/images/thank-you-icon.svg" alt="thank-you-icon">
+    <h4>Thank you!</h4>
+    <p>Your reference is on its way and we will contact your friend shortly.
+      Keep referring, keep helping and keep earning.
+
+    </p>
+    <div class="">
+      <button type="submit" class="btn refer-btn referal-small-btn" data-ng-click="referralPopUp.referagain()">Refer
+        More</button>
+    </div>
+  </div>
+  <div class="thank-bottom">
+    <p>Quick Tip – A quick call to your friends about
+      CloudLex will greatly<br> increase the chance to schedule
+      a demo and an eventual sign-up. </p>
+  </div>
+</div>

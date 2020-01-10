@@ -1,0 +1,268 @@
+.launcher-wrapper {
+    padding: 0 75px 0 20px;
+    // .new-release{
+    //     font-weight: 700;
+    //     margin: -2px 0 10px 0;
+    // }
+        .link-block{ position: relative;
+    }
+    .main-block {
+        .carousel-control {
+            display: none;
+        }
+        .carousel-indicators {
+            bottom: -6px;
+            li {
+                width: 8px;
+                height: 8px;
+            }
+            .active {
+                width: 10px;
+                height: 10px;
+            }
+        }
+        width: 48%;
+        margin: 0 9px 0 0;
+        border-radius: 3px;
+        display: inline-block;
+    }
+    .togglediv {
+        p {
+            padding: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: 4px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        position: absolute;
+        background: #fff;
+        top: 18px;
+        left: 106px;
+        display: none;
+        &:after {
+            border-bottom: 5px solid rgba(0, 0, 0, 0.41);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            content: " ";
+            height: 0;
+            left: 50%;
+            position: absolute;
+            top: -6px;
+            width: 0;
+        }
+        a {
+            font-size: 12px;
+            color: #909092;
+        }
+    }
+    .dotedimg {
+        width: 10px;
+        margin-left: 3px;
+    }
+    .togglediv.intakeToggle {
+        left: 127px;
+    }
+    .subscriptions {
+        font-weight: bold;
+        margin: 10px 0 0 0;
+    }
+    .custom-bar {
+        width: 200px;
+        height: 8px;
+        clear: both;
+        margin-bottom: 8px;
+    }
+    .set-txt {
+        position: relative;
+        top: 5px;
+    }
+    .details-block {
+        p {
+            margin-bottom: 0px;
+        }
+        width: 74%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .lanch-block {
+        border: 0;
+        background-color: #fff;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        margin-top: 15px;
+        padding: 17px 15px;
+        display: block;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+            box-shadow: 0 0 3px #000000;
+            background-color: #f0f4f5;
+        }
+        .title {
+            font-size: 15px;
+            color: #484848;
+            font-weight: bold;
+            margin-top: 6px;
+            display: block;
+        }
+        .link {
+            font-size: 12px;
+            color: #909092;
+        }
+        .link-block {
+            margin-top: 2px;
+            .pipe {
+                margin: 0 10px;
+                color: #909092;
+            }
+        }
+    }
+    .img-block {
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 10px;
+        img {
+            max-width: 100%;
+        }
+    }
+    .right-block {
+        .lanch-block {
+            .title {
+                margin-top: 0;
+            }
+        }
+        .main-block {
+            width: 100%;
+            .lanch-block {
+                height: inherit;
+                display: inline-block;
+                width: 100%;
+                p {
+                    font-size: 11px;
+                    color: #909092;
+                }
+                .firm-block {
+                    p {
+                        font-size: 15px;
+                        color: #858489;
+                        line-height: 18px;
+                        margin: 10px 0 0px 0;
+                    }
+                    span {
+                        font-size: 11px;
+                        color: #bdbdbe;
+                    }
+                }
+            }
+        }
+    }
+    .disabled {
+        opacity: .65;
+        background-color: #eee;
+        pointer-events: none;
+    }
+    .dropdown-menu {
+        width: auto;
+    }
+    .marketplace-txt {
+        width: 76%;
+    }
+    p.addon {
+        span {
+            font-weight: normal;
+            color: #aaa;
+        }
+        margin: 20px 0 0 0;
+        font-weight: bold;
+    }
+    .welcom {
+        font-size: 15px;
+        width: 48%;
+        display: block;
+    }
+    .whatnew {
+        width: 48%;
+        display: inline-block;
+        font-size: 15px;
+        margin-top: 10px;
+        text-align: right;
+    }
+    .bluebg {
+        background: #F1F7F9;
+        padding-top: 14px;
+        height: 100vh;
+
+    }
+    .appcategory {
+        padding: 20px;
+    }
+    .text-blue {
+            color: #1bc3d8;
+    }
+    .newapp {
+        background: #E3F1F6;
+        color: #fff;
+        margin-top: 30px;
+        padding-bottom: 18px
+    }
+    .launcher-checkbox {
+        margin-bottom: 0;
+        label {
+            padding-left: 24px;
+        }
+    }
+    .bottom-div {
+        margin-bottom: 30px;
+        .lanch-block {
+            border-bottom: 1px solid #f5f5f5;
+            border-radius: 3px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            &:hover {
+                box-shadow: 0 0 3px #000000;
+                background-color: #f0f4f5;
+            }
+            span {
+                font-size: 12px;
+            }
+        }
+        .img-block {
+            width: 10%;
+        }
+        .details-block {
+            width: 45%;
+        }
+    }
+    .dots-popup {
+        .col-md-6 {
+            padding: 0 15px;
+        }
+    }
+    .subcrib {
+        width: 40%;
+        display: inline-block;
+        vertical-align: top;
+        text-align: right;
+        padding-top: 5px;
+    }
+    button.btn.subscrib {
+        background: transparent;
+        border: 1px solid #19c1d9;
+        color: #19c1d9;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 11px;
+        padding: 0 24px;
+    }
+    .lanch-block.marketblock {
+        background: #e3f0f6;
+        box-shadow: none;
+        padding: 23px 15px;
+    }
+    .launcher-dropdown {
+        &:before,&:after {
+            left: 35px;
+            right: auto;
+        }
+    }
+}

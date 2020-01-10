@@ -1,0 +1,176 @@
+<div class="cal-wrapper">
+    <div class="row cal-btn-group" data-ng-show="calendar.displayCalendar && calendar.eventsPermissions[0].V == 1">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" data-ng-click="calendar.resetCalendar()" href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px" data-ng-click="sideNav.closeDrawer()" href="javascript:void(0)">Close
+            </a>
+        </div>
+    </div>
+
+    <div data-ng-show="calendar.displayCalendar && calendar.eventsPermissions[0].V == 1" class="content-class-popup">
+        <section id="directives-calendar">
+            <div class="row-fluid">
+                <div>
+                    <div class="page-title-border-links clearfix subnav heading-with-button-bottom-padding margin0">
+                        <ul>
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' activeLink': calendar.filters.filterby == 'mymatterevent'}"
+                                    data-ng-click="calendar.myEvent(2)">My Events</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' activeLink': calendar.filters.filterby == 'allmatterevent'}"
+                                    ng-click="calendar.allEvent(1)">All Events</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div select="calendar.renderCalender('myCalendar1');" class="margin-top10px">
+                        <clx-filter-tags on-filter-cancel="calendar.tagCancelled" tag-list="calendar.tags"
+                            class="filter-tags"></clx-filter-tags>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="button" data-ng-click="calendar.clickToday()"
+                                    class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right padding-left-0"><span>Today</span>
+                                </button>
+                                <button type="button" data-ng-click="calendar.clickPrev()"
+                                    class="fc-prev-button fc-button fc-state-default">
+                                    <span class="fc-icon fc-icon-left-single-arrow">
+                                    </span>
+                                </button>
+                                <span class="big-font">{{calendar.dateString}}</span>
+                                <button type="button" data-ng-click="calendar.clickNext()"
+                                    class="fc-next-button fc-button fc-state-default">
+                                    <span class="fc-icon fc-icon-right-single-arrow">
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="col-md-8 edge-pl-14">
+                                <div class="btn-toolbar">
+                                    <div class="btn-group m-w-d-btn">
+                                        <label ng-class="{' active': calendar.selectedButton == 0}"
+                                            class="btn btn-default"
+                                            ng-click="calendar.changeView('month', 'myCalendar1')">
+                                            Month
+                                        </label>
+                                        <label ng-class="{' active': calendar.selectedButton == 1}"
+                                            class="btn btn-default"
+                                            ng-click="calendar.changeView('agendaWeek', 'myCalendar1')">
+                                            Week
+                                        </label>
+                                        <label ng-class="{' active': calendar.selectedButton == 2}"
+                                            class="btn btn-default"
+                                            ng-click="calendar.changeView('agendaDay', 'myCalendar1')">
+                                            Day
+                                        </label>
+                                    </div>
+
+
+                                    <div class="form-inline pull-left event-category-custom-width">
+                                        <div class=" form-group select-label-correction category-dropdown-menu-height">
+                                            <label>Category</label>
+                                            <span ng-dropdown-multiselect="" id="eventCategory"
+                                                options="calendar.category[0]"
+                                                callback-fn="calendar.getSelectCategoryDetails(arg)"
+                                                selected-model="calendar.selectedModel"
+                                                ng-disabled="calendar.personalCategory"
+                                                extra-settings="calendar.extraSettings"></span>
+                                        </div>
+                                    </div>
+                                    <div class="pull-left margin-left20px complied-btn">
+                                        <clx-btn-group btn-small="true" btn-list="calendar.allCompliedEventListBtns"
+                                            ng-hide="calendar.personalCategory" value="calendar.filters.complied"
+                                            btn-click="calendar.allCompliedEventList"></clx-btn-group>
+
+
+                                    </div>
+                                    <div class="pull-left margin-left20px">
+                                        <ul class="showBy-btns">
+                                            <li>
+                                                <div class="input-group datepicker cal-datepicker">
+                                                    <input placeholder="Select Date" ng-disabled="true"
+                                                        id="calselecteddateDiv" validate-date
+                                                        error-div="#calselecteddateDiv" tooltip="mm/dd/yyyy"
+                                                        placeholder="mm/dd/yyyy" type="text"
+                                                        data-ng-model="calendar.userSelectedDate"
+                                                        datepicker-popup="{{calendar.dateFormat}}"
+                                                        datepicker-options="calendar.datepickerOptions"
+                                                        is-open="calendar.openCloseDateSelector" show-button-bar="false"
+                                                        class="form-control"
+                                                        ng-change="calendar.goToSelectedDate(calendar.userSelectedDate)" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default"
+                                                            data-ng-click="calendar.openCloseDate($event, calendar.openCloseDateSelector)">
+                                                            <i class="default-calendar-small sprite"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                                <div><span></span></div>
+                                                <div class="error" id="calselecteddateErr">Invalid date format!</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="pull-left paddingLR-10px">
+
+                                        <a data-ng-click="calendar.printCalendar(calendar.filters, calendar.selectedModel)"
+                                            class="pull-left"><span class="sprite default-file sortby-icons "
+                                                tooltip="Print"></span></a>
+                                    </div>
+                                    <div class="pull-left paddingLR-10px">
+                                        <span tooltip="Filter" tooltip-placement="left"
+                                            data-ng-click="calendar.openFilterPopUp();"
+                                            class="sprite default-filter cursor-pointer"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="calendar padding-bottom-20px" ng-model="calendar.eventSources"
+                            calendar="myCalendar1" calendardir="" ui-calendar="calendar.uiConfig.calendar">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row text-center" ng-show="calendar.eventsPermissions[0].V == 0">
+        You are not authorized to view events
+    </div>
+
+    <div data-ng-if="!calendar.displayCalendar && calendar.addEditMatterEventSelector">
+        <div class="filter-greybox container">
+            <div class="col-md-9">
+                <div class="inner-box">
+                    <div ng-repeat="info in eventFor" class="padding-0">
+                        <div class="radio padding-0 margin0 pull-left margin-right20px">
+                            <input ng-disabled="isIntakeActive != 1 && info.id == 1" class="margin0" type="radio"
+                                data-ng-model="calendar.selectedMode" ng-value="info.id" />
+                            <label class="margin0 lable-line-height">&nbsp;{{info.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div data-ng-if="calendar.selectedMode == 2" ng-include="'app/calendar/partials/calendarEvent.html'"
+            ng-controller="CalendarEventCtrl as calendarEventCtrl">
+        </div>
+
+        <div data-ng-if="calendar.selectedMode == 1" ng-include="'app/intake/calendar/partials/calendarEvent.html'"
+            ng-controller="IntakeCalendarEventCtrl as calendarEventCtrl">
+        </div>
+    </div>
+
+    <div data-ng-if="!calendar.displayCalendar && calendar.addEditMatterEvent && !calendar.scheduleCalendar"
+        ng-include="'app/calendar/partials/calendarEvent.html'" ng-controller="CalendarEventCtrl as calendarEventCtrl">
+    </div>
+
+    <div data-ng-if="!calendar.displayCalendar && calendar.addEditIntakeEvent && !calendar.scheduleCalendar"
+        ng-include="'app/intake/calendar/partials/calendarEvent.html'"
+        ng-controller="IntakeCalendarEventCtrl as calendarEventCtrl">
+    </div>
+</div>

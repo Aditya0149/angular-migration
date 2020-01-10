@@ -1,0 +1,85 @@
+<div id="content" class="padding-bottom0" data-ng-form="intakeReferOut.form">
+    <div class="row margin-top10px">
+        <div class="col-md-6 header-line-height ellipsis-nowrap">
+            <span>Refer Out Intake:</span> <strong>{{intakeReferOut.matterInfo[0].intakeName}}</strong>
+        </div>
+        <div class="col-md-6 pull-right ">
+            <div class="pull-right btn-botm">
+                <button data-ng-click="intakeReferOut.goToMatterOverview()" class="btn btn-default btn-styleNone">
+                    Cancel</button>
+                <button class="btn btn-default"
+                    data-ng-click="intakeReferOut.referMatterOut(intakeReferOut.referOutInfo)">
+                    Refer Out</button>
+            </div>
+        </div>
+    </div>
+    <div class="flexCont"></div>
+    <div class="row margin-top20px">
+        <div class="col-md-3">
+            <input type="text" name="contact" ng-disabled="true" data-ng-model="intakeReferOut.referOutInfo.contact"
+                placeholder="Select CloudLex User" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default margin-top3px" ng-disabled="intakeReferOut.referOutInfo.invitenew==1"
+                data-ng-click="intakeReferOut.selectContact()">
+                Refer Out To</button>
+        </div>
+
+        <div class="col-md-3 pt-6">
+            <label class="pull-left margin-left15px margin-right10px">OR</label>
+            <div class="pull-left padding-0 margin-right10px"><label>Invite someone to Cloudlex: </label> </div>
+            <div class="checkbox mt-0">
+                <input type="checkbox" data-ng-model="intakeReferOut.referOutInfo.invitenew"
+                    data-ng-click="intakeReferOut.setFeeAgreement(intakeReferOut.referOutInfo.invitenew)"
+                    data-ng-true-value="'1'" data-ng-false-value="'0'" />
+                <label></label>
+            </div>
+        </div>
+
+        <div data-ng-form="intakeReferOut.form" class="col-md-3">
+            <input class="form-control" data-ng-model="intakeReferOut.referOutInfo.inviteNewContact"
+                ng-readonly="intakeReferOut.referOutInfo.invitenew == 0" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                name="invite_emailId" placeholder="Invite someone to cloudlex" type="email">
+            <div data-ng-if="intakeReferOut.form.invite_emailId.$dirty"
+                ng-messages="intakeReferOut.form.invite_emailId.$error">
+                <div class="error" ng-message="pattern">
+                    invalid email id
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="add-now-wrap">                    
+       <button class="btn btn-default" data-ng-click="intakeReferOut.selectContact()">
+        Select Contact</button>
+     </div>-->
+
+
+
+    <div class="row margin-top20px">
+        <div class="col-md-5">
+            <label>
+                Message <span class="compulsary-mark">*</span>
+            </label>
+            <textarea rows="6" data-ng-required="true" name="message"
+                data-ng-model="intakeReferOut.referOutInfo.message" class="form-control"></textarea>
+            <div class="error"
+                data-ng-show="intakeReferOut.form.message.$error.required && intakeReferOut.form.message.$dirty">
+                Message is Required
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row margin-top10px">
+        <div class="col-md-5 checkbox">
+            <input type="checkbox" data-ng-model="intakeReferOut.referOutInfo.attachFeeAgreement" />
+            <label>Attach Fee Agreement</label>
+            <div data-editable-html="" data-disable-edit="!intakeReferOut.referOutInfo.attachFeeAgreement"
+                data-ng-model="intakeReferOut.referOutInfo.fee"
+                data-ng-class="{' disable-content-editable':!intakeReferOut.referOutInfo.attachFeeAgreement}"
+                class="fee-agreement form-control margin-top10px">
+            </div>
+        </div>
+    </div>
+</div>

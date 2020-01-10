@@ -1,0 +1,20 @@
+<div class="node-embed" style="display: inline-block;height: 25px;" ui-tree-handle ng-click="itemSelect(item,this)"
+    ng-class="{nodeActive:item.isSelected,matched:item.match}">
+    <a class="btn-clear btn-xs" style="width: 22px;display: inline-block;" data-ng-show="item.items.length" ng-click="expandNode(this,$event)">
+        <i class="fa" ng-class="{'fa-chevron-right': collapsed, 'fa-chevron-down': !collapsed}"></i>
+    </a>
+    <a class="btn-clear btn-xs" data-ng-show="!item.items" style="padding-right: 21px;">
+
+    </a>
+    <span class="node-header checkbox" style="display: inline-block;">
+        <input type="checkbox" ng-checked="item.isSelected" indeterminate-checkbox node="item" />
+        <label></label>
+    </span>
+    {{item.title}}
+
+</div>
+
+<div ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed,displayed:!collapsed}">
+    <div ng-repeat="item in item.items" style="padding-left: 25px;" ui-tree-node collapsed="true" ng-include="'app/utils/custom-templates/items_renderer.html'">
+    </div>
+</div>

@@ -1,0 +1,343 @@
+<style>
+    .report-custom-drop-height .open .dropdown-menu {
+        max-height: inherit !important;
+    }
+
+    body .report-responsive .body-row .cell {
+        overflow: visible !important;
+    }
+
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<div class="row" scrolly="plaintiffMailingCtrl.scrollReachedBottom()"
+    reached-top="plaintiffMailingCtrl.scrollReachedTop()">
+    <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Plaintiff Contact Report</h1>
+</div>
+<div class="flexCont"></div>
+<div class="row  margin0 fixed-grid-report">
+    <div class="col-md-12 paddingRLR heading-filter-removed ">
+        <div class="pull-right head-padding-10px ">
+            <ul class="showBy-btns pull-right heading-right-buttons paddingLR-10px">
+
+                <li class="seperation-filter"></li>
+                <li>
+                    <a>
+                        <span data-ng-click="plaintiffMailingCtrl.filterPlaintiffMailingList()"
+                            class="sprite default-filter" tooltip="Filter" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="seperation-filter"></li>
+                <li>
+                    <a data-ng-click="plaintiffMailingCtrl.print()">
+                        <span class="sprite default-file sortby-icons" tooltip="Print" tooltip-placement="right"></span>
+                    </a>
+                </li>
+                <li class="paddingLR-10px">
+                    <a data-ng-click="plaintiffMailingCtrl.downloadMailingList()">
+                        <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                            tooltip-placement="right"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown head-padding-10px pull-right">
+            Sort By :
+            <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{plaintiffMailingCtrl.selectedSort}}
+
+                <span class="default-downward-arrow sprite dropdown-arrow"></span>
+            </button>
+            <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                <li data-ng-repeat="sort in plaintiffMailingCtrl.sorts">
+                    <a data-ng-click="plaintiffMailingCtrl.applySortByFilter(sort)">{{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pull-right">
+        <clx-filter-tags on-filter-cancel="plaintiffMailingCtrl.tagCancelled" tag-list="plaintiffMailingCtrl.tags">
+        </clx-filter-tags>
+    </div>
+</div>
+<div class="clearfix"></div>
+<show-record-count-only more="plaintiffMailingCtrl.getMore()" all="plaintiffMailingCtrl.getAll()"
+    hide-pager="{{(plaintiffMailingCtrl.showPaginationButtons() && (plaintiffMailingCtrl.plaintiffDataList.length > 0))}}"
+    displayed="plaintiffMailingCtrl.plaintiffDataList.length" total="plaintiffMailingCtrl.total">
+</show-record-count-only>
+</div>
+
+
+<div class="clearfix">
+
+</div>
+
+<!-- Start: New scroll-table tableid -->
+<div class="clearfix"></div>
+<div id="listUpper"></div>
+<div class="report-scroll-all-matter">
+
+    <scroll-table tag="plaintiffMailingCtrl.tags" sort="plaintiffMailingCtrl.selectedSort"
+        watch="plaintiffMailingCtrl.plaintiffMailingList" tableid="listGrid" to="#listUpper" from="#moreAllLinkRecord">
+
+        <table class="table table-scroll">
+            <thead data-ng-show="plaintiffMailingCtrl.plaintiffMailingList.length!=0">
+                <tr>
+                    <th ng-class="{'th-width-8':(plaintiffMailingCtrl.filter && 
+                        plaintiffMailingCtrl.filter.had_surgery && 
+                        (plaintiffMailingCtrl.filter.had_surgery == 1)), 'th-width-12':(plaintiffMailingCtrl.filter && 
+                        plaintiffMailingCtrl.filter.had_surgery && 
+                        (plaintiffMailingCtrl.filter.had_surgery != 1))}">
+                        <div>
+                            <span>
+                                <b>Matter Name</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th ng-if="(plaintiffMailingCtrl.filter && 
+                    plaintiffMailingCtrl.filter.had_surgery && 
+                    (plaintiffMailingCtrl.filter.had_surgery == 1))" class="th-width-8">
+                        <div>
+                            <span>
+                                <b>Matter Status & Substatus</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-8">
+                        <div>
+                            <span>
+                                <b>Date of Incident</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th ng-class="{'th-width-8':(plaintiffMailingCtrl.filter && 
+                    plaintiffMailingCtrl.filter.had_surgery && 
+                    (plaintiffMailingCtrl.filter.had_surgery == 1)), 'th-width-12':(plaintiffMailingCtrl.filter && 
+                    plaintiffMailingCtrl.filter.had_surgery && 
+                    (plaintiffMailingCtrl.filter.had_surgery != 1))}">
+                        <div>
+                            <span>
+                                <b>Plaintiff Name</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-8">
+                        <div>
+                            <span>
+                                <b>Date of Birth</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-7">
+                        <div>
+                            <span>
+                                <b>Gender</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-16">
+                        <div>
+                            <span>
+                                <b>Address</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-14">
+                        <div>
+                            <span>
+                                <b>Email</b>
+                            </span>
+                        </div>
+                    </th>
+                    <th class="th-width-23">
+                        <div>
+                            <span>
+                                <b>Phone</b>
+                            </span>
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody class="dashboard-tasks-due" id="plaintiffMailingListlistbody" style="overflow-y:overlay">
+                <tr data-ng-repeat="data in plaintiffMailingCtrl.plaintiffMailingList"
+                    data-highlight-clicked-row="{{$index}},plaintiffMailingCtrl.clickedRow"
+                    data-ng-class="{'selected-grid-row':$index == plaintiffMailingCtrl.clickedRow}">
+                    <div class="cell">
+
+                        <td ng-class="{'th-width-8':(plaintiffMailingCtrl.filter && 
+                            plaintiffMailingCtrl.filter.had_surgery && 
+                            (plaintiffMailingCtrl.filter.had_surgery == 1)), 'th-width-12':(plaintiffMailingCtrl.filter && 
+                            plaintiffMailingCtrl.filter.had_surgery && 
+                            (plaintiffMailingCtrl.filter.had_surgery != 1))}">
+                            <div>
+                                <a class="word-wrap" href="#/matter-overview/{{data.matter_id}}"
+                                    tooltip-placement="right" tooltip="{{data.matter_name}}">
+                                    {{data.matter_name}}
+                                </a>
+                            </div>
+                        </td>
+                        <td ng-if="(plaintiffMailingCtrl.filter && plaintiffMailingCtrl.filter.had_surgery && (plaintiffMailingCtrl.filter.had_surgery == 1))"
+                            class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.status | replaceByDash}}">
+                                    {{data.status | replaceByDash}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.sub_status | replaceByDash}}">
+                                    {{data.sub_status | replaceByDash}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.date_of_incidence}}">
+                                    {{data.date_of_incidence}}
+                                </span>
+                            </div>
+                        </td>
+                        <td ng-class="{'th-width-8':(plaintiffMailingCtrl.filter && 
+                        plaintiffMailingCtrl.filter.had_surgery && 
+                        (plaintiffMailingCtrl.filter.had_surgery == 1)), 'th-width-12':(plaintiffMailingCtrl.filter && 
+                        plaintiffMailingCtrl.filter.had_surgery && 
+                        (plaintiffMailingCtrl.filter.had_surgery != 1))}">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.first_name}}">
+                                    {{data.first_name}}
+                                </span><br>
+                                <span tooltip-placement="bottom" tooltip="{{data.last_name}}">
+                                    {{data.last_name}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-8">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.date_of_birth}}">
+                                    {{data.date_of_birth}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-7">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.gender}}">
+                                    {{data.gender}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-16">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.streetCityStateZip}}">
+                                    {{data.streetCityStateZip}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-14">
+                            <div>
+                                <span class="amount_ellipsis" tooltip-placement="bottom" tooltip="{{data.email_id}}">
+                                    {{data.email_id}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-23">
+
+
+                            <div>
+                                <div ng-show="data.phoneType1 == 1"><span tooltip-placement="bottom" tooltip="Cell"
+                                        class="sprite default-contactPhone-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone1"></span>
+                                </div>
+                                <div ng-show="data.phoneType1 == 2"><span tooltip-placement="bottom" tooltip="Home"
+                                        class="sprite default-contactPhone-home-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone1"></span>
+                                </div>
+                                <div ng-show="data.phoneType1 == 3"><span tooltip-placement="bottom" tooltip="Work"
+                                        class="sprite default-contactPhone-work-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone1"></span>
+                                </div>
+                                <div ng-show="data.phoneType2 == 3"><span tooltip-placement="bottom" tooltip="Work"
+                                        class="sprite default-contactPhone-work-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone2"></span>
+                                </div>
+                                <div ng-show="data.phoneType2 == 1"><span tooltip-placement="bottom" tooltip="Cell"
+                                        class="sprite default-contactPhone-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone2"></span>
+                                </div>
+                                <div ng-show="data.phoneType2 == 2"><span tooltip-placement="bottom" tooltip="Home"
+                                        class="sprite default-contactPhone-home-new"></span><span
+                                        class="cell contactphonemerge plainiff_contact" ng-bind="data.phone2"></span>
+                                </div>
+                            </div>
+
+
+
+                            <!-- <div>
+                                <div ng-show="data.phoneType1 == 1"><span tooltip-placement="bottom" tooltip="Cell"
+                                       style="vertical-align: middle" class="sprite default-contactPhone-new"></span>
+                                        <span style="width: 89%;" class="cell contactphonemerge" ng-bind="data.phone1"></span>
+                                </div>
+                                <div ng-show="data.phoneType1 == 2"><span tooltip-placement="bottom" tooltip="Cell"
+                                    style="vertical-align: middle" class="sprite default-contactPhone-home-new"></span>
+                                     <span style="width: 89%;" class="cell contactphonemerge" ng-bind="data.phone2"></span>
+                             </div>
+                             <div ng-show="data.phoneType1 == 3"><span tooltip-placement="bottom" tooltip="Cell"
+                                style="vertical-align: middle" class="sprite default-contactPhone-work-new"></span>
+                                 <span style="width: 89%;" class="cell contactphonemerge" ng-bind="data.phone3"></span>
+                         </div> -->
+                            <!-- <div ng-show="data.phoneType1 == 2"><span tooltip-placement="bottom" tooltip="Home"
+                                        class="sprite default-contactPhone-home-new"></span>
+                                        <span class="cell contactphonemerge" ng-bind="data.phone1"></span>
+                                </div>
+                                <div ng-show="data.phoneType1 == 3"><span tooltip-placement="bottom" tooltip="Work"
+                                        class="sprite default-contactPhone-work-new"></span><span
+                                        class="cell contactphonemerge" ng-bind="data.phone1"></span>
+                                </div>
+
+                                <div ng-show="data.phoneType2 == 3"><span tooltip-placement="bottom" tooltip="Work"
+                                        class="sprite default-contactPhone-work-new"></span><span
+                                        class="cell contactphonemerge" ng-bind="data.phone2"></span>
+                                </div>
+                                <div ng-show="data.phoneType2 == 1"><span tooltip-placement="bottom" tooltip="Cell"
+                                        class="sprite default-contactPhone-new"></span><span
+                                        class="cell contactphonemerge" ng-bind="data.phone2"></span>
+                                </div>
+                                <div ng-show="data.phoneType2 == 2"><span tooltip-placement="bottom" tooltip="Home"
+                                        class="sprite default-contactPhone-home-new"></span><span
+                                        class="cell contactphonemerge" ng-bind="data.phone2"></span>
+                                </div> -->
+                            <!-- </div>
+                            <span tooltip-placement="bottom" tooltip="{{data.phone_home}}">
+                                {{data.phone_home}}
+                            </span> -->
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </scroll-table>
+    <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+        style="overflow: hidden !important;position: fixed;bottom: 0px;">
+    </div>
+</div>
+
+<!-- Start: New scroll-table tableid -->
+
+
+<div class="clearfix"></div>
+<show-record-more-and-all more="plaintiffMailingCtrl.getMore()" all="plaintiffMailingCtrl.getAll()"
+    hide-pager="{{(plaintiffMailingCtrl.showPaginationButtons() && (plaintiffMailingCtrl.plaintiffDataList.length > 0))}}"
+    displayed="plaintiffMailingCtrl.plaintiffDataList.length" total="plaintiffMailingCtrl.total">
+</show-record-more-and-all>
+</div>
+
+<p class="text-center margin-top10px"
+    data-ng-show="plaintiffMailingCtrl.dataLoaderFlag && plaintiffMailingCtrl.plaintiffMailingList.length <= 0">
+    No data for the applied filters
+</p>

@@ -1,0 +1,33 @@
+﻿<div data-ng-form="setEmail.form">
+    <div class="modal-header">
+        <h2 class="pull-left page-title">Enter a new email ID</h2>
+
+        <div class="pull-right">
+            <button
+                data-ng-disabled="setEmail.form.$invalid"
+                data-ng-click="setEmail.undeleteUser(setEmail.emailData)"
+                class="btn btn-default pull-right">
+                Undelete
+            </button>
+            <button class="btn btn-default btn-styleNone pull-right"
+                data-ng-click="setEmail.cancel()">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <div class="clearfix">
+            <label>
+                Email:
+            </label>
+            <input type="email"
+                name="email" class="form-control"
+                data-ng-model="setEmail.emailData.email" data-ng-required="true" />
+            <div data-ng-show="setEmail.form.email.$invalid && setEmail.form.email.$dirty" style="float:left" class="error">
+                invalid email id
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,137 @@
+<div class="efax-landing-wrapper">
+    <div class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px"
+                data-ng-click="efaxCtrl.resetPage()"
+                href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div class="container" ng-class="{'cursor-pointer-events-none' :efaxCtrl.composeFax, '' : !efaxCtrl.composeFax}" >
+    <div class="page-title-border-links clearfix ">
+        <div class="pull-left ">
+            <h3>Sent Fax </h3>           
+        </div>
+        
+            <div class="pull-right margin-bottom10px">
+                <button data-ng-show="efaxCtrl.enableCompose==true" data-ng-disabled="efaxCtrl.isGraceOver != 1"
+                 data-ng-click="efaxCtrl.composeFax=true;efaxCtrl.composeMailMsg = efaxCtrl.signature; rootDocumentContainer = true; efaxCtrl.emailDocsNote = false; efaxCtrl.disabledSidebarIcon()" class="btn btn-default">
+                    Compose</button>
+            </div>
+            <div class="pull-right">
+                <ul class="showBy-btns"><li class="seperation-filter"></li></ul>
+            </div>
+            <div class="pull-right margin-bottom10px">
+                <ul class="pull-right">
+                        <li>
+                            <div class="search-input form-control-margin-null ng-hide" data-ng-show="efaxCtrl.showSearch">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="efaxCtrl.showSearch" data-ng-model-options="{ debounce: 0 }" data-ng-model="efaxCtrl.filterText" 
+                                data-ng-change="efaxCtrl.filterRetain();" class="form-control ng-pristine ng-untouched ng-valid">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="showBy-btns pull-right">
+                        <li class="search-overlap">
+                            <ul data-ng-hide="efaxCtrl.showSearch">
+                                <li class="custom-height"><a data-ng-click="efaxCtrl.showSearch = true"><span class="sprite default-searchico-menu " tooltip="Search"></span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+            </div>
+    </div>
+
+  
+
+    <div class="row">     
+           
+        <div class="col-md-4 ">
+            <div class="mailbox-height-iscroll">
+                <div class="events-list">
+                    <div>
+                        <ul>
+                            
+                            <li data-ng-repeat="data in efaxCtrl.filteredMails = (efaxCtrl.sentBoxList.data | filter:efaxCtrl.filterText)">
+                                <div class="row">
+                                    
+                                    <div class="col-md-12 col-sm-12 margin-top10px"  data-ng-click="efaxCtrl.getFaxthread(data.faxId,$index)">
+                                        <div class="">
+                                            <div class="col-md-8 ellipsis pd-ri2" >
+                                               {{data.recipients[0].address}}  <span ng-if="data.recipients.length > 1">({{data.recipients.length}})</span> 
+                                            </div>
+                                            <div class="col-md-3 padding-0">
+                                                {{data.createdOn|timeFormatFilter}}
+                                            </div>
+                                            <div class="pull-left paddding-0">
+                                                
+                                                <span data-ng-if="data.hasAttachment" class="sprite default-attachment"></span>
+                                            </div>
+                                            <!-- <div class="col-md-2"><span class="sprite default-alert"></span> 
+                                    </div>-->
+                                        </div>
+                                        <div class="">
+                                            <div class="col-md-12 ellipsis">
+                                                <p>{{data.subject|replaceNonASCII}}</p>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>                                  
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="  text-center margin-top10px" data-ng-show="efaxCtrl.sentBoxList.count < efaxCtrl.sentBoxList.totallength">
+                        <a href="javascript:void(0)" class="" data-ng-click="efaxCtrl.getNextLimitFax()">More</a>
+                        <!--<span class="paddingLR-10px">|</span>
+                        <a href="javascript:void(0)" class="" data-ng-click="efaxCtrl.getNextLimitFax('all')">All</a>-->
+                    </div>
+                    <div data-ng-show="efaxCtrl.sentBoxList.count===0" class="margin-top10px">
+                        No fax Present
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div  class="col-md-8 mailbox-height faxbox-word-wrap">
+            
+                <div class="row margin-top20px" data-ng-repeat="maildata in efaxCtrl.mailThread">
+                    <div class="col-md-10">                       
+                            From:<strong> &#60;{{::maildata.from.address}}&#62;</strong><br>
+                            To: <span ng-if="maildata.recipients.length > 0" ng-repeat="mail in maildata.recipients"><strong> </strong><strong> &#60;{{::mail.address}}&#62;</strong></span>
+                        
+                        <p class="ellipsis">{{::maildata.subject|replaceNonASCII}}</p>
+                        <p class="ellipsis">{{::maildata.createdOn|utcDateFilter: 'DD MMMM YYYY hh:mm A' }}</p>
+                        <p data-ng-bind-html="::maildata.body|replaceNonASCII"></p>
+                        <div data-ng-if="$index===0 && efaxCtrl.mailThreadAttachment.length > 0">
+                            <div data-ng-repeat="attachment in efaxCtrl.mailThreadAttachment">
+                                <div class="row">
+                                    <div class="pull-left paddingLR-10px ellipsis line-height-28px">{{attachment.docName}}</div>
+                                    <div class="col-md-1">
+                                        <a href="javascript:void(0);" data-ng-click="efaxCtrl.downloadAttachment(attachment.attachmentId)">
+                                            <span class="sprite default-sharedown"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>      
+    </div>
+
+</div>
+<!-- compose fax -->
+<div class="compose-wrap" ng-class="{'composeShow' :efaxCtrl.composeFax, '' : !efaxCtrl.composeFax ,'cursor-pointer-events-none' :efaxCtrl.matterDocs, 'cursor-pointer-events-all' : !efaxCtrl.matterDocs}">
+    <ng-include src="'efax/compose-fax.html'"></ng-include>
+</div>
+</div>
+
+
+
+

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="85" height="88" viewBox="0 0 85 88">
+    <g fill="none" fill-rule="evenodd">
+        <g fill="#CCF1FF" transform="translate(0 2.5)">
+            <rect width="85" height="85" opacity=".3" rx="42.5"/>
+            <rect width="65" height="65" x="10" y="10" rx="32.5"/>
+        </g>
+        <circle cx="72" cy="3" r="3" fill="#FFB64C"/>
+        <rect width="49" height="36" fill="#FFF" rx="3" transform="translate(18 28.5)"/>
+        <rect width="67" height="3" x="9" y="62.5" fill="#004E75" rx="1.5"/>
+        <circle cx="9" cy="9" r="9" fill="#FFB64C" transform="translate(57 19.5)"/>
+        <text fill="#FFF" font-family="GothamRounded-Medium, Gotham Rounded" font-size="11" font-weight="400" transform="translate(57 19.5)">
+            <tspan x="5.469" y="13">$</tspan>
+        </text>
+        <g transform="translate(52.5 5.5)">
+            <circle cx="5.5" cy="5.5" r="5.5" fill="#FFB64C"/>
+            <text fill="#FFF" font-family="GothamRounded-Medium, Gotham Rounded" font-size="8" font-weight="400">
+                <tspan x="2.932" y="8">$</tspan>
+            </text>
+        </g>
+        <g transform="translate(30 32.5)">
+            <circle cx="13" cy="13" r="13" fill="#83DE42"/>
+            <path fill="#FFF" fill-rule="nonzero" d="M9.412 12.348L8 13.74 11.304 17 18 10.393 16.588 9l-5.284 5.214z"/>
+        </g>
+    </g>
+</svg>

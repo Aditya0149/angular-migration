@@ -1,0 +1,184 @@
+<style>
+    .disk-bullet p ul li {
+        list-style: disc;
+    }
+
+    .modal-open .modal {
+        overflow-y: auto !important;
+    }
+
+    .show-bullet-list ul {
+        list-style: inside disc;
+    }
+</style>
+<div>
+    <div ng-show="display.mode == 'view'">
+        <div class="modal-header" style="height:105px;">
+            <div class="view-only-fields row">
+                <div class=" pull-left col-md-11">
+                    <div class="pop-head-icon pull-left" ng-show="note.is_important == 1">
+                        <div class="pull-left">
+                            <span class="default-alert sprite"></span>
+                        </div>
+                    </div>
+                    <div class="note-subhead">
+                        <strong>{{note.noteCategory.category_name  | SentenseCase | noteCategoryFilter}}</strong>
+                        <br />
+                        <small ng-if="!isIntake">Matter Name : {{note.matter_name}} | File #:{{note.file_number}}
+                        </small>
+                        <small ng-if="isIntake">Intake Name : {{note.matter_name}} </small><br />
+                        <small
+                            title="{{note.user.first_name}}&nbsp;{{note.user.last_name}}&nbsp;{{getFormattedDate(note.created_date)}}">Added
+                            By: {{note.user.first_name}}&nbsp;{{note.user.last_name}} |
+                            {{getFormattedDate(note.created_date)}}</small><br />
+                        <small> Linked Contact: {{note.linked_names}} </small>
+                    </div>
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div>
+            <div data-ng-show="note.type!='email' && note.noteCategory.notecategory_id != 1003">
+                <div class="modal-body pop-body-scroll-height dashboard-tasks-due disk-bullet show-bullet-list"
+                    style="max-height: 250px;height: 250px;">
+                    <pre class="sidebar-note" data-ng-bind-html="note.text | showSafeHtml"></pre>
+                    <!-- <p data-ng-bind-html="note.text | showSafeHtml" class="word-wrap"></p> -->
+                </div>
+                <strong style="margin-left: 20px;" data-ng-if="sidebarPost == false">Comment</strong>
+                <div style="overflow: auto;max-height: 95px;" class="dashboard-tasks-due">
+                    <div data-ng-if="sidebarPost == false" class="modal-body" ng-repeat="item in sidebarComments">
+                        <strong>{{item.user_name}}</strong><br>
+                        <small>{{item.created|utcDateFilter: 'hh:mm a'}}
+                            {{item.created|utcDateFilter: 'MMM DD, YYYY'}}</small><br> {{item.comment_body_value}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="note.type == 'sidebar' || note.noteCategory.notecategory_id == 1003">
+
+            <div class="modal-body pop-body-scroll-height dashboard-tasks-due disk-bullet show-bullet-list"
+                style="max-height: 350px;">
+                <div class="col-md-12">
+                    <div style="max-height: 250px;" class="dashboard-tasks-due">
+                        <div ng-include src='"smsAsNote"'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-ng-show="note.type == 'email'">
+            <div class="modal-body pop-body-scroll-height dashboard-tasks-due show-bullet-list"
+                style="max-height: 250px;height: 250px;" data-ng-class="{'sub-email':!$last}"
+                data-ng-repeat="mail in note.emailMessages">
+                <div class="row-fluid" style="word-break: break-all;">To: {{mail.recipients_mail}}</div>
+                <div class="row-fluid" ng-if="mail.cc_recipients_mail != ''" style="word-break: break-all;">Cc:
+                    {{mail.cc_recipients_mail}}</div>
+                <div class="row-fluid" style="word-break: break-all;">From: {{mail.from_mail}}</div>
+                <div class="row-fluid">Date: {{mail.createddate|utcDateFilter:'MM/DD/YYYY hh:mm A'}}</div>
+                <div class="row-fluid margin-top10px">
+                    <p class="word-wrap">Sub: {{mail.subject}}</p>
+                </div>
+                <div class="row-fluid margin-top10px">
+                    <p class="word-wrap" data-ng-bind-html="mail.message"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="documentTags.length > 0">
+            <div class="pull-left note-email-documents-txt">Documents:</div>
+            <span class="pull-left sprite default-attachment"></span>
+            <span class="pull-left margin-top5px margin-left5px">{{documentTags.length}}</span>
+            <div class="pull-left note-email-documents-txt-pipe">|</div>
+            <div class="pull-left" style="padding-left:4%;padding-right:4%;">
+                <ul class="tags">
+                    <li class="paddingRLR" ng-click="gotoDocument(attachment);"
+                        data-ng-repeat="attachment in documentTags" class="bg-info">
+                        <strong>{{attachment.value | replaceByBlank}}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="modal-footer" ng-if="!isIntake">
+            <div class="pull-left">
+                <a data-ng-click="composeNotesMail();" ng-if="(isGraceOver != 0 && email_subscription == 1)"
+                    ng-hide="matterInfo.archivalMatterReadOnlyFlag">
+                    <!--  Mail Note Icon -->
+                    <span style="margin-left:-2px;" class="sprite default-mailbox" tooltip="E-mail"
+                        tooltip-placement="top">&nbsp;</span>
+                </a>
+            </div>
+            <!-- <div class="pull-left" style="margin-left: 15px;">
+            <a data-ng-click="getCollaboration()" ng-hide="matterInfo.archivalMatterReadOnlyFlag">
+                <span style="margin-left:-2px;cursor: pointer;" class="sprite default-userprofile" tooltip="Share" tooltip-placement="top">&nbsp;</span>
+            </a>
+        </div> -->
+            <button data-ng-click="cancel()" class="btn btn-default btn-style">Cancel</button>
+
+            <button data-ng-click="printNote(note,sidebarComments)" ng-hide="matterInfo.archivalMatterReadOnlyFlag"
+                class="btn btn-default btn-default">Print </button>
+            <button data-ng-click="edit()" ng-disabled="isUser || (isGraceOver != 1)"
+                ng-show="!(note.type == 'email' || note.type == 'sidebar' || note.type == 'Client Messenger') && !matterInfo.archivalMatterReadOnlyFlag"
+                class="btn btn-default btn-default">
+                Edit</button>
+
+            <button type="button" class="btn btn-default" ng-click="deleteNote()"
+                ng-hide="matterInfo.archivalMatterReadOnlyFlag"
+                ng-disabled="note.type == 'email' || note.type == 'sidebar' || note.type == 'Client Messenger' || (isUser) || (isGraceOver != 1)">
+                Delete Note</button>
+
+        </div>
+        <div class="modal-footer" ng-if="isIntake">
+            <div class="pull-left">
+                <a data-ng-click="composeNotesMail();" ng-if="(isGraceOver != 0 && email_subscription == 1)"
+                    ng-hide="matterInfo.archivalMatterReadOnlyFlag">
+                    <!--  Mail Note Icon -->
+                    <span style="margin-left:-2px;" class="sprite default-mailbox" tooltip="E-mail"
+                        tooltip-placement="top">&nbsp;</span>
+                </a>
+            </div>
+            <button data-ng-click="cancel()" class="btn btn-default btn-style">Cancel</button>
+
+            <button data-ng-click="printNote(note,sidebarComments)" class="btn btn-default btn-default">Print</button>
+            <button ng-if="migrate!= 1" data-ng-click="edit()"
+                ng-show="!(note.type == 'email' || note.type == 'sidebar'|| note.type == 'Client Messenger')"
+                ng-disabled="(isUser) || (isGraceOver != 1)" class="btn btn-default btn-default">
+                Edit</button>
+
+            <button type="button" class="btn btn-default" ng-click="deleteNote()"
+                ng-disabled="note.type == 'email' || note.type == 'sidebar' || note.type == 'Client Messenger' || (isUser) || (isGraceOver != 1)">
+                Delete Note</button>
+
+        </div>
+    </div>
+
+    <!--------------------------Delete note view------------------------------------>
+    <div class="modal-content" ng-if="display.mode == 'delete'">
+        <style>
+            .modal-dialog  {
+                width: 330px !important;
+            }
+        </style>
+        <div class="modal-header">
+            <strong>Delete note?</strong>
+        </div>
+        <div class="modal-body">
+            <span>Do you wish to delete this note?</span>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="doDeleteNote()">OK</button>
+            <button class="btn btn-default" ng-click="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+
+    <!--------------------------Edit note view------------------------------------>
+    <div class="modal-content" data-ng-show="display.mode == 'edit'">
+        <div ng-include src='"notes/matter-notes/partials/edit-note.html"'></div>
+    </div>
+
+    <!-- <div class="modal-content" data-ng-show="display.mode == 'collaboration'">
+        <div ng-include src='"notes/notes-collaboration/notes-collaboration.html"'></div>
+    </div> -->
+
+</div>

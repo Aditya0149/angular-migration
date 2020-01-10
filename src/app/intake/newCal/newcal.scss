@@ -1,0 +1,180 @@
+.cal-wrapper {
+	position: relative;
+	.tooltip-inner {
+		white-space: pre-wrap;
+		text-align: left;
+	}
+	.event-category-custom-width {
+		.dropdown-menu {
+			width: 204% !important;
+		}
+		label {
+			font-size: 11px;
+		}
+	}
+	.fc-time-grid-container {
+		height: 300px !important;
+		overflow-y: scroll !important;
+		overflow-x: hidden !important;
+	}
+	.fc-toolbar {
+		margin-bottom: 0 !important;
+	}
+	.tags {
+		li {
+			margin: 0 5px 5px 0;
+			padding: 1px 5px;
+			font-size: smaller;
+		}
+	}
+	.multiselect-parent {
+		button.btn-default {
+			height: 24px;
+			width: 110px;
+			line-height: 24px;
+			.dropdown-arrow {
+				top: 10px;
+			}
+		}
+	}
+	.complied-btn {
+		.btn-group {
+			.btn-default {
+				height: 24px !important;
+				width: 105px;
+			}
+			label {
+				line-height: 24px !important;
+			}
+		}
+	}
+	.btn-group {
+		>.btn.active {
+			z-index: 1;
+		}
+		.btn-default {
+			font-size: 11px;
+		}
+	}
+	.fc-more-popover {
+		.fc-body {
+			max-height: 200px;
+			overflow-y: scroll;
+		}
+	}
+	.radio {
+		label {
+			&::before {
+				width: 19px !important;
+				height: 19px !important;
+				border: 2px solid $color_strong_blue !important;
+			}
+			&::after {
+				@include set_background_color($color_strong_blue);
+				top: 5px !important;
+				width: 9px !important;
+				height: 9px !important;
+				left: 5px !important;
+			}
+			padding-left: 25px !important;
+			padding-left: 25px !important;
+		}
+	}
+	.m-w-d-btn {
+		.btn {
+			padding: 0 10px;
+		}
+		label {
+			line-height: 24px !important;
+			height: 24px !important;
+		}
+	}
+	.big-font {
+		font-weight: bolder;
+	}
+	.filter-greybox {
+		position: relative;
+		top: 12px;
+		left: -36px;
+		height: 1px;
+	}
+	.inner-box {
+		width: 24%;
+		margin: 0 50% !important;
+		position: absolute;
+	}
+	.lable-line-height {
+		line-height: inherit;
+	}
+	.cal-btn-group {
+		position: absolute;
+		right: 0;
+	}
+	.cal-datepicker {
+		.dropdown-menu {
+			left: -140px !important;
+		}
+		.form-control {
+			height: 24px;
+		}
+	}
+	.page-title-border-links {
+		position: static
+	}
+	.sprite.default-calendar-small {
+		background-position: -36px -325px;
+		height: 22px !important;
+	}
+	#directives-calendar .datepicker {
+		.btn-default {
+			height: 24px;
+		}
+	}
+	.select-label-correction {
+		label {
+			margin: 5px 10px;
+		}
+	}
+	.multi-select-dropdown {
+		li.multi-row {
+			div {
+				font-size: 11px;
+			}
+		}
+		li {
+			a {
+				font-size: 11px;
+			}
+		}
+	}
+}
+
+.cal-popup-wrapper {
+	.modal-header {
+		padding-bottom: 0px;
+		height: auto;
+	}
+	.containt-height {
+		max-height: 34px;
+	}
+	.empty-space {
+		white-space: pre-wrap;
+	}
+	.normal-font {
+		font-weight: normal
+	}
+	.modal-footer {
+		height: 40px;
+		padding: 5px 20px 5px 20px;
+	}
+	.btn {
+		font-size: 12px;
+	}
+	.modal-body {
+		padding-top: 5px !important;
+		padding-bottom: 5px !important;
+		font-size: .85em;
+		line-height: 1.3;
+		font-weight: 400;
+	}
+}

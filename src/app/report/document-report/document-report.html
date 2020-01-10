@@ -1,0 +1,200 @@
+<style>
+    .report-custom-drop-height .open .dropdown-menu {
+        max-height: 210px !important;
+    }
+
+    .sol-table-padding {
+        padding-bottom: 150px;
+    }
+
+    .heading-filter-removed {
+        padding: 14px 47px 0;
+    }
+
+    .list-group,
+    .table {
+        margin-bottom: 5px;
+    }
+</style>
+<div class=" clearfix" scrolly="docReport.handleAll()" reached-top="docReport.reachedTop()">
+    <div class="row">
+        <h1 class="col-md-5 ellipsis-nowrap padding-topbottom-14px">Documents Report</h1>
+    </div>
+    <div class="row fixed-grid-report">
+        <div class="col-md-12 paddingRLR heading-filter-removed">
+            <div class="pull-right heading-right-buttons">
+                <ul class="showBy-btns pull-right heading-right-buttons paddingLR-25px">
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a>
+                            <span data-ng-click="docReport.filterdocReport()" class="sprite default-filter"
+                                tooltip="Filter" tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="seperation-filter"></li>
+                    <li>
+                        <a data-ng-click="docReport.print()">
+                            <span class="sprite default-file sortby-icons" tooltip="Print"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                    <li class="paddingLR-10px">
+                        <a data-ng-click="docReport.exportReport()">
+                            <span class="sprite default-sharedown sortby-icons" tooltip="Export"
+                                tooltip-placement="right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown heading-right-buttons pull-right">
+                Sort By :
+                <button id="dLabel" type="button" class="btn sortby-dropdown dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{docReport.selectedSort}}
+                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                </button>
+
+                <ul class="dropdown-menu divider-alt" role="menu" aria-labelledby="dLabel">
+                    <li data-ng-repeat="sort in docReport.sorts">
+                        <a data-ng-click="docReport.applySortByFilter(sort)">{{sort.name}}
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-right margin-right10px margin-left15px">
+                <clx-filter-tags on-filter-cancel="docReport.tagCancelled" tag-list="docReport.tags"></clx-filter-tags>
+            </div>
+        </div>
+    </div>
+    <div data-ng-show="docReport.docReportList.length > 0">
+        <show-record-count-only more="docReport.getMore()" all="docReport.getAll()"
+            hide-pager="{{docReport.showPaginationButtons() && docReport.docReportList.length > 0}}"
+            displayed="docReport.docReportList.length" total="docReport.total"></show-record-count-only>
+    </div>
+
+
+    <!-- Start: New scroll-table tableid -->
+    <div class="clearfix"></div>
+    <div id="listUpper"></div>
+    <div class="report-scroll-all-matter">
+
+        <scroll-table tag="docReport.tags" sort="docReport.selectedSort" watch="docReport.docReportList"
+            tableid="documentReportlistGrid" to="#listUpper" from="#moreAllLinkRecord">
+
+            <table class="table table-scroll">
+                <thead data-ng-show="docReport.docReportList.length!=0">
+                    <tr>
+                        <th class="th-width-10">
+                            <div>
+                                <b>Created Date</b>
+                            </div>
+                        </th>
+                        <th class="th-width-20">
+                            <div>
+                                <b>Name</b>
+                            </div>
+                        </th>
+                        <th class="th-width-17">
+                            <div>
+                                <b>Matter Name</b>
+                            </div>
+                        </th>
+                        <th class="th-width-10">
+                            <div>
+                                <b>Date of Incident</b>
+                            </div>
+                        </th>
+                        <th class="th-width-13">
+                            <div>
+                                <b>Last Updated</b>
+                            </div>
+                        </th>
+                        <th class="th-width-15">
+                            <div>
+                                <b>Last Updated By</b>
+                            </div>
+                        </th>
+                        <th class="th-width-15">
+                            <div>
+                                <b>Created By</b>
+                            </div>
+                    </tr>
+                </thead>
+
+
+
+                <tbody class="dashboard-tasks-due" id="documentReportlistbody" style="overflow-y:overlay">
+                    <tr data-ng-class="{'selected-grid-row':$index == docReport.clickedRow}"
+                        data-ng-repeat="data in docReport.docReportList">
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.created_date}}">
+                                    {{data.created_date }}</span>
+                            </div>
+                        </td>
+                        <td class="th-width-20">
+                            <div>
+                                <span class="reminders-popup" tooltip-placement="bottom" tooltip="{{data.doc_name}}">
+                                    {{data.doc_name}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-17">
+                            <div>
+                                <a tooltip-placement="bottom" tooltip="{{data.matter_name}}"
+                                    href="#/matter-overview/{{data.matter.matter_id}}" class="word-wrap">
+                                    {{data.matter_name}}</a>
+                            </div>
+                        </td>
+
+                        <td class="th-width-10">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.dateofincidence}}">
+                                    {{data.dateofincidence}}</span><br>
+                            </div>
+                        </td>
+
+                        <td class="th-width-13">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.last_updated}}">
+                                    {{data.last_updated}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.last_updated_by_name}}">
+                                    {{data.last_updated_by_name}}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="th-width-15">
+                            <div>
+                                <span tooltip-placement="bottom" tooltip="{{data.created_by_name}}">
+                                    {{data.created_by_name}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </scroll-table>
+        <div id="moreAllLinkRecord" class="text-right pull-left width-54per"
+            style="overflow: hidden !important;position: fixed;bottom: 0px;">
+        </div>
+    </div>
+
+    <!-- Start: New scroll-table tableid -->
+
+    <div class="text-center" data-ng-show="docReport.docReportList.length <= 0 && docReport.dataReceived">
+        No data for applied filter
+    </div>
+    <div data-ng-show="docReport.docReportList.length > 0">
+        <show-record-more-and-all more="docReport.getMore()" all="docReport.getAll()"
+            hide-pager="{{docReport.showPaginationButtons() && docReport.docReportList.length > 0}}"
+            displayed="docReport.docReportList.length" total="docReport.total"></show-record-more-and-all>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="row medical-info-gridSec margin0" ng-class="{'cursor-pointer-events-none' :liens.compose, '' : !liens.compose}">
+    <div class=" pull-left">
+        <div class="paddingRLR clearfix search-overlap">
+            <ul class="showBy-btns pull-right heading-right-buttons" ng-hide="liens.matterInfo.archivalMatterReadOnlyFlag">
+                <li tooltip="Add">
+                    <a href="javascript:void(0)" ng-if="(liens.isGraceOver != 0)" data-ng-click="liens.addLiensInfo('add',matterDetail.plaintiffDefendants)">
+                        <span class="sprite default-plus">&nbsp;</span>
+                    </a>
+                </li>
+                <li class="seperation" data-ng-show="liens.liensGrid.selectedItems.length > 0 && liens.isGraceOver != 0"></li>
+                <li>
+                    <ul class="">
+                        <li>
+                            <a href="javascript:void(0)" data-ng-show="liens.liensGrid.selectedItems.length > 0 
+                                    && liens.isGraceOver != 0 " data-ng-click="liens.deleteLiens(liens.liensGrid.selectedItems)">
+                                <span tooltip="Delete" class="sprite default-delete col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="javascript:void(0)" data-ng-show="liens.liensGrid.selectedItems.length > 0 " data-ng-click="liens.unlinkDocument(liens.liensGrid.selectedItems)">
+                                <span tooltip="unlink" class="sprite default-unlink col-md-offset-1">&nbsp;</span>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="javascript:void(0)" data-ng-show="liens.liensGrid.selectedItems.length === 1
+                                 && liens.isGraceOver != 0 " data-ng-click="liens.addLiensInfo('edit',matterDetail.plaintiffDefendants,liens.liensGrid.selectedItems)">
+                                <span tooltip="Edit" class="sprite default-edit "></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-ng-show="matterDetail.showViewDoc(liens.liensGrid.selectedItems,'liens_documentid')">
+                                <open-doc doc-id="{{[{doc_id:liens.liensGrid.selectedItems[0]['liens_documentid']}]}}"></open-doc>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class=" pull-right">
+        <ul class="showBy-btns heading-right-buttons pull-right"  ng-hide="liens.matterInfo.archivalMatterReadOnlyFlag">
+            <li class="seperation-filter"></li>
+            <li tooltip="Print">
+                <a data-ng-click="liens.printLiens(matterDetail.plaintiffDefendants, liens.plaintiffid)"><span class="sprite default-file "></span></a>
+            </li>
+            <li class="paddingLR-10px" >
+                <a data-ng-click="liens.downloadLiens(liens.plaintiffid)"><span tooltip="Export" class="sprite default-sharedown sortby-icons"></span></a>
+            </li>
+        </ul>
+        <form class="form-inline pull-right">
+
+            <div class="form-group select-label-correction">
+                <label>Show records of</label>
+
+                <ui-select ng-model="liens.plaintiffid" theme="selectize" on-select="liens.filterLienInfo(liens.plaintiffid.id,matterDetail.plaintiffDefendants, $item.selectedPartyType)">
+                    <ui-select-match placeholder="Enter Name">
+                        {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="matterDetail.groupPlaintiffDefendants" group-filter="['All','Plaintiffs','Defendants','Other Parties']"
+                        repeat="item in matterDetail.plaintiffDefendants | filter:{ name:$select.search } | orderBy: 'name'">
+                        <small>
+                                    {{item.name}}
+                                </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+
+        </form>
+        <div class="total-amount-main" data-ng-if="liens.liensList.liens.length > 0">
+            <div><b>Total</b> <span class="total-amount-sepretor"></span></div>
+            <div class="lable">Amount: <span>{{liens.liensTotal.lienamount| sumOfValue:'lienamount' | currency}}</span></div>
+            <div class="lable">Amount Due: <span>{{liens.liensTotal.dueamount| sumOfValue:'dueamount' |currency}}</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="report-responsive" data-ng-if="liens.liensList.liens.length > 0" ng-class="{'cursor-pointer-events-none' :liens.compose, '' : !liens.compose}">
+    <div class="row header-row ">
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-model="liens.liensGrid.selectAll" data-ng-checked="liens.allUsersSelected()" data-ng-click="liens.selectAllUsers(liens.liensGrid.selectAll)"
+            /><label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in ::liens.liensGrid.headers" data-width={{header.dataWidth}} data-ng-class="{'text-right':((header.field[0].prop == 'lien_amount') || (header.field[0].prop == 'due_amount'))}">
+            <span ng-if="header.displayName != 'Memo'">  {{header.displayName}} </span>
+        </div>
+    </div>
+
+    <div class="row body-row " data-ng-class="{'selected-grid-row':liens.isUserSelected(data.lien_id)}"
+        data-ng-repeat="data in liens.liensList.liens">
+        <div class="cell checkbox" data-width="3">
+
+            <input type="checkbox" data-ng-checked="liens.isUserSelected(data.lien_id)" checklist-model="liens.liensGrid.selectedItems"
+                checklist-value="data" /><label></label>
+
+        </div>
+        <div class="cell" data-ng-repeat="header in liens.liensGrid.headers" data-width={{header.dataWidth}} grid-size>
+            <div ng-if="header.displayName != 'Memo'" data-ng-repeat="field in header.field" data-ng-class="{'display-table-cell':field.inline,'cursor-pointer':field.cursor,'text-right':((field.prop == 'lien_amount')|| (field.prop == 'due_amount'))}"
+                cell-data="{{data}}" field="{{field}}" render-cell>
+            </div>
+        </div>
+    </div>
+</div>
+<p class="text-center" data-ng-if="liens.liensList.liens.length==0">
+    No data available.
+</p>
+<div class="compose-wrap" ng-if="liens.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :liens.compose, '' : !liens.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="liens.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :liens.compose, '' : !liens.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

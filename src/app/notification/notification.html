@@ -1,0 +1,416 @@
+<div class="notification-pop-height">
+<div class="page-title-border-links clearfix subnav addevent-flicker">
+    <div class="col-md-11">
+        <h1 style="padding-top: 8px;"> All Notifications </h1>
+    </div>
+    <div class="col-md-1">
+        <button class="close fl-right" data-ng-click="notif.closePopUp()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <ul class="centered-nav">
+        <li data-ng-click="notif.activateTab('task',notif.activeTab)">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.task}">Tasks({{notif.counts.task_count}})</a>
+        </li>
+        <li data-ng-click="notif.activateTab('event',notif.activeTab)">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.event}">Events({{notif.counts.event_count}})</a>
+        </li>
+        <li data-ng-click="notif.activateTab('sidebar',notif.activeTab)">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.sidebar}">Sidebar
+                Posts({{notif.counts.sidebar_comment_count}})</a>
+        </li>
+        <!-- <li data-ng-click="notif.activateTab('sync',notif.activeTab)">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.sync}">Sync
+                Alerts({{notif.counts.sync_count}})</a>
+        </li> -->
+        <li data-ng-click="notif.activateTab('reminders',notif.activeTab)">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.reminders}">Reminders({{notif.reminderList.length}})</a>
+        </li>
+        <li data-ng-click="notif.activateTab('cloudelexLite',notif.activeTab)" ng-show="notif.isCollaborationActive && onMatter">
+            <a href="javascript:void(0)" data-ng-class="{'activeLink' : notif.activeTab.cloudelexLite}">CloudLex
+                Lite({{notif.counts.lite_count}})</a>
+        </li>
+    </ul>
+</div>
+<div class="notification-popup-content" style="padding: 0px 10px">
+    <!-- Start Task Notification HTML -->
+    <div data-ng-if="notif.activeTab.task">
+        <div class="notification-task" style="overflow-x: hidden;" ng-if="notif.taskList && notif.taskList.length != 0">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="task.isRecSelected" data-ng-checked="notif.allRecordselected('task')"
+                            data-ng-click="notif.selectAllRecord('task',task.isRecSelected)" />
+                        <label style="padding-left: 30px;" class="new-check-allign">Select All </label>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-tasks-due" style="overflow-y: auto;overflow-x:hidden;max-height: 215px !important;">
+                <div class="row" data-ng-repeat="task in notif.taskList">
+                    <div class="col-md-1 reminders-checkbox" style="width: 2%;">
+                        <div class="checkbox" style="margin-top:0px;">
+                            <input type="checkbox" data-ng-checked="notif.isRecordSelected('task',task.notification_id)"
+                                data-ng-model="task.isRecSelected" data-ng-click="notif.selectItems('task',task,task.isRecSelected)" />
+                            <label></label>
+                        </div>
+                    </div>
+                    <div class="col-md-10 padding-0">
+                        <div data-ng-if="task.taskname">
+                            <div class="col-md-6">
+                                <strong>Task Name:</strong>
+                                <span class="cursor-pointer" data-ng-click="notif.gotoTask(task)">{{task.taskname}}</span>
+                            </div>
+                            <div class="col-md-5">
+                                <strong>Assigned By:</strong>
+                                <span>{{task.assigned_user}}</span>
+                            </div>
+                            <div class="col-md-12">
+                                <strong ng-show="onMatter">Matter Name:</strong>
+                                <strong ng-show="onIntake">Intake Name:</strong>
+                                <span class="cursor-pointer" data-ng-click="notif.goToEventMatter(task)">{{task.mattername}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Due Date:</strong>
+                                <span>{{task.duedate}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Status:</strong>
+                                <span>{{task.status}}</span>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Percentage Complete:</strong>
+                                <span>{{task.percentagecomplete}}%</span>
+                            </div>
+                        </div>
+                        <!-- US#4228: Task notification template -->
+                        <div class="col-md-12">{{task.notification_text}}&nbsp;&nbsp;&nbsp;
+                            <span class="task-updated-on">{{task.created_on}}</span>
+                        </div>
+                        <!-- US#4228: End -->
+                    </div>
+                    <div class="col-md-1 close-btn" >
+                        <button class="close fl-right">
+                            <span data-ng-click="notif.clearNotification(task.notification_id, 'task', $event)">×</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center margin-top20px" data-ng-show="notif.counts.task_count == 0">
+            No task notification.
+        </div>
+        <div class="modal-footer" style="margin-top: 0px !important;" ng-if="notif.taskList && notif.taskList.length != 0">
+            <div class="pull-right">
+                <button class="btn btn-default btn-styleNone" data-ng-click="notif.clearNotification(task.notification_id, 'task', $event)">Dismiss</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Task Notification HTML -->
+    <!-- Start Event Notification HTML -->
+    <div data-ng-if="notif.activeTab.event">
+        <div class="notification-task" style="overflow-x: hidden;">
+            <div class="row" ng-if="notif.eventList && notif.eventList.length != 0">
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <input type="checkbox" data-ng-model="task.isRecSelected" data-ng-checked="notif.allRecordselected('event')"
+                            data-ng-click="notif.selectAllRecord('event',task.isRecSelected)" />
+                        <label style="padding-left: 30px;">Select All </label>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="notif.eventList && notif.eventList.length != 0" class="dashboard-tasks-due" style="overflow-y: auto;overflow-x:hidden;max-height: 215px !important;">
+                <div class="row" 
+                    data-ng-repeat="task in notif.eventList">
+                    <div data-ng-if="task.event_title">
+                        <div class="col-md-1 reminders-checkbox " style="width: 2%;">
+                            <div class="checkbox" style="margin-top:0px;">
+                                <input type="checkbox" data-ng-checked="notif.isRecordSelected('event',task.notification_id)"
+                                    data-ng-model="task.isRecSelected" data-ng-click="notif.selectItems('event',task,task.isRecSelected)" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="col-md-10 padding-left-0" >
+                            <div class="col-md-6">
+                                <strong>Event Title:</strong>
+                                <span data-ng-class="(task.matterid && task.matterid != 0) ? 'cursor-pointer' : ''" data-ng-click="(task.matterid && task.matterid != 0) ? notif.gotoEvent(task) : ''">{{task.event_title}}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Event Type:</strong>
+                                <span>{{task.event_type}}</span>
+                            </div>
+                            <div class="col-md-12">
+                                <strong ng-show="onMatter">Matter Name:</strong>
+                                <strong ng-show="onIntake">Intake Name:</strong>
+                                <span class="cursor-pointer" data-ng-click="notif.goToEventMatter(task)">{{task.mattername}}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Start Date:</strong>
+                                <span ng-if="task.allday == 1">{{task.start | utcDateFilter:
+                                    'MM-DD-YYYY':task.allday:'start'}}</span>
+                                <span ng-if="task.allday == 0">{{task.start | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                    A':task.allday:'start'}}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>End Date:</strong>
+                                <span ng-if="task.allday == 1">{{task.end | utcDateFilter:
+                                    'MM-DD-YYYY':task.allday:'end'}}</span>
+                                <span ng-if="task.allday == 0">{{task.end | utcDateFilter: 'MM-DD-YYYY hh:mm
+                                    A':task.allday:'end'}}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Location:</strong>
+                                <span>{{task.location}}</span>
+                            </div>
+                            <div class="col-md-12">{{task.notification_text}}&nbsp;&nbsp;&nbsp;
+                                <span class="task-updated-on">{{task.created_on}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-1 close-btn" >
+                            <button class="close fl-right" style="height:inherit;">
+                                <span data-ng-click="notif.clearNotification(task.notification_id, 'event', $event)">×</span>
+                            </button>
+                            </div>
+                        </div>
+                        <!-- US#4228: Task notification template -->
+                        <!-- US#4228: End -->
+                    </div>
+                    
+                </div>
+                <div class="text-center margin-top20px" data-ng-show="notif.counts.event_count == 0">
+                    No event notification.
+                </div>
+                <div class="modal-footer" style="margin-top: 0px !important;" ng-if="notif.eventList && notif.eventList.length != 0">
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-styleNone" data-ng-click="notif.clearNotification(task.notification_id, 'event', $event)">Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Event Notification HTML -->
+        <!-- Start Notification Sidebar Post HTML -->
+        <div data-ng-if="notif.activeTab.sidebar">
+                <div class="row" style="border-bottom: 1px solid #d3d9de;margin: 0px;margin-top:10px" ng-if="notif.sidebarList && notif.sidebarList.length != 0" >
+                        <div class="col-md-2">
+                            <div class="checkbox">
+                                <input type="checkbox" data-ng-model="comment.isRecSelected" data-ng-checked="notif.allRecordselected('sidebar',notif.sidebarList)" data-ng-click="notif.selectAllRecord('sidebar',comment.isRecSelected,notif.sidebarList)"
+                                    />
+                                    <label style="padding-left: 30px;">Select All </label>
+                            </div>
+                        </div>
+                    </div>
+            <div class="dashboard-tasks-due" style="overflow-y: auto;overflow-x:hidden;max-height: 235px !important;">
+                <div class="col-md-12">
+                    <ul>
+                        <li ng-if="notif.sidebarList && notif.sidebarList.length != 0" class="post-border" data-ng-show="notif.counts.sidebar_comment_count != 0" data-ng-repeat="post in notif.sidebarList">
+                            <div class="col-md-1 padding-0">
+                                <div class="profile-pic">
+                                    <img data-ng-src="{{post.user_photo}}" class="sidebar-post-photo" width="50px" height="50px" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-0">
+                                <div>
+                                    <strong>{{post.created_name}}</strong>
+                                </div>
+                                <div class="margin-top5px">{{post.created|utcDateFilter: 'hh:mm A'}}</div>
+                                <div>{{post.created|utcDateFilter: 'MMM DD, YYYY'}}</div>
+                            </div>
+                            <div class="col-md-8">
+                                <strong>
+                                <label ng-show="onMatter">Matter: </label> <label  ng-show="onIntake">Intake: </label><span class="cursor-pointer" data-ng-click="notif.goToSidebarMatter(post)"> {{post.matter_name}}</strong></span>
+                               
+                                <div><span class="cursor-pointer" data-ng-click="notif.loadPage('Sidebar', post);notif.closePopUp()"> {{post.body_value}}</span></div>
+                                <div class="row">
+                                    <div class="col-md-12 sidebar-sub-comment" data-ng-repeat="comment in post.comments">
+                                        <div class="col-md-1  padding-top-10px reminders-checkbox">
+                                            <div class="checkbox" style="margin-top:0px;">
+                                                <input type="checkbox" data-ng-checked="notif.isRecordSelected('sidebar',comment.cid)" data-ng-model="comment.isRecSelected"
+                                                    data-ng-click="notif.selectItems('sidebar',comment,comment.isRecSelected)" />
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 profile-pic-small">
+                                            <img data-ng-src="{{comment.user_photo}}" class="sidebar-comment-photo" />
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div>
+                                                <strong>{{comment.name}}</strong>
+                                            </div>
+                                            <!--<div>{{comment.created | utcDateFilter: 'hh:mm A MMM DD,YYYY'}}</div>-->
+                                            <div>
+                                                <small>{{comment.created|utcDateFilter: 'hh:mm A'}}</small>
+                                                <span class="paddingLR-10px"></span>
+                                                <small>{{comment.created|utcDateFilter: 'MMM DD, YYYY'}}</small>
+                                            </div>
+                                            <div class="margin-top10px">{{comment.comment_body_value}}</div>
+                                        </div>
+                                        <div class="col-md-1 close-btn padding-0" >
+                                            <button class="close fl-right">
+                                            <span data-ng-click="notif.clearNotification(comment.cid, 'sidebar', $event)">×</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="text-center  margin-top20px" data-ng-show="notif.counts.sidebar_comment_count == 0">No
+                        sidebar notification.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer" style="margin-top: 0px !important;" ng-if="notif.sidebarList && notif.sidebarList.length != 0">
+            <div class="pull-right">
+                <button class="btn btn-default btn-styleNone" data-ng-click="notif.clearNotification(task.notification_id, 'sidebar', $event)">Dismiss</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Notification Sidebar Post HTML -->
+    <!-- Start Sync Notification HTML -->
+    <!-- <div data-ng-if="notif.activeTab.sync">
+        <div class="notification-sync">
+            <div class="row" data-ng-repeat="error in notif.syncList" style="margin:0px">
+                <div class="col-md-12">
+                    <strong>{{error.errortype}}:</strong>
+                    <span>{{error.error_message}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center margin-top20px" data-ng-show="notif.counts.sync_count == 0">
+            No sync notification.
+        </div>
+    </div> -->
+    <div data-ng-if="notif.activeTab.reminders">
+        <div class="modal-body task-event-reminders" style="padding: 0px !important;">
+            <div class="container-fluid padding-0" data-ng-hide="notif.reminderList == 0">
+                <div class="row reminder-headers {{' '+notif.reminderHeaders}}">
+                    <div class="col-md-1" style="width: 2%;">
+                        <div class="checkbox checkbox-top-space">
+                            <input type="checkbox" data-ng-model="reminder.isSelected" data-ng-click="notif.selectAllNotifications(reminder.isSelected)"
+                                data-ng-checked="notif.allNotificationSelected()" />
+                                <label> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-top-5px" ng-show="onMatter">Matter</div>
+                    <div class="col-md-3 padding-top-5px" ng-show="onIntake">Intake</div>
+                    <div class="col-md-4 padding-top-5px">Event / Task Name</div>
+                    <div class="col-md-3 padding-top-5px">Event / Due Date</div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="reminder-row" style="border-bottom: 2px solid #ccc;"></div>
+                <div class="dashboard-tasks-due" id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;">
+                    <div class="row reminder-row " data-ng-repeat="reminder in notif.reminderList">
+                        <div class="col-md-1 padding-top-5px" style="width: 2%;">
+                            <div class="checkbox checkbox-top-space">
+                                <input type="checkbox" data-ng-model="reminder.isSelected" data-ng-checked="notif.isNotifySelected(reminder.reminderid)"
+                                    data-ng-click="notif.selecReminder(reminder,reminder.isSelected)" />
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="col-md-3  padding-top-10px cursor-pointer" data-ng-click="notif.goToReminderMatter(reminder)" style="word-break: break-word;">
+                            {{reminder.matterName}}
+                        </div>
+                        <div class="col-md-4 padding-top-10px cursor-pointer" data-ng-click="notif.gotoReminderEvent(reminder)" style="word-break: break-word;">
+                            {{reminder.reminderName}}
+                        </div>
+                        <div class="col-md-3 reminder-cell padding-top-10px" data-ng-show="reminder.allday == 1 && reminder.type== 'event'">
+                            {{reminder.reminderTime|utcDateFilter:'MM/DD/YYYY':reminder.allday:'start'}}
+                        </div>
+                        <div class="col-md-3  padding-top-10px" data-ng-show="reminder.allday == 0 && reminder.type== 'event'">
+                            {{reminder.reminderTime|utcDateFilter:'MM/DD/YYYY hh:mm a':reminder.allday:'start'}}
+                        </div>
+                        <div class="col-md-3  padding-top-10px" data-ng-show="reminder.type== 'task'">
+                            {{reminder.reminderTime}}
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 0px !important;">
+                <div class="pull-right" data-ng-hide="notif.reminderList == 0">
+                    <button class="btn btn-default btn-styleNone" data-ng-click="notif.dismissReminder()">Dismiss</button>
+                    <!-- <button class="btn btn-default btn-styleNone" 
+                        data-ng-click="notif.snooze()">Snooze</button> -->
+                </div>
+            </div>
+            <div class="text-center" data-ng-if="notif.noDataReminder">No reminders.
+            </div>
+        </div>
+    </div>
+    <div data-ng-if="notif.activeTab.cloudelexLite && onMatter">
+        <div class="modal-body task-event-reminders" style="padding: 0px !important;">
+            <div class="container-fluid padding-0 " data-ng-show="notif.docList && notif.docList.length != 0">
+                <!--  -->
+                <div style="height: 52px;" class="row reminder-headers {{' '+notif.reminderHeaders}}">
+                    <div class="col-md-1" style="width: 3%;">
+                        <div class="checkbox">
+                            <input type="checkbox" data-ng-model="doc.isRecSelected" data-ng-checked="notif.allRecordselected('cloudelexLite')"
+                                data-ng-click="notif.selectAllRecord('cloudelexLite', doc.isRecSelected)" />
+                            <label> </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-top-5px">
+                        <span ng-show="onMatter">Matter name</span>
+                        <span ng-show="onIntake">Intake name</span>
+                    </div>
+                    <div class="col-md-2 padding-top-5px">Type</div>
+                    <div class="col-md-2 padding-top-5px">Name</div>
+                    <div class="col-md-2 padding-top-5px">Created On</div>
+                    <div class="col-md-2 padding-top-5px">Created By</div>
+                    <!-- <div class="col-md-2"></div> -->
+                </div>
+                <div class="reminder-row" style="border-bottom: 2px solid #ccc;"></div>
+                <div class="dashboard-tasks-due padding-top-10px" style="height: 224px;overflow-x: hidden;">
+                    <div id="remindersDiv" style="max-height: 200px !important;overflow-x: hidden !important;"
+                        data-ng-repeat="doc in notif.docList">
+                        <div class="row ">
+                            <div class="col-md-1 reminders-checkbox" style="width: 3%;">
+                                <div class="checkbox" style="margin-top:0px;">
+                                    <input type="checkbox" data-ng-model="doc.isRecSelected" data-ng-checked="notif.isRecordSelected('cloudelexLite',doc.id)"
+                                        data-ng-click="notif.selectItems('cloudelexLite',doc,doc.isRecSelected)" />
+                                    <label></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3  padding-top-5px cursor-pointer" data-ng-click="notif.goToMatterOverview(doc)"
+                                style="word-break: break-word;">
+                                {{doc.matterName}}
+                            </div>
+                            <div class="col-md-2 padding-top-5px" style="word-break: break-word;">
+                                {{doc.entityTypeName}}
+                            </div>
+                            <div class="col-md-2 padding-top-5px cursor-pointer" data-ng-click="notif.goToEntityTypeName(doc)"
+                                style="word-break: break-word;">
+                                {{doc.entityName | characters:50:false}}
+                            </div>
+                            <div class="col-md-2  padding-top-5px" style="word-break: break-word;margin-left: 4px;">
+                                {{doc.createdOn | utcDateFilter:'MM/DD/YYYY'}}
+                            </div>
+                            <div class="col-md-2  padding-top-5px" style="word-break: break-word;margin-left: 4px;">
+                                {{doc.createdBy}}
+                            </div>
+                            <!-- <div class="col-md-2 close-btn" data-ng-click="notif.clearNotification(doc.doc_notification_id, 'cloudelexLite', $event)">
+                            <button class="close fl-right" style="position: relative;top: 3px;right: 10px;float: right;">
+                                <span>×</span>
+                            </button>
+                        </div> -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer" style="margin-top: 0px !important;">
+                <div class="pull-right " data-ng-show="notif.docList &&  notif.docList.length != 0">
+                    <button class="btn btn-default btn-styleNone" data-ng-click="notif.clearNotificationLite(doc.id, 'cloudelexLite', $event)">Dismiss</button>
+                    <!-- <button class="btn btn-default btn-styleNone" 
+                                    data-ng-click="notif.snooze()">Snooze</button> -->
+                </div>
+            </div>
+            <div class="text-center" data-ng-if="notif.docList.length == 0">No cloudlex lite notification.
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>

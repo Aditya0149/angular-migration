@@ -1,0 +1,138 @@
+<div ng-form="document.documentMotionForm">
+    <div class="row fullsize-control">
+        <div class="col-md-12">
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Date of Service</label>
+                    <span class="input-group datepicker">
+                        <input readonly="true" type="text"
+                               data-ng-model="document.documentMotionDetailInfo.dateOfService"
+                               datepicker-popup="{{document.dateFormat}}"
+                               show-button-bar="true"
+                               clear-text="Clear"
+                               datepicker-options="document.datepickerOptions"
+                               is-open="document.dateOfServiceEvent.openStartDatepickerForDOS"
+                               show-button-bar="false"
+                               class="form-control" ng-change="document.dateOfServiceDateChange(document.dateOfServiceEvent)" />
+                                <span class="input-group-btn">
+                                    <button type="button"
+                                            class="btn btn-default"
+                                            data-ng-click="document.openDateOfService($event,'openStartDatepickerForDOS')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <label>Returnable Date</label>
+                    <span class="input-group datepicker">
+                        <input readonly="true" type="text"
+                               data-ng-model="document.documentMotionDetailInfo.returnableDate"
+                               datepicker-popup="{{document.dateFormat}}"
+                               show-button-bar="true"
+                               clear-text="Clear"
+                               datepicker-options="document.datepickerOptions"
+                               is-open="document.returnableDateEvent.openStartDatepickerForRD"
+                               show-button-bar="false"
+                               class="form-control" ng-change="document.returnableDateChange(document.returnableDateEvent)" />
+                                <span class="input-group-btn">
+                                    <button type="button"
+                                            class="btn btn-default"
+                                            data-ng-click="document.openReturnableDate($event,'openStartDatepickerForRD')">
+                                        <i class="default-calendar-small sprite"></i>
+                                    </button>
+                                </span>
+                    </span>
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Type<span class="compulsary-mark">*</span></label>
+                    <ui-select data-ng-required="true" name="document_type" ng-model="document.documentMotionDetailInfo.motionTypeId" theme="selectize">
+                        <ui-select-match placeholder="Enter Event Type">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="type.id as type in document.motionType | filter:{ name:$select.search }">
+                            <small>
+                                {{type.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6">
+                    <label>Title<span class="compulsary-mark">*</span></label>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                           data-ng-model="document.documentMotionDetailInfo.motionTitle"
+                           name="document_title"
+                           ng-pattern="/^[\x00-\x7F]*$/"
+                           data-ng-required="true">
+
+                    <span class="sprite default-caution error-icon" data-ng-show="document.documentMotionForm.document_title.$dirty && document.documentMotionForm.document_title.$invalid"></span>
+                    <div data-ng-if="document.documentMotionForm.document_title.$dirty" ng-messages="document.documentMotionForm.document_title.$error">
+                        <div class="error" ng-message="required">
+                            <span ng-show="document.documentMotionForm.document_title.$error">Title cannot be blank.</span>
+                        </div>
+                        <div class="error" ng-message="pattern">
+                            <span ng-show="document.documentMotionForm.document_title.$error">Motion title contains invalid characters. Please enter another title</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-12">
+                    <label>Description</label>
+                    <textarea rows="4" class="form-control" data-ng-model="document.documentMotionDetailInfo.motionDescription"></textarea>
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-6">
+                    <label>Status<span class="compulsary-mark">*</span></label>
+                    <ui-select data-ng-required="true" ng-model="document.documentMotionDetailInfo.motionStatusId" theme="selectize">
+                        <ui-select-match placeholder="Select Status...">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="status.id as status in document.motionStatus| filter:{name:$select.search} | orderBy: 'name'">
+                            <small>
+                                {{status.name}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="row margin-top20px form-group-margin-null">
+                <div class="form-group col-md-6 ">
+
+                    <label>Judge</label>
+                    <input type="text"
+                           name="contact"
+                           data-ng-model="document.documentMotionDetailInfo.contact"
+                           data-ng-model-options="{ debounce: 200 }"
+                           typeahead-editable="false"
+                           placeholder="Search Contacts"
+                           typeahead="row as row.name for row in document.getDocumentMotionContact($viewValue)"
+                           typeahead-input-formatter="document.formatTypeaheadDisplayForDocumentMotion($model)"
+                           typeahead-on-select="document.setTypeMotionForMultiupload($model, $index)"
+                           typeahead-template-url = "matter/matter-details/insaurance/contact-tpl.html"
+                           class="form-control ">
+                </div>
+
+                <div class="add-now-wrap">
+                    <span class="or-connector">OR </span>
+                    <button class="btn btn-default" data-ng-click="document.addNewContactforDocumentMotion()">Add New</button>
+                </div>
+            </div>
+            <div class="row margin-top20px">
+                <div class="col-md-8">
+                    <clx-btn-group btn-list="document.motionToBeSelected" value="document.documentMotionDetailInfo.motionName"></clx-btn-group>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+
+    </div>
+</div>
+

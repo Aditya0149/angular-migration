@@ -1,0 +1,172 @@
+<style>
+    .ta-editor {
+        width: 100% !important;
+        height: 44vh !important;
+    }
+
+    .medical-information-wrapper .panel-group {
+        margin-bottom: 0px;
+    }
+
+    .medical-information-wrapper .panel-body {
+        padding: 15px 15px 0px 15px;
+    }
+
+    .medical-information-wrapper .panel-group .panel {
+        border: none;
+        border-bottom: 1px solid #d3d9de;
+        border-radius: 0px;
+    }
+
+    .medical-information-wrapper .panel-heading {
+        background-color: #e9eef0 !important;   
+    }
+
+    .medical-information-wrapper {
+        padding-left: 10px;
+        padding-right: 20px;
+        padding-bottom: 60px;
+    }
+</style>
+
+
+<div class="margin-top10px">
+    <div class="medical-information-wrapper">
+        <accordion>
+            <accordion-group ng-repeat="app in applicationCtrl.emailConnectors">
+                <accordion-heading>
+                    <div ng-click="applicationCtrl.toggleDiv($index)">
+                        <span ng-if="app.id == 1"><b>Outlook Connector</b></span>
+                        <span ng-if="app.id == 2"><b>Connector for Gmail</b></span>
+                        <i class="pull-right sprite" ng-class="{'default-upward-arrow': app.open, 'default-downward-arrow': !app.open}"></i>
+                    </div>
+
+                </accordion-heading>
+
+                <div ng-if="app.id == 1" class="marketplace-details-main">
+                    <div class="ng-scope row">
+                        <div class="container col-md-12 main-top">
+                            <div class="pull-left back-btn-block">
+                                <a href="#/marketplace" data-ng-click="applicationCtrl.clearStorage()" class="marketplace-back-btn"></a>
+                            </div>
+                            <!-- <div class="col-md-11 padding-0"> -->
+
+                            <div class="col-md-11 padding-0" ng-if="((applicationCtrl.isOutlookPlugin.permission.V==1 && applicationCtrl.isOutlookPlugin.is_visible == 1))">
+                                <div class="pull-left left-img">
+                                    <img src="styles/images/marketplace-images/icon/outlook-connector.png">
+                                </div>
+                                <div class="col-md-8 marketplace-details-block border-right">
+                                    <div class="title">Outlook Connector</div>
+                                    <div class="text col-md-10 padding-0">Eliminate email chaos, save your important Outlook emails to CloudLex and help your team
+                                        members stay informed.</div>
+                                    <div class="col-md-12"></div>
+
+                                    <span class="pull-left" ng-if="applicationCtrl.isOutlookPlugin.is_active==1">
+                                        <a ng-click="applicationCtrl.downloadOutlookConnector()" class="btn btn-default download-connector-btn">INSTALL DESKTOP APPLICATION</a>
+                                    </span>
+                                    <span class="pull-left" ng-if="applicationCtrl.isOutlookPlugin.is_active==1">
+                                        <a ng-click="applicationCtrl.outlookWebConnectorDetails()" class="btn btn-default download-connector-btn">INSTALL WEB APPLICATION</a>
+                                    </span>
+                                </div>
+                                <div class="col-md-2 padding-right-0 marketplace-details-block">
+                                    <div class="text clear-both">
+                                        <div class="margin-top30px">
+                                            <button class="btn btn-default" ng-disabled="applicationCtrl.isOutlookPlugin.permission.E==0 || (applicationCtrl.dissableSubscribe)"
+                                                ng-if="applicationCtrl.isOutlookPlugin.is_active==0" ng-click="applicationCtrl.subofficeConnector(applicationCtrl.isOutlookPlugin, true)">SUBSCRIBE</button>
+                                            <button class="btn btn-default" ng-if="applicationCtrl.isOutlookPlugin.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-12 padding-right-0">
+                                <div id="report-content">
+                                    <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+                                        <carousel interval="applicationCtrl.mySliderInterval">
+                                            <slide ng-repeat="slide in applicationCtrl.slidesOutlook" active="slide.active">
+                                                <img ng-src="{{slide.image}}">
+                                                <span class="slide-txt" ng-bind-html="slide.text"></span>
+                                                <div class="carousel-caption">
+                                                </div>
+                                            </slide>
+                                        </carousel>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+
+                    </div>
+                </div>
+
+                <div ng-if="app.id == 2" class="marketplace-details-main" style="width: 100%;">
+                    <div class="ng-scope row">
+                        <div class="container col-md-12 main-top" style="width: 100%;">
+                            <div class="pull-left back-btn-block">
+                                <a href="#/marketplace" data-ng-click="applicationCtrl.clearStorage()" class="marketplace-back-btn"></a>
+                            </div>
+                            <div class="pull-left left-img">
+                                <img src="styles/images/marketplace-images/icon/connector-for-gmail.png">
+                            </div>
+                            <div class="col-md-7 marketplace-details-block border-right">
+                                <div class="title">Connector for Gmail</div>
+                                <div class="text col-md-10 padding-0">Eliminate email chaos - save important mails to CloudLex and keep everyone informed.</div>
+                                <div class="col-md-12"></div>
+                                <span class="pull-left" style="display:none">
+                                    <a ng-click="applicationCtrl.downloadOfficeConnector()" class="btn btn-default download-connector-btn">INSTALL FOR WINDOWS</a>
+                                </span>
+                                <span class="pull-left" style="display:none">
+                                    <a ng-click="applicationCtrl.downloadOfficeConnectorForMAC()" class="btn btn-default download-connector-btn">INSTALL FOR MAC</a>
+                                </span>
+                            </div>
+                            <div class="col-md-2 padding-right-0 marketplace-details-block">
+                                <div class="text clear-both">
+                                    <div class="margin-top30px">
+                                        <button class="btn btn-default" ng-disabled="applicationCtrl.isgmailPlugin.permission.E==0 || (applicationCtrl.dissableSubscribe)"
+                                            ng-if="applicationCtrl.isgmailPlugin.is_active==0" ng-click="applicationCtrl.subofficeConnector(applicationCtrl.isgmailPlugin, false)">SUBSCRIBE</button>
+                                        <button class="btn btn-default" ng-if="applicationCtrl.isgmailPlugin.is_active==1" disabled="disabled">SUBSCRIBED</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="report-content">
+                        <div class="marketplace-details-vedeo-block col-md-9 col-centered">
+                            <carousel interval="applicationCtrl.myInterval">
+                                <slide ng-repeat="slide in applicationCtrl.slidesGmail" active="slide.active">
+                                    <img ng-src="{{slide.image}}">
+                                    <span class="slide-txt" ng-bind-html="slide.text"></span>
+                                    <div class="carousel-caption">
+                                    </div>
+                                </slide>
+                            </carousel>
+                        </div>
+                    </div>
+                </div>
+
+            </accordion-group>
+        </accordion>
+    </div>
+</div>
+
+
+
+<footer position-center>
+    <ul>
+        <li>
+            <a href="#/marketplace" class="active-footer">Applications</a>
+        </li>
+        <li>
+            <a href="#/marketplace/services">Services</a>
+        </li>
+        <!-- <li>
+            <a href="#/marketplace/upcoming">Upcoming</a>
+        </li> -->
+
+    </ul>
+</footer>

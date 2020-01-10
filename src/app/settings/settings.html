@@ -1,0 +1,15 @@
+<div id="report-content" data-ui-view="" class="relative-container"></div>
+
+
+<footer data-ng-class="{'intake-header':onIntake,'referral-header':onReferral,'archival-header':onArchival}" data-position-center="" delayRender='true'>
+
+    <ul>
+        <li data-ng-repeat="navs in settings.settingsNavigation">
+            <a data-ui-sref="{{navs.state}}"
+                data-ng-class="{'active-footer': settings.highlightCurrentNav(navs.state)}">{{navs.name}}</a>
+                               
+        </li>
+    </ul>
+    
+
+</footer>

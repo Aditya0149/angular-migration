@@ -1,0 +1,48 @@
+<div class="row margin-top10px">
+    <div class="col-md-6">
+        <strong>Today's Tasks</strong>
+        <div data-ng-show="matterOverview.matterOverviewData.tasksDueToday.length > 0" class="margin-top10px">
+            <div
+                data-ng-repeat="data in matterOverview.matterOverviewData.tasksDueToday|limitTo:matterOverview.todaysTaskLimit"
+                class="margin-top20px">
+                {{data.taskname}}
+                    <br />
+                Status :<strong>{{data.status}}</strong>
+                <br />
+                Percentage Complete:<strong> {{data.percentagecomplete}}</strong>
+            </div>
+            <div class="pull-right"
+                data-ng-show="matterOverview.todaysTaskLimit < matterOverview.matterOverviewData.tasksDueToday.length">
+                <a
+                    data-ng-click="matterOverview.todaysTaskLimit = matterOverview.matterOverviewData.tasksDueToday.length">View All</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div data-ng-show="matterOverview.matterOverviewData.tasksDueToday.length === 0" class="margin-top10px">
+            <p>There are no tasks due today.</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <strong>Overdue Tasks</strong>
+        <div data-ng-show="matterOverview.matterOverviewData.overdueTasks.length > 0" class="margin-top10px">
+
+            <div
+                data-ng-repeat="data in matterOverview.matterOverviewData.overdueTasks|limitTo:matterOverview.overdueLimit"  class="margin-top10px">
+                {{data.taskname}}
+                    <br />
+                Status:  <strong>{{data.status}}</strong>
+                <br />
+                Percentage Complete:<strong> {{data.percentagecomplete}}</strong>
+
+            </div>
+            <div class="pull-right">
+                <a data-ng-show="matterOverview.overdueLimit < matterOverview.matterOverviewData.overdueTasks.length"
+                    data-ng-click="matterOverview.viewAllOverdueTasks()">View All</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div data-ng-show="matterOverview.matterOverviewData.overdueTasks.length === 0" class="margin-top10px">
+            <p>There are no overdue tasks for today.</p>
+        </div>
+    </div>
+</div>

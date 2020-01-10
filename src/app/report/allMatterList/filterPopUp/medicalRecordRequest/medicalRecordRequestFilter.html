@@ -1,0 +1,153 @@
+<style>
+  .custom-input-list ul.dropdown-menu {
+    max-height: 59vh
+  }
+  .form-control{width: 100% !important;}
+  .selectize-control{width: 100% !important;}
+  .radio label::before {
+    width: 19px !important;
+    height: 19px !important;
+    border: 2px solid #2097c6 !important;
+}
+.radio label::after {
+    background-color: #2097c6 !important;
+    top: 5px !important;
+    width: 9px !important;
+    height: 9px !important;
+    left: 5px !important;
+}
+.modal-dialog .modal-body {
+    padding: 30px;
+}
+.selectize-dropdown-content {
+    max-height: 89px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.radio label, .checkbox label {
+    padding-left: 25px;
+}
+label {
+    margin-bottom: 5px;
+}
+.row {
+    margin-left: -15px;
+}
+</style>
+
+<div class="modal-header clearfix">
+  <h1 class="modal-title fl-left">Filters</h1>
+  <button class="close fl-right" data-ng-click="medicalRecordRequestFillter.cancel()">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="filter-greybox container modal-body">
+
+  <!-- Date requested -->
+  <div class="container row">
+    <h2 class="subtitle">Date Requested</h2>
+    <div class="col-md-4 padding-left-0">
+      <div class="input-group datepicker">
+        <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="medicalRecordRequestFillter.filter.start"
+          is-open="start" placeholder="start date" data-ng-disabled="false" id="DORstartDatediv" validate-date error-div="#DORstartDatediv"
+          tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" show-button-bar="false"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="openCalendar($event);start = true;end=false">
+            <i class="default-calendar-small sprite"></i>
+          </button>
+        </span>
+      </div>
+      <div><span></span></div>
+      <div style="float: none;" class="error" id="DORstartDatedivError">Invalid date format!</div>
+    </div>
+    <div>
+      <div class="input-group datepicker">
+          <input type="text" class="form-control" datepicker-popup="MM/dd/yyyy" data-ng-model="medicalRecordRequestFillter.filter.end"
+            is-open="end" placeholder="end date" data-ng-disabled="false" id="DOREndDatediv" validate-date error-div="#DOREndDatediv"
+            tooltip="mm/dd/yyyy" placeholder="mm/dd/yyyy" close-text="Close" show-button-bar="false"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openCalendar($event);end = true;start=false">
+              <i class="default-calendar-small sprite"></i>
+            </button>
+          </span>
+        </div>
+        <div><span></span></div>
+        <div style="float: none;" class="error" id="DOREndDatedivError">Invalid date format!</div>
+    </div>
+  </div>
+
+  <div class="margin-top10px container row">
+    <label>Document linked</label> <br>
+    <div ng-repeat="documentlink in medicalRecordRequestFillter.documentLinked" class="padding-0">
+      <div class="radio padding-0 margin0 pull-left margin-right20px">
+        <input class="margin0" type="radio" data-ng-model="medicalRecordRequestFillter.filter.linkedDocument" 
+          ng-value="documentlink.id" />
+        <label class="margin0" style="line-height: inherit;">{{documentlink.Name}}</label>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="margin-top10px container row medical-dropdown">
+
+    <label>Service Provider</label>
+    <input type="text" ng-model="medicalRecordRequestFillter.filter.provider" ng-keydown="medicalRecordRequestFillter.checkIfEnterKeyWasPressed($event)"
+      placeholder="Enter Provider name.." typeahead="row as row.name for row in medicalRecordRequestFillter.getContacts($viewValue,'serviceprovider')"
+      typeahead-input-formatter="medicalRecordRequestFillter.formatTypeaheadDisplayPartials($model)" typeahead-loading="medicalRecordRequestFillter.display.loadinginsuranceproviderid"
+      typeahead-on-select="medicalRecordRequestFillter.setTypeMedicalBills($model)" typeahead-template-url="matter/matter-details/insaurance/contact-tpl.html"
+      data-ng-model-options="{ debounce: 500 }" class="form-control">
+    <!-- <span ng-show="medicalRecordRequestFillter.display.loadinginsuranceproviderid">loading...</span> -->
+
+  </div>
+
+  <div class="margin-top10px container row medical-dropdown">
+    <label>Physician Name </label>
+    <input type="text" data-ng-model="medicalRecordRequestFillter.filter.physician" data-ng-model-options="{ debounce: 500 }" placeholder="Enter physician name.."
+      typeahead="row as row.name +' '+ row.street +' '+ row.city +' '+ row.state for row in medicalRecordRequestFillter.getContacts($viewValue,'physicianName')"
+      ng-keydown="medicalRecordRequestFillter.checkIfEnterKeyWasPressed($event)" 
+      typeahead-template-url="matter/matter-details/medical-info/contact-tpl.html"
+      typeahead-input-formatter="medicalRecordRequestFillter.formatTypeaheadDisplay($model)" typeahead-loading="medicalRecordRequestFillter.display.loadingPhysicianId"
+      class="form-control">
+  </div>
+
+  <div class="margin-top10px container row">
+    <label>Attorney</label>
+    <ui-select ng-model="medicalRecordRequestFillter.filter.att" theme="selectize">
+      <ui-select-match placeholder="Select attorney...">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="item in medicalRecordRequestFillter.viewModel.att| filter:{name:$select.search}| orderBy:'name'">
+        <small>
+          {{item.name}}
+        </small>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+
+  <div class="margin-top10px container row">
+    <label>Paralegal</label>
+    <ui-select ng-model="medicalRecordRequestFillter.filter.paralegal" theme="selectize">
+      <ui-select-match placeholder="Select paralegal...">
+        {{$select.selected.name}}
+      </ui-select-match>
+      <ui-select-choices repeat="item in medicalRecordRequestFillter.viewModel.paralegal| filter:{name:$select.search} | orderBy:'name'">
+        <small>
+          {{item.name}}
+        </small>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <div class="pull-right ">
+    <button data-ng-click="medicalRecordRequestFillter.resetFilters()" type="button" class="btn btn-default btn-styleNone">
+      Reset
+    </button>
+    <button data-ng-click="medicalRecordRequestFillter.apply(medicalRecordRequestFillter.filter)" ng-disabled="medicalRecordRequestFillter.isDatesValid() || medicalRecordRequestFillter.enableApply"
+      type="button" class="btn btn-default">
+      Apply
+    </button>
+  </div>
+</div>

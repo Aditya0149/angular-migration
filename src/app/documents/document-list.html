@@ -1,0 +1,445 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div ng-if="!documentlist.isGlobalDocs" class="row  margin0  margin-top10px document-header">
+    <matter-info-header matter-info="documentlist.matterInfo"></matter-info-header>
+</div>
+<div class="document-list-wrapper">
+    <div id="report-content" ng-class="{'padding-bottom0':documentlist.activeTab.documents}"
+        ng-if="documentlist.docPermissions[0].V==1"
+        ng-class="{'cursor-pointer-events-none' :(documentlist.compose || documentlist.composeEfax), '' : (!documentlist.compose || documentlist.composeEfax)}">
+        <div class="page-title-border-links clearfix subnav" data-ng-hide="documentlist.isGlobalDocs">
+            <ul class="centered-nav">
+                <li data-ng-click="documentlist.activateTab('documents',documentlist.activeTab)">
+                    <a href="javascript:void(0)"
+                        data-ng-class="{'activeLink' : documentlist.activeTab.documents}">Documents</a>
+                </li>
+                <li data-ng-click="documentlist.activateTab('templatestab',documentlist.activeTab)">
+                    <a href="javascript:void(0)"
+                        data-ng-class="{'activeLink' : documentlist.activeTab.templatestab}">Templates</a>
+                </li>
+                <li data-ng-click="documentlist.activateTab('motion',documentlist.activeTab)">
+                    <a href="javascript:void(0)"
+                        data-ng-class="{'activeLink' : documentlist.activeTab.motion}">Lifecycle</a>
+                </li>
+            </ul>
+        </div>
+
+        <div data-ng-show="documentlist.activeTab.documents">
+            <div class="row documentlistPadHeight" id="documentListStyle">
+                <div class="col-md-12 p-0">
+                    <div class="col-md-5 pull-left paddingRLR dropdown create top-icon-set">
+                        <a class="list" ng-if="!documentlist.isGlobalDocs && (documentlist.isGraceOver != 0) "
+                            data-ui-sref="document-upload({'matterId': {{documentlist.matterId}} })"
+                            ng-hide="documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <span has-access="{{documentlist.docPermissions[0].A}}" class="sprite default-plus"
+                                tooltip="Add" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a ng-if="documentlist.isGlobalDocs && (documentlist.isGraceOver != 0) "
+                            data-ui-sref="globaldocument-upload"
+                            ng-hide="documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <span has-access="{{documentlist.docPermissions[0].A}}" class="sprite default-plus"
+                                tooltip="Add" tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+
+                        <a class="list"
+                            ng-if="!documentlist.isGlobalDocs && documentlist.clxGridOptions.selectedItems.length==1 && (documentlist.isGraceOver != 0)"
+                            data-ui-sref="document-edit({'matterId': {{documentlist.clxGridOptions.selectedItems[0].matter.matter_id}}, 'documentId': {{documentlist.clxGridOptions.selectedItems[0].doc_id}} })"
+                            ng-hide="documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <span has-access="{{documentlist.docPermissions[0].E}}" class="sprite default-edit"
+                                tooltip="Edit" tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <a class="list"
+                            ng-if="documentlist.isGlobalDocs && documentlist.clxGridOptions.selectedItems.length==1 && (documentlist.isGraceOver != 0)"
+                            data-ui-sref="globaldocument-edit({'matterId': {{documentlist.clxGridOptions.selectedItems[0].matter.matter_id}}, 'documentId': {{documentlist.clxGridOptions.selectedItems[0].doc_id}} })"
+                            ng-hide="documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <span has-access="{{documentlist.docPermissions[0].E}}" class="sprite default-edit"
+                                tooltip="Edit" tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <a class="list"
+                            data-ng-click="documentlist.deleteDocument(documentlist.clxGridOptions.selectedItems,documentlist.filteredDocuments)"
+                            data-ng-show="((documentlist.clxGridOptions.selectedItems.length > 0 && (documentlist.isGraceOver != 0) && documentlist.clxGridOptions.selectedItems.length <= 10) && !documentlist.matterInfo.archivalMatterReadOnlyFlag)">
+                            <span has-access="{{documentlist.docPermissions[0].D}}" class="sprite default-delete"
+                                tooltip="Delete" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="list"
+                            data-ng-click="documentlist.downloadDocument(documentlist.clxGridOptions.selectedItems,documentlist.filteredDocuments)"
+                            data-ng-show="documentlist.clxGridOptions.selectedItems.length > 0 ">
+                            <span has-access="{{documentlist.docPermissions[0].D}}" class="sprite default-sharedown"
+                                tooltip="Download" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!-- view comment-->
+                        <!--<a ng-if="documentlist.clxGridOptions.selectedItems.length==1 && (documentlist.isGraceOver != 0) && documentlist.clxGridOptions.selectedItems[0].mr_comment != null" data-ng-click="documentlist.viewCommentMedicalInfo(documentlist.clxGridOptions.selectedItems[0])">
+                            <span has-access="{{documentlist.docPermissions[0].V}}" class="sprite default-view-comment margin-left20px" tooltip="View Comment" tooltip-placement="right">&nbsp;</span>
+                        </a>-->
+                        <open-doc class="list" data-ng-show="documentlist.clxGridOptions.selectedItems.length > 0"
+                            doc-id="{{documentlist.clxGridOptions.selectedItems}}"
+                            search-doc="{{documentlist.filteredDocuments}}"
+                            call-func="documentlist.allDocumentsSelected()"
+                            call-searchtext="{{documentlist.display.filterText}}" tooltip-placement="right"></open-doc>
+
+                        <a class="list" data-ng-click="documentlist.composeNotesMail();"
+                            ng-if="(documentlist.isGraceOver != 0)"
+                            data-ng-show="(documentlist.clxGridOptions.selectedItems.length > 0 && documentlist.email_subscription == 1 && documentlist.clxGridOptions.selectedItems.length <= 10) && !documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <!--  Mail Document Icon -->
+                            <span class="sprite default-mailbox" tooltip="E-mail"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <a class="list" data-ng-click="documentlist.composeFax();"
+                            ng-if="(documentlist.isGraceOver != 0)"
+                            data-ng-show="((documentlist.clxGridOptions.selectedItems.length > 0 && documentlist.isEfax == 1 && documentlist.clxGridOptions.selectedItems.length <= 10)) && !documentlist.matterInfo.archivalMatterReadOnlyFlag">
+                            <!--  E-Fax Document Icon -->
+                            <span class="sprite default-efax" tooltip="E-fax" tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <a class="list"
+                            ng-if="!documentlist.isGlobalDocs && documentlist.clxGridOptions.selectedItems.length==1 && documentlist.collaboratedEntityFlag && documentlist.isCollaborationActive"
+                            data-ng-click="documentlist.viewCollaborateInfo(documentlist.clxGridOptions.selectedItems[0])">
+                            <!--  Collaboration Document Icon -->
+                            <span class="sprite default-userprofile" tooltip="Share"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <!-- US:16596 DocuSign-->
+                        <a class="list" data-ng-if="documentlist.is_DocuSign == '1'"
+                            data-ng-click="documentlist.sendDocuSign(documentlist.clxGridOptions.selectedItems,documentlist.filteredDocuments)"
+                            data-ng-show="((documentlist.clxGridOptions.selectedItems.length > 0 && (documentlist.isGraceOver != 0 && !documentlist.matterInfo.archivalMatterReadOnlyFlag)))">
+                            <span class="docuSign" tooltip="Send to DocuSign" tooltip-placement="right"
+                                tooltip-append-to-body="true"></span>
+                        </a>
+
+
+                    </div>
+
+                    <div class="col-md-7 text-right p-0">
+
+                        <div class="sub-icon-box">
+                            <div class="dropdown">
+                                Sort By :
+                                <button id="dLabel" type="button" class="sortby-dropdown dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{documentlist.display.sortSeleted}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu custom-sort-dropdown-1" role="menu" aria-labelledby="dLabel">
+                                    <li data-ng-repeat="svalue in documentlist.display.sortOption">
+                                        <a data-ng-click="documentlist.sortDocument(svalue.key,svalue.sortorder,svalue.lable);"
+                                            data-ng-class="{'active': documentlist.display.sortby == svalue.key}">{{svalue.lable}}
+                                        </a>
+                                        <ul data-ng-if="svalue.divider===1">
+                                            <li class="divider"></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sub-icon-box">
+                            <span class="seprator-line"></span>
+                            <a class="list">
+                                <span data-ng-click="documentlist.toggleFilterPage();" class="sprite default-filter"
+                                    tooltip="Filter" tooltip-placement="right"></span>
+                            </a>
+                            <span class="seprator-line"></span>
+                            <a class="list" data-ng-click="documentlist.print(documentlist.filteredDocuments)"
+                                ng-hide="documentlist.matterInfo.archivalMatterReadOnlyFlag"><span
+                                    class="sprite default-file" tooltip="Print Documents"
+                                    tooltip-placement="right"></span></a>
+                            <!-- <span class="seprator-line"></span> -->
+
+
+                            <a class="search-overlap list document-list" data-ng-click="documentlist.showSearch = true"
+                                data-ng-hide="documentlist.showSearch"><span
+                                    class="sprite default-searchico-menu default-search-new" tooltip="Search"
+                                    tooltip-placement="right"></span>
+                            </a>
+                        </div>
+
+                        <div class="sub-icon-box">
+
+                            <div class="search-input form-control-margin-null document-search-input"
+                                data-ng-show="documentlist.showSearch">
+                                <div class="default-searchico sprite  default-serach-ico-document"></div>
+                                <input type="text"
+                                    ng-keyup="documentlist.filterReatain();documentlist.searchDocumentOnEnter($event)"
+                                    id="search_id" placeholder="Enter min 3 character"
+                                    class="form-control ng-pristine ng-valid ng-touched"
+                                    data-ng-model="documentlist.display.filterText" ng-change="onChange()">
+                                <button id="clearText" data-ng-model="documentlist.cancelSearch"
+                                    data-ng-click="documentlist.getClearData()"
+                                    data-ng-hide="documentlist.display.filterText == '' || documentlist.display.filterText == undefined"
+                                    class="close-icon canl-btn" type="reset"></button>
+                            </div>
+                            <button id="search" type="submit" data-ng-show="documentlist.display.filterText.length>=3"
+                                data-ng-click="documentlist.filterReatain();documentlist.getSearchedData(documentlist.display.filterText)"
+                                class="btn btn-default new-global-search-btn" aria-hidden="true">
+                                Search</button>
+
+                        </div>
+
+                        <div class="pull-right border">
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-right ">
+                        <clx-filter-tags class="small-filter" on-filter-cancel="documentlist.cancleFilterTags"
+                            tag-list="documentlist.display.filtertags"></clx-filter-tags>
+                    </div>
+                </div>
+            </div>
+
+            <div data-ng-show="documentlist.documentsList.data.length > 0">
+                <show-record-count4 id="more" displayed="documentlist.documentsList.data.length"
+                    more="documentlist.getNextLimitDocuments()"
+                    hide-pager="{{documentlist.documentsList.data.length < documentlist.total}}"
+                    total="documentlist.total">
+                </show-record-count4>
+            </div>
+            <!-- Grid started -->
+            <!-- <div class="report-responsive icon-setup" data-ng-if="documentlist.documentsList.data.length">
+                <div class="row header-row cust-header-doc">
+                    <div class="cell checkbox" data-width="3" cal-width>
+                        <input type="checkbox" data-ng-disabled="documentlist.filteredDocuments.length==0"
+                            data-ng-model="documentlist.clxGridOptions.selectAll"
+                            data-ng-checked="documentlist.allDocumentsSelected()"
+                            data-ng-click="documentlist.selectAllDocuments(documentlist.clxGridOptions.selectAll)" /><label></label>
+                    </div>
+    
+                    <div class="cell" cal-width data-ng-repeat="header in ::documentlist.clxGridOptions.headers"
+                        data-width="{{header.dataWidth}}">
+                        {{header.displayName}}
+                    </div>
+                </div>
+                <div class="row body-row" data-ng-class="{'selected-grid-row':documentlist.isDocSelected(data) }"
+                    data-ng-if="documentlist.display.filtered"
+                    data-ng-repeat="data in documentlist.filteredDocuments = (documentlist.documentsList.data|filter:documentlist.display.filterText| limitTo:documentlist.limit) track by data.doc_id"
+                    grid-size-updated>
+                    <div class="cell checkbox" data-width="3" cal-width>
+                        <input type="checkbox" data-ng-checked="documentlist.isDocSelected(data)"
+                            checklist-model="documentlist.clxGridOptions.selectedItems"
+                            checklist-value="data" /><label></label>
+                    </div>
+                    <div class="cell" cal-width data-ng-repeat="header in ::documentlist.clxGridOptions.headers "
+                        data-ng-class="{'selected-grid-row':documentlist.isDocSelected(data)}"
+                        data-width="{{header.dataWidth}}">
+    
+                        <div data-ng-repeat="field in ::header.field" cell-data="{{data}}" field="{{field}}" render-cell
+                            data-ng-class="{'display-table-cell':field.inline}">
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="clearfix"></div>
+            <div id="docupper1"></div>
+            <div data-ng-if="documentlist.documentsList.data.length">
+                <scrollable-table class="document-list-table show-table-data document-list-table-height" tableid="docListgrid1"
+                    watch="documentlist.documentsList.data" to="#docupper1" from="#moreLink">
+                    <table class="table fix-layout">
+                        <thead>
+                            <tr>
+                                <th class="th-width-3">
+                                    <div class="cell checkbox margin0">
+                                        <input type="checkbox"
+                                            data-ng-disabled="documentlist.filteredDocuments.length==0"
+                                            data-ng-model="documentlist.clxGridOptions.selectAll"
+                                            data-ng-checked="documentlist.allDocumentsSelected()"
+                                            data-ng-click="documentlist.selectAllDocuments(documentlist.clxGridOptions.selectAll)" /><label></label>
+                                    </div>
+                                </th>
+                                <th class="th-width-4"></th>
+                                <th class="th-width-4"></th>
+                                <th class="th-width-23">Document Name</th>
+                                <th ng-if="!documentlist.isGlobalDocs" class="th-width-24">Category and Associated Party
+                                </th>
+                                <th ng-if="documentlist.isGlobalDocs" class="th-width-24">Matter, Category and
+                                    Associated
+                                    Party</th>
+                                <th class="th-width-15">Last Updated</th>
+                                <th class="th-width-13">Created By</th>
+                                <th class="th-width-13">Date Filed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class=" body-row margin0 relative-container"
+                                data-ng-class="{'selected-grid-row':documentlist.isDocSelected(data)}"
+                                data-highlight-clicked-row="{{data.doc_id}},documentlist.clickedRow"
+                                data-ng-repeat="data in documentlist.filteredDocuments = (documentlist.documentsList.data) track by data.doc_id">
+                                <td>
+                                    <div class="cell checkbox">
+                                        <input type="checkbox" data-ng-checked="documentlist.isDocSelected(data)"
+                                            checklist-model="documentlist.clxGridOptions.selectedItems"
+                                            checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span data-ng-show="data.memo" class="sprite default-view-comment"
+                                        ng-click="documentlist.viewCommentMedicalInfo(data)" tooltip="View Memo"
+                                        tooltip-append-to-body="true" tooltip-placement="top"></span>
+                                </td>
+                                <!-- US:16596 DocuSign-->
+                                <td>
+                                    <span ng-show="data.docusign_recieved == '1'">
+                                        <span href="javascript:void(0);" tooltip="Received from DocuSign"
+                                            tooltip-append-to-body="true" tooltip-placement="top"><img
+                                                src="../styles/images/recived_docusign.svg"></span>
+                                    </span>
+                                    <span ng-show="data.docusign_recieved == '0'">
+                                        <span href="javascript:void(0);" tooltip="Sent to DocuSign"
+                                            tooltip-append-to-body="true" tooltip-placement="top"><img
+                                                src="../styles/images/send_docusign.svg"></span>
+                                    </span>
+                                    
+                                </td>
+                                <td>
+                                    <span class="cursor-pointer saved-search-link" data-toggle="name-tooltip"
+                                        tooltip="{{data.doc_name}}" data-placement="top"
+                                        ng-click="documentlist.opendocumentView(data, false, $event)"
+                                        tooltip-placement="top">{{data.doc_name}}</span><br>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{data.tags_String}}" tooltip-placement="top">
+                                        {{data.tags_String}}</span><br>
+
+                                </td>
+                                <td>
+                                    <a ng-if="documentlist.isGlobalDocs" class="cursor-pointer"
+                                        data-toggle="name-tooltip" href="#/matter-overview/{{data.mid}}"
+                                        tooltip="{{data.matter_name}}" tooltip-placement="top">
+                                        {{data.matter_name | replaceByDash}}</a><br
+                                        ng-if="documentlist.isGlobalDocs"></b>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{data.categoryname}}" tooltip-placement="top">
+                                        {{data.categoryname | replaceByDash}}</span><br>
+                                    <span class="default-cursor" data-toggle="name-tooltip"
+                                        tooltip="{{data.plaintiff_name}}"
+                                        tooltip-placement="top">{{data.plaintiff_name}}</span>
+
+                                </td>
+                                <td>
+                                    <span class="default-cursor" tooltip-placement="top" data-toggle="name-tooltip"
+                                        tooltip="{{data.last_updated_by_name}}">
+                                        {{data.last_updated_by_name}}</span><br>
+                                    <span class="default-cursor" tooltip-placement="top" data-toggle="name-tooltip"
+                                        tooltip="{{data.docmodified_date}}">
+                                        {{data.docmodified_date}}</span>
+                                </td>
+                                <td>
+                                    <span class="default-cursor" tooltip-placement="top" data-toggle="name-tooltip"
+                                        tooltip="{{data.created_by_name}}">
+                                        {{data.created_by_name}}</span>
+                                </td>
+                                <td>
+                                    <span class="default-cursor" tooltip-placement="top" data-toggle="name-tooltip"
+                                        tooltip="{{data.date_filed_date}}">
+                                        {{data.date_filed_date}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </scrollable-table>
+            </div>
+            <!-- Grid Ended -->
+            <div id="moreLink" class="row margin-top20px text-center more-link-wrapper">
+                <!-- <div
+            data-ng-show="documentlist.documentsList.data.length < documentlist.total && documentlist.documentsList.data.length>0">
+            <a href="javascript:void(0)" data-ng-show="documentlist.showAllOptions"
+                data-ng-click="documentlist.getNextLimitDocuments()">More</a>
+            <span class="paddingLR-10px">|</span>
+            <a href="javascript:void(0)" data-ng-show="documentlist.showAllOptions" data-ng-click="documentlist.getNextLimitDocuments('all');
+            documentlist.showAllOptions=false">All</a>
+        </div> -->
+            </div>
+
+            <p class="text-center"
+                data-ng-if="documentlist.documentsList.data.length==0 && documentlist.display.documentListReceived && documentlist.isGlobalDocs && !root.requestPending">
+                There aren’t any documents associated with your CloudLex account.
+            </p>
+            <p class="text-center"
+                data-ng-if="documentlist.documentsList.data.length==0 && documentlist.display.documentListReceived && !documentlist.isGlobalDocs && !root.requestPending">
+                There aren’t any documents associated to this matter.
+            </p>
+        </div>
+
+        <div data-ng-if="documentlist.activeTab.templatestab">
+            <div data-ng-controller="TemplateCtrl as template" data-ng-include="'app/templates/templates.html'">
+            </div>
+        </div>
+
+        <div data-ng-if="documentlist.activeTab.motion">
+            <div data-ng-controller="MotionCtrl as motionCtrl" data-ng-include="'app/motion/motion.html'">
+            </div>
+        </div>
+        <div data-ng-if="documentlist.extFlag && documentlist.officeOnlineStat" data-ui-sref="global-office-view">
+        </div>
+    </div>
+    <div class="row">
+        <div class="list margin-top10px text-center" data-ng-show="documentlist.docPermissions[0].V==0">
+            You are not authorized to view documents.
+        </div>
+    </div>
+
+
+    <footer position-center data-ng-hide="documentlist.isGlobalDocs">
+        <ul>
+            <li>
+                <a href="#/matter-overview/{{documentlist.matterId}}">Overview</a>
+            </li>
+            <li>
+                <a href="#/allParties/{{documentlist.matterId}}">All Parties</a>
+            </li>
+            <li>
+                <a href="#/matter-details/{{documentlist.matterId}}">Details</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="active-footer">Documents</a>
+            </li>
+            <li>
+                <a href="#/notes/{{documentlist.matterId}}">Notes</a>
+            </li>
+            <li>
+                <a href="#/events/{{documentlist.matterId}}">Events </a>
+            </li>
+            <li>
+                <a href="#/tasks/{{documentlist.matterId}}">Tasks</a>
+            </li>
+            <li data-ng-show="is_workflow_active">
+                <a href="#/workflow/{{documentlist.matterId}}">Workflow</a>
+            </li>
+            <li>
+                <a href="#/timeline/{{documentlist.matterId}}">Timeline</a>
+            </li>
+        </ul>
+    </footer>
+
+    <footer position-center data-ng-if="documentlist.isGlobalDocs">
+        <ul>
+            <li>
+                <a href="javascript:void(0)" data-ng-class="{'active-footer': documentlist.mydocs==true}"
+                    data-ng-click="documentlist.togleDocType(true);">My Documents</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" data-ng-class="{'active-footer': documentlist.mydocs==false}"
+                    data-ng-click="documentlist.togleDocType(false);">All Documents</a>
+            </li>
+        </ul>
+    </footer>
+
+    <!-- compose mail -->
+    <div class="compose-wrap box-index" ng-if="documentlist.firmData.API === 'PHP' && !documentlist.reloadEmail"
+        data-ng-controller="MailboxController as mailboxCtrl"
+        ng-class="{'composeShow' :documentlist.compose, '' : !documentlist.compose}">
+        <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+    </div>
+    <div class="compose-wrap box-index" ng-if="documentlist.firmData.API === 'JAVA' && !documentlist.reloadEmail"
+        data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+        ng-class="{'composeShow' :documentlist.compose, '' : !documentlist.compose}">
+        <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+    </div>
+    <!--compose Efax-->
+    <div class="compose-wrap box-index" ng-if="!documentlist.reloadEfax" data-ng-controller="efaxController as efaxCtrl"
+        ng-class="{'composeShow' :documentlist.composeEfax, '' : !documentlist.composeEfax}">
+        <ng-include src="'app/efax/compose-fax.html'"></ng-include>
+    </div>
+
+</div>

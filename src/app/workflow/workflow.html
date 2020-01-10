@@ -1,0 +1,124 @@
+<div data-ng-if="!workflow.applyWorkflow && !workflow.viewMattWorkflow && !workflow.viewapplyworkflow " class="row  margin0  margin-top10px"
+    style="width: calc( 100% - 100px) !important;padding:0 11px 0 20px;">
+    <matter-info-header matter-info="workflow.matterInfo"></matter-info-header>
+</div>
+<div id="report-content" data-ng-if="!workflow.applyWorkflow && !workflow.viewMattWorkflow && !workflow.viewapplyworkflow ">
+
+    <div class="row gridSec margin0">
+        <div class="col-md-12 paddingRLR">
+            <div class="col-md-4 pull-left paddingRLR dropdown create">
+
+                <a data-ng-click="workflow.applyWorkFlow()">
+                    <span ng-if="workflow.eventsPermissions[0].A ==1 && workflow.criticalDatesPermission[0].A ==1 && !workflow.matterInfo.archivalMatterReadOnlyFlag" class="pull-left sprite default-plus"
+                        tooltip="Apply Workflow">&nbsp;</span>
+                </a>
+
+                <a data-ng-click="workflow.deleteWorkflow(workflow.userGrid.selectedItems)" data-ng-if="workflow.userGrid.selectedItems.length > 0 && !workflow.matterInfo.archivalMatterReadOnlyFlag">
+                    <span class="sprite default-delete col-md-offset-1"
+                        tooltip="Delete">&nbsp;</span>
+                </a>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="report-responsive" data-ng-show="workflow.workflowList.length > 0">
+        <div class="row header-row">
+            <div class="cell" data-width="5">
+                <div class="checkbox">
+                    <input type="checkbox" data-ng-model="workflow.userGrid.selectAll" data-ng-checked="workflow.allUsersSelected()" data-ng-click="workflow.selectAllUsers(workflow.userGrid.selectAll)"
+                    /><label></label>
+                </div>
+            </div>
+            <div class="cell" data-ng-repeat="header in ::workflow.userGrid.headers" data-width={{header.dataWidth}}>
+                {{header.displayName}}
+            </div>
+        </div>
+
+        <div class="row body-row" data-ng-class="{'selected-grid-row':workflow.isUserSelected(data.workflow_id) }" data-ng-repeat="data in filtered = (workflow.workflowList | filter:workflow.searchText)">
+            <div class="cell checkbox" data-width="5">
+                <input type="checkbox" data-ng-disabled="filtered.length==0" data-ng-checked="workflow.isUserSelected(data.workflow_id)" checklist-model="workflow.userGrid.selectedItems"
+                    checklist-value="data" /><label></label>
+            </div>
+            <div class="cell" data-ng-repeat="header in ::workflow.userGrid.headers" data-width={{header.dataWidth}} grid-size>
+                <div data-ng-repeat="field in ::header.field" data-ng-class="{'cursor-pointer':field.cursor}" cell-data="{{data}}" field="{{field}}"
+                    render-cell>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center margin-top10px" data-ng-show="filtered.length === 0">
+        <p>There is no workflow applied to this matter.</p>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<div data-ng-if="workflow.applyWorkflow">
+    <div data-ng-controller="applyWorkflowCtrl as applyWorkflow" data-ng-include="'app/workflow/apply-workflow/apply-workflow.html'">
+    </div>
+</div>
+
+
+<div data-ng-if="workflow.viewMattWorkflow">
+    <div data-ng-controller="viewMattWorkflowCtrl as viewMattWorkflow" data-ng-include="'app/workflow/matter-view-workflow/matter-view-workflow.html'">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<footer position-center>
+    <ul>
+        <li>
+            <a href="#/matter-overview/{{workflow.matterId}}">Overview</a>
+        </li>
+        <li>
+            <a href="#/allParties/{{workflow.matterId}}">All Parties</a>
+        </li>
+        <li>
+            <a href="#matter-details/{{workflow.matterId}}">Details</a>
+        </li>
+        <li>
+            <a href="#/matter-documents/{{workflow.matterId}}">Documents</a>
+        </li>
+        <li>
+            <a href="#/notes/{{workflow.matterId}}">Notes</a>
+        </li>
+        <li class="active-footer">
+            <a href="#/events/{{workflow.matterId}}">Events </a>
+        </li>
+        <li>
+            <a href="#/tasks/{{workflow.matterId}}">Tasks</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="active-footer">Workflow</a>
+        </li>
+        <li>
+            <a href="#/timeline/{{workflow.matterId}}">Timeline</a>
+        </li>
+
+    </ul>
+</footer>
+
+<div class="compose-wrap" ng-if="workflow.firmData.API === 'PHP'" data-ng-controller="MailboxController as mailboxCtrl"
+    ng-class="{'composeShow' :workflow.compose, '' : !workflow.compose}">
+    <ng-include src="'app/mailbox/compose-mail.html'"></ng-include>
+</div>
+<div class="compose-wrap" ng-if="workflow.firmData.API === 'JAVA'" data-ng-controller="MailboxControllerV2 as mailboxCtrlV2"
+    ng-class="{'composeShow' :workflow.compose, '' : !workflow.compose}">
+    <ng-include src="'app/mailbox_v2/compose-mail.html'"></ng-include>
+</div>

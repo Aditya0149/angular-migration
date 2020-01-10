@@ -1,0 +1,174 @@
+<div class="create-firm-login-page">
+    <div class="create-your-firm-main col-centered col-md-5">
+        <div class="create-firm-login-block">
+            <ng-form name="createfirm.createfirmForm">
+                <div class="login-logo">
+                    <img src="../styles/images/login-logo.png"><br>
+                    <p class="login-firm-title">Create Your Firm</p>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 text-panel">
+                        <label>First Name</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true" name="smpfname"
+                               data-ng-model="createfirm.firmInfo.smpfname">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.smpfname.$dirty && createfirm.createfirmForm.smpfname.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.smpfname.$dirty"
+                             ng-messages="createfirm.createfirmForm.smpfname.$error">
+                            <div class="error" ng-message="required">
+                                First name is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-panel">
+                        <label>Last Name</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true" name="smplname"
+                               data-ng-model="createfirm.firmInfo.smplname">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.smplname.$dirty && createfirm.createfirmForm.smplname.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.smplname.$dirty"
+                             ng-messages="createfirm.createfirmForm.smplname.$error">
+                            <div class="error" ng-message="required">
+                                Last name is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 text-panel">
+                        <label>Email</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true" ng-readonly="true" name="mail"
+                               data-ng-model="createfirm.firmInfo.mail">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.mail.$dirty && createfirm.createfirmForm.mail.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.mail.$dirty"
+                             ng-messages="createfirm.createfirmForm.mail.$error">
+                            <div class="error" ng-message="required">
+                                Email is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-panel">
+                        <label>Phone Number</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true" ng-pattern="/^[0-9-]{12}$/"
+                               placeholder="Enter phone number" maxlength="12" phone-number-format name="telephone_no"
+                               data-ng-model="createfirm.firmInfo.telephone_no">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.telephone_no.$dirty && createfirm.createfirmForm.telephone_no.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.telephone_no.$dirty"
+                             ng-messages="createfirm.createfirmForm.telephone_no.$error">
+                            <div class="error" ng-message="required">
+                                Phone number is required
+                            </div>
+                            <div class="error" ng-message="pattern"
+                                 ng-show="createfirm.createfirmForm.telephone_no.$error">
+                                Invalid phone number
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 text-panel">
+                        <label>Firm Name</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true" name="firmName"
+                               data-ng-model="createfirm.firmInfo.firmName">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.firmName.$dirty && createfirm.createfirmForm.firmName.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.firmName.$dirty"
+                             ng-messages="createfirm.createfirmForm.firmName.$error">
+                            <div class="error" ng-message="required">
+                                Firm name is required
+                            </div>
+                            <div class="error" ng-message="pattern" ng-show="createfirm.createfirmForm.firmName.$error">
+                                Invalid firm name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-panel">
+                        <label>Number Of Staff Members</label><span class="compulsary-mark">*</span>
+                        <input type="text" class="form-control" data-ng-required="true"
+                               ng-disabled="(createfirm.disableFirmSize)" name="firmSize" ng-pattern="/^[0-9]*$/"
+                               data-ng-model="createfirm.firmInfo.firmSize">
+                        <span class="sprite default-caution error-icon"
+                              data-ng-show="createfirm.createfirmForm.firmSize.$dirty && createfirm.createfirmForm.firmSize.$invalid"></span>
+                        <div data-ng-show="createfirm.createfirmForm.firmSize.$dirty"
+                             ng-messages="createfirm.createfirmForm.firmSize.$error">
+                            <div class="error" ng-message="required">
+                                Number Of Staff Members is required
+                            </div>
+                            <div class="error" ng-message="pattern" ng-show="createfirm.createfirmForm.firmSize.$error">
+                                Invalid Number Of Staff Members
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 text-panel">
+                        <label>Password</label>
+                        <input type="password" tooltip-toggle="tooltip" tooltip-placement="right"
+                               tooltip="Password length: 6 including 1 lower case, 1 upper case letter, 1 number and 1 special character. For example: Pw0r!d"
+                               class="form-control" minlength="6" maxlength="25"
+                               ng-required="createfirm.checkAllPasswordEntered(createfirm.firmInfo.smppassword, createfirm.firmInfo.confirm_smppassword)"
+                               name="smppassword" ng-model="createfirm.firmInfo.smppassword"
+                               ng-change="createfirm.passwordEntered()">
+                        <div class="error" ng-show="createfirm.createfirmForm.smppassword.$error.minlength">
+                            Password
+                            minimum must be 6
+                        </div>
+                        <div class="error" ng-show="createfirm.createfirmForm.smppassword.$error.maxlength">
+                            Password
+                            maximum must be 25
+                        </div>
+                        <div class="error"
+                             ng-show="(!createfirm.passwordStrength.satisfyCondition && createfirm.passwordStrength.passwordLength>5)">
+                            Password condition not satisfied
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-panel">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" name="confirm_smppassword"
+                               ui-validate=" '$value==createfirm.createfirmForm.smppassword' "
+                               ui-validate-watch=" 'createfirm.createfirmForm.smppassword' "
+                               data-ng-disabled="(!createfirm.firmInfo.smppassword)"
+                               ng-required="createfirm.checkAllPasswordEntered(createfirm.firmInfo.smppassword, createfirm.firmInfo.confirm_smppassword)"
+                               ng-model="createfirm.firmInfo.confirm_smppassword"
+                               ng-change="createfirm.checkPasswordSimilarity(createfirm.firmInfo.smppassword, createfirm.firmInfo.confirm_smppassword)">
+                        <div class="error"
+                             ng-show="(!createfirm.confirmPasswordFlag && createfirm.firmInfo.confirm_smppassword.length>0)">
+                            Confirm password didn't match with new password
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 margin-top20px padding15px ">
+                    <label>
+                        Password Strength: <span class="text-success"
+                                                 ng-show="createfirm.firmInfo.smppassword.length > 0"><b>{{createfirm.passwordStrength.durable}}</b></span>
+                    </label>
+                    <div class="progress">
+                        <div class="progress-bar" ng-class="{'progress-bar-success': createfirm.isPasswordStrong(), 'progress-bar-warning': createfirm.isPasswordOk(),
+                                                    'progress-bar-danger': createfirm.isPasswordWeak()}"
+                             aria-valuenow="{{createfirm.passwordStrength.score}}" aria-valuemin="0" aria-valuemax="100"
+                             ng-style="{width: (createfirm.passwordStrength.score + '%')}">
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-12 pull-left margin-top15px padding15px" vc-recaptcha key="createfirm.recaptchaStr"
+                     ng-model="respone1"></div>
+
+                <div class="col-md-12 text-panel padding15px">
+                    <button data-ng-disabled="createfirm.createfirmForm.$invalid || (!createfirm.passwordStrength.satisfyCondition && createfirm.passwordStrength.passwordLength>5) || (!createfirm.confirmPasswordFlag && createfirm.firmInfo.confirm_smppassword.length>0)"
+                            type="button" data-ng-click="createfirm.signIn(createfirm.firmInfo)"
+                            class="btn btn-danger sign-in-btn">
+                        Sign up
+                    </button>
+                </div>
+                <!--<div class="col-md-12 text-panel padding15px">
+                    <button type="button"  data-ng-click="createfirm.resetForm(createfirm.firmInfo)" class="btn btn-danger sign-in-btn">Reset</button>
+                </div>-->
+            </ng-form>
+        </div>
+    </div>
+</div>

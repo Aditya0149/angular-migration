@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180px" height="180px" viewBox="0 0 180 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_2WaySms__NoLabel</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="62.7201112%" x2="50%" y2="104.67293%" id="linearGradient-1">
+            <stop stop-color="#48AFD4" offset="0%"></stop>
+            <stop stop-color="#00328F" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="180" height="180" rx="45"></rect>
+        <linearGradient x1="50%" y1="46.4872602%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#006189" offset="0%"></stop>
+            <stop stop-color="#002E45" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="20.3662153%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#AAAFC7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ic_2WaySms__NoLabel" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-3">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-2"></use>
+            </mask>
+            <use id="Mask" fill="url(#linearGradient-1)" fill-rule="nonzero" xlink:href="#path-2"></use>
+            <g id="Group-16" mask="url(#mask-3)" fill-rule="nonzero">
+                <g transform="translate(28.285714, 64.285714)">
+                    <path d="M6.88996171,1.63092975 L68.1143924,1.63092975 C71.8794698,1.63092975 74.9316681,4.68312807 74.9316681,8.4482055 L74.9316681,134.079838 L0.0726859602,134.079838 L0.0726859602,8.4482055 C0.0726859602,4.68312807 3.12488428,1.63092975 6.88996171,1.63092975 Z" id="Rectangle-17" fill="url(#linearGradient-4)"></path>
+                    <polygon id="Shape" fill="url(#linearGradient-5)" points="6.02388331 17.6128874 69.1380368 17.6128874 69.1380368 118.324317 6.02388331 118.324317"></polygon>
+                </g>
+            </g>
+            <g id="Group-Copy-2" mask="url(#mask-3)">
+                <g transform="translate(62.630334, 32.220483)" id="Group">
+                    <g transform="translate(0.141046, 1.907033)"></g>
+                </g>
+            </g>
+            <path d="M59.0956341,103.416633 L59.0956341,103.416327 C55.9259166,103.416327 53.3563057,100.846853 53.3561372,97.6771356 L53.3541443,65.9182826 L97.4706941,65.9182826 C100.640531,65.9182826 103.210191,68.4879429 103.210191,71.6577796 L103.210191,103.416633 L59.0956341,103.416633 Z M67.8223218,121.322464 L67.8223218,103.42818 L82.3330045,103.424306 L67.8223218,121.322464 Z" id="Combined-Shape-Copy-7" fill-opacity="0.18" fill="#000000" fill-rule="nonzero" mask="url(#mask-3)"></path>
+            <path d="M63.7976762,97.6217223 L63.7976762,97.6215419 C60.6279101,97.6215419 58.058279,95.0519916 58.0581793,91.8822254 L58.0561464,38.6991083 C58.0561464,38.6990482 58.0561464,38.698988 58.0561464,38.6989279 C58.0561464,35.5290913 60.6258067,32.959431 63.7956433,32.959431 L144.115139,32.9596114 C147.284975,32.9596114 149.854635,35.5292717 149.854635,38.6991083 L149.854635,91.8822254 C149.854635,95.052062 147.284975,97.6217223 144.115139,97.6217223 L63.7976762,97.6217223 Z M72.5243639,115.527554 L72.5243639,97.6332699 L87.0350466,97.6293961 L72.5243639,115.527554 Z" id="Combined-Shape-Copy-8" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-3)"></path>
+            <rect id="Rectangle-18-Copy-19" fill="#00658D" fill-rule="nonzero" mask="url(#mask-3)" x="70.6789202" y="52.085741" width="20.2570479" height="5.06426198"></rect>
+            <rect id="Rectangle-18-Copy-20" fill="#D4D6E3" fill-rule="nonzero" mask="url(#mask-3)" x="70.6789202" y="62.214265" width="60.7711438" height="5.06426198"></rect>
+            <rect id="Rectangle-18-Copy-21" fill="#D4D6E3" fill-rule="nonzero" mask="url(#mask-3)" x="70.6789202" y="72.3427889" width="35.4498339" height="5.06426198"></rect>
+            <g id="Group-2" mask="url(#mask-3)" fill-rule="nonzero">
+                <g transform="translate(68.657143, 20.571429)">
+                    <circle id="Oval-4-Copy-24" fill="#F0564A" cx="13.4213059" cy="12.3880024" r="11.4789938"></circle>
+                    <circle id="Oval-4-Copy-25" fill="#FFFFFF" cx="13.4213059" cy="8.56167111" r="3.27971252"></circle>
+                    <ellipse id="Oval-4-Copy-26" fill="#FFFFFF" cx="13.4213059" cy="16.7609524" rx="6.01280629" ry="3.82633128"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

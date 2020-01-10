@@ -1,0 +1,96 @@
+.matter-tasks-wrapper {
+	.checkbox { padding-top: 0px ;
+	margin-top: 0px ;
+}
+.radio {
+	margin-top: 0px ;
+	padding-left: 0px ;
+	input[type="radio"] {
+		margin-left: 0 ;
+		width: 20px;
+		height: 20px;
+		top: -3px;
+	}
+	input {
+		outline: none ;
+		box-sizing: initial ;
+	}
+	label {
+		padding-left: 25px ;
+		padding-left: 25px ;
+		&::after {
+			background-color: #2097c6 ;
+			top: 5px ;
+			width: 9px ;
+			height: 9px ;
+			left: 5px ;
+		}
+		&::before {
+			width: 19px ;
+			height: 19px ;
+			border: 2px solid #2097c6 ;
+		}
+	}
+}
+.reason-list-order {
+	li {
+		float: left;
+		margin-left: 20px;
+		width: 95px;
+	}
+}
+.task-list {
+	max-height: 450px;
+}
+.list-progress {
+	ul {
+		li {
+			.list-item-wrapper {
+				.list-item-height {
+					span {
+						word-break: break-word;
+					}
+				}
+			}
+		}
+	}
+}
+.custom-header {
+	width: calc( 100% - 95px) ;
+	padding: 0 0px 0 20px;
+}
+.custom-task-list {
+	height: 50vh ;
+}
+.up-level {
+	z-index: 9;
+}
+.custom-review {
+	font-family: 'GothamRounded-Book';
+	color: black;
+	font-size: 100%;
+	background-color: #fff;
+	border: 0;
+	padding: 0;
+	white-space: pre-wrap;
+	word-break: keep-all;
+	max-height: 150px;
+	overflow-y: auto;
+}
+.custom-line-height {
+	line-height: inherit;
+}
+.task-width {
+	width: 52%;
+}
+.grey-bg {
+	background-color: #ccc;
+}
+.custom-wrap {
+	word-wrap: break-word;
+	width: 23%
+}
+.margin-top15px {
+    margin-top: 15px!important;
+}
+}

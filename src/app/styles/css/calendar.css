@@ -1,0 +1,35 @@
+.calendarBtnRight {
+    padding: 14px 24px;
+    border: 1px solid grey;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background: white;
+    margin: 0px;
+}
+
+.calendarBtnLeft {
+    padding: 14px 24px;
+    border: 1px solid grey;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: white;
+
+}
+
+.calendarBtn:focus, .calendarBtn:active:focus, .calendarBtn.active:focus {
+    outline: 0 none;
+}
+
+.calendarBorder{
+    border: 1px solid black;
+}
+.eventMargin{
+    margin: 10px;
+    float: left;
+}

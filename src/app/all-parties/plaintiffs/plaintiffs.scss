@@ -1,0 +1,131 @@
+.plaintiffs-view-wrapper {
+        .body-row .cell { overflow: visible;
+    }
+    .spacing-span {
+        border-right: 1px solid #ccc;
+        padding: 5px 10px 5px 0;
+        margin-right: 10px;
+    }
+    .switch.switch-right {
+        background: #74bb2f;
+        border-color: #74bb2f;
+        .switch-button {
+            border: 1px solid #74bb2f;
+            left: 25px;
+        }
+    }
+    .switch {
+        .switch-button {
+            height: 20px;
+            width: 20px;
+            margin-top: -3px;
+        }
+    }
+    span.boldtxt {
+        font-weight: 900;
+    }
+    p.boldblue {
+        color: #2a98c7;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+    span.smaltxt {
+        display: block;
+        font-size: 12px;
+    }
+    .table {
+        td.no-top-border {
+            border-top: none;
+        }
+        th.no-bottom-border {
+            border-bottom: none;
+        }
+    }
+    p.graytxt {
+        color: #ccc;
+    }
+    td.same-width {
+        width: 25%;
+    }
+    span.imptxt {
+        display: inline-block;
+        vertical-align: top;
+        width: 70%;
+    }
+    span.horidiv {
+        margin-left: 5px;
+        float: right;
+    }
+    .collaborated-entity {
+        border-bottom: 1px solid #e9eef0;
+        padding-bottom: 5px;
+        p {
+            margin-bottom: 0;
+        }
+    }
+    span.left-div {
+        display: inline-block;
+        width: 80%;
+        vertical-align: top;
+        font-weight: 700;
+        color: #2a98c7;
+    }
+    .big-txt {
+        font-weight: 600;
+    }
+    .new-table {
+        .row {
+            display: block;
+            margin-right: 0;
+            margin-left: 0;
+        }
+    }
+    .summary-box {
+        width: 80%;
+        float: left;
+    }
+    .details-box {
+        width: 68%;
+        margin: auto 0 auto 10px;
+    }
+    .file-count {
+        display: inline-block;
+        padding: 5px 0;
+    }
+    .outer-line {
+        border: 1px solid #e9eef0;
+    }
+    .showing-word {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+    .cust-btn {
+        float: right;
+        margin-top: -55px;
+    }
+    .auto-top-space {
+        margin-top: auto;
+    }
+    .memo-box {
+        white-space: pre-line;
+        background-color: white;
+        border-radius: 0;
+        border: 0;
+        padding: 0;
+        font-family: 'GothamRounded-Book';
+        word-break: break-word;
+    }
+    .custom-entity {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .doc-box {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .custom-event {
+        min-width: 50px;
+        display: inline-block;
+    }
+}

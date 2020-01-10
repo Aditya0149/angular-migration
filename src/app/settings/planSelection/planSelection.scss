@@ -1,0 +1,165 @@
+.planSelection-wrapper {
+    .messenger-btn {
+        cursor: default !important;
+        border-color: $color_gray80 !important;
+    }
+    .digital-box {
+        border: 1px solid #d3d9de;
+        padding: 10px;
+    }
+    .pricing-panel {
+        .plan-name h2,.user-matter-block {
+            font-size: 14px !important;
+        }
+        .plan {
+            height: 309px;
+        }
+    }
+    .progress {
+        margin-bottom: 0;
+    }
+    .configuration-right-block .block {
+        margin-bottom: 10px;
+    }
+    .clearme:nth-child(4) {
+        clear: both;
+    }
+    .block:hover {
+        box-shadow: 0 0 3px #000000;
+        background-color: #f0f4f5;
+    }
+    .topper-div {
+        border-bottom: $divider_border;
+        width: 97%;
+        margin: 10px auto 0 auto;
+        h2 {
+            padding-bottom: 10px;
+        }
+    }
+    .greytxt p {
+        margin-left: 15px;
+        font-size: 9px;
+        color: #aaa;
+        margin-bottom: 0;
+    }
+    .current-usage-block {
+        margin: 10px 0;
+        height: 70px;
+    }
+    .usub {
+        font-weight: bold;
+        margin: 10px 0 0 0;
+    }
+    .custom-bar {
+        width: 200px;
+        height: 8px;
+        clear: both;
+        margin-bottom: 8px;
+    }
+    .set-txt {
+        position: relative;
+        top: 5px;
+    }
+    .details-block {
+        p {
+            margin-bottom: 0px;
+        }
+        width: 75%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .img-block {
+        width: 15%;
+        display: inline-block;
+        vertical-align: top;
+        img {
+            max-width: 100%;
+        }
+    }
+    .disabled {
+        opacity: 0.6;
+        background-color: #eee;
+        pointer-events: none;
+    }
+    .progress-l-text {
+        width: 95%;
+        margin: 0 auto;
+        color: #858489;
+    }
+    .progress-l {
+        width: 100%;
+    }
+    .dropdown-menu {
+        width: auto;
+    }
+    .subcrib {
+        width: 40%;
+        display: inline-block;
+        vertical-align: top;
+        text-align: right;
+        padding-top: 9px;
+    }
+    button.btn.subscrib {
+        background: transparent;
+        border: 1px solid #19c1d9;
+        color: #19c1d9;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 10px;
+        padding: 0 6px;
+        margin-bottom: 5px;
+    }
+    .title-box {
+        margin-top: 35px;
+        border-top: 1px solid #ccc;
+        border-bottom: none;
+        padding: 20px 0 15px 0;
+    }
+    .planselectionctrl {
+        border: 1px solid #d3d9de;
+        padding: 10px;
+    }
+}
+
+.configuration-main {
+    .configuration-left-block .block { 
+        border-bottom: none;
+        padding: 30px 15px;
+        display: inline-block;
+        width: 48%;
+        vertical-align: top;
+    }
+    .slide-block {
+        margin: 0 0 -6px 0;
+        width: 100%;
+        display: inline-block;
+        border: 1px solid #cccccc;
+        padding: 20px 10px;
+    }
+    .round-border-top {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .round-border-bottom {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .whole-round-border {
+        border-radius: 5px;
+    }
+    h2 {
+        font-size: 16px;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    .graytxt {
+        font-size: 10px;
+        color: #767373;
+    }
+    .app-title {
+        font-size: 14px;
+    }
+    .indication {
+        top: -16px;
+    }
+}

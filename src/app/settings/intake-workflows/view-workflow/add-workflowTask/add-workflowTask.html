@@ -1,0 +1,242 @@
+<style type="text/css">
+.radio{margin-top: 0px !important;padding-left: 0px !important;}
+.radio input[type="radio"]{margin-left: 0 !important;width: 20px;height: 20px;top: -3px;}
+.radio input {outline: none !important;box-sizing:initial !important;}
+.radio label, .radio label{padding-left: 25px !important;}
+.radio label::after{background-color: #2097c6 !important;top: 5px !important;width: 9px !important;height: 9px !important;left: 5px !important;}
+.radio label::before{width: 19px !important;height: 19px !important;border: 2px solid #2097c6 !important;}
+.dropdown-custom-width .selectize-control{width:87%;}
+.add-workflow-block .checkbox label{padding-left: 30px;}
+.add-workflow-block > .radio+.radio, .checkbox+.checkbox{margin-top: 10px;}
+.add-workflow-block .checkbox{float: left;margin-right:35px !important;}
+</style>
+<!--resetAddTaskPage-->
+<div data-ng-if="addTask.display.page=='openAddTask'" class="row">
+        <div class="pull-right margin-top10px margin-right30px">
+            <a class="paddingLR-10px" 
+                data-ng-click="addTask.resetAddTaskPage()"
+                href="javascript:void(0)">Reset
+            </a>
+            <a class="paddingLR-10px"
+                data-ng-click="sideNav.closeDrawer()"
+                href="javascript:void(0)">Close
+            </a>
+        </div>
+</div>
+<div data-ng-if="addTask.display.page =='openAddTask'" class="container" >
+<div class="page-title-border clearfix form-group heading-with-button-bottom-padding row-fluid global-page-title">
+    <h2 class="pull-left page-title">{{addTask.mode}} Task</h2>
+    <div class="pull-right">
+        <button   data-ng-click="addTask.cancel()" class="btn btn-default">
+                Back
+            </button>     
+        <button   data-ng-disabled="addTask.form.$invalid"  data-ng-click="addTask.save(addTask.taskInfo)" class="btn btn-default">
+                Save
+            </button>    
+        </div>        
+</div>
+
+<div class="filter-greybox container add-workflow-block" data-ng-form="addTask.form">
+    <div class="form-group relative-container margin-top10px">
+<div class="col-md-12 padding-0">
+        <div class="row form-group">
+            <div class="col-md-3 padding-0">
+                <label class="margin-top5px">Task Name:<span class="compulsary-mark">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <input type="text"
+                                name="taskName"
+                                data-ng-focus="addTask.addTaskDescription()"
+                                class="form-control"
+                                title=" "
+                                data-ng-required="true"
+                                data-ng-model="addTask.taskInfo.task_name" />
+                         <div data-ng-if="addTask.form.taskName.$dirty"
+                                ng-messages="addTask.form.taskName.$error">
+                                <div class="error"
+                                    ng-message="required">
+                                    task name is required
+                                </div>
+                            </div>
+
+                 </div>
+              </div>
+
+         
+        <div class="row form-group">
+            <div class="col-md-3 padding-0">
+                <label class="margin-top5px">Priority: <span class="compulsary-mark">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ui-select  ng-model="addTask.taskInfo.priority" theme="selectize">
+                    <ui-select-match placeholder="Priority">
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="priority in addTask.priorities">
+                        <small>
+                  {{priority}}
+                </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <!-- <div  class="row form-group">
+            <div class="col-md-3 padding-0 padding-right-0">
+                <label class="margin-top5px">Assign To:</label>
+            </div>
+
+            <div class="col-md-7">
+                <div class="pull-left margin-right20px padding-0">
+                   <div class="checkbox" data-ng-repeat="roleid in addTask.rolesId">
+                            <input type="checkbox" checklist-value="roleid.rid" checklist-model="addTask.taskInfo.roleid"
+                             /><label>{{roleid.role}}</label>
+                    </div>
+                </div>
+             </div>
+            
+        </div> -->
+
+
+        <div class="row form-group">
+            <div class="col-md-3 padding-0 padding-right-0">
+                <label class="margin-top5px">Task Description:</label>
+            </div>
+            <div class="col-md-8">
+                <textarea   name="notes" rows="6"
+                                maxlength="5120"
+                                data-ng-model="addTask.taskInfo.notes"
+                                ng-trim='false' 
+                                class="form-control height-110" ></textarea>
+            </div>
+        </div>
+        <div class="row form-group">
+                <div class="col-md-3 padding-0 padding-right-0">
+                        <label class="margin-top5px">Workflow Due date Calculation <span class="compulsary-mark">*</span></label>
+                </div>    
+                <div class="col-md-4 margin-top5px">
+                        <input type="text" allow-only-numbers
+                         name="noofday"
+                         title=" "
+                         ng-pattern="/^[0-9]*$/"
+                         data-ng-required="true"
+                         maxlength="50" placeholder="Number of days"
+                         data-ng-model="addTask.taskInfo.no_of_days" class="form-control" /> 
+                                        
+                 <div data-ng-if="addTask.form.noofday.$dirty || addTask.form.noofday.$valid" 
+                 ng-messages="addTask.form.noofday.$error">
+                                    <div class="error" ng-message="required">
+                                       number of days required
+                                    </div>
+                                    <div class="error" ng-message="pattern" ng-show="profileCtrl.profileForm.firmSize_name.$error">
+                                        Invalid number of days
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="col-md-4 margin-top10px ">
+                            
+                            <!-- <ui-select ng-model="addTask.taskInfo.day_type" theme="selectize">
+                                <ui-select-match placeholder="days">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="days in addTask.day_type">
+                                    <small>
+                              {{days}}
+                            </small>
+                                </ui-select-choices>
+                            </ui-select> -->
+                             
+                            <div class="radio pull-left margin-right20px padding-0">
+                                <input  type="radio"  data-ng-model="addTask.taskInfo.day_type" value="Calendar days"
+                                /><label>Calendar Days</label>
+                            </div>
+                            <div class="radio pull-left margin-right20px padding-0">
+                                <input  type="radio"  data-ng-model="addTask.taskInfo.day_type" value="Business Days"
+                                /><label>Business Days</label>
+                            </div>
+                           
+
+                    </div>
+            </div>
+            <div class="row form-group">
+                    <div class="col-md-3 padding-0 padding-right-0"></div>    
+                    <div class="pull-left  margin-top5px padding-0">
+                        <div class="col-md-12 btn-group btn-group">
+                                <label data-ng-click="addTask.beforeDates(0)" ng-class="{' active': addTask.dateFieldValue == 0}"
+                                    class="btn btn-default btn-styleNone ">
+                                Before</label>
+                                <label data-ng-click="addTask.afterDates(1)" ng-class="{' active': addTask.dateFieldValue == 1}"
+                                    class="btn btn-default btn-styleNone">
+                                After</label>
+                            </div>
+                    </div>
+                    <div class="pull-left margin-top15px">
+                            <span class="sprite default-workflow-note"></span>
+                            <label> Task due date will be {{addTask.taskInfo.no_of_days}}  {{addTask.taskInfo.day_type}}  {{addTask.taskInfo.beforeAfter}} the Workflow 
+                                <label ng-hide="addTask.taskInfo.optionSelected=='custom_date2' || addTask.taskInfo.optionSelected=='custom_date1' ">{{(addTask.taskInfo.optionSelected == "MCD" ? "ICD" : addTask.taskInfo.optionSelected)}}</label> 
+                         <label ng-show = "addTask.taskInfo.optionSelected == 'custom_date2'">{{addTask.taskInfo.customDate2Label}}</label>       
+                                <label ng-show="addTask.taskInfo.optionSelected=='custom_date1'">{{addTask.taskInfo.customDate1Label}}</label>
+                               
+                        
+                        </label>
+                    </div>
+            </div>   
+            <div class="row form-group">
+                    <div class="col-md-3 padding-0 padding-right-0"><label>Calculate Due Date From: <span class="compulsary-mark">*</span>  </label></div>
+                    <div class="col-md-7">
+                            <div ng-if="addTask.taskInfo.DOI=='1'" class="pull-left margin-right20px padding-0">
+                                 <div class="radio">
+                                     <input  type="radio" title=" " data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="DOI"
+                                     /><label>Date of Incident</label>
+                                 </div>
+                             </div>
+                             <div  ng-if="addTask.taskInfo.DOIn=='1'"  class="pull-left margin-right20px padding-0">
+                                 <div class="radio">
+                                     <input  type="radio" title=" " data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="DOIn"
+                                     /><label>Date of Intake</label>
+                                 </div>
+                             </div>
+                             <div   ng-if="addTask.taskInfo.SOL=='1'"  class="pull-left margin-right20px padding-0">
+                                 <div class="radio">
+                                     <input  type="radio" title=" "  data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="SOL"
+                                     /><label>SOL</label>
+                                 </div>
+                             </div>
+                             <div  ng-if="addTask.taskInfo.MCD == '1'"  class="pull-left margin-right20px padding-0">
+                                 <div class="radio"> 
+                                     <input  type="radio" title=" "  data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="MCD"
+                                     /><label>Intake Created Date</label>
+                                 </div>
+                             </div>
+                             <div  ng-if="addTask.taskInfo.custom_date1 == '1'"  class="pull-left margin-right20px padding-0">
+                                 <div class="radio">
+                                     <input type="radio" title=" " data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="custom_date1"
+                                          /><label>{{addTask.taskInfo.customDate1Label}}</label>
+                                 </div>
+                             </div>
+                             <div  ng-if="addTask.taskInfo.custom_date2 == '1'" class="pull-left margin-right20px padding-0">
+                                 <div class="radio">
+                                     <input type="radio" title=" " data-ng-required="true" data-ng-model="addTask.taskInfo.optionSelected" value="custom_date2"
+                                          /><label>{{addTask.taskInfo.custom_date_label2}}</label>
+                                 </div>
+                             </div>
+                         </div> 
+            </div>
+
+</div>
+
+
+    </div>
+    
+
+
+</div>
+
+</div>
+
+
+<div data-ng-if="addTask.display.page == 'closeAddTask'">
+        <div data-ng-controller="viewintakeWorkflowCtrl as viewWorkflow"
+            data-ng-include="'app/settings/intake-workflows/view-workflow/view-workflow.html'">
+        </div>
+</div>

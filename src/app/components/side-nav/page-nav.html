@@ -1,0 +1,200 @@
+
+<!-- top links-->
+
+<div data-ng-class="{'mask' :sideNav.display.openDrawer}"></div>
+
+<!-- HEADER-->
+<header data-ng-class="{'intake-header':onIntake,'referral-header':onReferral,'archival-header':onArchival}" id="header"
+    ng-hide="($state.includes('office-view')) || ($state.includes('global-office-view')) || ($state.includes('global-office-redirect')) || ($state.includes('intakeglobal-office-redirect'))|| ($state.includes('global-office-edit')) || $state.includes('intakeoffice-view') || $state.includes('intakeglobal-office-view')"
+    data-ng-include="'app/components/header/page-header.html'"></header>
+<div id="nav" data-ng-if="(sideNav.display.showDrawer && (onMatter || onIntake || onLauncher))" data-ng-class="{'show-nav show-nav-full':sideNav.display.openDrawer}"
+    show-hide-right-panel data-panel-state='{{sideNav.display.reloadPage && sideNav.display.openDrawer}}'>
+    
+    <div>
+        <!-- navigation-->
+        <div class="row" data-ng-show="sideNav.dataReceived">
+            
+            <ul class="pull-left floated-menu" id="navMenu" ng-if="onMatter">
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Search', $event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-search-new-svg"  data-ng-class="{'inactive-link':sideNav.activePage !=='Search',
+                            'active-search':sideNav.activePage ==='Search'}" tooltip-placement="top" tooltip="Search" style="margin-top: 5px;"></span>
+                            <!-- <span class="nav-name">Search</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Sidebar',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-sidebar-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Sidebar',
+                            'active-sidebar':sideNav.activePage ==='Sidebar'}" tooltip-placement="top" tooltip="Sidebar"></span>
+                            <!-- <span class="nav-name">Sidebar</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Events',$event)">
+                        <span class="tab-wrapper">
+                            <span class="sprite-svg-icon default-event-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Events',
+                            'active-event':sideNav.activePage ==='Events'}" tooltip-placement="top" tooltip="Events"></span>
+                            <!-- <span class="nav-name">Events</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Notes',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-notes-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Notes',
+                            'active-notes':sideNav.activePage ==='Notes'}" tooltip-placement="top" tooltip="Notes"></span>
+                            <!-- <span class="nav-name">Notes</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Tasks',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-task-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Tasks',
+                            'active-task':sideNav.activePage ==='Tasks'}" tooltip-placement="top" tooltip="Tasks"></span>
+                            <!-- <span class="nav-name">Tasks</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-if="sideNav.is_workflow">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Workflow',$event)">
+                        <span class="tab-wrapper activtool" >
+                            <span class="sprite-svg-icon default-workflow-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Workflow',
+                            'active-workflow':sideNav.activePage ==='Workflow'}" tooltip-placement="top" tooltip="Workflow"></span>
+                            <!-- <span class="nav-name">Workflow</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-show="sideNav.role.email_subscription" ng-if="sideNav.firmData.API === 'JAVA'">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Mailbox_v2',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-mailbox-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Mailbox_v2',
+                            'active-mailbox':sideNav.activePage ==='Mailbox_v2'}" tooltip-placement="top" tooltip="Email"></span>
+                            <!-- <span class="nav-name">Email</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-show="sideNav.role.email_subscription" ng-if="sideNav.firmData.API === 'PHP'">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Mailbox',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-mailbox-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Mailbox',
+                            'active-mailbox':sideNav.activePage ==='Mailbox'}" tooltip-placement="top" tooltip="Email"></span>
+                            <!-- <span class="nav-name">Email</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-if="sideNav.is_fax">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('eFax',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-efax-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='eFax',
+                            'active-efax':sideNav.activePage ==='eFax'}" tooltip-placement="top" tooltip="E-Fax"></span>
+                            <!-- <span class="nav-name">E-Fax</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-show="sideNav.role.lexvia_services">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('DailyMailScan',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-mailscan-new-svg " data-ng-class="{'inactive-link':sideNav.activePage !=='DailyMailScan',
+                            'active-mailscan':sideNav.activePage ==='DailyMailScan'}" tooltip-placement="top" tooltip="Daily Mail"></span>
+                            <!-- <span class="nav-name">Daily Mail</span> -->
+                        </span>
+                    </a>
+
+                </li>
+            </ul>
+            <ul class="pull-left floated-menu" ng-if="onIntake || onLauncher">
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Search', $event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-search-new-svg "  data-ng-class="{'inactive-link':sideNav.activePage !=='Search',
+                            'active-search':sideNav.activePage ==='Search'}" tooltip-placement="top" tooltip="Search" style="margin-top: 5px;"></span>
+                            <!-- <span class="nav-name">Search</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Sidebar',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-sidebar-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Sidebar',
+                            'active-sidebar':sideNav.activePage ==='Sidebar'}" tooltip-placement="top" tooltip="Sidebar"></span>
+                            <!-- <span class="nav-name">Sidebar</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Events',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-event-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Events',
+                            'active-event':sideNav.activePage ==='Events'}" tooltip-placement="top" tooltip="Events"></span>
+                            <!-- <span class="nav-name">Events</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Notes',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-notes-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Notes',
+                            'active-notes':sideNav.activePage ==='Notes'}" tooltip-placement="top" tooltip="Notes"></span>
+                            <!-- <span class="nav-name">Notes</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li ng-if="onIntake">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Tasks',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-task-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Tasks',
+                            'active-task':sideNav.activePage ==='Tasks'}" tooltip-placement="top" tooltip="Tasks"></span>
+                            <!-- <span class="nav-name">Tasks</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li ng-if="onLauncher">
+                    <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('LauncherTask',$event)">
+                        <span class="tab-wrapper" >
+                            <span class="sprite-svg-icon default-task-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='LauncherTask',
+                            'active-task':sideNav.activePage ==='LauncherTask'}" tooltip-placement="top" tooltip="Tasks"></span>
+                            <!-- <span class="nav-name">Tasks</span> -->
+                        </span>
+                    </a>
+                </li>
+                <li data-ng-show="sideNav.role.email_subscription" ng-if="sideNav.firmData.API === 'PHP'">
+                        <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Mailbox',$event)">
+                            <span class="tab-wrapper" >
+                                <span class="sprite-svg-icon default-mailbox-new-svg" ng-class="{'inactive-link':sideNav.activePage !=='Mailbox',
+                                'active-mailbox':sideNav.activePage ==='Mailbox'}" tooltip-placement="top" tooltip="Email"></span>
+                                <!-- <span class="nav-name">Email</span> -->
+                            </span>
+                        </a>
+                    </li>
+                    <li data-ng-if="sideNav.is_workflow && onIntake">
+                            <a href="javascript:void(0)" data-ng-click="sideNav.loadPage('Workflow',$event)">
+                                <span class="tab-wrapper activtool" >
+                                    <span class="sprite-svg-icon default-workflow-new-svg " ng-class="{'inactive-link':sideNav.activePage !=='Workflow',
+                                    'active-workflow':sideNav.activePage ==='Workflow'}" tooltip-placement="top" tooltip="Workflow"></span>
+                                    <!-- <span class="nav-name">Workflow</span> -->
+                                </span>
+                            </a>
+                        </li>
+            </ul>
+
+            <div class="panel-content-overflow fade-content" when-scroll-ends reached-top data-ng-if="sideNav.display.reloadPage && sideNav.display.openDrawer"
+                style="overflow-y: auto;overflow-x: hidden">
+                <div class="clearfix"></div>
+                <!-- <div class="pull-left margin-top10px" style="margin-left: 5px;">
+                    <span tooltip="Enter full screen" tooltip-placement="top" style="cursor:pointer" ng-if="!sideNav.isFullScreen" data-ng-click="sideNav.isFullScreen = true;expandSidebar();"
+                        class="sprite expand-screen"></span>
+                    <span tooltip="Exit full screen" tooltip-placement="top" style="cursor:pointer" ng-if="sideNav.isFullScreen == true" data-ng-click="sideNav.isFullScreen = false;collapseSidebar();"
+                        class="sprite collapse-screen"></span>
+                </div> -->
+                <clx-load-page page-info="sideNav.pageInfo"></clx-load-page>
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,433 @@
+<cancel-pending-requests></cancel-pending-requests>
+<div class="matter-list-wrapper">
+    <div data-ng-if="!matterCtrl.archivedTab">
+        <div id="report-content">
+            <div class="page-title-border-links clearfix">
+                <div class="row">
+                    <h1 class="col-md-6 ">{{matterCtrl.selectionModel.statusName}} Matters </h1>
+                    <div class="col-md-6 pull-right page-sublinks subnav">
+                        <ul class="pull-right">
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' active': matterCtrl.selectionModel.allMatter == 1}"
+                                    ng-click="matterCtrl.filterByUser(1);">
+                                    <h2>My Matters</h2>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"
+                                    ng-class="{' active': matterCtrl.selectionModel.allMatter == 0}"
+                                    ng-click="matterCtrl.filterByUser(0);">
+                                    <h2>All Matters</h2>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin0">
+                <div class="paddingRLR flexCont ongoing-matter">
+                    <!-- All -->
+                    <div ng-click="matterCtrl.applyStatusFilter(item);"
+                        ng-class="{'active': matterCtrl.highlightSelectedStatus(item.id)}" class="flex-column card "
+                        ng-repeat="(itemKey,item) in matterCtrl.viewModel.statusWiseCountsAll">
+                        <p class="numb">{{item.Count}}</p>
+                        <span class="textA">{{itemKey}}</span>
+                    </div>
+
+                    <!--rest status-->
+                    <div ng-click="matterCtrl.applyStatusFilter(value);"
+                        ng-class="{'active': matterCtrl.highlightSelectedStatus(value.id)}" class="flex-column card "
+                        ng-repeat="key in matterCtrl.notSorted(matterCtrl.viewModel.statusWiseCounts)"
+                        ng-init="value = matterCtrl.viewModel.statusWiseCounts[key]">
+                        <p class="numb">{{matterCtrl.viewModel.statusWiseCounts[key].Count}}</p>
+                        <span class="textA">{{key}}</span>
+                    </div>
+
+                    <!-- Stalled -->
+                    <div ng-click="matterCtrl.applyStatusFilter(item);"
+                        ng-class="{'active': matterCtrl.highlightSelectedStatus(item.id)}" class="flex-column card "
+                        ng-repeat="(itemKey,item) in matterCtrl.viewModel.statusWiseCountsStalled">
+                        <p class="numb">{{item.Count}}</p>
+                        <span class="textA">{{itemKey}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row gridSec matterGridSecStyle">
+                <div class="col-md-12 paddingRLR">
+                    <div class="col-md-4 paddingRLR dropdown create top-icon-set top-left-side-icon">
+                        <a data-ng-click="matterCtrl.openAddEditmatterview()"
+                            ng-show="(matterCtrl.totalmattersUsed < matterCtrl.subscribematterLimit) && (matterCtrl.isGraceOver != 0)">
+                            <span has-access="{{matterCtrl.matterPermissions[0].A}}" class="sprite default-plus"
+                                tooltip="Add Matter" tooltip-placement="right">&nbsp;</span>
+                            <!-- <span has-access="{{matterCtrl.matterPermissions[0].A}}" class="sprite-svg-icon default-plus-svg" tooltip="Add Matter" tooltip-placement="right">&nbsp;</span> -->
+                        </a>
+
+                        <div class="dropdown pull-left height-user-dropdown"
+                            ng-if="(matterCtrl.totalmattersUsed >= matterCtrl.subscribematterLimit) && (matterCtrl.isGraceOver != 0) ">
+                            <a class="dropdown-toggle" id="dropdownMenu5" data-toggle="dropdown" aria-expanded="true">
+                                <span has-access="{{matterCtrl.matterPermissions[0].A}}"
+                                    class="sprite default-plus">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown matterlist-dropdown"
+                                role="menu" aria-labelledby="dropdownMenu5">
+
+                                <li><span
+                                        class="default-alert sprite"></span>&nbsp;&nbsp;<small>{{matterCtrl.userMsg}}</small>
+                                </li>
+                                <li class="divider" ng-if="true"> </li>
+                                <!--
+                    <li ng-if="false"><small>Please <a href="javascript: void(0)">click here</a> to increase the matter capacity.</small></li>
+                    <li class="divider" ng-if="false"</li>
+    -->
+                                <li ng-if="matterCtrl.isSubsriber"><small>
+                                        <a href="javascript:void(0);"
+                                            ng-click="matterCtrl.applyFooterFilters('Closed')">Archive closed
+                                            matters</a></small></li>
+                            </ul>
+                        </div>
+
+                        <a 
+                            data-ng-click="matterCtrl.openAddEditmatterview(matterCtrl.clxGridOptions.selectedItems[0].matter_id)"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0)">
+                            <span has-access="{{matterCtrl.matterPermissions[0].E}}" class="sprite default-edit"
+                                tooltip="Edit Matter" tooltip-placement="right">&nbsp;</span>
+                            <!-- <span has-access="{{matterCtrl.matterPermissions[0].E}}" class="sprite-svg-icon default-edit-svg" tooltip="Edit Matter" tooltip-placement="right">&nbsp;</span> -->
+                        </a>
+
+                        <a 
+                            data-ng-click="matterCtrl.deleteMatters(matterCtrl.clxGridOptions.selectedItems,matterCtrl.filteredMatters)"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length > 0 &&  (matterCtrl.isGraceOver != 0) ">
+                            <span has-access="{{matterCtrl.matterPermissions[0].D}}" class="sprite default-delete"
+                                tooltip="Delete Matter" tooltip-placement="right">&nbsp;</span>
+                            <!-- <span has-access="{{matterCtrl.matterPermissions[0].D}}" class="sprite-svg-icon default-delete-svg" tooltip="Delete Matter" tooltip-placement="right">&nbsp;</span> -->
+                        </a>
+
+                        <!-- Refer-out -->
+                        <a href="javascript:void(0)" data-ng-click="matterCtrl.goToReferOut()"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 &&  (matterCtrl.isGraceOver != 0) && matterCtrl.isReferralExchange == 1 && isReferalActive == 1 && matterCtrl.selectionModel.statusName != 'Closed' ">
+                            <span class="sprite default-refer" tooltip="Refer Out"
+                                tooltip-placement="right">&nbsp;</span>
+                        </a>
+
+                        <a href="javascript:void(0)"
+                            data-ng-click="matterCtrl.goToMatterCollaboration()"
+                            data-ng-show="matterCtrl.clxGridOptions.selectedItems.length === 1 && matterCtrl.isCollaborationActive">
+                            <span class="sprite default-userprofile cur-pointer" tooltip="Share"
+                                tooltip-placement="right">&nbsp;</span>
+                            <!-- <span  class="sprite-svg-icon default-userprofile-svg" tooltip="Share" tooltip-placement="right" style="cursor:pointer">&nbsp;</span> -->
+                        </a>
+                        <!-- user subsribed-->
+                        <a 
+                            data-ng-show="(matterCtrl.clxGridOptions.selectedItems.length > 0 && 
+                                     matterCtrl.selectionModel.statusName=='Closed' && matterCtrl.isAdmin && matterCtrl.isDigiArchivalSub && matterCtrl.isGraceOver == 1)">
+                            <span class="sprite default-archive"
+                                data-ng-click="matterCtrl.showArchivePopup(matterCtrl.clxGridOptions.selectedItems,matterCtrl.filteredMatters)"
+                                tooltip="Archive" tooltip-placement="right">&nbsp;</span>
+                        </a>
+                        <!--end-->
+                        <!--end-->
+                        <!-- if user subscription expired-->
+                        <span class="dropdown  height-user-dropdown" ng-if="(matterCtrl.clxGridOptions.selectedItems.length > 0 && 
+                            matterCtrl.selectionModel.statusName=='Closed' && 
+                            !(matterCtrl.isAdmin) && matterCtrl.isDigiArchivalSub && matterCtrl.isGraceOver == 1)">
+                            <!--Bug#6675 -->
+                            <a class="dropdown-toggle col-md-offset-1" id="dropdownMenu5" tooltip="Archive"
+                                tooltip-placement="right" data-toggle="dropdown" aria-expanded="true">
+                                <span class="sprite default-archive">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu add-matter-dropdown username-profile-dropdown matterlist-dropdown"
+                                role="menu" aria-labelledby="dropdownMenu5">
+                                <li class="li-small"><span class="default-alert sprite"></span>&nbsp;&nbsp;<span
+                                        class="pop-msg">Please contact the subscribing managing partner to archive
+                                        matters.</span></li>
+                            </ul>
+                        </span>
+                        <!-- end-->
+                    </div>
+
+                    <div class="col-md-8 text-right p-0">
+
+                        <div class="sub-icon-box">
+                            <div class="dropdown">
+                                <span class="sortby-align">Sort By:</span>
+                                <button id="dLabel" type="button" class="sortby-dropdown dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{matterCtrl.getSortByLabel(matterCtrl.viewModel.filters.sortby)}}
+                                    <span class="default-downward-arrow sprite dropdown-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-min-width" role="menu" aria-labelledby="dLabel">
+                                    <li data-ng-repeat-start="sort in matterCtrl.sorts"
+                                        data-ng-class="{' active': matterCtrl.viewModel.filters.sortby == sort.key}">
+                                        <a data-ng-click="matterCtrl.applySortByFilter(sort.key)">{{sort.name}}</a>
+                                    </li>
+                                    <li data-ng-show="!$last" data-ng-repeat-end class="divider"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="sub-icon-box">
+                            <span class="seprator-line"></span>
+                                <a class="list">
+                                    <span data-ng-click="matterCtrl.toggleFilterPage();" class="sprite default-filter"
+                                        tooltip="Filter" tooltip-placement="right"></span>
+                                    <!-- <span data-ng-click="matterCtrl.toggleFilterPage();" class="sprite-svg-icon default-filter-svg" tooltip="Filter" tooltip-placement="right"></span> -->
+                                </a>
+                            <span class="seprator-line"></span>
+                            <!-- <li><a class="list"><span class="sprite-svg-icon default-file-svg sortby-icons" data-ng-click="matterCtrl.print()" tooltip="Print Matters" tooltip-placement="right">&nbsp;</span></a></li>
+                            <li ><a class="list"><span style="margin-left:10px" class="sprite-svg-icon default-sharedown-svg sortby-icons" data-ng-click="matterCtrl.downloadMatters()" tooltip="Export Matters" tooltip-placement="right">&nbsp;</span></a></li> -->
+                            <a class="list"><span class="sprite default-file"
+                                        data-ng-click="matterCtrl.print()" tooltip="Print Matters"
+                                        tooltip-placement="right">&nbsp;</span></a>
+                            <a class="list"><span class="sprite default-sharedown"
+                                        data-ng-click="matterCtrl.exportMatters()" tooltip="Export Matters"
+                                        tooltip-placement="right">&nbsp;</span></a>
+                            <a class="search-overlap list" data-ng-hide="matterCtrl.showSearch"  data-ng-click="matterCtrl.showSearch = true" >
+                                <span>
+                                    <span
+                                                class="sprite default-search-new" tooltip="Search"
+                                                tooltip-placement="right">&nbsp;</span>
+                                    <!-- <li><a class="list" data-ng-click="matterCtrl.showSearch = true"><span class="sprite-svg-icon default-search-new-svg" tooltip="Search" tooltip-placement="right">&nbsp;</span></a></li> -->
+                                </span>
+                            </a>
+
+
+                        </div>
+                        <div class="sub-icon-box">
+                             <!--data-ng-change="matterCtrl.filterMatterList(matterCtrl.viewModel.filters.filterText)"-->
+                             <div class="search-input" data-ng-show="matterCtrl.showSearch">
+                                <div class="default-searchico sprite"></div>
+                                <input type="text" focus-me="matterCtrl.showSearch"
+                                    data-ng-model-options="{ debounce: 0 }"
+                                    data-ng-model="matterCtrl.viewModel.filters.filterText"
+                                    data-ng-change="matterCtrl.filterRetain();" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="pull-right ">
+                        <clx-filter-tags on-filter-cancel="matterCtrl.tagCancelled" tag-list="matterCtrl.tags">
+                        </clx-filter-tags>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="matterCtrl.matterPermissions[0].V != 0">
+                <div data-ng-show="matterCtrl.viewModel.matters.length >0">
+                    <show-record-count2 displayed="matterCtrl.viewModel.matters.length"
+                        hide-pager="{{matterCtrl.showPager}}" more="matterCtrl.applyFilterLazyLoading()"
+                        all="matterCtrl.getAllMatterList()" total="matterCtrl.totalMatters"></show-record-count2>
+                </div>
+
+                <div class="clearfix"></div>
+                <div id="matterlistupper"></div>
+
+                <scroll-table tableid="matterlistgrid1" watch="matterCtrl.viewModel.matters" to="#matterlistupper"
+                    from="#moreMatterList">
+                    <table class="table table-scroll">
+                        <thead>
+                            <tr>
+                                <th class="box-align th-width-3">
+                                    <div class="checkbox">
+                                        <input type="checkbox" data-ng-disabled="matterCtrl.filteredMatters.length==0"
+                                            data-ng-model="matterCtrl.clxGridOptions.selectAll"
+                                            data-ng-checked="matterCtrl.allMatterSelected()"
+                                            data-ng-click="matterCtrl.selectAllMatters(matterCtrl.clxGridOptions.selectAll)" /><label></label>
+                                    </div>
+                                </th>
+                                <th class="th-width-4">
+
+                                </th>
+                                <th class="th-width-23">
+                                    <div> <span><b>Matter
+                                                Name, File#,<br> Index/Docket#, DOI</b></span>
+                                    </div>
+                                </th>
+                                <th class="th-width-15">
+                                    <div> <span><b>Status, Substatus</b></span></div>
+                                </th>
+                                <th class="th-width-20">
+                                    <div> <span><b>Type,
+                                                Subtype, <br> Category, Law Type</b></span></div>
+                                </th>
+                                <th class="th-width-15">
+                                    <div> <span><b>Plaintiff Name</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Court, Venue</b></span></div>
+                                </th>
+                                <th class="th-width-10">
+                                    <div> <span><b>Lead
+                                                Attorney, <br>Attorney</b></span></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="dashboard-tasks-due" id="matterlistbody">
+
+                            <tr class=" body-row "
+                                data-ng-class="{'grid-row-block':data.isActive === '0','grid-row-deleted':data.isDeleted === '1', 'selected-grid-row':($index == template.clickedRow)}"
+                                data-highlight-clicked-row="{{$index}},template.clickedRow"
+                                data-ng-repeat="data in matterCtrl.filteredMatters = (matterCtrl.viewModel.matters|filter:matterCtrl.viewModel.filters.filterText) track by data.matter_id">
+                                <td class="th-width-3">
+                                    <div class="checkbox">
+                                        <input type="checkbox" data-ng-checked="matterCtrl.isMatterSelected(data)"
+                                            checklist-model="matterCtrl.clxGridOptions.selectedItems"
+                                            checklist-value="data" /><label></label>
+                                    </div>
+                                </td>
+                                <td class="th-width-4">
+                                    <span data-ng-if="data.is_retrieved == 1"
+                                        class="sprite retrieve-alert-icon center-block" tooltip-append-to-body="true"
+                                        tooltip="Retrieved"></span>
+
+                                </td>
+                                <td class="th-width-23">
+                                    <div>
+                                        <a href="#/matter-overview/{{data.matter_id}}"
+                                            tooltip="{{data.matter_name}}">{{data.matter_name}}</a><br>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip="{{data.fileNindex}}"
+                                            ng-bind-html="data.fileNindex"></span><br>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor"
+                                            tooltip="{{data.date_of_incidence}}">{{data.date_of_incidence}}</span><br>
+                                    </div>
+
+                                </td>
+                                <td class="th-width-15">
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top" tooltip="{{data.status}}">
+                                            {{data.status}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.sub_status}}">
+                                            {{data.sub_status}}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td class="th-width-20">
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top" tooltip="{{data.type}}">
+                                            {{data.type | replaceByDash}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.sub_type}}">
+                                            {{data.sub_type | replaceByDash}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.category}}">
+                                            {{data.category | replaceByDash}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.law_type_name}}">
+                                            {{data.law_type_name | replaceByDash}}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td class="th-width-15">
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.plaintiff_name}}">
+                                            {{data.plaintiff_name}}
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td class="th-width-10">
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.courtName}}">
+                                            {{data.courtName}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.courtVenue}}">
+                                            {{data.courtVenue}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="th-width-10">
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.matter_lead_attorney}}">
+                                            {{data.matter_lead_attorney}}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="default-cursor" tooltip-placement="top"
+                                            tooltip="{{data.matter_attorney}}">
+                                            {{data.matter_attorney}}
+                                        </span>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </scroll-table>
+
+
+                <p class="text-center margin-top10px"
+                    data-ng-show="(matterCtrl.viewModel.matters.length===0)&& matterCtrl.display.matterListReceived && matterCtrl.selectionModel.statusName == 'Ongoing' && !root.requestPending">
+                    You currently do not have any ongoing matters.
+                </p>
+                <p class="text-center margin-top10px"
+                    data-ng-show="(matterCtrl.viewModel.matters.length===0)&& matterCtrl.display.matterListReceived && matterCtrl.selectionModel.statusName == 'Closed' && !root.requestPending">
+                    You do not have any closed matters.
+                </p>
+                <p class="text-center margin-top10px"
+                    data-ng-show="(matterCtrl.viewModel.matters.length===0)&& matterCtrl.display.matterListReceived && matterCtrl.selectionModel.statusName == 'Archived' && !root.requestPending">
+                    There are no archived matters.
+                </p>
+
+                <div id="moreMatterList" class="text-right pull-left width-54per">
+                  
+
+                </div>
+
+              
+            </div>
+            <p class="text-center margin-top10px" data-ng-show="matterCtrl.matterPermissions[0].V==0">
+                You are not authorized to view matters
+            </p>
+        </div>
+    </div>
+
+    <div data-ng-if="matterCtrl.archivedTab">
+        <div data-ng-controller="archiveMatterListCtrl as archiveMatterCtrl"
+            data-ng-include="'app/matter/matter-list/matter-archive/archive-matter-list.html'">
+        </div>
+    </div>
+</div>
+
+
+<footer data-ng-if="matterCtrl.viewModel.page=='GRIDVIEW'" position-center>
+
+    <ul>
+        <li>
+            <a href="javascript:void(0);" ng-click="matterCtrl.applyFooterFilters('Ongoing','clickedTab')"
+                ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Ongoing'}">Ongoing</a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" ng-click="matterCtrl.applyFooterFilters('Closed','clickedTab')"
+                ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Closed'}">Closed</a></li>
+        <li ng-if="matterCtrl.isMM">
+            <a href="javascript:void(0);" ng-click="matterCtrl.applyFooterFilters('Archived','clickedTab')"
+                ng-class="{'active-footer': matterCtrl.selectionModel.statusName == 'Archived'}">Archived</a>
+
+        </li>
+    </ul>
+
+</footer>

@@ -1,0 +1,65 @@
+<div class="page-title-border-links clearfix">
+    <h2 class="padding-heading ellipsis-nowrap"
+        tooltip="Current Matters Assigned To Attorney">Current Matters Assigned To Attorney </h2>
+</div>
+
+<div class="row pie-chart-height">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div id="chart"></div>
+        <clx-c3-donut
+            data-ng-if="dashboardAnalytics.donutData"
+            bind-to="chart"
+            title="{{dashboardAnalytics.donutTitle}}"
+            data="dashboardAnalytics.donutData"
+            on-click="dashboardAnalytics.showData"
+            donut-val="count"
+            display-val="a_name"
+            donut-for="aid"></clx-c3-donut>
+    </div>
+    <div class="col-md-1 margin-top20px"><a href="javascript:void(0)" tooltip = "Reset" ng-if="dashboardAnalytics.selectedAttorney.count > 0 && dashboardAnalytics.resetforDonut" ng-click="dashboardAnalytics.resetforDonut=false;resetDonut()" class="reset-icons sprite"></a></div>
+    <div class="col-md-1"></div>
+</div>
+
+<div data-ng-show="dashboardAnalytics.selectedAttorney && dashboardAnalytics.resetforDonut"
+    class="col-md-12 graph-info">
+    <div class="arrow-up"></div>
+    <label>{{dashboardAnalytics.selectedAttorney.name}} ({{dashboardAnalytics.selectedAttorney.count}} matters)</label>
+    <div class="dashboard-tasks-due" style="max-height:130px !important;">
+    <div data-ng-repeat="info in dashboardAnalytics.selectedAttorney.matters | limitTo:dashboardAnalytics.matterLimit" class="ellipsis-nowrap">
+        {{info.name}}
+    </div>
+    <a href="javascript:void(0)" data-ng-show="dashboardAnalytics.matterLimit < dashboardAnalytics.selectedAttorney.count"
+    data-ng-click="dashboardAnalytics.showAllMatters()">{{dashboardAnalytics.selectedAttorney.moreText}}</a>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="remove-border">
+    <div class="relative-container  pull-left title45Percent" data-ng-show="dashboardAnalytics.display.dashboard">
+        <h2 class="ellipsis-nowrap " tooltip="Cloudlex Usage (Hrs)">Cloudlex Usage (Hrs)</h2>
+    </div>
+    <div class="child-ul-right subnav-compact" data-ng-show="dashboardAnalytics.display.dashboard">
+        <clx-filter-options
+            fiter-opts="dashboardAnalytics.dailyUsageFilters"
+            on-filter-select="dashboardAnalytics.filterDailyUsage"
+            selected-filter="dashboardAnalytics.selectedDailyUsageFilter"></clx-filter-options>
+    </div>
+</div>
+<div class="flexCont"></div>
+<div class="clearfix"></div>
+<div  class="margin-top10px usage-chart" data-ng-show="dashboardAnalytics.usageChart === '1M'">
+    <div class="pull-right">{{dashboardAnalytics.usageTimePeriod}}</div>
+    <div id="monthly-usage-chart"></div>
+</div>
+
+<div  class="margin-top10px usage-chart" data-ng-show="dashboardAnalytics.usageChart === '1W'">
+    <div class="pull-right">{{dashboardAnalytics.usageTimePeriod}}</div>
+    <div id="weekly-usage-chart"></div>
+</div>
+
+<div  class="margin-top10px usage-chart" data-ng-show="dashboardAnalytics.usageChart === '3M'">
+    <div class="pull-right">{{dashboardAnalytics.usageTimePeriod}}</div>
+    <div id="threemonthly-usage-chart"></div>
+</div>
